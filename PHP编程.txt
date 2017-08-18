@@ -1,4 +1,4 @@
-常用过滤函数
+﻿常用过滤函数
 {
 mysql_real_escape_string
 str_replace

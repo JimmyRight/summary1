@@ -1,14 +1,14 @@
-#python±à³Ì³£ÓÃÖªÊ¶µã
-Ñ­»·
-Êı×é
-Ñ¡Ôñ
-¶ÔÏó
-ÊäÈëÊä³ö
-±äÁ¿
-¶ÔÏó
-ÕıÔò±í´ïÊ½
+ï»¿#pythonç¼–ç¨‹å¸¸ç”¨çŸ¥è¯†ç‚¹
+å¾ªç¯
+æ•°ç»„
+é€‰æ‹©
+å¯¹è±¡
+è¾“å…¥è¾“å‡º
+å˜é‡
+å¯¹è±¡
+æ­£åˆ™è¡¨è¾¾å¼
 .*()
-Õ¼Î»·ûÓë×ªÒå·û
+å ä½ç¬¦ä¸è½¬ä¹‰ç¬¦
 
 
 
@@ -17,7 +17,7 @@
 
 
 
-#zip½âÑ¹Ëõ¼°16½øÖÆ±àÂë
+#zipè§£å‹ç¼©åŠ16è¿›åˆ¶ç¼–ç 
 {
 #! /usr/bin/env python
 import zlib
@@ -31,7 +31,7 @@ print result
 
 
 
-#PPL±à³Ì£¨»­Í¼£©
+#PPLç¼–ç¨‹ï¼ˆç”»å›¾ï¼‰
 {
 #!/usr/bin/env python
 import Image
@@ -52,7 +52,7 @@ pic.save("flag.png")
 
 
 
-#base64±à½âÂë£¬get/postÇëÇó
+#base64ç¼–è§£ç ï¼Œget/postè¯·æ±‚
 {
 import requests, base64
 
@@ -64,14 +64,14 @@ print rsp.text
 
 
 
-#Õ¤À¸ÃÜÂëÆÆ½â
+#æ …æ å¯†ç ç ´è§£
 {
 #!/usr/bin/env python
 # -*- coding: gbk -*-
 # -*- coding: utf_8 -*-
-# Author: ÎµÀ¶ĞĞ
+# Author: è”šè“è¡Œ
 # http://www.cnblogs.com/duanv
-e = raw_input('ÇëÊäÈëÒª½âÃÜµÄ×Ö·û´®\n')
+e = raw_input('è¯·è¾“å…¥è¦è§£å¯†çš„å­—ç¬¦ä¸²\n')
 elen = len(e)
 field=[]
 for i in range(2,elen):
@@ -87,12 +87,12 @@ for f in field:
     d = ''
     for i in range(b):
         d = d + result[i]
-    print '·ÖÎª\t'+str(f)+'\t'+'À¸Ê±£¬½âÃÜ½á¹ûÎª£º  '+d
+    print 'åˆ†ä¸º\t'+str(f)+'\t'+'æ æ—¶ï¼Œè§£å¯†ç»“æœä¸ºï¼š  '+d
 }
 
 
 
-#¿­ÈöÃÜÂëÆÆ½â
+#å‡¯æ’’å¯†ç ç ´è§£
 {	
 import sys
 
@@ -121,61 +121,61 @@ for i in range(1, leftmove+1):
 
 
 	
-#CRC32±¬ÆÆ
+#CRC32çˆ†ç ´
 {	
 #!/usr/bin/env python 
 # -*- coding: UTF-8 -*- 
 ########################################################## 
-# ½Å±¾¶ş : ĞŞÕıÁËÒ»Ğ© BUG  , ¿ÉÒÔÕı³£´òÓ¡ÈÕÖ¾ , °ÑÎÕ½ø¶È # 
-# ĞŞ¸ÄÊ±¼ä : 2017/03/20 # TODO : ¿ÉÒÔÇî¾ÙµÄ×ÖµäµÄË³Ğò½øĞĞµ÷Õû , ÒÔ×ÖÄ¸µÄÍ³¼ÆÆµÂÊ½øĞĞµ÷Õû 
-# ¿ÉÒÔÌá¸ßÕûÌåÇî¾ÙĞ§ÂÊ 
+# è„šæœ¬äºŒ : ä¿®æ­£äº†ä¸€äº› BUG  , å¯ä»¥æ­£å¸¸æ‰“å°æ—¥å¿— , æŠŠæ¡è¿›åº¦ # 
+# ä¿®æ”¹æ—¶é—´ : 2017/03/20 # TODO : å¯ä»¥ç©·ä¸¾çš„å­—å…¸çš„é¡ºåºè¿›è¡Œè°ƒæ•´ , ä»¥å­—æ¯çš„ç»Ÿè®¡é¢‘ç‡è¿›è¡Œè°ƒæ•´ 
+# å¯ä»¥æé«˜æ•´ä½“ç©·ä¸¾æ•ˆç‡ 
 ########################################################## 
 import binascii 
 import time 
 import winsound 
 startTime = time.time() 
-# ³ÌĞò¿ªÊ¼ÔËĞĞ 
+# ç¨‹åºå¼€å§‹è¿è¡Œ 
 #----------Config start----------# 
-# ĞèÒª±»ÆÆ½âµÄCRC32µÄÖµ 
+# éœ€è¦è¢«ç ´è§£çš„CRC32çš„å€¼ 
 keys = [int("0xA359AFC1",16), int("0xCF5F72B9",16), int("0xDF7BF1C9",16), int("0x6E38B65E",16)] 
-# ÉèÖÃ±¬ÆÆµÄ·¶Î§ , Ä¬ÈÏËùÓĞ¿É´òÓ¡×Ö·û 
+# è®¾ç½®çˆ†ç ´çš„èŒƒå›´ , é»˜è®¤æ‰€æœ‰å¯æ‰“å°å­—ç¬¦ 
 myRange = [' ', '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~'] 
-# ×¢ : #     ÕâÀïµÄ´úÂë¿ÉÒÔÇî¾ÙËÄÎ»¿É´òÓ¡×Ö·û , ¿ÉÒÔ¸ù¾İĞèÒªĞŞ¸Ä´úÂëÖĞµÄÇ¶Ì×Ñ­»·²ãÊı #    ²»ÖªµÀÈçºÎÄÜÊ¹ÓÃ²ÎÊı¿ØÖÆÑ­»·Ç¶Ì×µÄ²ãÊı , Èç¹ûÓĞÖªµÀµÄĞ¡»ï°é¶ùÒ»¶¨ÒªÁªÏµÎÒÅ¶ , Ò»Æğ½ø²½ 
+# æ³¨ : #     è¿™é‡Œçš„ä»£ç å¯ä»¥ç©·ä¸¾å››ä½å¯æ‰“å°å­—ç¬¦ , å¯ä»¥æ ¹æ®éœ€è¦ä¿®æ”¹ä»£ç ä¸­çš„åµŒå¥—å¾ªç¯å±‚æ•° #    ä¸çŸ¥é“å¦‚ä½•èƒ½ä½¿ç”¨å‚æ•°æ§åˆ¶å¾ªç¯åµŒå¥—çš„å±‚æ•° , å¦‚æœæœ‰çŸ¥é“çš„å°ä¼™ä¼´å„¿ä¸€å®šè¦è”ç³»æˆ‘å“¦ , ä¸€èµ·è¿›æ­¥ 
 #----------Config end----------# 
 RESULT = {} 
-# ½á¹û×Öµä 
+# ç»“æœå­—å…¸ 
 def getCRC32(str): 
 	'''
-	¼ÆËãCRC32
+	è®¡ç®—CRC32
 	''' 
 	return (binascii.crc32(str) & 0xffffffff) 
 def checkSuccess(keys, mycrc32, words): 
 	'''
-    ¼ì²âÊÇ·ñ³É¹¦Æ¥Åä
-    ²ÎÊı : 
-        keys : ËùÓĞĞèÒª±¬ÆÆµÄCRC32Öµ
-        mycrc32 : Ä³´Î¼ÆËãµÃµ½µÄÃ÷ÎÄ(words)µÄCRC32
-        words : Ã÷ÎÄ
+    æ£€æµ‹æ˜¯å¦æˆåŠŸåŒ¹é…
+    å‚æ•° : 
+        keys : æ‰€æœ‰éœ€è¦çˆ†ç ´çš„CRC32å€¼
+        mycrc32 : æŸæ¬¡è®¡ç®—å¾—åˆ°çš„æ˜æ–‡(words)çš„CRC32
+        words : æ˜æ–‡
     ''' 
 	global RESULT 
 	for key in keys: 
 		if key == mycrc32: 
 			RESULT[keys.index(key)] = words 
 			words = "" 
-			counter = 0 	# ÓÃÓÚ¼ÆËãËÙ¶È 
+			counter = 0 	# ç”¨äºè®¡ç®—é€Ÿåº¦ 
 			oldTime = time.clock() 
 			for i in myRange: 
 				nowTime = time.clock() 
-				print "Trying : " + words + "\t" + "Speed : " + str(counter / (nowTime - oldTime)) + " / s" + "\t" + "Result : " + str(RESULT) 	# Êä³öÈÕÖ¾ 
+				print "Trying : " + words + "\t" + "Speed : " + str(counter / (nowTime - oldTime)) + " / s" + "\t" + "Result : " + str(RESULT) 	# è¾“å‡ºæ—¥å¿— 
 				oldTime = nowTime 
 				for j in myRange: 
 					for k in myRange: 
 						for l in myRange: 
-							words = i + j + k + l 	# ¹¹ÔìÃ÷ÎÄ 
+							words = i + j + k + l 	# æ„é€ æ˜æ–‡ 
 							counter += 1 
-							myCRC32 = getCRC32(words) # ¼ÆËãÃ÷ÎÄCRC32 
-							checkSuccess(keys, myCRC32, words) # ¼ì²éÊÇ·ñÆ¥Åä 
+							myCRC32 = getCRC32(words) # è®¡ç®—æ˜æ–‡CRC32 
+							checkSuccess(keys, myCRC32, words) # æ£€æŸ¥æ˜¯å¦åŒ¹é… 
 endTime = time.time() 
-print "Result : " + str(RESULT) 	# ÊäÈë±¬ÆÆ½á¹û 
-print "Cost : " + str(endTime-startTime) + " s" # Êä³ö×Ü»¨·ÑÊ±¼ä
+print "Result : " + str(RESULT) 	# è¾“å…¥çˆ†ç ´ç»“æœ 
+print "Cost : " + str(endTime-startTime) + " s" # è¾“å‡ºæ€»èŠ±è´¹æ—¶é—´
 }
