@@ -1,4 +1,18 @@
-﻿常用过滤函数
+﻿#技能要求
+laravel
+redis
+百万级别数据表的联合索引
+swoole，长短链接socket通信协议
+Nginx，fast-cgi层面的
+数据库主从
+大数据高并发
+jq啊，缓存啊，redis，node
+mycat数据库中间件来做数据库的主从支持和分库分表
+redis monogdb 消息队列服务rabbitmq或者kafka ，搜索引擎sphinx 或者 es
+storm spark sql hadoop---- kafka python java R html(前几个大数据必备)
+
+
+常用过滤函数
 {
 mysql_real_escape_string
 str_replace
@@ -7,11 +21,30 @@ fnmatch
 trim
 addslashes()//get_magic_quotes_gpc()//get_magic_quotes_runtime()//magic_quotes_gpc
 htmlspecialchars
+intval
 }
 常用函数及示例
 {
 	
 }
+
+
+
+
+
+
+
+#php输出
+<!DOCTYPE html>
+<html>
+<body>
+
+<?php
+echo "Hello World!";
+?>
+
+</body>
+</html>
 
 
 #php序列化：serialize
@@ -22,11 +55,17 @@ class foo {
 	function __destruct() { 
 		ﬁle_put_contents($this->ﬁle, $this->data); 
 	} 
+	public function PrintData()    
+    {    
+        echo 'content of' . $this->file . ' is ' . $this->data    
+             . '.<br />';    
+    }    
 } 
 
 $f = new foo();
 $f->ﬁle = "xx.php"; 
 $f->data = "<?php phpinfo(); ?>"; 
+$f->PrintData();
 echo base64_encode(serialize($f)); 
 ?>
 

