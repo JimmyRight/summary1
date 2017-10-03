@@ -874,17 +874,575 @@ Python for 循环语句
 				 break            # 跳出当前循环
 		   else:                  # 循环的 else 部分
 			  print num, '是一个质数'
+			  
+Python 循环嵌套
+	Python 语言允许在一个循环体里面嵌入另一个循环。
+	Python for 循环嵌套语法：
+		for iterating_var in sequence:
+		   for iterating_var in sequence:
+			  statements(s)
+		   statements(s)
+	Python while 循环嵌套语法：
+		while expression:
+		   while expression:
+			  statement(s)
+		   statement(s)
+	你可以在循环体内嵌入其他的循环体，如在while循环中可以嵌入for循环， 反之，你可以在for循环中嵌入while循环。
+	实例：
+	以下实例使用了嵌套循环输出2~100之间的素数：
+	实例
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
+		 
+		i = 2
+		while(i < 100):
+		   j = 2
+		   while(j <= (i/j)):
+			  if not(i%j): break
+			  j = j + 1
+		   if (j > i/j) : print i, " 是素数"
+		   i = i + 1
+		 
+		print "Good bye!"
+
+Python break 语句
+	Python break语句，就像在C语言中，打破了最小封闭for或while循环。
+	break语句用来终止循环语句，即循环条件没有False条件或者序列还没被完全递归完，也会停止执行循环语句。
+	break语句用在while和for循环中。
+	如果您使用嵌套循环，break语句将停止执行最深层的循环，并开始执行下一行代码。
+	#!/usr/bin/python
+	# -*- coding: UTF-8 -*-
+	 
+	for letter in 'Python':     # 第一个实例
+	   if letter == 'h':
+		  break
+	   print '当期字母 :', letter
+	  
+	var = 10                    # 第二个实例
+	while var > 0:              
+	   print '当期变量值 :', var
+	   var = var -1
+	   if var == 5:   # 当变量 var 等于 5 时退出循环
+		  break
+	 
+	print "Good bye!"
+
+Python continue 语句
+	Python continue 语句跳出本次循环，而break跳出整个循环。
+	continue 语句用来告诉Python跳过当前循环的剩余语句，然后继续进行下一轮循环。
+	continue语句用在while和for循环中。
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
+		 
+		for letter in 'Python':     # 第一个实例
+		   if letter == 'h':
+			  continue
+		   print '当前字母 :', letter
+		 
+		var = 10                    # 第二个实例
+		while var > 0:              
+		   var = var -1
+		   if var == 5:
+			  continue
+		   print '当前变量值 :', var
+		print "Good bye!"
+
+Python pass 语句
+	Python pass是空语句，是为了保持程序结构的完整性。
+	pass 不做任何事情，一般用做占位语句。
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*- 
+
+		# 输出 Python 的每个字母
+		for letter in 'Python':
+		   if letter == 'h':
+			  pass
+			  print '这是 pass 块'
+		   print '当前字母 :', letter
+
+		print "Good bye!"
+	
+	你在编写一个程序时，执行语句部分思路还没有完成，这时你可以用pass语句来占位，也可以当做是一个标记，是要过后来完成的代码。比如下面这样：
+		def iplaypython():
+		    pass
+		定义一个函数iplaypython，但函数体部分暂时还没有完成，又不能空着不写内容，因此可以用pass来替代占个位置。
+
+Python Number(数字)
+	Python Number 数据类型用于存储数值。
+	数据类型是不允许改变的,这就意味着如果改变 Number 数据类型的值，将重新分配内存空间。
+	以下实例在变量赋值时 Number 对象将被创建：
+	var1 = 1
+	var2 = 10
+	您也可以使用del语句删除一些 Number 对象引用。
+	del语句的语法是：
+	del var1[,var2[,var3[....,varN]]]]
+	您可以通过使用del语句删除单个或多个对象，例如：
+	del var
+	del var_a, var_b
+	Python 支持四种不同的数值类型：
+		整型(Int) - 通常被称为是整型或整数，是正或负整数，不带小数点。
+		长整型(long integers) - 无限大小的整数，整数最后是一个大写或小写的L。
+		浮点型(floating point real values) - 浮点型由整数部分与小数部分组成，浮点型也可以使用科学计数法表示（2.5e2 = 2.5 x 102 = 250）
+		复数(complex numbers) - 复数由实数部分和虚数部分构成，可以用a + bj,或者complex(a,b)表示， 复数的实部a和虚部b都是浮点型。
+		int	long	float	complex
+		10	51924361L	0.0	3.14j
+		100	-0x19323L	15.20	45.j
+		-786	0122L	-21.9	9.322e-36j
+		080	0xDEFABCECBDAECBFBAEl	32.3+e18	.876j
+		-0490	535633629843L	-90.	-.6545+0J
+		-0x260	-052318172735L	-32.54e100	3e+26J
+		0x69	-4721885298529L	70.2-E12	4.53e-7j
+		长整型也可以使用小写"L"，但是还是建议您使用大写"L"，避免与数字"1"混淆。Python使用"L"来显示长整型。
+		Python还支持复数，复数由实数部分和虚数部分构成，可以用a + bj,或者complex(a,b)表示， 复数的实部a和虚部b都是浮点型
+
+Python Number 类型转换
+	int(x [,base ])         将x转换为一个整数  
+	long(x [,base ])        将x转换为一个长整数  
+	float(x )               将x转换到一个浮点数  
+	complex(real [,imag ])  创建一个复数  
+	str(x )                 将对象 x 转换为字符串  
+	repr(x )                将对象 x 转换为表达式字符串  
+	eval(str )              用来计算在字符串中的有效Python表达式,并返回一个对象  
+	tuple(s )               将序列 s 转换为一个元组  
+	list(s )                将序列 s 转换为一个列表  
+	chr(x )                 将一个整数转换为一个字符  
+	unichr(x )              将一个整数转换为Unicode字符  
+	ord(x )                 将一个字符转换为它的整数值  
+	hex(x )                 将一个整数转换为一个十六进制字符串  
+	oct(x )                 将一个整数转换为一个八进制字符串  
+
+Python数学函数
+	函数	返回值 ( 描述 )
+	abs(x)	返回数字的绝对值，如abs(-10) 返回 10
+	ceil(x)	返回数字的上入整数，如math.ceil(4.1) 返回 5
+	cmp(x, y)	如果 x < y 返回 -1, 如果 x == y 返回 0, 如果 x > y 返回 1
+	exp(x)	返回e的x次幂(ex),如math.exp(1) 返回2.718281828459045
+	fabs(x)	返回数字的绝对值，如math.fabs(-10) 返回10.0
+	floor(x)	返回数字的下舍整数，如math.floor(4.9)返回 4
+	log(x)	如math.log(math.e)返回1.0,math.log(100,10)返回2.0
+	log10(x)	返回以10为基数的x的对数，如math.log10(100)返回 2.0
+	max(x1, x2,...)	返回给定参数的最大值，参数可以为序列。
+	min(x1, x2,...)	返回给定参数的最小值，参数可以为序列。
+	modf(x)	返回x的整数部分与小数部分，两部分的数值符号与x相同，整数部分以浮点型表示。
+	pow(x, y)	x**y 运算后的值。
+	round(x [,n])	返回浮点数x的四舍五入值，如给出n值，则代表舍入到小数点后的位数。
+	sqrt(x)	返回数字x的平方根
+
+Python随机数函数
+	随机数可以用于数学，游戏，安全等领域中，还经常被嵌入到算法中，用以提高算法效率，并提高程序的安全性。
+	Python包含以下常用随机数函数：
+	函数	描述
+	choice(seq)	从序列的元素中随机挑选一个元素，比如random.choice(range(10))，从0到9中随机挑选一个整数。
+	randrange ([start,] stop [,step])	从指定范围内，按指定基数递增的集合中获取一个随机数，基数缺省值为1
+	random()	随机生成下一个实数，它在[0,1)范围内。
+	seed([x])	改变随机数生成器的种子seed。如果你不了解其原理，你不必特别去设定seed，Python会帮你选择seed。
+	shuffle(lst)	将序列的所有元素随机排序
+	uniform(x, y)	随机生成下一个实数，它在[x,y]范围内。
+
+Python三角函数
+	Python包括以下三角函数：
+	函数	描述
+	acos(x)	返回x的反余弦弧度值。
+	asin(x)	返回x的反正弦弧度值。
+	atan(x)	返回x的反正切弧度值。
+	atan2(y, x)	返回给定的 X 及 Y 坐标值的反正切值。
+	cos(x)	返回x的弧度的余弦值。
+	hypot(x, y)	返回欧几里德范数 sqrt(x*x + y*y)。
+	sin(x)	返回的x弧度的正弦值。
+	tan(x)	返回x弧度的正切值。
+	degrees(x)	将弧度转换为角度,如degrees(math.pi/2) ， 返回90.0
+	radians(x)	将角度转换为弧度
+
+Python数学常量
+	常量	描述
+	pi	数学常量 pi（圆周率，一般以π来表示）
+	e	数学常量 e，e即自然常数（自然常数）。		
+	
+	
+Python 字符串
+	字符串是 Python 中最常用的数据类型。我们可以使用引号('或")来创建字符串。
+	创建字符串很简单，只要为变量分配一个值即可。例如：
+	var1 = 'Hello World!'
+	var2 = "Python Runoob"
+	Python访问字符串中的值
+	Python不支持单字符类型，单字符也在Python也是作为一个字符串使用。
+	Python访问子字符串，可以使用方括号来截取字符串，如下实例：
+	#!/usr/bin/python
+
+	var1 = 'Hello World!'
+	var2 = "Python Runoob"
+
+	print "var1[0]: ", var1[0]
+	print "var2[1:5]: ", var2[1:5]
+	以上实例执行结果：
+	var1[0]:  H
+	var2[1:5]:  ytho
+	
+Python字符串更新
+	你可以对已存在的字符串进行修改，并赋值给另一个变量，如下实例：
+	#!/usr/bin/python
+	# -*- coding: UTF-8 -*-
+
+	var1 = 'Hello World!'
+
+	print "更新字符串 :- ", var1[:6] + 'Runoob!'
+	以上实例执行结果
+	更新字符串 :-  Hello Runoob!
+	
+	
+Python转义字符
+	在需要在字符中使用特殊字符时，python用反斜杠(\)转义字符。如下表：
+	转义字符	描述
+	\(在行尾时)	续行符
+	\\	反斜杠符号
+	\'	单引号
+	\"	双引号
+	\a	响铃
+	\b	退格(Backspace)
+	\e	转义
+	\000	空
+	\n	换行
+	\v	纵向制表符
+	\t	横向制表符
+	\r	回车
+	\f	换页
+	\oyy	八进制数，yy代表的字符，例如：\o12代表换行
+	\xyy	十六进制数，yy代表的字符，例如：\x0a代表换行
+	\other	其它的字符以普通格式输出
+
+Python字符串运算符
+	下表实例变量 a 值为字符串 "Hello"，b 变量值为 "Python"：
+	操作符		描述					实例		结果
+	+		字符串连接				>>>a + b		'HelloPython'
+	*		重复输出字符串			>>>a * 2		'HelloHello'
+	[]	通过索引获取字符串中字符	>>>a[1]			'e'
+	[ : ]	截取字符串中的一部分	>>>a[1:4]		'ell'
+	in		成员运算符 - 如果字符串中包含给定的字符返回 True	>>>"H" in a True
+	not in	成员运算符 - 如果字符串中不包含给定的字符返回 True	>>>"M" not in a	True
+	r/R	原始字符串 - 原始字符串：所有的字符串都是直接按照字面的意思来使用，没有转义特殊或不能打印的字符。 原始字符串除在字符串的第一个引号前加上字母"r"（可以大小写）以外，与普通字符串有着几乎完全相同的语法。	>>>print r'\n'	\n			>>> print R'\n'	\n
+	%	格式字符串	请看下一章节
+	实例如下：
+	#!/usr/bin/python
+	# -*- coding: UTF-8 -*-
+
+	a = "Hello"
+	b = "Python"
+
+	print "a + b 输出结果：", a + b 
+	print "a * 2 输出结果：", a * 2 
+	print "a[1] 输出结果：", a[1] 
+	print "a[1:4] 输出结果：", a[1:4] 
+
+	if( "H" in a) :
+		print "H 在变量 a 中" 
+	else :
+		print "H 不在变量 a 中" 
+
+	if( "M" not in a) :
+		print "M 不在变量 a 中" 
+	else :
+		print "M 在变量 a 中"
+
+	print r'\n'
+	print R'\n'
+	以上程序执行结果为：
+	a + b 输出结果： HelloPython
+	a * 2 输出结果： HelloHello
+	a[1] 输出结果： e
+	a[1:4] 输出结果： ell
+	H 在变量 a 中
+	M 不在变量 a 中
+	\n
+	\n
+	
+Python 字符串格式化
+	Python 支持格式化字符串的输出 。尽管这样可能会用到非常复杂的表达式，但最基本的用法是将一个值插入到一个有字符串格式符 %s 的字符串中。
+		在 Python 中，字符串格式化使用与 C 中 sprintf 函数一样的语法。
+		如下实例：
+		#!/usr/bin/python
+		print "My name is %s and weight is %d kg!" % ('Zara', 21) 
+		以上实例输出结果：
+		My name is Zara and weight is 21 kg!
+		
+	python字符串格式化符号:
+		符号		描述
+		  %c	 格式化字符及其ASCII码
+		  %s	 格式化字符串
+		  %d	 格式化整数
+		  %u	 格式化无符号整型
+		  %o	 格式化无符号八进制数
+		  %x	 格式化无符号十六进制数
+		  %X	 格式化无符号十六进制数（大写）
+		  %f	 格式化浮点数字，可指定小数点后的精度
+		  %e	 用科学计数法格式化浮点数
+		  %E	 作用同%e，用科学计数法格式化浮点数
+		  %g	 %f和%e的简写
+		  %G	 %f 和 %E 的简写
+		  %p	 用十六进制数格式化变量的地址
+	格式化操作符辅助指令:
+		符号	功能
+		*	定义宽度或者小数点精度
+		-	用做左对齐
+		+	在正数前面显示加号( + )
+		<sp>	在正数前面显示空格
+		#	在八进制数前面显示零('0')，在十六进制前面显示'0x'或者'0X'(取决于用的是'x'还是'X')
+		0	显示的数字前面填充'0'而不是默认的空格
+		%	'%%'输出一个单一的'%'
+		(var)	映射变量(字典参数)
+		m.n.	m 是显示的最小总宽度,n 是小数点后的位数(如果可用的话)
+	Python2.6 开始，新增了一种格式化字符串的函数 str.format()，它增强了字符串格式化的功能。
+	
+	Python三引号（triple quotes）
+		python中三引号可以将复杂的字符串进行复制:
+		python三引号允许一个字符串跨多行，字符串中可以包含换行符、制表符以及其他特殊字符。
+		三引号的语法是一对连续的单引号或者双引号（通常都是成对的用）。
+			>>> hi = '''hi 
+			there'''
+			>>> hi   # repr()
+			'hi\nthere'
+			>>> print hi  # str()
+			hi 
+			there  
+		三引号让程序员从引号和特殊字符串的泥潭里面解脱出来，自始至终保持一小块字符串的格式是所谓的WYSIWYG（所见即所得）格式的。
+		一个典型的用例是，当你需要一块HTML或者SQL时，这时用字符串组合，特殊字符串转义将会非常的繁琐。
+			errHTML = '''
+			<HTML><HEAD><TITLE>
+			Friends CGI Demo</TITLE></HEAD>
+			<BODY><H3>ERROR</H3>
+			<B>%s</B><P>
+			<FORM><INPUT TYPE=button VALUE=Back
+			ONCLICK="window.history.back()"></FORM>
+			</BODY></HTML>
+			'''
+			cursor.execute('''
+			CREATE TABLE users (  
+			login VARCHAR(8), 
+			uid INTEGER,
+			prid INTEGER)
+			''')
+			
+	Unicode 字符串
+		Python 中定义一个 Unicode 字符串和定义一个普通字符串一样简单：
+			>>> u'Hello World !'
+			u'Hello World !'
+			#引号前小写的"u"表示这里创建的是一个 Unicode 字符串。
+		如果你想加入一个特殊字符，可以使用 Python 的 Unicode-Escape 编码。如下例所示：
+			>>> u'Hello\u0020World !'
+			u'Hello World !'
+			被替换的 \u0020 标识表示在给定位置插入编码值为 0x0020 的 Unicode 字符（空格符）。
+
+python的字符串内建函数
+		字符串方法是从python1.6到2.0慢慢加进来的——它们也被加到了Jython中。这些方法实现了string模块的大部分方法，如下表所示列出了目前字符串内建支持的方法，所有的方法都包含了对Unicode的支持，有一些甚至是专门用于Unicode的。
+			方法															描述
+			string.capitalize()									把字符串的第一个字符大写
+			string.center(width)								返回一个原字符串居中,并使用空格填充至长度 width 的新字符串
+			string.count(str, beg=0, end=len(string))			返回 str 在 string 里面出现的次数，如果 beg 或者 end 指定则返回指定范围内 str 出现的次数
+			string.encode(encoding='UTF-8', errors='strict')	以 encoding 指定的编码格式编码 string，如果出错默认报一个ValueError 的异常，除非 errors 指定的是'ignore'或者'replace'
+			string.endswith(obj, beg=0, end=len(string))		检查字符串是否以 obj 结束，如果beg 或者 end 指定则检查指定的范围内是否以 obj 结束，如果是，返回 True,否则返回 False.
+			string.expandtabs(tabsize=8)						把字符串 string 中的 tab 符号转为空格，tab 符号默认的空格数是 8。
+			string.find(str, beg=0, end=len(string))			检测 str 是否包含在 string 中，如果 beg 和 end 指定范围，则检查是否包含在指定范围内，如果是返回开始的索引值，否则返回-1
+			string.format()										格式化字符串
+			string.index(str, beg=0, end=len(string))			跟find()方法一样，只不过如果str不在 string中会报一个异常.
+			string.isalnum()									如果 string 至少有一个字符并且所有字符都是字母或数字则返回 True,否则返回 False
+			string.isalpha()									如果 string 至少有一个字符并且所有字符都是字母则返回 True,否则返回 False
+			string.isdecimal()									如果 string 只包含十进制数字则返回 True 否则返回 False.
+			string.isdigit()									如果 string 只包含数字则返回 True 否则返回 False.
+			string.islower()									如果 string 中包含至少一个区分大小写的字符，并且所有这些(区分大小写的)字符都是小写，则返回 True，否则返回 False
+			string.isnumeric()									如果 string 中只包含数字字符，则返回 True，否则返回 False
+			string.isspace()									如果 string 中只包含空格，则返回 True，否则返回 False.
+			string.istitle()									如果 string 是标题化的(见 title())则返回 True，否则返回 False
+			string.isupper()									如果 string 中包含至少一个区分大小写的字符，并且所有这些(区分大小写的)字符都是大写，则返回 True，否则返回 False
+			string.join(seq)									以 string 作为分隔符，将 seq 中所有的元素(的字符串表示)合并为一个新的字符串
+			string.ljust(width)									返回一个原字符串左对齐,并使用空格填充至长度 width 的新字符串
+			string.lower()										转换 string 中所有大写字符为小写.
+			string.lstrip()										截掉 string 左边的空格
+			string.maketrans(intab, outtab])					maketrans() 方法用于创建字符映射的转换表，对于接受两个参数的最简单的调用方式，第一个参数是字符串，表示需要转换的字符，第二个参数也是字符串表示转换的目标。
+			max(str)											返回字符串 str 中最大的字母。
+			min(str)											返回字符串 str 中最小的字母。
+			string.partition(str)								有点像 find()和 split()的结合体,从 str 出现的第一个位置起,把 字 符 串 string 分 成 一 个 3 元 素 的 元 组 (string_pre_str,str,string_post_str),如果 string 中不包含str 则 string_pre_str == string.
+			string.replace(str1, str2,  num=string.count(str1))	把 string 中的 str1 替换成 str2,如果 num 指定，则替换不超过 num 次.
+			string.rfind(str, beg=0,end=len(string) )			类似于 find()函数，不过是从右边开始查找.
+			string.rindex( str, beg=0,end=len(string))			类似于 index()，不过是从右边开始.
+			string.rjust(width)									返回一个原字符串右对齐,并使用空格填充至长度 width 的新字符串
+			string.rpartition(str)								类似于 partition()函数,不过是从右边开始查找.
+			string.rstrip()										删除 string 字符串末尾的空格.
+			string.split(str="", num=string.count(str))			以 str 为分隔符切片 string，如果 num有指定值，则仅分隔 num 个子字符串
+			string.splitlines([keepends])						按照行('\r', '\r\n', \n')分隔，返回一个包含各行作为元素的列表，如果参数 keepends 为 False，不包含换行符，如果为 True，则保留换行符。
+			string.startswith(obj, beg=0,end=len(string))		检查字符串是否是以 obj 开头，是则返回 True，否则返回 False。如果beg 和 end 指定值，则在指定范围内检查.
+			string.strip([obj])									在 string 上执行 lstrip()和 rstrip()
+			string.swapcase()									翻转 string 中的大小写
+			string.title()										返回"标题化"的 string,就是说所有单词都是以大写开始，其余字母均为小写(见 istitle())
+			string.translate(str, del="")						根据 str 给出的表(包含 256 个字符)转换 string 的字符,要过滤掉的字符放到 del 参数中
+			string.upper()										转换 string 中的小写字母为大写
+			string.zfill(width)									返回长度为 width 的字符串，原字符串 string 右对齐，前面填充0
+			string.isdecimal()									isdecimal()方法检查字符串是否只包含十进制字符。这种方法只存在于unicode对象。		
 
 
+Python 列表(List)
+	序列是Python中最基本的数据结构。序列中的每个元素都分配一个数字 - 它的位置，或索引，第一个索引是0，第二个索引是1，依此类推。
+		Python有6个序列的内置类型，但最常见的是列表和元组。
+		序列都可以进行的操作包括索引，切片，加，乘，检查成员。
+		此外，Python已经内置确定序列的长度以及确定最大和最小的元素的方法。
+	列表是最常用的Python数据类型，它可以作为一个方括号内的逗号分隔值出现。
+		列表的数据项不需要具有相同的类型
+		创建一个列表，只要把逗号分隔的不同的数据项使用方括号括起来即可。如下所示：
+			list1 = ['physics', 'chemistry', 1997, 2000];
+			list2 = [1, 2, 3, 4, 5 ];
+			list3 = ["a", "b", "c", "d"];
+		与字符串的索引一样，列表索引从0开始。列表可以进行截取、组合等。
+		访问列表中的值
+			使用下标索引来访问列表中的值，同样你也可以使用方括号的形式截取字符，如下所示：
+			#!/usr/bin/python
 
+			list1 = ['physics', 'chemistry', 1997, 2000];
+			list2 = [1, 2, 3, 4, 5, 6, 7 ];
 
+			print "list1[0]: ", list1[0]
+			print "list2[1:5]: ", list2[1:5]
+			以上实例输出结果：
+			list1[0]:  physics
+			list2[1:5]:  [2, 3, 4, 5]
+		更新列表
+			你可以对列表的数据项进行修改或更新，你也可以使用append()方法来添加列表项，如下所示：
+			#!/usr/bin/python
 
+			list = ['physics', 'chemistry', 1997, 2000];
 
+			print "Value available at index 2 : "
+			print list[2];
+			list[2] = 2001;
+			print "New value available at index 2 : "
+			print list[2];
+			注意：我们会在接下来的章节讨论append()方法的使用
+			以上实例输出结果：
+			Value available at index 2 :
+			1997
+			New value available at index 2 :
+			2001
+		删除列表元素
+			可以使用 del 语句来删除列表的的元素，如下实例：
+			#!/usr/bin/python
 
+			list1 = ['physics', 'chemistry', 1997, 2000];
 
-
-
-
+			print list1;
+			del list1[2];
+			print "After deleting value at index 2 : "
+			print list1;
+			以上实例输出结果：
+			['physics', 'chemistry', 1997, 2000]
+			After deleting value at index 2 :
+			['physics', 'chemistry', 2000]
+			注意：我们会在接下来的章节讨论remove()方法的使用
+		Python列表脚本操作符
+			列表对 + 和 * 的操作符与字符串相似。+ 号用于组合列表，* 号用于重复列表。
+			如下所示：
+			Python表达式					结果							描述
+			len([1, 2, 3])					3								长度
+			[1, 2, 3] + [4, 5, 6]			[1, 2, 3, 4, 5, 6]				组合
+			['Hi!'] * 4						['Hi!', 'Hi!', 'Hi!', 'Hi!']	重复
+			3 in [1, 2, 3]					True							元素是否存在于列表中
+			for x in [1, 2, 3]: print x,	1 2 3							迭代
+		Python列表截取
+			Python 的列表截取实例如下：
+			>>> L = ['Google', 'Runoob', 'Taobao']
+			>>> L[2]
+			'Taobao'
+			>>> L[-2]
+			'Runoob'
+			>>> L[1:]
+			['Runoob', 'Taobao']
+			>>> 
+			描述：
+			Python 表达式	结果	描述
+			L[2]	'Taobao'	读取列表中第三个元素
+			L[-2]	'Runoob'	读取列表中倒数第二个元素
+			L[1:]	['Runoob', 'Taobao']	从第二个元素开始截取列表
+		Python列表函数&方法
+			Python包含以下函数:
+				序号	函数
+				1	cmp(list1, list2)	比较两个列表的元素
+				2	len(list)			列表元素个数
+				3	max(list)			返回列表元素最大值
+				4	min(list)			返回列表元素最小值
+				5	list(seq)			将元组转换为列表
+			Python包含以下方法:
+				序号	方法
+				1	list.append(obj)		在列表末尾添加新的对象
+				2	list.count(obj)			统计某个元素在列表中出现的次数
+				3	list.extend(seq)		在列表末尾一次性追加另一个序列中的多个值（用新列表扩展原来的列表）
+				4	list.index(obj)			从列表中找出某个值第一个匹配项的索引位置
+				5	list.insert(index, obj)	将对象插入列表
+				6	list.pop(obj=list[-1])	移除列表中的一个元素（默认最后一个元素），并且返回该元素的值
+				7	list.remove(obj)		移除列表中某个值的第一个匹配项
+				8	list.reverse()			反向列表中元素
+				9	list.sort([func])		对原列表进行排序			
+				
+		
+		python 创建二维列表，将需要的参数写入 cols 和 rows 即可
+			list_2d = [[0 for col in range(cols)] for row in range(rows)]
+			实例：
+			>>> list_2d = [ [0 for i in range(5)] for i in range(5)]
+			>>> list_2d[0].append(3)
+			>>> list_2d[0].append(5)
+			>>> list_2d[2].append(7)
+			>>> list_2d
+			[[0, 0, 0, 0, 0, 3, 5], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 7], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]		
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	
 #python demo "hello world"
 {
@@ -897,9 +1455,119 @@ print "你好，妹子";
 }
 
 
+#冒泡排序
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+array = [9,2,7,4,5,6,3,8,1,10]
+L = len(array)
+for i in range(L):
+    for j in range(L-i):
+        if array[L-j-1]<array[L-j-2]:
+            array[L-j-1],array[L-j-2]=array[L-j-2],array[L-j-1]
+for i in range(L):
+    print array[i],
 
 
+#列表操作demo
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 
+list01 = ['runoob', 786, 2.23, 'john', 70.2]
+list02 = [123, 'john']
+
+print list01
+print list02
+
+# 列表截取
+
+print list01[0]
+print list01[-1]
+print list01[0:3]
+
+# 列表重复
+
+print list01 * 2
+
+# 列表组合
+
+print list01 + list02
+
+# 获取列表长度
+
+print len(list01)
+
+# 删除列表元素
+
+del list02[0]
+print list02
+
+# 元素是否存在于列表中
+
+print 'john' in list02  # True
+
+# 迭代
+
+for i in list01:
+    print i
+
+# 比较两个列表的元素
+
+print cmp(list01, list02)
+
+# 列表最大/最小值
+
+print max([0, 1, 2, 3, 4])
+print min([0, 1])
+
+# 将元组转换为列表
+
+aTuple = (1,2,3,4)
+list03 = list(aTuple)
+print list03
+
+# 在列表末尾添加新的元素
+
+list03.append(5)
+print list03
+
+# 在列表末尾一次性追加另一个序列中的多个值（用新列表扩展原来的列表）
+
+list03.extend(list01)
+print list03
+
+# 统计某个元素在列表中出现的次数
+
+print list03.count(1)
+
+# 从列表中找出某个值第一个匹配项的索引位置
+
+print list03.index('john')
+
+# 将对象插入列表
+
+list03.insert(0, 'hello')
+print list03
+
+# 移除列表中的一个元素（默认最后一个元素），并且返回该元素的值
+
+print list03.pop(0)
+print list03
+
+# 移除列表中某个值的第一个匹配项
+
+list03.remove(1)
+print list03
+
+# 反向列表中元素
+
+list03.reverse()
+print list03
+
+# 对原列表进行排序
+
+list03.sort()
+print list03
 
 
 
