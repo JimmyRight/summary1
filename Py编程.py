@@ -20,6 +20,11 @@ python、pypy、shell
 
 
 #python基础语法
+参考库
+	python			https://docs.python.org/2.7/library/index.html
+	pytz模块		http://www.twinsun.com/tz/tz-link.htm
+    dateutil模块    http://labix.org/python-dateutil
+	
 Python 标识符
 	在 Python 里，标识符由字母、数字、下划线组成。
 	在 Python 中，所有标识符可以包括英文、数字以及下划线(_)，但不能以数字开头。
@@ -1658,9 +1663,635 @@ Python 字典(Dictionary)
 	
 	
 
+<<<<<<< HEAD
 	
-	
+=======
+Python 日期和时间
+
+	Python 程序能用很多方式处理日期和时间，转换日期格式是一个常见的功能。
+	Python 提供了一个 time 和 calendar 模块可以用于格式化日期和时间。
+	时间间隔是以秒为单位的浮点小数。
+	每个时间戳都以自从1970年1月1日午夜（历元）经过了多长时间来表示。
+
+	Python 的 time 模块下有很多函数可以转换常见日期格式。如函数time.time()用于获取当前时间戳, 如下实例:
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
+
+		import time;  # 引入time模块
+
+		ticks = time.time()
+		print "当前时间戳为:", ticks
+
+		以上实例输出结果：
+
+		当前时间戳为: 1459994552.51
+		#时间戳单位最适于做日期运算。但是1970年之前的日期就无法以此表示了。太遥远的日期也不行，UNIX和Windows只支持到2038年。
+
+	什么是时间元组？
+		很多Python函数用一个元组装起来的9组数字处理时间:
+		序号 	字段	值
+		0	4位数年	2008
+		1	月	1 到 12
+		2	日	1到31
+		3	小时	0到23
+		4	分钟	0到59
+		5	秒	0到61 (60或61 是闰秒)
+		6	一周的第几日	0到6 (0是周一)
+		7	一年的第几日	1到366 (儒略历)
+		8	夏令时	-1, 0, 1, -1是决定是否为夏令时的旗帜
+
+		上述也就是struct_time元组。这种结构具有如下属性：
+		序号	属性	值
+		0	tm_year	2008
+		1	tm_mon	1 到 12
+		2	tm_mday	1 到 31
+		3	tm_hour	0 到 23
+		4	tm_min	0 到 59
+		5	tm_sec	0 到 61 (60或61 是闰秒)
+		6	tm_wday	0到6 (0是周一)
+		7	tm_yday	1 到 366(儒略历)
+		8	tm_isdst	-1, 0, 1, -1是决定是否为夏令时的旗帜
+
+	获取当前时间
+		从返回浮点数的时间辍方式向时间元组转换，只要将浮点数传递给如localtime之类的函数。
+
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
+
+		import time
+
+		localtime = time.localtime(time.time())
+		print "本地时间为 :", localtime
+
+		以上实例输出结果：
+
+		本地时间为 : time.struct_time(tm_year=2016, tm_mon=4, tm_mday=7, tm_hour=10, tm_min=3, tm_sec=27, tm_wday=3, tm_yday=98, tm_isdst=0)
+
+
+	获取格式化的时间
+		你可以根据需求选取各种格式，但是最简单的获取可读的时间模式的函数是asctime():
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+
+			import time
+
+			localtime = time.asctime( time.localtime(time.time()) )
+			print "本地时间为 :", localtime
+
+			以上实例输出结果：
+
+			本地时间为 : Thu Apr  7 10:05:21 2016
+
+	格式化日期
+		我们可以使用 time 模块的 strftime 方法来格式化日期，：
+		time.strftime(format[, t])
+
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
+
+		import time
+
+		# 格式化成2016-03-20 11:45:39形式
+		print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) 
+
+		# 格式化成Sat Mar 28 22:24:24 2016形式
+		print time.strftime("%a %b %d %H:%M:%S %Y", time.localtime()) 
+		  
+		# 将格式字符串转换为时间戳
+		a = "Sat Mar 28 22:24:24 2016"
+		print time.mktime(time.strptime(a,"%a %b %d %H:%M:%S %Y"))
+
+		以上实例输出结果：
+
+		2016-04-07 10:25:09
+		Thu Apr 07 10:25:09 2016
+		1459175064.0
+
+	python中时间日期格式化符号：
+
+		%y 两位数的年份表示（00-99）
+		%Y 四位数的年份表示（000-9999）
+		%m 月份（01-12）
+		%d 月内中的一天（0-31）
+		%H 24小时制小时数（0-23）
+		%I 12小时制小时数（01-12）
+		%M 分钟数（00=59）
+		%S 秒（00-59）
+		%a 本地简化星期名称
+		%A 本地完整星期名称
+		%b 本地简化的月份名称
+		%B 本地完整的月份名称
+		%c 本地相应的日期表示和时间表示
+		%j 年内的一天（001-366）
+		%p 本地A.M.或P.M.的等价符
+		%U 一年中的星期数（00-53）星期天为星期的开始
+		%w 星期（0-6），星期天为星期的开始
+		%W 一年中的星期数（00-53）星期一为星期的开始
+		%x 本地相应的日期表示
+		%X 本地相应的时间表示
+		%Z 当前时区的名称
+		%% %号本身
+
+	获取某月日历
+		Calendar模块有很广泛的方法用来处理年历和月历，例如打印某月的月历：
+
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
+
+		import calendar
+
+		cal = calendar.month(2016, 1)
+		print "以下输出2016年1月份的日历:"
+		print cal;
+
+		以上实例输出结果：
+
+		以下输出2016年1月份的日历:
+			January 2016
+		Mo Tu We Th Fr Sa Su
+					 1  2  3
+		 4  5  6  7  8  9 10
+		11 12 13 14 15 16 17
+		18 19 20 21 22 23 24
+		25 26 27 28 29 30 31
+
+
+	Time 模块
+		Time 模块包含了以下内置函数，既有时间处理相的，也有转换时间格式的：
+			序号	函数及描述
+			1		time.altzone
+					返回格林威治西部的夏令时地区的偏移秒数。如果该地区在格林威治东部会返回负值（如西欧，包括英国）。对夏令时启用地区才能使用。
+			2		time.asctime([tupletime])
+					接受时间元组并返回一个可读的形式为"Tue Dec 11 18:07:14 2008"（2008年12月11日 周二18时07分14秒）的24个字符的字符串。
+			3		time.clock( )
+					用以浮点数计算的秒数返回当前的CPU时间。用来衡量不同程序的耗时，比time.time()更有用。
+			4		time.ctime([secs])
+					作用相当于asctime(localtime(secs))，未给参数相当于asctime()
+			5		time.gmtime([secs])
+					接收时间辍（1970纪元后经过的浮点秒数）并返回格林威治天文时间下的时间元组t。注：t.tm_isdst始终为0
+			6		time.localtime([secs])
+					接收时间辍（1970纪元后经过的浮点秒数）并返回当地时间下的时间元组t（t.tm_isdst可取0或1，取决于当地当时是不是夏令时）。
+			7		time.mktime(tupletime)
+					接受时间元组并返回时间辍（1970纪元后经过的浮点秒数）。
+			8		time.sleep(secs)
+					推迟调用线程的运行，secs指秒数。
+			9		time.strftime(fmt[,tupletime])
+					接收以时间元组，并返回以可读字符串表示的当地时间，格式由fmt决定。
+			10		time.strptime(str,fmt='%a %b %d %H:%M:%S %Y')
+					根据fmt的格式把一个时间字符串解析为时间元组。
+			11		time.time( )
+					返回当前时间的时间戳（1970纪元后经过的浮点秒数）。
+			12		time.tzset()
+					根据环境变量TZ重新初始化时间相关设置。
+
+		Time模块包含了以下2个非常重要的属性：
+			序号	属性及描述
+			1		time.timezone
+					属性time.timezone是当地时区（未启动夏令时）距离格林威治的偏移秒数（>0，美洲;<=0大部分欧洲，亚洲，非洲）。
+			2		time.tzname
+					属性time.tzname包含一对根据情况的不同而不同的字符串，分别是带夏令时的本地时区名称，和不带的。
+
+		日历（Calendar）模块
+			此模块的函数都是日历相关的，例如打印某月的字符月历。
+			星期一是默认的每周第一天，星期天是默认的最后一天。更改设置需调用calendar.setfirstweekday()函数。模块包含了以下内置函数：
+			序号	函数及描述
+			1		calendar.calendar(year,w=2,l=1,c=6)
+					返回一个多行字符串格式的year年年历，3个月一行，间隔距离为c。 每日宽度间隔为w字符。每行长度为21* W+18+2* C。l是每星期行数。
+			2		calendar.firstweekday( )
+					返回当前每周起始日期的设置。默认情况下，首次载入caendar模块时返回0，即星期一。
+			3		calendar.isleap(year)
+					是闰年返回True，否则为false。
+			4		calendar.leapdays(y1,y2)
+					返回在Y1，Y2两年之间的闰年总数。
+			5		calendar.month(year,month,w=2,l=1)
+					返回一个多行字符串格式的year年month月日历，两行标题，一周一行。每日宽度间隔为w字符。每行的长度为7* w+6。l是每星期的行数。
+			6		calendar.monthcalendar(year,month)
+					返回一个整数的单层嵌套列表。每个子列表装载代表一个星期的整数。Year年month月外的日期都设为0;范围内的日子都由该月第几日表示，从1开始。
+			7		calendar.monthrange(year,month)
+					返回两个整数。第一个是该月的星期几的日期码，第二个是该月的日期码。日从0（星期一）到6（星期日）;月从1到12。
+			8		calendar.prcal(year,w=2,l=1,c=6)
+					相当于 print calendar.calendar(year,w,l,c).
+			9		calendar.prmonth(year,month,w=2,l=1)
+					相当于 print calendar.calendar（year，w，l，c）。
+			10		calendar.setfirstweekday(weekday)
+					设置每周的起始日期码。0（星期一）到6（星期日）。
+			11		calendar.timegm(tupletime)
+					和time.gmtime相反：接受一个时间元组形式，返回该时刻的时间辍（1970纪元后经过的浮点秒数）。
+			12		calendar.weekday(year,month,day)
+					返回给定日期的日期码。0（星期一）到6（星期日）。月份为 1（一月） 到 12（12月）。
+
+			其他相关模块和函数
+			在Python中，其他处理日期和时间的模块还有：
+
+				datetime模块	https://docs.python.org/3/library/datetime.html#module-datetime
+				pytz模块		http://www.twinsun.com/tz/tz-link.htm
+				dateutil模块    http://labix.org/python-dateutil
+
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+
+			import datetime
+			i = datetime.datetime.now()
+			print ("当前的日期和时间是 %s" % i)
+			print ("ISO格式的日期和时间是 %s" % i.isoformat() )
+			print ("当前的年份是 %s" %i.year)
+			print ("当前的月份是 %s" %i.month)
+			print ("当前的日期是  %s" %i.day)
+			print ("dd/mm/yyyy 格式是  %s/%s/%s" % (i.day, i.month, i.year) )
+			print ("当前小时是 %s" %i.hour)
+			print ("当前分钟是 %s" %i.minute)
+			print ("当前秒是  %s" %i.second)
 			
+
+
+Python 函数
+函数是组织好的，可重复使用的，用来实现单一，或相关联功能的代码段。
+函数能提高应用的模块性，和代码的重复利用率。你已经知道Python提供了许多内建函数，比如print()。但你也可以自己创建函数，这被叫做用户自定义函数。
+
+	定义一个函数
+		你可以定义一个由自己想要功能的函数，以下是简单的规则：
+			函数代码块以 def 关键词开头，后接函数标识符名称和圆括号()。
+			任何传入参数和自变量必须放在圆括号中间。圆括号之间可以用于定义参数。
+			函数的第一行语句可以选择性地使用文档字符串—用于存放函数说明。
+			函数内容以冒号起始，并且缩进。
+			return [表达式] 结束函数，选择性地返回一个值给调用方。不带表达式的return相当于返回 None。
+
+	语法
+		def functionname( parameters ):
+		   "函数_文档字符串"
+		   function_suite
+		   return [expression]
+		默认情况下，参数值和参数名称是按函数声明中定义的的顺序匹配起来的。
+>>>>>>> fe13186b9d1550946bef8bd1567ed5e7d08efe5c
+	
+	实例
+		以下为一个简单的Python函数，它将一个字符串作为传入参数，再打印到标准显示设备上。
+		def printme( str ):
+		   "打印传入的字符串到标准显示设备上"
+		   print str
+		   return
+
+	函数调用
+		定义一个函数只给了函数一个名称，指定了函数里包含的参数，和代码块结构。
+		这个函数的基本结构完成以后，你可以通过另一个函数调用执行，也可以直接从Python提示符执行。
+		如下实例调用了printme（）函数：
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+			 
+			# 定义函数
+			def printme( str ):
+			   "打印任何传入的字符串"
+			   print str;
+			   return;
+			 
+			# 调用函数
+			printme("我要调用用户自定义函数!");
+			printme("再次调用同一函数");
+
+			以上实例输出结果：
+
+			我要调用用户自定义函数!
+			再次调用同一函数
+
+	参数传递
+		在 python 中，类型属于对象，变量是没有类型的：
+			a=[1,2,3]
+			a="Runoob"
+		以上代码中，[1,2,3] 是 List 类型，"Runoob" 是 String 类型，而变量 a 是没有类型，她仅仅是一个对象的引用（一个指针），可以是 List 类型对象，也可以指向 String 类型对象。
+		可更改(mutable)与不可更改(immutable)对象
+		在 python 中，strings, tuples, 和 numbers 是不可更改的对象，而 list,dict 等则是可以修改的对象。
+			不可变类型：变量赋值 a=5 后再赋值 a=10，这里实际是新生成一个 int 值对象 10，再让 a 指向它，而 5 被丢弃，不是改变a的值，相当于新生成了a。
+			可变类型：变量赋值 la=[1,2,3,4] 后再赋值 la[2]=5 则是将 list la 的第三个元素值更改，本身la没有动，只是其内部的一部分值被修改了。
+
+	python 函数的参数传递：
+		不可变类型：类似 c++ 的值传递，如 整数、字符串、元组。如fun（a），传递的只是a的值，没有影响a对象本身。比如在 fun（a）内部修改 a 的值，只是修改另一个复制的对象，不会影响 a 本身。
+		可变类型：类似 c++ 的引用传递，如 列表，字典。如 fun（la），则是将 la 真正的传过去，修改后fun外部的la也会受影响
+
+	python 中一切都是对象，严格意义我们不能说值传递还是引用传递，我们应该说传不可变对象和传可变对象。
+		python 传不可变对象实例
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+			 
+			def ChangeInt( a ):
+				a = 10
+
+			b = 2
+			ChangeInt(b)
+			print b # 结果是 2
+
+			实例中有 int 对象 2，指向它的变量是 b，在传递给 ChangeInt 函数时，按传值的方式复制了变量 b，a 和 b 都指向了同一个 Int 对象，在 a=10 时，则新生成一个 int 值对象 10，并让 a 指向它。
+			
+		传可变对象实例
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+			 
+			# 可写函数说明
+			def changeme( mylist ):
+			   "修改传入的列表"
+			   mylist.append([1,2,3,4]);
+			   print "函数内取值: ", mylist
+			   return
+			 
+			# 调用changeme函数
+			mylist = [10,20,30];
+			changeme( mylist );
+			print "函数外取值: ", mylist
+
+			实例中传入函数的和在末尾添加新内容的对象用的是同一个引用，故输出结果如下：
+
+			函数内取值:  [10, 20, 30, [1, 2, 3, 4]]
+			函数外取值:  [10, 20, 30, [1, 2, 3, 4]]
+
+	参数
+		以下是调用函数时可使用的正式参数类型：
+			必备参数
+			关键字参数
+			默认参数
+			不定长参数
+
+	必备参数
+		必备参数须以正确的顺序传入函数。调用时的数量必须和声明时的一样。
+
+		调用printme()函数，你必须传入一个参数，不然会出现语法错误：
+
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
+		 
+		#可写函数说明
+		def printme( str ):
+		   "打印任何传入的字符串"
+		   print str;
+		   return;
+		 
+		#调用printme函数
+		printme();
+
+		以上实例输出结果：
+
+		Traceback (most recent call last):
+		  File "test.py", line 11, in <module>
+			printme();
+		TypeError: printme() takes exactly 1 argument (0 given)
+
+	关键字参数
+		关键字参数和函数调用关系紧密，函数调用使用关键字参数来确定传入的参数值。
+		使用关键字参数允许函数调用时参数的顺序与声明时不一致，因为 Python 解释器能够用参数名匹配参数值。
+
+		以下实例在函数 printme() 调用时使用参数名：
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+			 
+			#可写函数说明
+			def printme( str ):
+			   "打印任何传入的字符串"
+			   print str;
+			   return;
+			 
+			#调用printme函数
+			printme( str = "My string");
+
+		以上实例输出结果：
+			My string
+
+		下例能将关键字参数顺序不重要展示得更清楚：
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
+		 
+		#可写函数说明
+		def printinfo( name, age ):
+		   "打印任何传入的字符串"
+		   print "Name: ", name;
+		   print "Age ", age;
+		   return;
+		 
+		#调用printinfo函数
+		printinfo( age=50, name="miki" );
+
+		以上实例输出结果：
+
+		Name:  miki
+		Age  50
+
+	缺省参数
+		调用函数时，缺省参数的值如果没有传入，则被认为是默认值。下例会打印默认的age，如果age没有被传入：
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
+		 
+		#可写函数说明
+		def printinfo( name, age = 35 ):
+		   "打印任何传入的字符串"
+		   print "Name: ", name;
+		   print "Age ", age;
+		   return;
+		 
+		#调用printinfo函数
+		printinfo( age=50, name="miki" );
+		printinfo( name="miki" );
+
+		以上实例输出结果：
+		Name:  miki
+		Age  50
+		Name:  miki
+		Age  35
+
+	不定长参数
+		你可能需要一个函数能处理比当初声明时更多的参数。这些参数叫做不定长参数，和上述2种参数不同，声明时不会命名。基本语法如下：
+
+		def functionname([formal_args,] *var_args_tuple ):
+		   "函数_文档字符串"
+		   function_suite
+		   return [expression]
+
+		加了星号（*）的变量名会存放所有未命名的变量参数。选择不多传参数也可。如下实例：
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+			 
+			# 可写函数说明
+			def printinfo( arg1, *vartuple ):
+			   "打印任何传入的参数"
+			   print "输出: "
+			   print arg1
+			   for var in vartuple:
+				  print var
+			   return;
+			 
+			# 调用printinfo 函数
+			printinfo( 10 );
+			printinfo( 70, 60, 50 );
+
+			以上实例输出结果：
+
+			输出:
+			10
+			输出:
+			70
+			60
+			50
+
+	匿名函数
+		python 使用 lambda 来创建匿名函数。
+		lambda只是一个表达式，函数体比def简单很多。
+		lambda的主体是一个表达式，而不是一个代码块。仅仅能在lambda表达式中封装有限的逻辑进去。
+		lambda函数拥有自己的命名空间，且不能访问自有参数列表之外或全局命名空间里的参数。
+		虽然lambda函数看起来只能写一行，却不等同于C或C++的内联函数，后者的目的是调用小函数时不占用栈内存从而增加运行效率。
+
+		语法
+			lambda函数的语法只包含一个语句，如下：
+			lambda [arg1 [,arg2,.....argn]]:expression
+
+			如下实例：
+				#!/usr/bin/python
+				# -*- coding: UTF-8 -*-
+				 
+				# 可写函数说明
+				sum = lambda arg1, arg2: arg1 + arg2;
+				 
+				# 调用sum函数
+				print "相加后的值为 : ", sum( 10, 20 )
+				print "相加后的值为 : ", sum( 20, 20 )
+			以上实例输出结果：
+				相加后的值为 :  30
+				相加后的值为 :  40
+
+		return 语句
+			return语句[表达式]退出函数，选择性地向调用方返回一个表达式。不带参数值的return语句返回None。之前的例子都没有示范如何返回数值，下例便告诉你怎么做：
+
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+			 
+			# 可写函数说明
+			def sum( arg1, arg2 ):
+			   # 返回2个参数的和."
+			   total = arg1 + arg2
+			   print "函数内 : ", total
+			   return total;
+			 
+			# 调用sum函数
+			total = sum( 10, 20 );
+
+			以上实例输出结果：
+
+			函数内 :  30
+
+		变量作用域
+			一个程序的所有的变量并不是在哪个位置都可以访问的。访问权限决定于这个变量是在哪里赋值的。
+			变量的作用域决定了在哪一部分程序你可以访问哪个特定的变量名称。两种最基本的变量作用域如下：
+
+				全局变量
+				局部变量
+
+			全局变量和局部变量
+
+			定义在函数内部的变量拥有一个局部作用域，定义在函数外的拥有全局作用域。
+
+			局部变量只能在其被声明的函数内部访问，而全局变量可以在整个程序范围内访问。调用函数时，所有在函数内声明的变量名称都将被加入到作用域中。如下实例：
+
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+
+			total = 0; # 这是一个全局变量
+			# 可写函数说明
+			def sum( arg1, arg2 ):
+			   #返回2个参数的和."
+			   total = arg1 + arg2; # total在这里是局部变量.
+			   print "函数内是局部变量 : ", total
+			   return total;
+			 
+			#调用sum函数
+			sum( 10, 20 );
+			print "函数外是全局变量 : ", total 
+
+			以上实例输出结果：
+
+			函数内是局部变量 :  30
+			函数外是全局变量 :  0
+
+	笔记列表
+		1.全局变量想作用于函数内，需加 global
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+
+			globvar = 0
+
+			def set_globvar_to_one():
+				global globvar    # 使用 global 声明全局变量
+				globvar = 1
+
+			def print_globvar():
+				print(globvar)     # 没有使用 global
+
+			set_globvar_to_one()
+			print  globvar        # 输出 1
+			print_globvar()       # 输出 1，函数内的 globvar 已经是全局变量
+
+			1、global---将变量定义为全局变量。可以通过定义为全局变量，实现在函数内部改变变量值。
+
+			2、一个global语句可以同时定义多个变量，如 global x, y, z。
+
+
+		2.列表反转函数:
+			#!/user/bin/python
+			# -*- coding: UTF-8 -*-
+
+			def reverse(li):
+				for i in range(0, len(li)/2):
+					temp = li[i]
+					li[i] = li[-i-1]
+					li[-i-1] = temp
+
+			l = [1, 2, 3, 4, 5]
+			reverse(l)
+			print(l)
+
+
+		3.列表反转函数二:
+			def reverse(ListInput):
+				RevList=[]
+				for i in range (len(ListInput)):
+					RevList.append(ListInput.pop())
+				return RevList
+
+		4.简化列表反转：
+			def reverse(li):
+				for i in range(0, len(li)/2):
+					li[i], li[-i - 1] = li[-i - 1], li[i]
+			l = [1, 2, 3, 4, 5]
+			reverse(l)
+			print(l)
+
+		5.参考地址
+			关于 return fun 和 return fun() 的区别：
+				>>> def funx(x):
+						def funy(y):
+							return x * y
+						return funy    #return funy返回的是一个对象，可理解为funx是funy的一个对象
+				>>> funx(7)(8)
+				56
+				
+				>>> def funx(x):
+						def funy(y):
+							return x*y
+						return funy()    #return funy()返回的是funy的函数返回值，所以此处报错
+				>>> funx(7)(8)
+				Traceback (most recent call last):
+				  File "<pyshell#5>", line 1, in <module>
+					funx(7)(8)
+				  File "<pyshell#4>", line 4, in funx
+					return funy()
+				TypeError: funy() takes exactly 1 argument (0 given)
+
+				>>> def funx(x):
+					def funy(y):
+						return x * y
+					return funy(8)    
+				>>> funx(7)
+				56
+				
+				
+
+					
+
+					
 		
 		
 		
@@ -1714,7 +2345,29 @@ Python 字典(Dictionary)
 		
 		
 		
-		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 #python demo "hello world"
 {
