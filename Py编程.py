@@ -21,9 +21,11 @@ python、pypy、shell
 
 #python基础语法
 参考库
+	一译				http://python.usyiyi.cn
 	python			https://docs.python.org/2.7/library/index.html
 	pytz模块		http://www.twinsun.com/tz/tz-link.htm
     dateutil模块    http://labix.org/python-dateutil
+	
 	
 Python 标识符
 	在 Python 里，标识符由字母、数字、下划线组成。
@@ -3308,8 +3310,92 @@ Python OS 文件/目录方法
 	os.utime(path, times)						返回指定的path文件的访问和修改的时间。
 	os.walk(top[, topdown=True[, onerror=None[, followlinks=False]]])输出在文件夹中的文件名通过在树中游走，向上或者向下。
 	os.write(fd, str)							写入字符串到文件描述符 fd中. 返回实际写入的字符串长度
+	
+	参考地址：
+
+    http://kuanghy.github.io/python-os/
+    http://python.usyiyi.cn/python_278/library/os.html
 
 
+Python 内置函数
+		 		
+abs() 	
+divmod() 	
+input() 	
+open() 	
+staticmethod()
+all() 	
+enumerate() 	
+int() 	
+ord() 	
+str()
+any() 	
+eval() 	
+isinstance() 	
+pow() 	
+sum()
+basestring() 	
+execfile() 	
+issubclass() 	
+print() 	
+super()
+bin() 	
+file() 	
+iter() 	
+property() 	
+tuple()
+bool() 	
+filter() 	
+len() 	
+range() 	
+type()
+bytearray() 	
+float() 	
+list() 	
+raw_input() 	
+unichr()
+callable() 	
+format() 	
+locals() 	
+reduce() 	
+unicode()
+chr() 
+frozenset() 	
+long() 	
+reload() 	
+vars()
+classmethod() 	
+getattr() 	
+map() 	
+repr() 	
+xrange()
+cmp() 	
+globals() 	
+max() 	
+reversed() 	
+zip()
+compile() 	
+hasattr() 	
+memoryview() 	
+round() 	
+__import__()
+complex() 	
+hash() 	
+min() 	
+set() 	
+delattr() 	
+help() 	
+next() 	
+setattr() 	
+dict() 	
+hex() 	
+object() 	
+slice() 	
+dir() 	
+id() 	
+oct() 	
+sorted() 	
+exec 内置表达式
 
 
 
