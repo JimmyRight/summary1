@@ -2889,12 +2889,425 @@ Python 文件I/O
 					File 对象方法: file对象提供了操作文件的一系列方法。
 					OS 对象方法: 提供了处理文件及目录的一系列方法。
 
+
+Python File(文件) 方法
+	file 对象使用 open 函数来创建，下表列出了 file 对象常用的函数：
+		序号				方法及描述
+		file.close()		关闭文件。关闭后文件不能再进行读写操作。
+		file.flush()		刷新文件内部缓冲，直接把内部缓冲区的数据立刻写入文件, 而不是被动的等待输出缓冲区写入。
+		file.fileno()		返回一个整型的文件描述符(file descriptor FD 整型), 可以用在如os模块的read方法等一些底层操作上。
+		file.isatty()		如果文件连接到一个终端设备返回 True，否则返回 False。
+		file.next()			返回文件下一行。
+		file.read([size])	从文件读取指定的字节数，如果未给定或为负则读取所有。
+		file.readline([size])读取整行，包括 "\n" 字符。
+		file.readlines([sizehint])读取所有行并返回列表，若给定sizeint>0，返回总和大约为sizeint字节的行, 实际读取值可能比sizhint较大, 因为需要填充缓冲区。
+		file.seek(offset[, whence])设置文件当前位置
+		file.tell()			返回文件当前位置。
+		file.truncate([size])截取文件，截取的字节通过size指定，默认为当前文件位置。
+		file.write(str)		将字符串写入文件，没有返回值。
+		file.writelines(sequence)向文件写入一个序列字符串列表，如果需要换行则要自己加入每行的换行符。
+
+	笔记列表
+		在 write 内容后，直接 read 文件输出会为空，是因为指针已经在内容末尾。
+
+		两种解决方式: 其一，先 close 文件，open 后再读取，其二，可以设置指针回到文件最初后再 read
+
+		# -*- coding: UTF-8 -*-
+
+		import os;
+
+		document = open("testfile.txt", "w+");
+		print "文件名: ", document.name;
+		document.write("这是我创建的第一个测试文件！\nwelcome!");
+		print document.tell();
+		#输出当前指针位置
+		document.seek(os.SEEK_SET);
+		#设置指针回到文件最初
+		context = document.read();
+		print context;
+		document.close();		
+
+
+Python 异常处理
+
+	python提供了两个非常重要的功能来处理python程序在运行中出现的异常和错误。你可以使用该功能来调试python程序。
+		异常处理: 本站Python教程会具体介绍。
+		断言(Assertions):本站Python教程会具体介绍。 
+
+	python标准异常
+		异常名称				描述
+		BaseException		所有异常的基类
+		SystemExit			解释器请求退出
+		KeyboardInterrupt	用户中断执行(通常是输入^C)
+		Exception			常规错误的基类
+		StopIteration 		迭代器没有更多的值
+		GeneratorExit 		生成器(generator)发生异常来通知退出
+		StandardError		所有的内建标准异常的基类
+		ArithmeticError 	所有数值计算错误的基类
+		FloatingPointError 	浮点计算错误
+		OverflowError		数值运算超出最大限制
+		ZeroDivisionError	除(或取模)零 (所有数据类型)
+		AssertionError		断言语句失败
+		AttributeError		对象没有这个属性
+		EOFError 			没有内建输入,到达EOF 标记
+		EnvironmentError 	操作系统错误的基类
+		IOError 			输入/输出操作失败
+		OSError 			操作系统错误
+		WindowsError		系统调用失败
+		ImportError 		导入模块/对象失败
+		LookupError 		无效数据查询的基类
+		IndexError			序列中没有此索引(index)
+		KeyError			映射中没有这个键
+		MemoryError			内存溢出错误(对于Python 解释器不是致命的)
+		NameError			未声明/初始化对象 (没有属性)
+		UnboundLocalError 	访问未初始化的本地变量
+		ReferenceError		弱引用(Weak reference)试图访问已经垃圾回收了的对象
+		RuntimeError 		一般的运行时错误
+		NotImplementedError	尚未实现的方法
+		SyntaxError	Python 	语法错误
+		IndentationError	缩进错误
+		TabError			Tab 和空格混用
+		SystemError 		一般的解释器系统错误
+		TypeError			对类型无效的操作
+		ValueError 			传入无效的参数
+		UnicodeError 		Unicode 相关的错误
+		UnicodeDecodeError 	Unicode 解码时的错误
+		UnicodeEncodeError 	Unicode 编码时错误
+		UnicodeTranslateError	Unicode 转换时错误
+		Warning 			警告的基类
+		DeprecationWarning	关于被弃用的特征的警告
+		FutureWarning 		关于构造将来语义会有改变的警告
+		OverflowWarning		旧的关于自动提升为长整型(long)的警告
+		PendingDeprecationWarning	关于特性将会被废弃的警告
+		RuntimeWarning 		可疑的运行时行为(runtime behavior)的警告
+		SyntaxWarning		可疑的语法的警告
+		UserWarning			用户代码生成的警告
+	
+	
+	什么是异常？
+		异常即是一个事件，该事件会在程序执行过程中发生，影响了程序的正常执行。
+		一般情况下，在Python无法正常处理程序时就会发生一个异常。
+		异常是Python对象，表示一个错误。
+		当Python脚本发生异常时我们需要捕获处理它，否则程序会终止执行。
+	
+	异常处理
+		捕捉异常可以使用try/except语句。
+		try/except语句用来检测try语句块中的错误，从而让except语句捕获异常信息并处理。
+		如果你不想在异常发生时结束你的程序，只需在try里捕获它。
+
+	语法：
+		以下为简单的try....except...else的语法：
+			try:
+			<语句>        #运行别的代码
+			except <名字>：
+			<语句>        #如果在try部份引发了'name'异常
+			except <名字>，<数据>:
+			<语句>        #如果引发了'name'异常，获得附加的数据
+			else:
+			<语句>        #如果没有异常发生
+
+		try的工作原理是，当开始一个try语句后，python就在当前程序的上下文中作标记，这样当异常出现时就可以回到这里，try子句先执行，接下来会发生什么依赖于执行时是否出现异常。
+		如果当try后的语句执行时发生异常，python就跳回到try并执行第一个匹配该异常的except子句，异常处理完毕，控制流就通过整个try语句（除非在处理异常时又引发新的异常）。
+		如果在try后的语句里发生了异常，却没有匹配的except子句，异常将被递交到上层的try，或者到程序的最上层（这样将结束程序，并打印缺省的出错信息）。
+		如果在try子句执行时没有发生异常，python将执行else语句后的语句（如果有else的话），然后控制流通过整个try语句。 
+
+	实例
+		下面是简单的例子，它打开一个文件，在该文件中的内容写入内容，且并未发生异常：
+
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
+
+		try:
+			fh = open("testfile", "w")
+			fh.write("这是一个测试文件，用于测试异常!!")
+		except IOError:
+			print "Error: 没有找到文件或读取文件失败"
+		else:
+			print "内容写入文件成功"
+			fh.close()
+
+		以上程序输出结果：
+			$ python test.py 
+			内容写入文件成功
+			$ cat testfile       # 查看写入的内容
+			这是一个测试文件，用于测试异常!!
+
+	实例
+		下面是简单的例子，它打开一个文件，在该文件中的内容写入内容，但文件没有写入权限，发生了异常：
+
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
+
+		try:
+			fh = open("testfile", "w")
+			fh.write("这是一个测试文件，用于测试异常!!")
+		except IOError:
+			print "Error: 没有找到文件或读取文件失败"
+		else:
+			print "内容写入文件成功"
+			fh.close()
+
+		在执行代码前为了测试方便，我们可以先去掉 testfile 文件的写权限，命令如下：
+			chmod -w testfile
+
+		再执行以上代码：
+			$ python test.py 
+			Error: 没有找到文件或读取文件失败
+
+			
+	使用except而不带任何异常类型
+		你可以不带任何异常类型使用except，如下实例：
+			try:
+				正常的操作
+			   ......................
+			except:
+				发生异常，执行这块代码
+			   ......................
+			else:
+				如果没有异常执行这块代码
+
+			以上方式try-except语句捕获所有发生的异常。但这不是一个很好的方式，我们不能通过该程序识别出具体的异常信息。因为它捕获所有的异常。
+	
+	使用except而带多种异常类型
+		你也可以使用相同的except语句来处理多个异常信息，如下所示：
+		try:
+			正常的操作
+		   ......................
+		except(Exception1[, Exception2[,...ExceptionN]]]):
+		   发生以上多个异常中的一个，执行这块代码
+		   ......................
+		else:
+			如果没有异常执行这块代码
+
+	try-finally 语句
+		try-finally 语句无论是否发生异常都将执行最后的代码。
+
+		try:
+		<语句>
+		finally:
+		<语句>    #退出try时总会执行
+		raise
+
+		实例
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+
+			try:
+				fh = open("testfile", "w")
+				fh.write("这是一个测试文件，用于测试异常!!")
+			finally:
+				print "Error: 没有找到文件或读取文件失败"
+
+			如果打开的文件没有可写权限，输出如下所示：
+
+			$ python test.py 
+			Error: 没有找到文件或读取文件失败
+
+		同样的例子也可以写成如下方式：
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+
+			try:
+				fh = open("testfile", "w")
+				try:
+					fh.write("这是一个测试文件，用于测试异常!!")
+				finally:
+					print "关闭文件"
+					fh.close()
+			except IOError:
+				print "Error: 没有找到文件或读取文件失败"
+			#当在try块中抛出一个异常，立即执行finally块代码。finally块中的所有语句执行后，异常被再次触发，并执行except块代码。
+
+	参数的内容不同于异常。
+		异常的参数
+		一个异常可以带上参数，可作为输出的异常信息参数。
+		你可以通过except语句来捕获异常的参数，如下所示：
+			try:
+				正常的操作
+			   ......................
+			except ExceptionType, Argument:
+				你可以在这输出 Argument 的值...
+
+		变量接收的异常值通常包含在异常的语句中。在元组的表单中变量可以接收一个或者多个值。
+		元组通常包含错误字符串，错误数字，错误位置。
+			实例
+
+			以下为单个异常的实例：
+
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+
+			# 定义函数
+			def temp_convert(var):
+				try:
+					return int(var)
+				except ValueError, Argument:
+					print "参数没有包含数字\n", Argument
+
+			# 调用函数
+			temp_convert("xyz");
+
+			以上程序执行结果如下：
+
+			$ python test.py 
+			参数没有包含数字
+			invalid literal for int() with base 10: 'xyz'
+
+	触发异常
+		我们可以使用raise语句自己触发异常
+
+		raise语法格式如下：
+			raise [Exception [, args [, traceback]]]
+			语句中Exception是异常的类型（例如，NameError）参数是一个异常参数值。该参数是可选的，如果不提供，异常的参数是"None"。
+			最后一个参数是可选的（在实践中很少使用），如果存在，是跟踪异常对象。
 		
+		实例
+			一个异常可以是一个字符串，类或对象。 Python的内核提供的异常，大多数都是实例化的类，这是一个类的实例的参数。
+			定义一个异常非常简单，如下所示：
+			def functionName( level ):
+				if level < 1:
+					raise Exception("Invalid level!", level)
+					# 触发异常后，后面的代码就不会再执行
+
+		注意：为了能够捕获异常，"except"语句必须有用相同的异常来抛出类对象或者字符串。
+			例如我们捕获以上异常，"except"语句如下所示：
+
+			try:
+				正常逻辑
+			except "Invalid level!":
+				触发自定义异常    
+			else:
+				其余代码
+
+			实例
+				#!/usr/bin/python
+				# -*- coding: UTF-8 -*-
+
+				# 定义函数
+				def mye( level ):
+					if level < 1:
+						raise Exception("Invalid level!", level)
+						# 触发异常后，后面的代码就不会再执行
+
+				try:
+					mye(0)                // 触发异常
+				except "Invalid level!":
+					print 1
+				else:
+					print 2
+
+				执行以上代码，输出结果为：
+
+				$ python test.py 
+				Traceback (most recent call last):
+				  File "test.py", line 11, in <module>
+					mye(0)
+				  File "test.py", line 7, in mye
+					raise Exception("Invalid level!", level)
+				Exception: ('Invalid level!', 0)
+
+	用户自定义异常
+		通过创建一个新的异常类，程序可以命名它们自己的异常。异常应该是典型的继承自Exception类，通过直接或间接的方式。
+		
+		以下为与RuntimeError相关的实例,实例中创建了一个类，基类为RuntimeError，用于在异常触发时输出更多的信息。
+			在try语句块中，用户自定义的异常后执行except块语句，变量 e 是用于创建Networkerror类的实例。
+			class Networkerror(RuntimeError):
+				def __init__(self, arg):
+					self.args = arg
+
+			在你定义以上类后，你可以触发该异常，如下所示：
+
+			try:
+				raise Networkerror("Bad hostname")
+			except Networkerror,e:
+				print e.args
+
+	笔记列表
+
+		0 作为除数：
+
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
+
+		try:
+			1 / 0
+		except Exception as e:
+			'''异常的父类，可以捕获所有的异常'''
+			print "0不能被除"
+		else:
+			'''保护不抛出异常的代码'''
+			print "没有异常"
+		finally:
+			print "最后总是要执行我"
 
 
-
-
-
+Python OS 文件/目录方法
+	os 模块提供了非常丰富的方法用来处理文件和目录。常用的方法如下表所示：
+	序号										方法及描述
+	os.access(path, mode)						检验权限模式
+	os.chdir(path)								改变当前工作目录
+	os.chflags(path, flags)						设置路径的标记为数字标记。
+	os.chmod(path, mode)						更改权限
+	os.chown(path, uid, gid)					更改文件所有者
+	os.chroot(path)								改变当前进程的根目录
+	os.close(fd)								关闭文件描述符 fd
+	os.closerange(fd_low, fd_high)				关闭所有文件描述符，从 fd_low (包含) 到 fd_high (不包含), 错误会忽略
+	os.dup(fd)									复制文件描述符 fd
+	os.dup2(fd, fd2)							将一个文件描述符 fd 复制到另一个 fd2
+	os.fchdir(fd)								通过文件描述符改变当前工作目录
+	os.fchmod(fd, mode)							改变一个文件的访问权限，该文件由参数fd指定，参数mode是Unix下的文件访问权限。
+	os.fchown(fd, uid, gid)						修改一个文件的所有权，这个函数修改一个文件的用户ID和用户组ID，该文件由文件描述符fd指定。
+	os.fdatasync(fd)							强制将文件写入磁盘，该文件由文件描述符fd指定，但是不强制更新文件的状态信息。
+	os.fdopen(fd[, mode[, bufsize]])			通过文件描述符 fd 创建一个文件对象，并返回这个文件对象
+	os.fpathconf(fd, name)返回一个打开的文件的系统配置信息。name为检索的系统配置的值，它也许是一个定义系统值的字符串，这些名字在很多标准中指定（POSIX.1, Unix 95, Unix 98, 和其它）。
+	os.fstat(fd)								返回文件描述符fd的状态，像stat()。
+	os.fstatvfs(fd)								返回包含文件描述符fd的文件的文件系统的信息，像 statvfs()
+	os.fsync(fd)								强制将文件描述符为fd的文件写入硬盘。
+	os.ftruncate(fd, length)					裁剪文件描述符fd对应的文件, 所以它最大不能超过文件大小。
+	os.getcwd()									返回当前工作目录
+	os.getcwdu()								返回一个当前工作目录的Unicode对象
+	os.isatty(fd)								如果文件描述符fd是打开的，同时与tty(-like)设备相连，则返回true, 否则False。
+	os.lchflags(path, flags)					设置路径的标记为数字标记，类似 chflags()，但是没有软链接
+	os.lchmod(path, mode)						修改连接文件权限
+	os.lchown(path, uid, gid)					更改文件所有者，类似 chown，但是不追踪链接。
+	os.link(src, dst)							创建硬链接，名为参数 dst，指向参数 src
+	os.listdir(path)							返回path指定的文件夹包含的文件或文件夹的名字的列表。
+	os.lseek(fd, pos, how)						设置文件描述符 fd当前位置为pos, how方式修改: SEEK_SET 或者 0 设置从文件开始的计算的pos; 
+												SEEK_CUR或者 1 则从当前位置计算; os.SEEK_END或者2则从文件尾部开始. 在unix，Windows中有效
+	os.lstat(path)								像stat(),但是没有软链接
+	os.major(device)							从原始的设备号中提取设备major号码 (使用stat中的st_dev或者st_rdev field)。
+	os.makedev(major, minor)					以major和minor设备号组成一个原始设备号
+	os.makedirs(path[, mode])					递归文件夹创建函数。像mkdir(), 但创建的所有intermediate-level文件夹需要包含子文件夹。
+	os.minor(device)							从原始的设备号中提取设备minor号码 (使用stat中的st_dev或者st_rdev field )。
+	os.mkdir(path[, mode])						以数字mode的mode创建一个名为path的文件夹.默认的 mode 是 0777 (八进制)。
+	os.mkfifo(path[, mode])						创建命名管道，mode 为数字，默认为 0666 (八进制)
+	os.mknod(filename[, mode=0600, device])		创建一个名为filename文件系统节点（文件，设备特别文件或者命名pipe）。
+	os.open(file, flags[, mode])				打开一个文件，并且设置需要的打开选项，mode参数是可选的
+	os.openpty()								打开一个新的伪终端对。返回 pty 和 tty的文件描述符。
+	os.pathconf(path, name)						返回相关文件的系统配置信息。
+	os.pipe()									创建一个管道. 返回一对文件描述符(r, w) 分别为读和写
+	os.popen(command[, mode[, bufsize]])		从一个 command 打开一个管道
+	os.read(fd, n)								从文件描述符 fd 中读取最多 n 个字节，返回包含读取字节的字符串，文件描述符 fd对应文件已达到结尾, 返回一个空字符串。
+	os.readlink(path)							返回软链接所指向的文件
+	os.remove(path)								删除路径为path的文件。如果path 是一个文件夹，将抛出OSError; 查看下面的rmdir()删除一个 directory。
+	os.removedirs(path)							递归删除目录。
+	os.rename(src, dst)							重命名文件或目录，从 src 到 dst
+	os.renames(old, new)						递归地对目录进行更名，也可以对文件进行更名。
+	os.rmdir(path)								删除path指定的空目录，如果目录非空，则抛出一个OSError异常。
+	os.stat(path)								获取path指定的路径的信息，功能等同于C API中的stat()系统调用。
+	os.stat_float_times([newvalue])				决定stat_result是否以float对象显示时间戳
+	os.statvfs(path)							获取指定路径的文件系统统计信息
+	os.symlink(src, dst)						创建一个软链接
+	os.tcgetpgrp(fd)							返回与终端fd（一个由os.open()返回的打开的文件描述符）关联的进程组
+	os.tcsetpgrp(fd, pg)						设置与终端fd（一个由os.open()返回的打开的文件描述符）关联的进程组为pg。
+	os.tempnam([dir[, prefix]])					返回唯一的路径名用于创建临时文件。
+	os.tmpfile()								返回一个打开的模式为(w+b)的文件对象 .这文件对象没有文件夹入口，没有文件描述符，将会自动删除。
+	os.tmpnam()									为创建一个临时文件返回一个唯一的路径
+	os.ttyname(fd)								返回一个字符串，它表示与文件描述符fd 关联的终端设备。如果fd 没有与终端设备关联，则引发一个异常。
+	os.unlink(path)								删除文件路径
+	os.utime(path, times)						返回指定的path文件的访问和修改的时间。
+	os.walk(top[, topdown=True[, onerror=None[, followlinks=False]]])输出在文件夹中的文件名通过在树中游走，向上或者向下。
+	os.write(fd, str)							写入字符串到文件描述符 fd中. 返回实际写入的字符串长度
 
 
 
