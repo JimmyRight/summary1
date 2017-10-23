@@ -3319,83 +3319,512 @@ Python OS 文件/目录方法
 
 Python 内置函数
 		 		
-abs() 	
-divmod() 	
-input() 	
-open() 	
-staticmethod()
-all() 	
-enumerate() 	
-int() 	
-ord() 	
-str()
-any() 	
-eval() 	
-isinstance() 	
-pow() 	
-sum()
-basestring() 	
-execfile() 	
-issubclass() 	
-print() 	
-super()
-bin() 	
-file() 	
-iter() 	
-property() 	
-tuple()
-bool() 	
-filter() 	
-len() 	
-range() 	
-type()
-bytearray() 	
-float() 	
-list() 	
-raw_input() 	
-unichr()
-callable() 	
-format() 	
-locals() 	
-reduce() 	
-unicode()
-chr() 
-frozenset() 	
-long() 	
-reload() 	
-vars()
-classmethod() 	
-getattr() 	
-map() 	
-repr() 	
-xrange()
-cmp() 	
-globals() 	
-max() 	
-reversed() 	
-zip()
-compile() 	
-hasattr() 	
-memoryview() 	
-round() 	
-__import__()
-complex() 	
-hash() 	
-min() 	
-set() 	
-delattr() 	
-help() 	
-next() 	
-setattr() 	
-dict() 	
-hex() 	
-object() 	
-slice() 	
-dir() 	
-id() 	
-oct() 	
-sorted() 	
-exec 内置表达式
+	abs()
+		描述
+			abs() 函数返回数字的绝对值。
+		语法
+			以下是 abs() 方法的语法:
+			abs( x )
+		参数
+			x -- 数值表达式。
+		返回值
+			函数返回x（数字）的绝对值。
+		实例
+			以下展示了使用 abs() 方法的实例：
+			#!/usr/bin/python
+			 
+			print "abs(-45) : ", abs(-45)
+			print "abs(100.12) : ", abs(100.12)
+			print "abs(119L) : ", abs(119L)
+
+			以上实例运行后输出结果为：
+
+			abs(-45) :  45
+			abs(100.12) :  100.12
+			abs(119L) :  119
+			
+	all()
+		描述
+			all() 函数用于判断给定的可迭代参数 iterable 中的所有元素是否不为 0、''、False 或者 iterable 为空，如果是返回 True，否则返回 False。
+			函数等价于：
+
+			def all(iterable):
+				for element in iterable:
+					if not element:
+						return False
+				return True
+			Python 2.5 以上版本可用。
+		
+		语法
+			以下是 all() 方法的语法:
+				all(iterable)
+
+		参数
+			iterable -- 元组或列表。
+
+		返回值
+			如果iterable的所有元素不为0、''、False或者iterable为空，all(iterable)返回True，否则返回False；
+			注意：空元组、空列表返回值为True，这里要特别注意。
+		实例
+			以下展示了使用 all() 方法的实例：
+			>>>all(['a', 'b', 'c', 'd'])  # 列表list，元素都不为空或0
+			True
+			>>> all(['a', 'b', '', 'd'])   # 列表list，存在一个为空的元素
+			False
+			>>> all([0, 1，2, 3])          # 列表list，存在一个为0的元素
+			False
+			   
+			>>> all(('a', 'b', 'c', 'd'))  # 元组tuple，元素都不为空或0
+			True
+			>>> all(('a', 'b', '', 'd'))   # 元组tuple，存在一个为空的元素
+			False
+			>>> all((0, 1，2, 3))          # 元组tuple，存在一个为0的元素
+			False
+			   
+			>>> all([])             # 空列表
+			True
+			>>> all(())             # 空元组
+			True
+			
+	 any() 函数
+		Python 内置函数 Python 内置函数
+		描述
+			any() 函数用于判断给定的可迭代参数 iterable 是否全部为空对象，如果都为空、0、false，则返回 False，如果不都为空、0、false，则返回 True。
+			函数等价于：
+			def any(iterable):
+				for element in iterable:
+					if element:
+						return True
+				return False
+
+			Python 2.5 以上版本可用。
+		语法
+			以下是 any() 方法的语法:
+			any(iterable)
+
+		参数
+			iterable -- 元组或列表。
+
+		返回值
+			如果都为空、0、false，则返回false，如果不都为空、0、false，则返回true。
+		
+		实例
+			以下展示了使用 any() 方法的实例：
+			>>>any(['a', 'b', 'c', 'd'])  # 列表list，元素都不为空或0
+			True
+			 
+			>>> any(['a', 'b', '', 'd'])   # 列表list，存在一个为空的元素
+			True
+			 
+			>>> any([0, '', False])        # 列表list,元素全为0,'',false
+			False
+			 
+			>>> any(('a', 'b', 'c', 'd'))  # 元组tuple，元素都不为空或0
+			True
+			 
+			>>> any(('a', 'b', '', 'd'))   # 元组tuple，存在一个为空的元素
+			True
+			 
+			>>> any((0, '', False))        # 元组tuple，元素全为0,'',false
+			False
+			  
+			>>> any([]) # 空列表
+			False
+			 
+			>>> any(()) # 空元组
+			False
+			
+	basestring() 函数
+		Python 内置函数 Python 内置函数
+		描述
+			basestring() 方法是 str 和 unicode 的超类（父类），也是抽象类，因此不能被调用和实例化，但可以被用来判断一个对象是否为 str 或者 unicode 的实例，isinstance(obj, basestring) 等价于 isinstance(obj, (str, unicode))。
+		语法
+			以下是 basestring() 方法的语法:
+			basestring()
+		参数
+			无
+		返回值
+			无。
+		实例
+			以下展示了使用 basestring 函数的实例：
+			>>>isinstance("Hello world", str)
+			True
+			>>> isinstance("Hello world", basestring)
+			True
+			
+	bin() 函数
+		Python 内置函数 Python 内置函数
+		描述
+			bin() 返回一个整数 int 或者长整数 long int 的二进制表示。
+		语法
+		以下是 bin() 方法的语法:
+			bin(x)
+		参数
+			x -- int 或者 long int 数字
+		返回值
+			字符串。
+		实例
+			以下展示了使用 bin 函数的实例：
+			>>>bin(10)
+			'0b1010'
+			>>> bin(20)
+			'0b10100'
+			
+	bool() 函数
+		Python 内置函数 Python 内置函数
+		描述
+			bool() 函数用于将给定参数转换为布尔类型，如果没有参数，返回 False。
+			bool 是 int 的子类。
+		语法
+			以下是 bool() 方法的语法:
+			class bool([x])
+		参数
+			x -- 要进行转换的参数。
+		返回值
+			返回 Ture 或 False。
+		实例
+			以下展示了使用 bool 函数的实例：
+			>>>bool()
+			False
+			>>> bool(0)
+			False
+			>>> bool(1)
+			True
+			>>> bool(2)
+			True
+			>>> issubclass(bool, int)  # bool 是 int 子类
+			True
+
+	bytearray() 函数
+		Python 内置函数 Python 内置函数
+		描述
+			bytearray() 方法返回一个新字节数组。这个数组里的元素是可变的，并且每个元素的值范围: 0 <= x < 256。
+		语法
+			bytearray()方法语法：
+			class bytearray([source[, encoding[, errors]]])
+		参数
+			如果 source 为整数，则返回一个长度为 source 的初始化数组；
+			如果 source 为字符串，则按照指定的 encoding 将字符串转换为字节序列；
+			如果 source 为可迭代类型，则元素必须为[0 ,255] 中的整数；
+			如果 source 为与 buffer 接口一致的对象，则此对象也可以被用于初始化 bytearray。
+			如果没有输入任何参数，默认就是初始化数组为0个元素。
+		返回值
+			返回新字节数组。
+		实例
+			以下实例展示了 bytearray() 的使用方法：
+			>>>bytearray()
+			bytearray(b'')
+			>>> bytearray([1,2,3])
+			bytearray(b'\x01\x02\x03')
+			>>> bytearray('runoob', 'utf-8')
+			bytearray(b'runoob')
+			>>>
+	
+	callable() 函数
+		Python 内置函数 Python 内置函数
+		描述
+			callable() 函数用于检查一个对象是否是可调用的。如果返回True，object仍然可能调用失败；但如果返回False，调用对象ojbect绝对不会成功。
+			对于函数, 方法, lambda 函式, 类, 以及实现了 __call__ 方法的类实例, 它都返回 True。
+		语法
+			callable()方法语法：
+			callable(object)
+		参数
+			object -- 对象
+		返回值
+			可调用返回 True，否则返回 False。
+		实例
+			以下实例展示了 callable() 的使用方法：
+			>>>callable(0)
+			False
+			>>> callable("runoob")
+			False
+			 
+			>>> def add(a, b):
+			...     return a + b
+			... 
+			>>> callable(add)             # 函数返回 True
+			True
+			>>> class A:                  # 类
+			...     def method(self):
+			...             return 0
+			... 
+			>>> callable(A)               # 类返回 True
+			True
+			>>> a = A()
+			>>> callable(a)               # 没有实现 __call__, 返回 False
+			False
+			>>> class B:
+			...     def __call__(self):
+			...             return 0
+			... 
+			>>> callable(B)
+			True
+			>>> b = B()
+			>>> callable(b)               # 实现 __call__, 返回 True
+			True
+	
+	chr() 函数
+		Python 内置函数 Python 内置函数
+		描述
+			chr() 用一个范围在 range（256）内的（就是0～255）整数作参数，返回一个对应的字符。
+		语法
+			以下是 chr() 方法的语法:
+			chr(i)
+		参数
+			i -- 可以是10进制也可以是16进制的形式的数字。
+		返回值
+			返回值是当前整数对应的ascii字符。
+		实例
+			以下展示了使用 chr() 方法的实例：
+			>>>print chr(0x30), chr(0x31), chr(0x61)   # 十六进制
+			0 1 a
+			>>> print chr(48), chr(49), chr(97)         # 十进制
+			0 1 a
+	
+	classmethod 修饰符
+		Python 内置函数 Python 内置函数
+		描述
+			classmethod 修饰符对应的函数不需要实例化，不需要 self 参数，但第一个参数需要是表示自身类的 cls 参数，可以来调用类的属性，类的方法，实例化对象等。
+		语法
+			classmethod 语法：
+			classmethod
+		参数
+			无。
+		返回值
+			返回函数的类方法。
+		实例
+			以下实例展示了 classmethod 的使用方法：
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+			 
+			class A(object):
+				bar = 1
+				def func1(self):  
+					print ('foo') 
+				@classmethod
+				def func2(cls):
+					print ('func2')
+					print (cls.bar)
+					cls().func1()   # 调用 foo 方法
+			 
+			A.func2()               # 不需要实例化
+
+			输出结果为：
+
+			func2
+			foo	
+			
+	cmp() 函数
+		Python 数字 Python 数字
+		描述
+			cmp(x,y) 函数用于比较2个对象，如果 x < y 返回 -1, 如果 x == y 返回 0, 如果 x > y 返回 1。
+		语法
+			以下是 cmp() 方法的语法:
+			cmp( x, y )
+		参数
+			x -- 数值表达式。
+			y -- 数值表达式。
+		返回值
+			如果 x < y 返回 -1, 如果 x == y 返回 0, 如果 x > y 返回 1。
+		实例
+			以下展示了使用 cmp() 方法的实例：
+
+			#!/usr/bin/python
+
+			print "cmp(80, 100) : ", cmp(80, 100)
+			print "cmp(180, 100) : ", cmp(180, 100)
+			print "cmp(-80, 100) : ", cmp(-80, 100)
+			print "cmp(80, -100) : ", cmp(80, -100)
+
+			以上实例运行后输出结果为：
+
+			cmp(80, 100) :  -1
+			cmp(180, 100) :  1
+			cmp(-80, 100) :  -1
+			cmp(80, -100) :  1
+
+	compile() 函数
+		Python 内置函数 Python 内置函数
+		描述
+			compile() 函数将一个字符串编译为字节代码。
+		语法
+			以下是 compile() 方法的语法:
+			compile(source, filename, mode[, flags[, dont_inherit]])
+		参数
+			source -- 字符串或者AST（Abstract Syntax Trees）对象。。
+			filename -- 代码文件名称，如果不是从文件读取代码则传递一些可辨认的值。
+			mode -- 指定编译代码的种类。可以指定为 exec, eval, single。
+			flags -- 变量作用域，局部命名空间，如果被提供，可以是任何映射对象。。
+			flags和dont_inherit是用来控制编译源码时的标志
+		返回值
+			返回表达式执行结果。
+		实例
+			以下展示了使用 compile 函数的实例：
+			>>>str = "for i in range(0,10): print(i)" 
+			>>> c = compile(str,'','exec')   # 编译为字节代码对象 
+			>>> c
+			<code object <module> at 0x10141e0b0, file "", line 1>
+			>>> exec(c)
+			0
+			1
+			2
+			3
+			4
+			5
+			6
+			7
+			8
+			9
+			>>> str = "3 * 4 + 5"
+			>>> a = compile(str,'','eval')
+			>>> eval(a)
+			17
+	Python complex() 函数
+		Python 内置函数 Python 内置函数
+		描述
+			complex() 函数用于创建一个值为 real + imag * j 的复数或者转化一个字符串或数为复数。如果第一个参数为字符串，则不需要指定第二个参数。。
+		语法
+			complex 语法：
+			class complex([real[, imag]])
+		参数说明：
+			real -- int, long, float或字符串；
+			imag -- int, long, float；
+		返回值
+			返回一个复数。
+		实例
+			以下实例展示了 complex 的使用方法：
+			>>>complex(1, 2)
+			(1 + 2j)
+			 
+			>>> complex(1)    # 数字
+			(1 + 0j)
+			 
+			>>> complex("1")  # 当做字符串处理
+			(1 + 0j)
+			 
+			# 注意：这个地方在"+"号两边不能有空格，也就是不能写成"1 + 2j"，应该是"1+2j"，否则会报错
+			>>> complex("1+2j")
+			(1 + 2j)
+		
+	Python delattr() 函数
+		Python 内置函数 Python 内置函数
+		描述
+			delattr 函数用于删除属性。
+			delattr(x, 'foobar') 相等于 del x.foobar。
+		语法
+			setattr 语法：
+			delattr(object, name)
+		参数
+			object -- 对象。
+			name -- 必须是对象的属性。
+
+		返回值
+			无。
+		实例
+			以下实例展示了 delattr 的使用方法：
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+			 
+			class Coordinate:
+				x = 10
+				y = -5
+				z = 0
+			 
+			point1 = Coordinate() 
+			 
+			print('x = ',point1.x)
+			print('y = ',point1.y)
+			print('z = ',point1.z)
+			 
+			delattr(Coordinate, 'z')
+			 
+			print('--删除 z 属性后--')
+			print('x = ',point1.x)
+			print('y = ',point1.y)
+			 
+			# 触发错误
+			print('z = ',point1.z)
+
+			输出结果：
+
+			('x = ', 10)
+			('y = ', -5)
+			('z = ', 0)
+			--删除 z 属性后--
+			('x = ', 10)
+			('y = ', -5)
+			Traceback (most recent call last):
+			  File "test.py", line 22, in <module>
+				print('z = ',point1.z)
+			AttributeError: Coordinate instance has no attribute 'z'
+
+	dict() 函数
+		Python 内置函数 Python 内置函数
+		描述
+			dict() 函数用于创建一个字典。
+		语法
+			dict 语法：
+				class dict(**kwarg)
+				class dict(mapping, **kwarg)
+				class dict(iterable, **kwarg)
+		参数说明：
+			**kwargs -- 关键字
+			mapping -- 元素的容器。
+			iterable -- 可迭代对象。
+		返回值
+			返回一个字典。
+		实例
+			以下实例展示了 dict 的使用方法：
+			>>>dict()                        # 创建空字典
+			{}
+			>>> dict(a='a', b='b', t='t')     # 传入关键字
+			{'a': 'a', 'b': 'b', 't': 't'}
+			>>> dict(zip(['one', 'two', 'three'], [1, 2, 3]))   # 映射函数方式来构造字典
+			{'three': 3, 'two': 2, 'one': 1} 
+			>>> dict([('one', 1), ('two', 2), ('three', 3)])    # 可迭代对象方式来构造字典
+			{'three': 3, 'two': 2, 'one': 1}
+			>>>
+
+	dir() 函数
+		Python 内置函数 Python 内置函数
+		描述
+			dir() 函数不带参数时，返回当前范围内的变量、方法和定义的类型列表；带参数时，返回参数的属性、方法列表。如果参数包含方法__dir__()，该方法将被调用。如果参数不包含__dir__()，该方法将最大限度地收集参数信息。
+		语法
+			dir 语法：
+			dir([object])
+		参数说明：
+			object -- 对象、变量、类型。
+		返回值
+			返回模块的属性列表。
+		实例
+			以下实例展示了 dir 的使用方法：
+			>>>dir()   #  获得当前模块的属性列表
+			['__builtins__', '__doc__', '__name__', '__package__', 'arr', 'myslice']
+			>>> dir([ ])    # 查看列表的方法
+			['__add__', '__class__', '__contains__', '__delattr__', '__delitem__', '__delslice__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getslice__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__setslice__', '__sizeof__', '__str__', '__subclasshook__', 'append', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
+			>>>
+			
+
+	divmod()
+		python divmod() 函数把除数和余数运算结果结合起来，返回一个包含商和余数的元组(a // b, a % b)。
+		在 python 2.3 版本之前不允许处理复数。
+		函数语法
+			divmod(a, b)
+		参数说明：
+			a: 数字
+			b: 数字
+
+		实例
+			>>>divmod(7, 2)
+			(3, 1)
+			>>> divmod(8, 2)
+			(4, 0)
+			>>> divmod(1+2j,1+0.5j)
+			((1+0j), 1.5j)
+ 	
+	input() 	
+		
+	
 
 
 
