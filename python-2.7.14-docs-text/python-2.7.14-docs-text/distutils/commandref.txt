@@ -1,0 +1,22 @@
+Référence des commandes
+***********************
+
+
+Installer des modules: la famille de commande **install**
+=========================================================
+
+La commande d’installation s’assure que la commande de construction a
+bien été lancé puis lance les sous-commandes  **install_lib**,
+**install_data** et **install_scripts**.
+
+
+**install_data**
+----------------
+
+Cette commande installe tout les fichier fournit avec la distribution
+
+
+**install_scripts**
+-------------------
+
+Cette commande installe tout les scripts (Python) dans la distribution

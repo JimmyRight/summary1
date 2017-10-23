@@ -1,0 +1,166 @@
+"mhlib" — MH のメールボックスへのアクセス機構
+*********************************************
+
+バージョン 2.6 で撤廃: "mhlib" モジュールは Python 3 で削除されました
+。代わりに "mailbox" モジュールを使ってください。
+
+"mhlib" モジュールは MH フォルダおよびその内容に対する Python インタフ
+ェースを提供します。
+
+このモジュールには、あるフォルダの集まりを表現する "MH" 、単一のフォル
+ダを表現する "Folder" 、単一のメッセージを表現する "Message" 、の 3 つ
+のクラスが入っています。
+
+class mhlib.MH([path[, profile]])
+
+   "MH" は MH フォルダの集まりを表現します。
+
+class mhlib.Folder(mh, name)
+
+   "Folder" クラスは単一のフォルダとフォルダ内のメッセージ群を表現しま
+   す。
+
+class mhlib.Message(folder, number[, name])
+
+   "Message" オブジェクトはフォルダ内の個々のメッセージを表現します。
+   メッセージクラスは "mimetools.Message" から派生しています。
+
+
+MH オブジェクト
+===============
+
+"MH" インスタンスは以下のメソッドを持っています:
+
+MH.error(format[, …])
+
+   エラーメッセージを出力します – 上書きすることができます。
+
+MH.getprofile(key)
+
+   プロファイルエントリ (設定されていなければ "None") を返します。
+
+MH.getpath()
+
+   メールボックスのパス名を返します。
+
+MH.getcontext()
+
+   現在のフォルダ名を返します。
+
+MH.setcontext(name)
+
+   現在のフォルダ名を設定します。
+
+MH.listfolders()
+
+   トップレベルフォルダのリストを返します。
+
+MH.listallfolders()
+
+   全てのフォルダのリストを返します。
+
+MH.listsubfolders(name)
+
+   指定したフォルダの直下にあるサブフォルダのリストを返します。
+
+MH.listallsubfolders(name)
+
+   指定したフォルダの下にある全てのサブフォルダのリストを返します。
+
+MH.makefolder(name)
+
+   新しいフォルダを生成します。
+
+MH.deletefolder(name)
+
+   フォルダを削除します – サブフォルダが入っていてはいけません。
+
+MH.openfolder(name)
+
+   新たな開かれたフォルダオブジェクトを返します。
+
+
+Folder オブジェクト
+===================
+
+"Folder" インスタンスは開かれたフォルダを表現し、以下のメソッドを持っ
+ています:
+
+Folder.error(format[, …])
+
+   エラーメッセージを出力します – 上書きすることができます。
+
+Folder.getfullname()
+
+   フォルダの完全なパス名を返します。
+
+Folder.getsequencesfilename()
+
+   フォルダ内のシーケンスファイルの完全なパス名を返します。
+
+Folder.getmessagefilename(n)
+
+   フォルダ内のメッセージ *n* の完全なパス名を返します。
+
+Folder.listmessages()
+
+   フォルダ内のメッセージの (番号の) リストを返します。
+
+Folder.getcurrent()
+
+   現在のメッセージ番号を返します。
+
+Folder.setcurrent(n)
+
+   現在のメッセージ番号を *n* に設定します。
+
+Folder.parsesequence(seq)
+
+   msgs 文を解釈して、メッセージのリストにします。
+
+Folder.getlast()
+
+   最新のメッセージを取得します。メッセージがフォルダにない場合には
+   "0" を返します。
+
+Folder.setlast(n)
+
+   最新のメッセージを設定します (内部使用のみ)。
+
+Folder.getsequences()
+
+   フォルダ内のシーケンスからなる辞書を返します。シーケンス名がキーと
+   して使われ、値はシーケンスに含まれるメッセージ番号のリストになりま
+   す。
+
+Folder.putsequences(dict)
+
+   フォルダ内のシーケンスからなる辞書 name: list を返します。
+
+Folder.removemessages(list)
+
+   リスト中のメッセージをフォルダから削除します。
+
+Folder.refilemessages(list, tofolder)
+
+   リスト中のメッセージを他のフォルダに移動します。
+
+Folder.movemessage(n, tofolder, ton)
+
+   一つのメッセージを他のフォルダの指定先に移動します。
+
+Folder.copymessage(n, tofolder, ton)
+
+   一つのメッセージを他のフォルダの指定先にコピーします。
+
+
+Message オブジェクト
+====================
+
+"Message" クラスは "mimetools.Message" のメソッドに加え、一つメソッド
+を持っています:
+
+Message.openmessage(n)
+
+   新たな開かれたメッセージオブジェクトを返します (ファイル記述子を一
+   つ消費します)。

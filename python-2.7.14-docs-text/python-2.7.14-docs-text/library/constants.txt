@@ -1,0 +1,75 @@
+Constantes natives
+******************
+
+Un petit nombre de constantes existent dans le *namespace* natif.
+Elles sont :
+
+False
+
+   The false value of the "bool" type.
+
+   Nouveau dans la version 2.3.
+
+True
+
+   The true value of the "bool" type.
+
+   Nouveau dans la version 2.3.
+
+None
+
+   The sole value of "types.NoneType".  "None" is frequently used to
+   represent the absence of a value, as when default arguments are not
+   passed to a function.
+
+   Modifié dans la version 2.4: Assignments to "None" are illegal and
+   raise a "SyntaxError".
+
+NotImplemented
+
+   Special value which can be returned by the « rich comparison »
+   special methods ("__eq__()", "__lt__()", and friends), to indicate
+   that the comparison is not implemented with respect to the other
+   type.
+
+Ellipsis
+
+   Special value used in conjunction with extended slicing syntax.
+
+__debug__
+
+   Cette constante est vraie si Python n’a pas été démarré avec une
+   option "-O". Voir aussi l’expression "assert".
+
+Note: The names "None" and "__debug__" cannot be reassigned
+  (assignments to them, even as an attribute name, raise
+  "SyntaxError"), so they can be considered « true » constants.
+
+  Modifié dans la version 2.7: Assignments to "__debug__" as an
+  attribute became illegal.
+
+
+Constantes ajoutées par le module "site"
+========================================
+
+Le module "site" (qui est importé automatiquement au démarrage, sauf
+si l’option de ligne de commande "-S" est donnée ajoute un certain
+nombre de constantes au *namespace* natif. Elles sont utiles pour
+l’interpréteur interactif et ne devraient pas être utilisées par des
+programmes.
+
+quit([code=None])
+exit([code=None])
+
+   Objets qui, lorsqu’ils sont représentés, affichent un message comme
+   « Use quit() or Ctrl-D (i.e. EOF) to exit », et lorsqu’ils sont
+   appelés, lèvent un "SystemExit" avec le code de retour spécifié.
+
+copyright
+license
+credits
+
+   Objets qui, lorsqu’ils sont représentés, affichent un message comme
+   « Type license() to see the full license text », et lorsqu’ils sont
+   appelés, présentent le texte correspondant dans un style paginé (un
+   écran à la fois).

@@ -1,0 +1,43 @@
+Saisie de mot de passe portable
+*******************************
+
+Le module "getpass" fournit 2 fonctions:
+
+getpass.getpass([prompt[, stream]])
+
+   Prompt the user for a password without echoing.  The user is
+   prompted using the string *prompt*, which defaults to "'Password:
+   '". On Unix, the prompt is written to the file-like object
+   *stream*.  *stream* defaults to the controlling terminal (/dev/tty)
+   or if that is unavailable to "sys.stderr" (this argument is ignored
+   on Windows).
+
+   Si aucune saisie en mode sans echo n’est disponnible, getpass() se
+   résoudra à afficher un message d’avertissement vers *stream*, puis
+   lire l’entrée depuis "sys.stdin", en levant une "GetPassWarning".
+
+   Modifié dans la version 2.5: The *stream* parameter was added.
+
+   Modifié dans la version 2.6: On Unix it defaults to using /dev/tty
+   before falling back to "sys.stdin" and "sys.stderr".
+
+   Note: Si vous appelez getpass depuis IDLE, la saisie peut être
+     faite dans le terminal depuis lequel IDLE a été lancé, plutôt que
+     dans la fenêtre d’IDLE.
+
+exception getpass.GetPassWarning
+
+   Une sous classe d’exception "UserWarning" est levée quand le mot de
+   passe saisi pourrait être affiché par un echo.
+
+getpass.getuser()
+
+   Renvoie le  « login name » de l’utilisateur
+
+   Cette fonction examine les variables d’environnement "LOGNAME",
+   "USER", "LNAME" et "USERNAME", dans cet ordre, et renvoie la valeur
+   de la première qui a comme valeur une string non vide. Si aucune
+   des variables n’est renseignée, dans le cas de systèmes qui
+   prennent en charge le module  "pwd", le « login name » de la base
+   de données des mots de passes est renvoyé, pour les autres systèmes
+   une exception est levée.

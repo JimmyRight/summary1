@@ -1,0 +1,219 @@
+"cmd" — Interpréteurs en ligne de commande.
+*******************************************
+
+**Code source:** Lib/cmd.py
+
+======================================================================
+
+La "Cmd" fournit une base simple permettant d’écrire des interpréteurs
+en ligne de commande. Ceux-ci sont souvent utiles pour piloter des
+tests, pour des outils administratifs, et pour des prototypes destinés
+à être intégrés à une interface plus sophistiquée.
+
+class cmd.Cmd([completekey[, stdin[, stdout]]])
+
+   Une instance de "Cmd" ou d’une classe en héritant est un
+   *framework* orienté ligne de commande. Il n’y a pas de bonne raison
+   d’instancier "Cmd" directement. Elle est plutôt utile en tant que
+   classe mère d’une classe-interprète que vous définirez afin
+   d’hériter des méthodes de "Cmd" et d’encapsuler les opérations.
+
+   L’argument facultatif *completekey* est le nom "readline" d’une
+   touche de complétion. Si *completekey* ne vaut pas "None" et que
+   "readline" est disponible, la complétion de commandes est faite
+   automatiquement.
+
+   Les arguments facultatifs *stdin* et *stdout* spécifient les
+   objets-fichiers de lecture et d’écriture que l’instance de Cmd ou
+   d’une classe fille utilisera comme entrée et sortie. Si ces
+   arguments ne sont pas spécifiés, ils prendront comme valeur par
+   défaut "sys.stdin" et "sys.stdout".
+
+   Si vous souhaitez qu’un *stdin* donné soit utilisé, assurez-vous
+   que l’attribut "use_rawinput" de l’instance vaille "False", faute
+   de quoi *stdin* sera ignoré.
+
+   Modifié dans la version 2.3: The *stdin* and *stdout* parameters
+   were added.
+
+
+Objets Cmd
+==========
+
+Une instance de "Cmd" possède les méthodes suivantes:
+
+Cmd.cmdloop([intro])
+
+   Affiche une invite de commande de manière répétée, accepte une
+   entrée, soustrait un préfixe initial de l’entrée reçue et envoie
+   aux méthodes d’opération la partie restante de l’entrée reçue.
+
+   L’argument facultatif est une bannière ou chaîne de caractères
+   d’introduction à afficher avant la première invite de commande (il
+   redéfinit l’attribut de classe "intro").
+
+   Si le module "readline" est chargé, l’entrée héritera
+   automatiquement d’une édition d’historique similaire à **bash**
+   (Par exemple, "Control-P" reviendra à la dernière commande,
+   "Control-N" avancera à la suivante, "Control-F" déplace le curseur
+   vers la droite, "Control-B" déplace le curseur vers la gauche,
+   etc…).
+
+   Une caractère de fin de fichier est transmis via la chaîne de
+   caractères "'EOF'".
+
+   Une instance d’un interpréteur reconnaîtra un nom de commande "foo"
+   si et seulement si celle-ci possède une méthode "do_foo()". Les
+   lignes commençant par le caractère "'?'" sont un cas particulier:
+   elles sont envoyées à la méthode "do_help()". Les lignes commençant
+   par le caractère "'!'" sont également un cas particulier: elles
+   sont envoyées à la méthode "do_shell()" (si une telle méthode est
+   définie).
+
+   Cette méthode ne s’arrêtera que lorsque "postcmd()" renverra une
+   valeur vraie. L’argument *stop* de "postcmd()" est la valeur de
+   retour de la méthode "do_*()" correspondant à la commande.
+
+   Si la complétion est activée, la complétion de commandes sera faite
+   automatiquement; et la complétion d’arguments sera faite en
+   appelant "complete_foo()" avec les arguments *text*, *line*,
+   *begidx*, et *endidx*. *text* est le préfixe que nous cherchons à
+   faire coïncider: toutes les valeurs renvoyées doivent commencer par
+   ce préfixe. *line* est la ligne d’entrée actuelle sans les espaces
+   blancs de début. *begidx* et *endidx* sont les index de début et de
+   fin du préfixe, ils pourraient être utilisés pour fournir
+   différentes complétions en fonction de la position de l’argument.
+
+   Toutes les classes filles de "Cmd" héritent d’une méthode
+   "do_help()" prédéfinie. Cette méthode appelera la méthode
+   "help_bar()" lorsqu’elle est appelée avec un argument "'bar'". Si
+   celle-ci n’est pas définie, elle affichera la *docstring* de
+   "do_bar()", (si elle a une docstring). Sans argument, "do_help()"
+   listera tous les sujets d’aide (c’est à dire, toutes les commandes
+   avec une méthode "help_\*()" correpondante ou commande ayant une
+   docstring, elle lisera aussi les commandes non documentées.
+
+Cmd.onecmd(str)
+
+   Interprète l’argument comme si il avait été entré en réponse à
+   l’invite de commande. Cette méthode peut être surchargée, mais ne
+   devrait normalement pas avoir besoin de l’être; voir les méthodes
+   "precmd()" et "postcmd()" pour altérer l’exécution d’une commande.
+   La valeur de retour est un *flag* indiquant si l’interprétation de
+   commandes par l’interpréteur devrait arrêter. S’il existe une
+   méthode "do_*()" pour la commande *str*, la valeur de retour de
+   cette méthode est renvoyée. Dans le cas contraire, la valeur de
+   retour de la méthode "default()" est renvoyée.
+
+Cmd.emptyline()
+
+   Méthode appelée quand une ligne vide est entrée en réponse à
+   l’invite de commande. Si cette méthode n’est pas surchargée, elle
+   répète la dernière commande non-vide entrée.
+
+Cmd.default(line)
+
+   Méthode appelée lorsque le préfixe de commande d’une ligne entrée
+   n’est pas reconnu. Si cette méthode n’est pas surchargée, elle
+   affiche un message d’erreur et s’arrête.
+
+Cmd.completedefault(text, line, begidx, endidx)
+
+   Méthode appelée pour compléter une ligne entrée quand aucune
+   méthode "complete_*()" spécifique à la commande n’est disponible.
+   Par défaut, elle renvoie une liste vide.
+
+Cmd.precmd(line)
+
+   Méthode de rappel exécutée juste avant que la ligne de commande
+   *line* ne soit interprétée, mais après que l’invite de commande ait
+   été généré et affiché. Cette méthode existe afin d’être surchargée
+   par des classes filles de "Cmd". La valeur de retour est utilisée
+   comme la commande qui sera exécutée par la méthode "onecmd()".
+   L’implémentation de "precmd()" peut réécrire la commande ou
+   simplement renvoyer *line* sans modification.
+
+Cmd.postcmd(stop, line)
+
+   Méthode de rappel exécutée juste après qu’une commande ait été
+   exécutée. Cette méthode existe afin d’être surchargée par des
+   classes filles de "Cmd". *line est la ligne de commande ayant été
+   exécutée et *stop* est un *flag* indiquant si l’exécution sera
+   terminée après un appel à "postcmd()". *stop* sera la valeur de
+   retour de "onecmd()". La valeur de retour de cette méthode sera
+   utilisée comme nouvelle valeur pour le *flag* interne correspondant
+   à *stop*. Renvoyer *False* permettra à l’interprétation de
+   continuer.
+
+Cmd.preloop()
+
+   Méthode de rappel exécutée une fois lorsque "cmdloop()" est
+   appelée. Cette méthode existe afin d’être surchargée par des
+   classes filles de "Cmd".
+
+Cmd.postloop()
+
+   Méthode de rappel exécutée une fois lorsque "cmdloop()" va
+   s’arrêter. Cette méthode existe afin d’être surchargée par des
+   classes filles de "Cmd".
+
+Les instances de classes filles de "Cmd" possèdent des variables
+d’instance publiques:
+
+Cmd.prompt
+
+   L’invite de commande affiché pour solliciter une entrée.
+
+Cmd.identchars
+
+   La chaîne de caractères acceptée en tant que préfixe de commande.
+
+Cmd.lastcmd
+
+   Le dernier préfixe de commande non-vide vu.
+
+Cmd.cmdqueue
+
+   Une liste de lignes entrées en file. La liste *cmdqueue* est
+   vérifiée dans "cmdloop()" lorsqu’une nouvelle entrée est
+   nécessitée; si elle n’est pas vide, ses éléments seront traités
+   dans l’ordre, comme si ils avaient entrés dans l’invite de
+   commande.
+
+Cmd.intro
+
+   Une chaîne de caractères à afficher en introduction ou banière.
+   Peut être surchargée en passant un argument à la méthode
+   "cmdloop()".
+
+Cmd.doc_header
+
+   L’en-tête à afficher si la sortie de l’aide possède une section
+   pour les commandes documentées.
+
+Cmd.misc_header
+
+   L’en-tête à afficher si la sortie de l’aide possède une section
+   pour divers sujets (c’est-à-dire qu’il existe des méthodes
+   "help_*()" sans méthodes "do_*()" correspondantes).
+
+Cmd.undoc_header
+
+   L’en-tête à afficher si la sortie de l’aide possède une section
+   pour les commandes non documentées (c’est-à-dire qu’il existe des
+   méthodes "dop_*()" sans méthodes "help_*()" correspondantes).
+
+Cmd.ruler
+
+   Le caractère utilisé pour afficher des lignes de séparation sous
+   les en-têtes de messages d’aide. Si il est vide, aucune ligne de
+   séparation n’est affichée. Par défaut, ce caractère vaut "'='".
+
+Cmd.use_rawinput
+
+   A flag, defaulting to true.  If true, "cmdloop()" uses
+   "raw_input()" to display a prompt and read the next command; if
+   false, "sys.stdout.write()" and "sys.stdin.readline()" are used.
+   (This means that by importing "readline", on systems that support
+   it, the interpreter will automatically support **Emacs**-like line
+   editing  and command-history keystrokes.)

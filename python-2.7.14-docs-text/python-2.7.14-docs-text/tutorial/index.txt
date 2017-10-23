@@ -1,0 +1,291 @@
+Le tutoriel Python
+******************
+
+Python est un langage de programmation puissant et facile à apprendre.
+Il dispose de structures de données de haut niveau et d’une approche
+de la programmation orientée objet simple mais efficace. Parce que sa
+syntaxe est élégante, que son typage est dynamique et qu’il est
+interprété, Python est un langage idéal pour l’écriture de scripts et
+le développement rapide d’applications dans de nombreux domaines et
+sur de nombreuses plateformes.
+
+L’interpréteur Python et sa vaste bibliothèque standard sont
+disponibles librement, sous forme de sources ou de binaires, pour
+toutes les plateformes majeures, depuis le site Internet
+http://www.python.org/ et peuvent être librement redistribués. Le même
+site distribue et contient des liens vers des modules, des programmes
+et des outils tiers ainsi que vers de la documentation supplémentaire.
+
+L’interpréteur Python peut être facilement étendu par de nouvelles
+fonctions et types de données implémentés en C ou C++ (ou tout autre
+langage appelable depuis le C). Python est également adapté comme
+langage d’extension pour personnaliser des applications.
+
+Ce tutoriel introduit au lecteur, de façon informelle, les concepts de
+base ainsi que les fonctionnalités du langage Python et de son
+écosystème. Il aide à prendre en main l’interpréteur Python pour une
+utilisation sur des cas pratiques. Les exemples étant indépendants, le
+tutoriel est adapté à une lecture hors ligne.
+
+Pour une description des objets et modules de la bibliothèque
+standard, voyez The Python Standard Library. The Python Language
+Reference présente une définition plus formelle du langage. Pour
+écrire des extensions en C ou en C++, lisez Extending and Embedding
+the Python Interpreter et Python/C API Reference Manual. Des livres
+sont également disponibles qui couvrent Python dans le détail.
+
+L’ambition de ce tutoriel n’est pas d’être exhaustif et de couvrir
+chaque fonctionnalités, ni même toutes les fonctionnalités les plus
+utilisées. Il cherche, par contre, à introduire plusieurs des
+fonctionnalités les plus notables et à vous donner une bonne idée de
+la saveur et du style du langage. Après l’avoir lu, vous serez capable
+de lire et d’écrire des modules et des programmes Python et vous serez
+prêts à en apprendre d’avantage sur les modules de la bibliothèque
+Python décrits dans The Python Standard Library.
+
+Pensez aussi à consulter le Glossaire.
+
+* Mise en bouche
+
+* Utiliser l’interpréteur Python
+
+  * Invoquer l’interpréteur
+
+    * Passage d’arguments
+
+    * Mode interactif
+
+  * L’interpréteur et son environnement
+
+    * Encodage du code source
+
+* Introduction informelle à Python
+
+  * Utiliser Python comme une calculatrice
+
+    * Les nombres
+
+    * Les chaînes de caractères
+
+    * Unicode Strings
+
+    * Les listes
+
+  * Premiers pas vers la programmation
+
+* D’autres outils de contrôle de flux
+
+  * L’instruction "if"
+
+  * L’instruction "for"
+
+  * La fonction "range()"
+
+  * Les instructions "break" et "continue", et les clauses "else" au
+    sein des boucles
+
+  * L’instruction "pass"
+
+  * Définir des fonctions
+
+  * D’avantage sur la définition des fonctions
+
+    * Valeur par défaut des arguments
+
+    * Les arguments nommés
+
+    * Listes d’arguments arbitraires
+
+    * Séparation des listes d’arguments
+
+    * Fonctions anonymes
+
+    * Chaînes de documentation
+
+  * Un style de codage : Intermezzo
+
+* Structures de données
+
+  * Compléments sur les listes
+
+    * Utiliser les listes comme des piles
+
+    * Utiliser les listes comme des files
+
+    * Functional Programming Tools
+
+    * Compréhensions de listes
+
+      * Compréhensions de listes imbriquées
+
+  * L’instruction "del"
+
+  * Tuples et séquences
+
+  * Les ensembles
+
+  * Dictionnaires
+
+  * Techniques de boucles
+
+  * Plus d’informations sur les conditions
+
+  * Comparer des séquences avec d’autres types
+
+* Modules
+
+  * Les modules en détails
+
+    * Exécuter des modules comme des scripts
+
+    * Les dossiers de recherche de modules
+
+    * Fichiers Python « compilés »
+
+  * Modules standards
+
+  * La fonction "dir()"
+
+  * Les paquets
+
+    * Importer * depuis un paquet
+
+    * Références internes dans un paquet
+
+    * Paquets dans plusieurs dossiers
+
+* Les entrées/sorties
+
+  * Formatage de données
+
+    * Anciennes méthodes de formatage de chaînes
+
+  * Lecture et écriture de fichiers
+
+    * Méthodes des objets fichiers
+
+    * Sauvegarder des données structurées avec le module "json"
+
+* Erreurs et exceptions
+
+  * Les erreurs de syntaxe
+
+  * Les exceptions
+
+  * Gestion des exceptions
+
+  * Déclencher des exceptions
+
+  * Exceptions définies par l’utilisateur
+
+  * Définition d’actions de nettoyage
+
+  * Actions de nettoyage prédéfinies
+
+* Classes
+
+  * Quelques mots au sujet des noms et objets
+
+  * Portées et espaces de noms en Python
+
+  * Une première approche des classes
+
+    * Syntaxe de définition des classes
+
+    * Les objets classe
+
+    * Objets instance
+
+    * Les objets méthode
+
+    * Classes et variables d’instance
+
+  * Remarques diverses
+
+  * L’héritage
+
+    * L’héritage multiple
+
+  * Private Variables and Class-local References
+
+  * Trucs et astuces
+
+  * Exceptions Are Classes Too
+
+  * Itérateurs
+
+  * Générateurs
+
+  * Expressions et générateurs
+
+* Survol de la Bibliothèque Standard
+
+  * Interface avec le Système d’Exploitation
+
+  * Jokers sur les noms de Fichiers
+
+  * Paramètres en ligne de Commande
+
+  * Redirection de la sortie d’erreur et fin d’exécution
+
+  * Recherche de motifs dans les Chaînes
+
+  * Mathématiques
+
+  * Accès à internet
+
+  * Dates et heures
+
+  * Compression de donnée
+
+  * Mesure des Performances
+
+  * Contrôle Qualité
+
+  * Piles Fournies
+
+* Survol de la Bibliothèque Standard – Partie II
+
+  * Formatage
+
+  * Gabarits (Templates)
+
+  * Travailler avec des données binaires
+
+  * Threads
+
+  * Journalisation
+
+  * Références faibles
+
+  * Outils pour travailler avec des listes
+
+  * Arithmétique décimale à Virgule Flottante
+
+* Et Maintenant ?
+
+* Édition interactive des entrées et substitution d’historique
+
+  * Line Editing
+
+  * History Substitution
+
+  * Key Bindings
+
+  * Alternatives à l’interpréteur interactif
+
+* Arithmétique en Nombre à Virgule Flottante : Problèmes et Limites
+
+  * Erreurs de représentation
+
+* Annexe
+
+  * Mode interactif
+
+    * Gestion des erreurs
+
+    * Scripts Python exécutables
+
+    * La configuration du mode interactif
+
+    * Les modules de Personnalisation

@@ -1,0 +1,21 @@
+Questions fréquemment posées sur Python
+***************************************
+
+* FAQ Générale sur Python
+
+* Programming FAQ
+
+* FAQ Histoire et Design
+
+* Bibliothèque et Extension FAQ
+
+* FAQ Extension/Intégration
+
+* Ce n’est pas forcément une question simple. Si vous êtes déjà
+  familier avec le lancement de programmes depuis la ligne de commande
+  de Windows alors tout semblera évident; Sinon, vous auriez besoin
+  d’être un peu guidé.
+
+* FAQ Interface Graphique
+
+* « Why is Python Installed on my Computer? » FAQ

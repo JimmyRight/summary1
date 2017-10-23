@@ -1,0 +1,16 @@
+Services Divers
+***************
+
+Les modules documentés dans ce chapitre fournissent différents
+services disponnibles dans toutes les version de Python. En voici un
+aperçu :
+
+* "formatter" — Generic output formatting
+
+  * The Formatter Interface
+
+  * Formatter Implementations
+
+  * The Writer Interface
+
+  * Writer Implementations

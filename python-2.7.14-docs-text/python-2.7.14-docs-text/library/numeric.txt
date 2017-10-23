@@ -1,0 +1,95 @@
+Numeric and Mathematical Modules
+********************************
+
+The modules described in this chapter provide numeric and math-related
+functions and data types. The "numbers" module defines an abstract
+hierarchy of numeric types. The "math" and "cmath" modules contain
+various mathematical functions for floating-point and complex numbers.
+For users more interested in decimal accuracy than in speed, the
+"decimal" module supports exact representations of decimal numbers.
+
+The following modules are documented in this chapter:
+
+* "numbers" — Numeric abstract base classes
+
+  * The numeric tower
+
+  * Notes for type implementors
+
+    * Adding More Numeric ABCs
+
+    * Implementing the arithmetic operations
+
+* Fonctions mathématiques — "math"
+
+  * Fonctions arithmétiques et de représentation
+
+  * Fonctions logarithme et exponentielle
+
+  * Fonctions trigonométriques
+
+  * Conversion angulaire
+
+  * Fonctions hyperboliques
+
+  * Fonctions spéciales
+
+  * Constantes
+
+* Fonctions mathématiques pour nombres complexes — "cmath"
+
+  * Conversion vers et à partir de coordonnées polaires
+
+  * Fonctions logarithme et exponentielle
+
+  * Fonctions trigonométriques
+
+  * Fonctions hyperboliques
+
+  * Fonctions de classifications
+
+  * Constantes
+
+* "decimal" — Decimal fixed point and floating point arithmetic
+
+  * Quick-start Tutorial
+
+  * Decimal objects
+
+    * Logical operands
+
+  * Context objects
+
+  * Signals
+
+  * Floating Point Notes
+
+    * Mitigating round-off error with increased precision
+
+    * Special values
+
+  * Working with threads
+
+  * Recipes
+
+  * Decimal FAQ
+
+* "fractions" — Rational numbers
+
+* "random" — Generate pseudo-random numbers
+
+* "itertools" — Fonctions créant des itérateurs pour boucler
+  efficacement.
+
+  * Fonctions d”*itertool*
+
+  * Recipes
+
+* "functools" — Fonctions de haut niveau et opérations sur des
+  objets appelables
+
+  * Objets "partial"
+
+* "operator" — Standard operators as functions
+
+  * Mapping Operators to Functions

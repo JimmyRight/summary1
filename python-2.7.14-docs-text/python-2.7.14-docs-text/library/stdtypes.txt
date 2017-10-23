@@ -1,0 +1,2893 @@
+Types natifs
+************
+
+Les sections suivantes décrivent les types standards intégrés à
+l’interpréteur.
+
+Note: Historically (until release 2.2), Python’s built-in types have
+  differed from user-defined types because it was not possible to use
+  the built-in types as the basis for object-oriented inheritance.
+  This limitation no longer exists.
+
+The principal built-in types are numerics, sequences, mappings, files,
+classes, instances and exceptions.
+
+Some operations are supported by several object types; in particular,
+practically all objects can be compared, tested for truth value, and
+converted to a string (with the repr() function or the slightly
+different "str()" function).  The latter function is implicitly used
+when an object is written by the "print()" function.
+
+
+Valeurs booléennes
+==================
+
+Any object can be tested for truth value, for use in an "if" or
+"while" condition or as operand of the Boolean operations below. The
+following values are considered false:
+
+* "None"
+
+* "False"
+
+* zero of any numeric type, for example, "0", "0L", "0.0", "0j".
+
+* any empty sequence, for example, "''", "()", "[]".
+
+* any empty mapping, for example, "{}".
+
+* instances of user-defined classes, if the class defines a
+  "__nonzero__()" or "__len__()" method, when that method returns the
+  integer zero or "bool" value "False". [1]
+
+All other values are considered true — so objects of many types are
+always true.
+
+Les opérations et fonctions natives dont le résultat est booléen
+donnent toujours "0" ou "False" pour faux et "1" ou "True" pour vrai,
+sauf indication contraire. (Exception importante : les opérations
+booléennes "or" et "and" renvoient toujours l’une de leurs opérandes.)
+
+
+Opérations booléennes — "and", "or", "not"
+==========================================
+
+Ce sont les opérations booléennes, classées par priorité ascendante :
+
++---------------+-----------------------------------+---------+
+| Opération     | Résultat                          | Notes   |
++===============+===================================+=========+
+| "x or y"      | si *x* est faux, alors *y*, sinon | (1)     |
+|               | *x*                               |         |
++---------------+-----------------------------------+---------+
+| "x and y"     | si *x* est faux, alors *x*, sinon | (2)     |
+|               | *y*                               |         |
++---------------+-----------------------------------+---------+
+| "not x"       | si *x* est faux, alors "True",    | (3)     |
+|               | sinon "False"                     |         |
++---------------+-----------------------------------+---------+
+
+Notes :
+
+1. Ceci est un opérateur court-circuit : il n’évalue le deuxième
+   argument que si le premier est faux.
+
+2. Ceci est un opérateur court-circuit, il n’évalue le deuxième
+   argument si le premier est vrai.
+
+3. "not" a une priorité inférieure à celle des opérateurs non-
+   booléens, donc "not a == b" est interprété comme "not (a == b)" et
+   "a == not b" est une erreur de syntaxe.
+
+
+Comparaisons
+============
+
+Comparison operations are supported by all objects.  They all have the
+same priority (which is higher than that of the Boolean operations).
+Comparisons can be chained arbitrarily; for example, "x < y <= z" is
+equivalent to "x < y and y <= z", except that *y* is evaluated only
+once (but in both cases *z* is not evaluated at all when "x < y" is
+found to be false).
+
+Ce tableau résume les opérations de comparaison :
+
++--------------+---------------------------+---------+
+| Opération    | Signification             | Notes   |
++==============+===========================+=========+
+| "<"          | strictement inférieur     |         |
++--------------+---------------------------+---------+
+| "<="         | inférieur ou égal         |         |
++--------------+---------------------------+---------+
+| ">"          | strictement supérieur     |         |
++--------------+---------------------------+---------+
+| ">="         | supérieur ou égal         |         |
++--------------+---------------------------+---------+
+| "=="         | égal                      |         |
++--------------+---------------------------+---------+
+| "!="         | différent                 | (1)     |
++--------------+---------------------------+---------+
+| "is"         | identité d’objet          |         |
++--------------+---------------------------+---------+
+| "is not"     | contraire de l’identité   |         |
+|              | d’objet                   |         |
++--------------+---------------------------+---------+
+
+Notes :
+
+1. "!=" can also be written "<>", but this is an obsolete usage
+   kept for backwards compatibility only. New code should always use
+   "!=".
+
+Objects of different types, except different numeric types and
+different string types, never compare equal; such objects are ordered
+consistently but arbitrarily (so that sorting a heterogeneous array
+yields a consistent result). Furthermore, some types (for example,
+file objects) support only a degenerate notion of comparison where any
+two objects of that type are unequal.  Again, such objects are ordered
+arbitrarily but consistently. The "<", "<=", ">" and ">=" operators
+will raise a "TypeError" exception when any operand is a complex
+number.
+
+Non-identical instances of a class normally compare as non-equal
+unless the class defines the "__eq__()" method or the "__cmp__()"
+method.
+
+Instances of a class cannot be ordered with respect to other instances
+of the same class, or other types of object, unless the class defines
+either enough of the rich comparison methods ("__lt__()", "__le__()",
+"__gt__()", and "__ge__()") or the "__cmp__()" method.
+
+**CPython implementation detail:** Objects of different types except
+numbers are ordered by their type names; objects of the same types
+that don’t support proper comparison are ordered by their address.
+
+Two more operations with the same syntactic priority, "in" and "not
+in", are supported only by sequence types (below).
+
+
+Numeric Types — "int", "float", "long", "complex"
+=================================================
+
+There are four distinct numeric types: *plain integers*, *long
+integers*, *floating point numbers*, and *complex numbers*. In
+addition, Booleans are a subtype of plain integers. Plain integers
+(also just called *integers*) are implemented using "long" in C, which
+gives them at least 32 bits of precision ("sys.maxint" is always set
+to the maximum plain integer value for the current platform, the
+minimum value is "-sys.maxint - 1").  Long integers have unlimited
+precision.  Floating point numbers are usually implemented using
+"double" in C; information about the precision and internal
+representation of floating point numbers for the machine on which your
+program is running is available in "sys.float_info".  Complex numbers
+have a real and imaginary part, which are each a floating point
+number.  To extract these parts from a complex number *z*, use
+"z.real" and "z.imag". (The standard library includes additional
+numeric types, "fractions" that hold rationals, and "decimal" that
+hold floating-point numbers with user-definable precision.)
+
+Numbers are created by numeric literals or as the result of built-in
+functions and operators.  Unadorned integer literals (including
+binary, hex, and octal numbers) yield plain integers unless the value
+they denote is too large to be represented as a plain integer, in
+which case they yield a long integer. Integer literals with an "'L'"
+or "'l'" suffix yield long integers ("'L'" is preferred because "1l"
+looks too much like eleven!).  Numeric literals containing a decimal
+point or an exponent sign yield floating point numbers. Appending
+"'j'" or "'J'" to a numeric literal yields an imaginary number (a
+complex number with a zero real part) which you can add to an integer
+or float to get a complex number with real and imaginary parts.
+
+Python fully supports mixed arithmetic: when a binary arithmetic
+operator has operands of different numeric types, the operand with the
+« narrower » type is widened to that of the other, where plain integer
+is narrower than long integer is narrower than floating point is
+narrower than complex. Comparisons between numbers of mixed type use
+the same rule. [2] The constructors "int()", "long()", "float()", and
+"complex()" can be used to produce numbers of a specific type.
+
+All built-in numeric types support the following operations. See The
+power operator and later sections for the operators” priorities.
+
++----------------------+-----------------------------------+----------+
+| Opération            | Résultat                          | Notes    |
++======================+===================================+==========+
+| "x + y"              | somme de *x* et *y*               |          |
++----------------------+-----------------------------------+----------+
+| "x - y"              | différence de *x* et *y*          |          |
++----------------------+-----------------------------------+----------+
+| "x * y"              | produit de *x* et *y*             |          |
++----------------------+-----------------------------------+----------+
+| "x / y"              | quotient de *x* et *y*            | (1)      |
++----------------------+-----------------------------------+----------+
+| "x // y"             | (floored) quotient of *x* and *y* | (4)(5)   |
++----------------------+-----------------------------------+----------+
+| "x % y"              | reste de "x / y"                  | (4)      |
++----------------------+-----------------------------------+----------+
+| "-x"                 | négatif de *x*                    |          |
++----------------------+-----------------------------------+----------+
+| "+x"                 | *x* inchangé                      |          |
++----------------------+-----------------------------------+----------+
+| "abs(x)"             | valeur absolue de *x*             | (3)      |
++----------------------+-----------------------------------+----------+
+| "int(x)"             | *x* converti en nombre entier     | (2)      |
++----------------------+-----------------------------------+----------+
+| "long(x)"            | *x* converted to long integer     | (2)      |
++----------------------+-----------------------------------+----------+
+| "float(x)"           | *x* converti en nombre à virgule  | (6)      |
+|                      | flottante                         |          |
++----------------------+-----------------------------------+----------+
+| "complex(re,im)"     | un nombre complexe avec *re* pour |          |
+|                      | partie réelle et *im* pour partie |          |
+|                      | imaginaire. *im* vaut zéro par    |          |
+|                      | défaut.                           |          |
++----------------------+-----------------------------------+----------+
+| "c.conjugate()"      | conjugate of the complex number   |          |
+|                      | *c*. (Identity on real numbers)   |          |
++----------------------+-----------------------------------+----------+
+| "divmod(x, y)"       | la paire "(x // y, x % y)"        | (3)(4)   |
++----------------------+-----------------------------------+----------+
+| "pow(x, y)"          | *x* à la puissance *y*            | (3)(7)   |
++----------------------+-----------------------------------+----------+
+| "x ** y"             | *x* à la puissance *y*            | (7)      |
++----------------------+-----------------------------------+----------+
+
+Notes :
+
+1. For (plain or long) integer division, the result is an integer.
+   The result is always rounded towards minus infinity: 1/2 is 0,
+   (-1)/2 is -1, 1/(-2) is -1, and (-1)/(-2) is 0.  Note that the
+   result is a long integer if either operand is a long integer,
+   regardless of the numeric value.
+
+2. Conversion from floats using "int()" or "long()" truncates
+   toward zero like the related function, "math.trunc()".  Use the
+   function "math.floor()" to round downward and "math.ceil()" to
+   round upward.
+
+3. See Fonctions Natives for a full description.
+
+4. Obsolète depuis la version 2.3: The floor division operator, the
+   modulo operator, and the "divmod()" function are no longer defined
+   for complex numbers.  Instead, convert to a floating point number
+   using the "abs()" function if appropriate.
+
+5. Also referred to as integer division.  The resultant value is a
+   whole integer, though the result’s type is not necessarily int.
+
+6. float accepte aussi les chaînes « nan » et « inf » avec un
+   préfixe optionnel « + » ou « - » pour *Not a Number* (NaN) et les
+   infinis positif ou négatif.
+
+   Nouveau dans la version 2.6.
+
+7. Python définit "pow(0, 0)" et "0 ** 0" valant "1", ​puisque
+   c’est courant pour les langages de programmation, et logique.
+
+All "numbers.Real" types ("int", "long", and "float") also include the
+following operations:
+
++----------------------+-----------------------------------------------+
+| Opération            | Résultat                                      |
++======================+===============================================+
+| "math.trunc(x)"      | *x* tronqué à l”"Integral"                    |
++----------------------+-----------------------------------------------+
+| "round(x[, n])"      | *x* rounded to *n* digits, rounding ties away |
+|                      | from zero. If *n* is omitted, it defaults to  |
+|                      | 0.                                            |
++----------------------+-----------------------------------------------+
+| "math.floor(x)"      | the greatest integer as a float <= *x*        |
++----------------------+-----------------------------------------------+
+| "math.ceil(x)"       | the least integer as a float >= *x*           |
++----------------------+-----------------------------------------------+
+
+
+Opérations sur les bits des nombres entiers
+-------------------------------------------
+
+Bitwise operations only make sense for integers.  Negative numbers are
+treated as their 2’s complement value (this assumes a sufficiently
+large number of bits that no overflow occurs during the operation).
+
+Les priorités de toutes les opération à deux opérandes sur des bits
+sont inférieures aux opérations numériques et plus élevées que les
+comparaisons ; l’opération unaire "~" a la même priorité que les
+autres opérations numériques unaires ("+" et "-").
+
+Ce tableau répertorie les opérations binaires triées par priorité
+ascendante :
+
++--------------+----------------------------------+------------+
+| Opération    | Résultat                         | Notes      |
++==============+==================================+============+
+| "x | y"      | *ou <or>* binaire de *x* et *y*  |            |
++--------------+----------------------------------+------------+
+| "x ^ y"      | *ou <or>* exclusive binaire de   |            |
+|              | *x* et *y*                       |            |
++--------------+----------------------------------+------------+
+| "x & y"      | *et binaire <and>* de *x* et *y* |            |
++--------------+----------------------------------+------------+
+| "x << n"     | *x* décalé vers la gauche de *n* | (1)(2)     |
+|              | bits                             |            |
++--------------+----------------------------------+------------+
+| "x >> n"     | *x* décalé vers la droite de *n* | (1)(3)     |
+|              | bits                             |            |
++--------------+----------------------------------+------------+
+| "~x"         | les bits de *x*, inversés        |            |
++--------------+----------------------------------+------------+
+
+Notes :
+
+1. Des valeurs de décalage négatives sont illégales et provoquent
+   une exception "ValueError".
+
+2. A left shift by *n* bits is equivalent to multiplication by
+   "pow(2, n)".  A long integer is returned if the result exceeds the
+   range of plain integers.
+
+3. A right shift by *n* bits is equivalent to division by "pow(2,
+   n)".
+
+
+Méthodes supplémentaires sur les entiers
+----------------------------------------
+
+The integer types implement the "numbers.Integral" *abstract base
+class*. In addition, they provide one more method:
+
+int.bit_length()
+
+long.bit_length()
+
+   Renvoie le nombre de bits nécessaires pour représenter un nombre
+   entier en binaire, à l’exclusion du signe et des zéros non
+   significatifs :
+
+      >>> n = -37
+      >>> bin(n)
+      '-0b100101'
+      >>> n.bit_length()
+      6
+
+   Plus précisément, si "x" est différent de zéro, "x.bit_length()"
+   est le nombre entier positif unique, "k" tel que "2**(k-1) <=
+   abs(x) < 2**k". Équivalemment, quand "abs(x)" est assez petit pour
+   avoir un logarithme correctement arrondi, "k = 1 + int(log(abs(x),
+   2))". Si "x" est nul, alors "x.bit_length()" donne "0".
+
+   Équivalent à :
+
+      def bit_length(self):
+          s = bin(self)       # binary representation:  bin(-37) --> '-0b100101'
+          s = s.lstrip('-0b') # remove leading zeros and minus sign
+          return len(s)       # len('100101') --> 6
+
+   Nouveau dans la version 2.7.
+
+
+Méthodes supplémentaires sur les nombres à virgule flottante
+------------------------------------------------------------
+
+Le type *float* implémente la *classe de base abstraite*
+"numbers.Real" et a également les méthodes suivantes.
+
+float.as_integer_ratio()
+
+   Renvoie une paire de nombres entiers dont le rapport est exactement
+   égal au nombre d’origine et avec un dénominateur positif. Lève
+   "OverflowError" avec un infini et "ValueError" avec un NaN.
+
+   Nouveau dans la version 2.6.
+
+float.is_integer()
+
+   Donne "True" si l’instance de *float* est finie avec une valeur
+   entière, et "False" autrement :
+
+      >>> (-2.0).is_integer()
+      True
+      >>> (3.2).is_integer()
+      False
+
+   Nouveau dans la version 2.6.
+
+Deux méthodes prennent en charge la conversion vers et à partir de
+chaînes hexadécimales. Étant donné que les *float* de Python sont
+stockés en interne sous forme de nombres binaires, la conversion d’un
+*float* depuis ou vers une chaine décimale implique généralement une
+petite erreur d’arrondi. En revanche, les chaînes hexadécimales
+permettent de représenter exactement les nombres à virgule flottante.
+Cela peut être utile lors du débogage, et dans un travail numérique.
+
+float.hex()
+
+   Donne une représentation d’un nombre à virgule flottante sous forme
+   de chaîne hexadécimale. Pour les nombres à virgule flottante finis,
+   cette représentation comprendra toujours un préfixe "0x", un
+   suffixe "p", et un exposant.
+
+   Nouveau dans la version 2.6.
+
+float.fromhex(s)
+
+   Méthode de classe pour obtenir le *float* représenté par une chaîne
+   de caractères hexadécimale *s*. La chaîne *s* peut contenir des
+   espaces avant et après le chiffre.
+
+   Nouveau dans la version 2.6.
+
+Notez que "float.hex()" est une méthode d’instance, alors que
+"float.fromhex()" est une méthode de classe.
+
+Une chaîne hexadécimale prend la forme :
+
+   [sign] ['0x'] integer ['.' fraction] ['p' exponent]
+
+où "sign" peut être soit "+" soit "-", "integer" et "fraction" sont
+des chaînes de chiffres hexadécimales, et "exponent" est un entier
+décimal facultativement signé. La casse n’est pas significative, et il
+doit y avoir au moins un chiffre hexadécimal soit dans le nombre
+entier soit dans la fraction. Cette syntaxe est similaire à la syntaxe
+spécifiée dans la section 6.4.4.2 de la norme C99, et est aussi la
+syntaxe utilisée à partir de Java 1.5. En particulier, la sortie de
+"float.hex()" est utilisable comme valeur hexadécimale à virgule
+flottante littérale en C ou Java, et des chaînes hexadécimales
+produites en C via un format "%a" ou Java via "Double.toHexString"
+sont acceptées par "float.fromhex()".
+
+Notez que l’exposant est écrit en décimal plutôt qu’en hexadécimal, et
+qu’il donne la puissance de 2 par lequel multiplier le coefficient.
+Par exemple, la chaîne hexadécimale "0x3.a7p10" représente le nombre à
+virgule flottante "(3 + 10./16 + 7./16**2) *2.0**10", ou "3740.0"
+
+   >>> float.fromhex('0x3.a7p10')
+   3740.0
+
+L’application de la conversion inverse à "3740.0" donne une chaîne
+hexadécimale différente représentant le même nombre
+
+   >>> float.hex(3740.0)
+   '0x1.d380000000000p+11'
+
+
+Les types Itérateurs
+====================
+
+Nouveau dans la version 2.2.
+
+Python supporte un concept d’itération sur les conteneurs. C’est
+implémenté en utilisant deux méthodes distinctes qui permettent aux
+classes définies par l’utilisateur de devenir itérables. Les
+séquences, décrites plus bas en détail, supportent toujours les
+méthodes d’itération.
+
+Une méthode doit être définie afin que les objets conteneurs
+supportent l’itération :
+
+container.__iter__()
+
+   Donne un objet itérateur. L’objet doit implémenter le protocole
+   d’itération décrit ci-dessous. Si un conteneur prend en charge
+   différents types d’itération, d’autres méthodes peuvent être
+   fournies pour obtenir spécifiquement les itérateurs pour ces types
+   d’itération. (Exemple d’un objet supportant plusieurs formes
+   d’itération : une structure d’arbre pouvant être parcourue en
+   largeur ou en profondeur.) Cette méthode correspond à l’attribut
+   "tp_iter" de la structure du type des objets Python dans l’API
+   Python/C.
+
+Les itérateurs eux-mêmes doivent implémenter les deux méthodes
+suivantes, qui forment ensemble le *protocole d’itérateur <iterator
+protocol>* :
+
+iterator.__iter__()
+
+   Donne l’objet itérateur lui-même. Cela est nécessaire pour
+   permettre à la fois à des conteneurs et des itérateurs d’être
+   utilisés avec les instructions "for" et "in". Cette méthode
+   correspond à l’attribut "tp_iter" de la structure des types des
+   objets Python dans l’API Python/C.
+
+iterator.next()
+
+   Donne l’élément suivant du conteneur. S’il n’y a pas d’autres
+   éléments, une exception "StopIteration" est levée. Cette méthode
+   correspond à l’attribut "PyTypeObject.tp_iternext" de la structure
+   du type des objets Python dans l’API Python/C.
+
+Python définit plusieurs objets itérateurs pour itérer sur les types
+standards ou spécifiques de séquence, de  dictionnaires et d’autres
+formes plus spécialisées. Les types spécifiques ne sont  pas
+importants au-delà de leur implémentation du protocole d’itération.
+
+The intention of the protocol is that once an iterator’s "next()"
+method raises "StopIteration", it will continue to do so on subsequent
+calls. Implementations that do not obey this property are deemed
+broken.  (This constraint was added in Python 2.3; in Python 2.2,
+various iterators are broken according to this rule.)
+
+
+Types Générateurs
+-----------------
+
+Python’s *generator*s provide a convenient way to implement the
+iterator protocol.  If a container object’s "__iter__()" method is
+implemented as a generator, it will automatically return an iterator
+object (technically, a generator object) supplying the "__iter__()"
+and "next()" methods.  More information about generators can be found
+in the documentation for the yield expression.
+
+
+Sequence Types — "str", "unicode", "list", "tuple", "bytearray", "buffer", "xrange"
+===================================================================================
+
+There are seven sequence types: strings, Unicode strings, lists,
+tuples, bytearrays, buffers, and xrange objects.
+
+For other containers see the built in "dict" and "set" classes, and
+the "collections" module.
+
+String literals are written in single or double quotes: "'xyzzy'",
+""frobozz"".  See String literals for more about string literals.
+Unicode strings are much like strings, but are specified in the syntax
+using a preceding "'u'" character: "u'abc'", "u"def"". In addition to
+the functionality described here, there are also string-specific
+methods described in the Méthodes de chaînes de caractères section.
+Lists are constructed with square brackets, separating items with
+commas: "[a, b, c]". Tuples are constructed by the comma operator (not
+within square brackets), with or without enclosing parentheses, but an
+empty tuple must have the enclosing parentheses, such as "a, b, c" or
+"()".  A single item tuple must have a trailing comma, such as "(d,)".
+
+Bytearray objects are created with the built-in function
+"bytearray()".
+
+Buffer objects are not directly supported by Python syntax, but can be
+created by calling the built-in function "buffer()".  They don’t
+support concatenation or repetition.
+
+Objects of type xrange are similar to buffers in that there is no
+specific syntax to create them, but they are created using the
+"xrange()" function.  They don’t support slicing, concatenation or
+repetition, and using "in", "not in", "min()" or "max()" on them is
+inefficient.
+
+Most sequence types support the following operations.  The "in" and
+"not in" operations have the same priorities as the comparison
+operations.  The "+" and "*" operations have the same priority as the
+corresponding numeric operations. [3] Additional methods are provided
+for Types de séquences mutables.
+
+This table lists the sequence operations sorted in ascending priority.
+In the table, *s* and *t* are sequences of the same type; *n*, *i* and
+*j* are integers:
+
++--------------------+----------------------------------+------------+
+| Opération          | Résultat                         | Notes      |
++====================+==================================+============+
+| "x in s"           | "True" si un élément de *s* est  | (1)        |
+|                    | égal à *x*, sinon "False"        |            |
++--------------------+----------------------------------+------------+
+| "x not in s"       | "False" si un élément de *s* est | (1)        |
+|                    | égal à *x*, sinon "True"         |            |
++--------------------+----------------------------------+------------+
+| "s + t"            | la concaténation de *s* et *t*   | (6)        |
++--------------------+----------------------------------+------------+
+| "s * n, n * s"     | équivalent à ajouter *s* *n*     | (2)        |
+|                    | fois à lui même                  |            |
++--------------------+----------------------------------+------------+
+| "s[i]"             | *i*ème élément de *s* en         | (3)        |
+|                    | commençant par 0                 |            |
++--------------------+----------------------------------+------------+
+| "s[i:j]"           | tranche (*slice*) de *s* de *i*  | (3)(4)     |
+|                    | à *j*                            |            |
++--------------------+----------------------------------+------------+
+| "s[i:j:k]"         | tranche (*slice*) de *s* de *i*  | (3)(5)     |
+|                    | à *j* avec un pas de *k*         |            |
++--------------------+----------------------------------+------------+
+| "len(s)"           | longueur de *s*                  |            |
++--------------------+----------------------------------+------------+
+| "min(s)"           | plus petit élément de *s*        |            |
++--------------------+----------------------------------+------------+
+| "max(s)"           | plus grand élément de *s*        |            |
++--------------------+----------------------------------+------------+
+| "s.index(x)"       | index of the first occurrence of |            |
+|                    | *x* in *s*                       |            |
++--------------------+----------------------------------+------------+
+| "s.count(x)"       | nombre total d’occurrences de    |            |
+|                    | *x* dans *s*                     |            |
++--------------------+----------------------------------+------------+
+
+Sequence types also support comparisons. In particular, tuples and
+lists are compared lexicographically by comparing corresponding
+elements. This means that to compare equal, every element must compare
+equal and the two sequences must be of the same type and have the same
+length. (For full details see Comparaisons in the language reference.)
+
+Notes :
+
+1. When *s* is a string or Unicode string object the "in" and "not
+   in" operations act like a substring test.  In Python versions
+   before 2.3, *x* had to be a string of length 1. In Python 2.3 and
+   beyond, *x* may be a string of any length.
+
+2. Values of *n* less than "0" are treated as "0" (which yields an
+   empty sequence of the same type as *s*).  Note that items in the
+   sequence *s* are not copied; they are referenced multiple times.
+   This often haunts new Python programmers; consider:
+
+   >>> lists = [[]] * 3
+   >>> lists
+   [[], [], []]
+   >>> lists[0].append(3)
+   >>> lists
+   [[3], [3], [3]]
+
+   What has happened is that "[[]]" is a one-element list containing
+   an empty list, so all three elements of "[[]] * 3" are references
+   to this single empty list.  Modifying any of the elements of
+   "lists" modifies this single list. You can create a list of
+   different lists this way:
+
+   >>> lists = [[] for i in range(3)]
+   >>> lists[0].append(3)
+   >>> lists[1].append(5)
+   >>> lists[2].append(7)
+   >>> lists
+   [[3], [5], [7]]
+
+   De plus amples explications sont disponibles dans la FAQ à la
+   question Comment puis-je créer une liste à plusieurs dimensions?.
+
+3. Si *i* ou *j* sont négatifs, l’indice est relatif à la fin de la
+   séquence *s* : "len(s) + i" ou "len(s) + j" est substitué. Mais
+   notez que "-0" est toujours "0".
+
+4. La tranche de *s* de *i* à *j* est définie comme la séquence
+   d’éléments d’indice *k* tels que "i <= k < j". Si *i* ou *j* est
+   supérieur à "len(s)", "len(s)" est utilisé. Si *i* est omis ou
+   "None", "0" est utilisé. Si *j* est omis ou "None", "len(s)" est
+   utilisé. Si *i* est supérieure ou égale à *j*, la tranche est vide.
+
+5. La tranche de *s* de *i* à *j* avec un pas de *k* est définie
+   comme la séquence d’éléments d’indice "x = i + n*k" tels que "0 <=
+   n < (j-i)/k". En d’autres termes, les indices sont "i", "i+k",
+   "i+2*k", "i+3*k" et ainsi de suite, en arrêtant lorsque *j* est
+   atteint (mais jamais inclus). Si *k* est positif, *i* et *j* sont
+   réduits, s’ils sont plus grands, à "len(s)". Si *k* est négatif,
+   *i* et *j* sont réduits à "len(s) - 1" s’ils sont plus grands. Si
+   *i* ou *j* sont omis ou sont "None", ils deviennent des valeurs «
+   extrêmes » (où l’ordre dépend du signe de *k*). Remarquez, *k* ne
+   peut pas valoir zéro. Si *k* est "None", il est traité comme "1".
+
+6. **CPython implementation detail:** If *s* and *t* are both
+   strings, some Python implementations such as CPython can usually
+   perform an in-place optimization for assignments of the form "s = s
+   + t" or "s += t".  When applicable, this optimization makes
+   quadratic run-time much less likely.  This optimization is both
+   version and implementation dependent.  For performance sensitive
+   code, it is preferable to use the "str.join()" method which assures
+   consistent linear concatenation performance across versions and
+   implementations.
+
+   Modifié dans la version 2.4: Formerly, string concatenation never
+   occurred in-place.
+
+
+Méthodes de chaînes de caractères
+---------------------------------
+
+Below are listed the string methods which both 8-bit strings and
+Unicode objects support.  Some of them are also available on
+"bytearray" objects.
+
+In addition, Python’s strings support the sequence type methods
+described in the Sequence Types — str, unicode, list, tuple,
+bytearray, buffer, xrange section. To output formatted strings use
+template strings or the "%" operator described in the String
+Formatting Operations section. Also, see the "re" module for string
+functions based on regular expressions.
+
+str.capitalize()
+
+   Renvoie une copie de la chaîne avec son premier caractère en
+   majuscule et le reste en minuscule.
+
+   For 8-bit strings, this method is locale-dependent.
+
+str.center(width[, fillchar])
+
+   Return centered in a string of length *width*. Padding is done
+   using the specified *fillchar* (default is a space).
+
+   Modifié dans la version 2.4: Support for the *fillchar* argument.
+
+str.count(sub[, start[, end]])
+
+   Donne le nombre d’occurrences de *sub* ne se chevauchant pas dans
+   le *range* [*start*, *end*]. Les arguments facultatifs *start* et
+   *end* sont interprétés comme pour des *slices*.
+
+str.decode([encoding[, errors]])
+
+   Decodes the string using the codec registered for *encoding*.
+   *encoding* defaults to the default string encoding.  *errors* may
+   be given to set a different error handling scheme.  The default is
+   "'strict'", meaning that encoding errors raise "UnicodeError".
+   Other possible values are "'ignore'", "'replace'" and any other
+   name registered via "codecs.register_error()", see section Codec
+   Base Classes.
+
+   Nouveau dans la version 2.2.
+
+   Modifié dans la version 2.3: Support for other error handling
+   schemes added.
+
+   Modifié dans la version 2.7: Gestion des arguments par mot clef.
+
+str.encode([encoding[, errors]])
+
+   Return an encoded version of the string.  Default encoding is the
+   current default string encoding.  *errors* may be given to set a
+   different error handling scheme.  The default for *errors* is
+   "'strict'", meaning that encoding errors raise a "UnicodeError".
+   Other possible values are "'ignore'", "'replace'",
+   "'xmlcharrefreplace'", "'backslashreplace'" and any other name
+   registered via "codecs.register_error()", see section Codec Base
+   Classes. For a list of possible encodings, see section Standard
+   Encodings.
+
+   Nouveau dans la version 2.0.
+
+   Modifié dans la version 2.3: Support for "'xmlcharrefreplace'" and
+   "'backslashreplace'" and other error handling schemes added.
+
+   Modifié dans la version 2.7: Gestion des arguments par mot clef.
+
+str.endswith(suffix[, start[, end]])
+
+   Donne "True" si la chaîne se termine par *suffix*, sinon "False".
+   *suffix* peut aussi être un tuple de suffixes à rechercher. Si
+   l’argument optionnel *start* est donné, le test se fait à partir de
+   cette position. Si l’argument optionnel *end* est fourni, la
+   comparaison s’arrête à cette position.
+
+   Modifié dans la version 2.5: Accept tuples as *suffix*.
+
+str.expandtabs([tabsize])
+
+   Donne une copie de la chaîne où toutes les tabulations sont
+   remplacées par un ou plusieurs espaces, en fonction de la colonne
+   courante et de la taille de tabulation donnée. Les positions des
+   tabulations se trouvent tous les *tabsize* caractères (8 par
+   défaut, ce qui donne les positions de tabulations aux colonnes 0,
+   8, 16 et ainsi de suite). Pour travailler sur la chaîne, la colonne
+   en cours est mise à zéro et la chaîne est examinée caractère par
+   caractère. Si le caractère est une tabulation ("\t"), un ou
+   plusieurs caractères d’espacement sont insérés dans le résultat
+   jusqu’à ce que la colonne courante soit égale à la position de
+   tabulation suivante. (Le caractère tabulation lui-même n’est pas
+   copié.) Si le caractère est un saut de ligne ("\n") ou un retour
+   chariot ("\r"), il est copié et la colonne en cours est remise à
+   zéro. Tout autre caractère est copié inchangé et la colonne en
+   cours est incrémentée de un indépendamment de la façon dont le
+   caractère est représenté lors de l’affichage.
+
+   >>> '01\t012\t0123\t01234'.expandtabs()
+   '01      012     0123    01234'
+   >>> '01\t012\t0123\t01234'.expandtabs(4)
+   '01  012 0123    01234'
+
+str.find(sub[, start[, end]])
+
+   Donne la première la position dans la chaîne où *sub* est trouvé
+   dans le *slice* "s[start:end]". Les arguments facultatifs *start*
+   et *end* sont interprétés comme dans la notation des *slice*. Donne
+   "-1" si *sub* n’est pas trouvé.
+
+   Note: La méthode "find()" ne doit être utilisée que si vous avez
+     besoin de connaître la position de *sub*. Pour vérifier si *sub*
+     est une sous chaine ou non, utilisez l’opérateur "in"
+
+        >>> 'Py' in 'Python'
+        True
+
+str.format(*args, **kwargs)
+
+   Formatte une chaîne. La chaîne sur laquelle cette méthode est
+   appelée peut contenir du texte littéral ou des emplacements de
+   remplacement délimités par des accolades "{}". Chaque champ de
+   remplacement contient soit l’indice numérique d’un argument
+   positionnel, ou le nom d’un argument donné par mot-clé. Renvoie une
+   copie de la chaîne où chaque champ de remplacement est remplacé par
+   la valeur de chaîne de l’argument correspondant.
+
+   >>> "The sum of 1 + 2 is {0}".format(1+2)
+   'The sum of 1 + 2 is 3'
+
+   Voir Syntaxe de formatage de chaîne pour une description des
+   options de formatage qui peuvent être spécifiées dans les chaînes
+   de format.
+
+   This method of string formatting is the new standard in Python 3,
+   and should be preferred to the "%" formatting described in String
+   Formatting Operations in new code.
+
+   Nouveau dans la version 2.6.
+
+str.index(sub[, start[, end]])
+
+   Like "find()", but raise "ValueError" when the substring is not
+   found.
+
+str.isalnum()
+
+   Return true if all characters in the string are alphanumeric and
+   there is at least one character, false otherwise.
+
+   For 8-bit strings, this method is locale-dependent.
+
+str.isalpha()
+
+   Return true if all characters in the string are alphabetic and
+   there is at least one character, false otherwise.
+
+   For 8-bit strings, this method is locale-dependent.
+
+str.isdigit()
+
+   Return true if all characters in the string are digits and there is
+   at least one character, false otherwise.
+
+   For 8-bit strings, this method is locale-dependent.
+
+str.islower()
+
+   Donne "True" si tous les caractères capitalisables [4] de la chaîne
+   sont en minuscules et qu’elle contient au moins un caractère
+   capitalisable. Donne "False" dans le cas contraire.
+
+   For 8-bit strings, this method is locale-dependent.
+
+str.isspace()
+
+   Return true if there are only whitespace characters in the string
+   and there is at least one character, false otherwise.
+
+   For 8-bit strings, this method is locale-dependent.
+
+str.istitle()
+
+   Donne "True" si la chaîne est une chaîne *titlecased* et qu’elle
+   contient au moins un caractère, par exemple les caractères
+   majuscules ne peuvent suivre les caractères non capitalisables et
+   les caractères minuscules ne peuvent suivre que des caractères
+   capitalisables. Donne "False" dans le cas contraire.
+
+   For 8-bit strings, this method is locale-dependent.
+
+str.isupper()
+
+   Donne "True" si tous les caractères différentiables sur la casse
+   [4] de la chaîne sont en majuscules et il y a au moins un caractère
+   différentiable sur la casse, sinon "False".
+
+   For 8-bit strings, this method is locale-dependent.
+
+str.join(iterable)
+
+   Donne une chaîne qui est la concaténation des chaînes contenues
+   dans *iterable*. Une "TypeError" sera levée si une valeur
+   d”*iterable* n’est pas une chaîne, y compris pour les objets
+   "bytes".  Le séparateur entre les éléments est la chaîne
+   fournissant cette méthode.
+
+str.ljust(width[, fillchar])
+
+   Return the string left justified in a string of length *width*.
+   Padding is done using the specified *fillchar* (default is a
+   space).  The original string is returned if *width* is less than or
+   equal to "len(s)".
+
+   Modifié dans la version 2.4: Support for the *fillchar* argument.
+
+str.lower()
+
+   Renvoie une copie de la chaîne avec tous les caractères
+   capitalisables [4] convertis en minuscules.
+
+   For 8-bit strings, this method is locale-dependent.
+
+str.lstrip([chars])
+
+   Return a copy of the string with leading characters removed.  The
+   *chars* argument is a string specifying the set of characters to be
+   removed.  If omitted or "None", the *chars* argument defaults to
+   removing whitespace.  The *chars* argument is not a prefix; rather,
+   all combinations of its values are stripped:
+
+   >>> '   spacious   '.lstrip()
+   'spacious   '
+   >>> 'www.example.com'.lstrip('cmowz.')
+   'example.com'
+
+   Modifié dans la version 2.2.2: Support for the *chars* argument.
+
+str.partition(sep)
+
+   Divise la chaîne à la première occurrence de *sep*, et donne un
+   *tuple* de trois éléments contenant la partie avant le séparateur,
+   le séparateur lui-même, et la partie après le séparateur. Si le
+   séparateur n’est pas trouvé, le *tuple* contiendra la chaîne elle-
+   même, suivie de deux chaînes vides.
+
+   Nouveau dans la version 2.5.
+
+str.replace(old, new[, count])
+
+   Renvoie une copie de la chaîne dont toutes les occurrences de la
+   sous-chaîne  *old* sont remplacés par *new*. Si l’argument
+   optionnel *count* est donné, seules les *count* premières
+   occurrences sont remplacées.
+
+str.rfind(sub[, start[, end]])
+
+   Donne l’indice le plus élevé dans la chaîne où la sous-chaîne *sub*
+   se trouve, de telle sorte que *sub* soit contenue dans
+   "s[start:end]". Les arguments facultatifs *start* et *end* sont
+   interprétés comme dans la notation des *slices*. Donne  "-1" en cas
+   d’échec.
+
+str.rindex(sub[, start[, end]])
+
+   Comme "rfind()" mais lève une exception "ValueError" lorsque la
+   sous-chaîne *sub* est introuvable.
+
+str.rjust(width[, fillchar])
+
+   Return the string right justified in a string of length *width*.
+   Padding is done using the specified *fillchar* (default is a
+   space). The original string is returned if *width* is less than or
+   equal to "len(s)".
+
+   Modifié dans la version 2.4: Support for the *fillchar* argument.
+
+str.rpartition(sep)
+
+   Divise la chaîne à la dernière occurrence de *sep*, et donne un
+   tuple de trois éléments contenant la partie avant le séparateur, le
+   séparateur lui-même, et la partie après le séparateur. Si le
+   séparateur n’est pas trouvé, le tuple contindra deux chaînes vides,
+   puis par la chaîne elle-même.
+
+   Nouveau dans la version 2.5.
+
+str.rsplit([sep[, maxsplit]])
+
+   Renvoie une liste des mots de la chaîne, en utilisant *sep* comme
+   séparateur. Si *maxsplit* est donné, c’est le nombre maximum de
+   divisions qui pourront être faites, celles « à droite ». Si *sep*
+   est pas spécifié ou est "None", tout espace est un séparateur. En
+   dehors du fait qu’il découpe par la droite, "rsplit()" se comporte
+   comme "split()" qui est décrit en détail ci-dessous.
+
+   Nouveau dans la version 2.4.
+
+str.rstrip([chars])
+
+   Return a copy of the string with trailing characters removed.  The
+   *chars* argument is a string specifying the set of characters to be
+   removed.  If omitted or "None", the *chars* argument defaults to
+   removing whitespace.  The *chars* argument is not a suffix; rather,
+   all combinations of its values are stripped:
+
+   >>> '   spacious   '.rstrip()
+   '   spacious'
+   >>> 'mississippi'.rstrip('ipz')
+   'mississ'
+
+   Modifié dans la version 2.2.2: Support for the *chars* argument.
+
+str.split([sep[, maxsplit]])
+
+   Renvoie une liste des mots de la chaîne, en utilisant *sep* comme
+   séparateur de mots. Si *maxsplit* est donné, c’est le nombre
+   maximum de divisionsqui pourront être effectuées, (donnant ainsi
+   une liste de longueur "maxsplit+1"). Si *maxsplit* n’est pas
+   fourni, ou vaut "-1", le nombre de découpes n’est pas limité
+   (Toutes les découpes possibles sont faites).
+
+   Si *sep* est donné, les délimiteurs consécutifs ne sont pas
+   regroupés et ainsi délimitent des chaînes vides (par exemple,
+   "'1,,2'.split(',')" donne "['1', '', '2']"). L’argument *sep* peut
+   contenir plusieurs caractères (par exemple, "'1<>2<>3'.split('<>')"
+   renvoie "['1', '2', '3']"). Découper une chaîne vide en spécifiant
+   *sep* donne "['']".
+
+   Si *sep* n’est pas spécifié ou est "None", un autre algorithme de
+   découpage est appliqué : les espaces consécutifs sont considérés
+   comme un seul séparateur, et le résultat ne contiendra pas les
+   chaînes vides de début ou de la fin si la chaîne est préfixée ou
+   suffixé d’espaces. Par conséquent, diviser une chaîne vide ou une
+   chaîne composée d’espaces avec un séparateur "None" renvoie "[]".
+
+   For example, "' 1  2   3  '.split()" returns "['1', '2', '3']", and
+   "'  1  2   3  '.split(None, 1)" returns "['1', '2   3  ']".
+
+str.splitlines([keepends])
+
+   Return a list of the lines in the string, breaking at line
+   boundaries. This method uses the *universal newlines* approach to
+   splitting lines. Line breaks are not included in the resulting list
+   unless *keepends* is given and true.
+
+   Python recognizes ""\r"", ""\n"", and ""\r\n"" as line boundaries
+   for 8-bit strings.
+
+   Par exemple :
+
+      >>> 'ab c\n\nde fg\rkl\r\n'.splitlines()
+      ['ab c', '', 'de fg', 'kl']
+      >>> 'ab c\n\nde fg\rkl\r\n'.splitlines(True)
+      ['ab c\n', '\n', 'de fg\r', 'kl\r\n']
+
+   Contrairement à "split()" lorsque *sep* est fourni, cette méthode
+   renvoie une liste vide pour la chaîne vide, et un saut de ligne à
+   la fin ne se traduit pas par une ligne supplémentaire :
+
+      >>> "".splitlines()
+      []
+      >>> "One line\n".splitlines()
+      ['One line']
+
+   À titre de comparaison, "split('\n')" donne :
+
+      >>> ''.split('\n')
+      ['']
+      >>> 'Two lines\n'.split('\n')
+      ['Two lines', '']
+
+unicode.splitlines([keepends])
+
+   Return a list of the lines in the string, like "str.splitlines()".
+   However, the Unicode method splits on the following line
+   boundaries, which are a superset of the *universal newlines*
+   recognized for 8-bit strings.
+
+   +-------------------------+-------------------------------+
+   | Représentation          | Description                   |
+   +=========================+===============================+
+   | "\n"                    | Saut de ligne                 |
+   +-------------------------+-------------------------------+
+   | "\r"                    | Retour Chariot                |
+   +-------------------------+-------------------------------+
+   | "\r\n"                  | Retour Chariot + Saut de      |
+   |                         | Ligne                         |
+   +-------------------------+-------------------------------+
+   | "\v" or "\x0b"          | Tabulation Verticale          |
+   +-------------------------+-------------------------------+
+   | "\f" or "\x0c"          | Saut de Page                  |
+   +-------------------------+-------------------------------+
+   | "\x1c"                  | Séparateur de Fichiers        |
+   +-------------------------+-------------------------------+
+   | "\x1d"                  | Séparateur de groupes         |
+   +-------------------------+-------------------------------+
+   | "\x1e"                  | Séparateur d’enregistrements  |
+   +-------------------------+-------------------------------+
+   | "\x85"                  | Ligne Suivante (code de       |
+   |                         | contrôle C1)                  |
+   +-------------------------+-------------------------------+
+   | "\u2028"                | Séparateur de Ligne           |
+   +-------------------------+-------------------------------+
+   | "\u2029"                | Séparateur de Paragraphe      |
+   +-------------------------+-------------------------------+
+
+   Modifié dans la version 2.7: "\v" et "\f" ajoutés à la liste des
+   limites de lignes.
+
+str.startswith(prefix[, start[, end]])
+
+   Donne "True" si la chaîne commence par *prefix*, sinon  "False".
+   *prefix* peut aussi être un tuple de préfixes à rechercher. Lorsque
+   *start* est donné, la comparaison commence à cette position, et
+   lorsque *end* est donné, la comparaison s’arrête à celle ci.
+
+   Modifié dans la version 2.5: Accept tuples as *prefix*.
+
+str.strip([chars])
+
+   Return a copy of the string with the leading and trailing
+   characters removed. The *chars* argument is a string specifying the
+   set of characters to be removed. If omitted or "None", the *chars*
+   argument defaults to removing whitespace. The *chars* argument is
+   not a prefix or suffix; rather, all combinations of its values are
+   stripped:
+
+   >>> '   spacious   '.strip()
+   'spacious'
+   >>> 'www.example.com'.strip('cmowz.')
+   'example'
+
+   Modifié dans la version 2.2.2: Support for the *chars* argument.
+
+str.swapcase()
+
+   Return a copy of the string with uppercase characters converted to
+   lowercase and vice versa.
+
+   For 8-bit strings, this method is locale-dependent.
+
+str.title()
+
+   Renvoie une version en initiales majuscules de la chaîne où les
+   mots commencent par une capitale et les caractères restants sont en
+   minuscules.
+
+   Pour l’algorithme, la notion de mot est définie simplement et
+   indépendamment de la langue comme un groupe de lettres
+   consécutives. La définition fonctionnedans de nombreux contextes,
+   mais cela signifie que les apostrophes (typiquement dela forme
+   possessive en Anglais) forment les limites de mot, ce qui n’est pas
+   toujours le résultat souhaité :
+
+      >>> "they're bill's friends from the UK".title()
+      "They'Re Bill'S Friends From The Uk"
+
+   Une solution pour contourner le problème des apostrophes peut être
+   obtenue en utilisant des expressions rationnelles :
+
+      >>> import re
+      >>> def titlecase(s):
+      ...     return re.sub(r"[A-Za-z]+('[A-Za-z]+)?",
+      ...                   lambda mo: mo.group(0)[0].upper() +
+      ...                              mo.group(0)[1:].lower(),
+      ...                   s)
+      ...
+      >>> titlecase("they're bill's friends.")
+      "They're Bill's Friends."
+
+   For 8-bit strings, this method is locale-dependent.
+
+str.translate(table[, deletechars])
+
+   Return a copy of the string where all characters occurring in the
+   optional argument *deletechars* are removed, and the remaining
+   characters have been mapped through the given translation table,
+   which must be a string of length 256.
+
+   You can use the "maketrans()" helper function in the "string"
+   module to create a translation table. For string objects, set the
+   *table* argument to "None" for translations that only delete
+   characters:
+
+   >>> 'read this short text'.translate(None, 'aeiou')
+   'rd ths shrt txt'
+
+   Nouveau dans la version 2.6: Support for a "None" *table* argument.
+
+   For Unicode objects, the "translate()" method does not accept the
+   optional *deletechars* argument.  Instead, it returns a copy of the
+   *s* where all characters have been mapped through the given
+   translation table which must be a mapping of Unicode ordinals to
+   Unicode ordinals, Unicode strings or "None". Unmapped characters
+   are left untouched. Characters mapped to "None" are deleted.  Note,
+   a more flexible approach is to create a custom character mapping
+   codec using the "codecs" module (see "encodings.cp1251" for an
+   example).
+
+str.upper()
+
+   Renvoie une copie de la chaîne dont tous les caractères
+   capitalisables [4] sontconvertis en capitales. Notez que
+   "str.upper().isupper()" pourrait être "False" si "s" contient des
+   caractères non capitalisables ou si la catégorieUnicode d’un
+   caractère du résultant est pas « Lu » (Lettre, majuscule), mais par
+   exemple « Lt » (Lettre, titlecase).
+
+   For 8-bit strings, this method is locale-dependent.
+
+str.zfill(width)
+
+   Return the numeric string left filled with zeros in a string of
+   length *width*.  A sign prefix is handled correctly.  The original
+   string is returned if *width* is less than or equal to "len(s)".
+
+   Nouveau dans la version 2.2.2.
+
+The following methods are present only on unicode objects:
+
+unicode.isnumeric()
+
+   Return "True" if there are only numeric characters in S, "False"
+   otherwise. Numeric characters include digit characters, and all
+   characters that have the Unicode numeric value property, e.g.
+   U+2155, VULGAR FRACTION ONE FIFTH.
+
+unicode.isdecimal()
+
+   Return "True" if there are only decimal characters in S, "False"
+   otherwise. Decimal characters include digit characters, and all
+   characters that can be used to form decimal-radix numbers, e.g.
+   U+0660, ARABIC-INDIC DIGIT ZERO.
+
+
+String Formatting Operations
+----------------------------
+
+String and Unicode objects have one unique built-in operation: the "%"
+operator (modulo).  This is also known as the string *formatting* or
+*interpolation* operator.  Given "format % values" (where *format* is
+a string or Unicode object), "%" conversion specifications in *format*
+are replaced with zero or more elements of *values*.  The effect is
+similar to the using "sprintf()" in the C language.  If *format* is a
+Unicode object, or if any of the objects being converted using the
+"%s" conversion are Unicode objects, the result will also be a Unicode
+object.
+
+Si *format* ne nécessite qu’un seul argument, *values* peut être un
+objet unique. [5] Si *values* est un tuple, il doit contenir
+exactement le nombre d’éléments spécifiés par la chaîne de format, ou
+un seul objet de correspondances ( *mapping object*, par exemple, un
+dictionnaire).
+
+Un indicateur de conversion contient deux ou plusieurs caractères et
+comporte les éléments suivants, qui doivent apparaître dans cet ordre
+:
+
+1. Le caractère "'%'", qui marque le début du marqueur.
+
+2. La clé de correspondance (facultative), composée d’une suite de
+   caractères entre parenthèse (par exemple, "(somename)").
+
+3. Des options de conversion, facultatives, qui affectent le
+   résultat de certains types de conversion.
+
+4. Largeur minimum (facultative). Si elle vaut "'*'" (astérisque),
+   la largeur est lue de l’élément suivant du tuple *values*, et
+   l’objet à convertir vient après la largeur de champ minimale et la
+   précision facultative.
+
+5. Precision (optional), given as a "'.'" (dot) followed by the
+   precision.  If specified as "'*'" (an asterisk), the actual width
+   is read from the next element of the tuple in *values*, and the
+   value to convert comes after the precision.
+
+6. Modificateur de longueur (facultatif).
+
+7. Type de conversion.
+
+Lorsque l’argument de droite est un dictionnaire (ou un autre type de
+*mapping*), les marqueurs dans la chaîne *doivent* inclure une clé
+présente dans le dictionnaire, écrite entre parenthèses,
+immédiatement après le caractère "'%'". La clé indique quelle valeur
+du dictionnaire doit être formatée. Par exemple :
+
+>>> print '%(language)s has %(number)03d quote types.' % \
+...       {"language": "Python", "number": 2}
+Python has 002 quote types.
+
+Dans ce cas, aucune "*" ne peuvent se trouver dans le format (car ces
+"*" nécessitent une liste (accès séquentiel) de paramètres).
+
+Les caractères indicateurs de conversion sont :
+
++-----------+-----------------------------------------------------------------------+
+| Option    | Signification                                                         |
++===========+=======================================================================+
+| "'#'"     | La conversion utilisera la « forme alternative » (définie ci-         |
+|           | dessous).                                                             |
++-----------+-----------------------------------------------------------------------+
+| "'0'"     | Les valeurs numériques converties seront complétée de zéros.          |
++-----------+-----------------------------------------------------------------------+
+| "'-'"     | La valeur convertie est ajustée à gauche (remplace la conversion      |
+|           | "'0'" si les deux sont données).                                      |
++-----------+-----------------------------------------------------------------------+
+| "' '"     | (un espace) Un espace doit être laissé avant un nombre positif (ou    |
+|           | chaîne vide) produite par la conversion d’une valeur signée.          |
++-----------+-----------------------------------------------------------------------+
+| "'+'"     | Un caractère de signe ("'+'" ou "'-'") précéde la valeur convertie    |
+|           | (remplace le marqueur « espace »).                                    |
++-----------+-----------------------------------------------------------------------+
+
+Un modificateur de longueur ("h", "l" ou "L") peut être présent, mais
+est ignoré car il est pas nécessaire pour Python - donc par exemple
+"%ld" est identique à "%d".
+
+Les types utilisables dans les conversion sont :
+
++--------------+-------------------------------------------------------+---------+
+| Conversion   | Signification                                         | Notes   |
++==============+=======================================================+=========+
+| "'d'"        | Entier décimal signé.                                 |         |
++--------------+-------------------------------------------------------+---------+
+| "'i'"        | Entier décimal signé.                                 |         |
++--------------+-------------------------------------------------------+---------+
+| "'o'"        | Valeur octale signée.                                 | (1)     |
++--------------+-------------------------------------------------------+---------+
+| "'u'"        | Type obsolète - identique à "'d'".                    | (7)     |
++--------------+-------------------------------------------------------+---------+
+| "'x'"        | Hexadécimal signé (en minuscules).                    | (2)     |
++--------------+-------------------------------------------------------+---------+
+| "'X'"        | Hexadécimal signé (capitales).                        | (2)     |
++--------------+-------------------------------------------------------+---------+
+| "'e'"        | Format exponentiel pour un *float* (minuscule).       | (3)     |
++--------------+-------------------------------------------------------+---------+
+| "'E'"        | Format exponentiel pour un *float* (en capitales).    | (3)     |
++--------------+-------------------------------------------------------+---------+
+| "'f'"        | Format décimal pour un *float*.                       | (3)     |
++--------------+-------------------------------------------------------+---------+
+| "'F'"        | Format décimal pour un *float*.                       | (3)     |
++--------------+-------------------------------------------------------+---------+
+| "'g'"        | Format *float*. Utilise le format exponentiel         | (4)     |
+|              | minuscules si l’exposant est inférieur à -4 ou pas    |         |
+|              | plus petit que la précision, sinon le format décimal. |         |
++--------------+-------------------------------------------------------+---------+
+| "'G'"        | Format *float*. Utilise le format exponentiel en      | (4)     |
+|              | capitales si l’exposant est inférieur à -4 ou pas     |         |
+|              | plus petit que la précision, sinon le format décimal. |         |
++--------------+-------------------------------------------------------+---------+
+| "'c'"        | Un seul caractère (accepte des entiers ou une chaîne  |         |
+|              | d’un seul caractère).                                 |         |
++--------------+-------------------------------------------------------+---------+
+| "'r'"        | String (converts any Python object using repr()).     | (5)     |
++--------------+-------------------------------------------------------+---------+
+| "'s'"        | String (convertit n’importe quel objet Python avec    | (6)     |
+|              | "str()").                                             |         |
++--------------+-------------------------------------------------------+---------+
+| "'%'"        | Aucun argument n’est converti, donne un caractère de  |         |
+|              | "'%'" dans le résultat.                               |         |
++--------------+-------------------------------------------------------+---------+
+
+Notes :
+
+1. The alternate form causes a leading zero ("'0'") to be inserted
+   between left-hand padding and the formatting of the number if the
+   leading character of the result is not already a zero.
+
+2. La forme alternative entraîne l’insertion d’un préfixe "'0x'" ou
+   "'0X'" (respectivement pour les formats "'x'" et "'X'") avant le
+   premier chiffre.
+
+3. La forme alternative implique la présence d’un point décimal,
+   même si aucun chiffre ne le suit.
+
+   La précision détermine le nombre de chiffres après la virgule, 6
+   par défaut.
+
+4. La forme alternative implique la présence d’un point décimal et
+   les zéros non significatifs sont conservés (ils ne le seraient pas
+   autrement).
+
+   La précision détermine le nombre de chiffres significatifs avant et
+   après la virgule. 6 par défaut.
+
+5. The "%r" conversion was added in Python 2.0.
+
+   The precision determines the maximal number of characters used.
+
+6. If the object or format provided is a "unicode" string, the
+   resulting string will also be "unicode".
+
+   The precision determines the maximal number of characters used.
+
+7. Voir la **PEP 237**.
+
+Puisque les chaînes Python ont une longueur explicite, les conversions
+"%s" ne considèrent pas "'\0'" comme la fin de la chaîne.
+
+Modifié dans la version 2.7: Les conversions "%f" pour nombres dont la
+valeur absolue est supérieure à 1e50 ne sont plus remplacés par des
+conversions "%g".
+
+Additional string operations are defined in standard modules "string"
+and "re".
+
+
+XRange Type
+-----------
+
+The "xrange" type is an immutable sequence which is commonly used for
+looping.  The advantage of the "xrange" type is that an "xrange"
+object will always take the same amount of memory, no matter the size
+of the range it represents.  There are no consistent performance
+advantages.
+
+XRange objects have very little behavior: they only support indexing,
+iteration, and the "len()" function.
+
+
+Types de séquences mutables
+---------------------------
+
+List and "bytearray" objects support additional operations that allow
+in-place modification of the object. Other mutable sequence types
+(when added to the language) should also support these operations.
+Strings and tuples are immutable sequence types: such objects cannot
+be modified once created. The following operations are defined on
+mutable sequence types (where *x* is an arbitrary object):
+
++--------------------------------+----------------------------------+-----------------------+
+| Opération                      | Résultat                         | Notes                 |
++================================+==================================+=======================+
+| "s[i] = x"                     | element *i* de *s* est remplacé  |                       |
+|                                | par *x*                          |                       |
++--------------------------------+----------------------------------+-----------------------+
+| "s[i:j] = t"                   | tranche de *s* de *i* à *j* est  |                       |
+|                                | remplacée par le contenu de      |                       |
+|                                | l’itérable *t*                   |                       |
++--------------------------------+----------------------------------+-----------------------+
+| "del s[i:j]"                   | identique à "s[i:j] = []"        |                       |
++--------------------------------+----------------------------------+-----------------------+
+| "s[i:j:k] = t"                 | les éléments de "s[i:j:k]" sont  | (1)                   |
+|                                | remplacés par ceux de *t*        |                       |
++--------------------------------+----------------------------------+-----------------------+
+| "del s[i:j:k]"                 | supprime les éléments de         |                       |
+|                                | "s[i:j:k]" de la liste           |                       |
++--------------------------------+----------------------------------+-----------------------+
+| "s.append(x)"                  | same as "s[len(s):len(s)] = [x]" | (2)                   |
++--------------------------------+----------------------------------+-----------------------+
+| "s.extend(t)" or "s += t"      | for the most part the same as    | (3)                   |
+|                                | "s[len(s):len(s)] = t"           |                       |
++--------------------------------+----------------------------------+-----------------------+
+| "s *= n"                       | met à jour *s* avec son contenu  | (11)                  |
+|                                | répété *n* fois                  |                       |
++--------------------------------+----------------------------------+-----------------------+
+| "s.count(x)"                   | return number of *i*’s for which |                       |
+|                                | "s[i] == x"                      |                       |
++--------------------------------+----------------------------------+-----------------------+
+| "s.index(x[, i[, j]])"         | return smallest *k* such that    | (4)                   |
+|                                | "s[k] == x" and "i <= k < j"     |                       |
++--------------------------------+----------------------------------+-----------------------+
+| "s.insert(i, x)"               | same as "s[i:i] = [x]"           | (5)                   |
++--------------------------------+----------------------------------+-----------------------+
+| "s.pop([i])"                   | same as "x = s[i]; del s[i];     | (6)                   |
+|                                | return x"                        |                       |
++--------------------------------+----------------------------------+-----------------------+
+| "s.remove(x)"                  | same as "del s[s.index(x)]"      | (4)                   |
++--------------------------------+----------------------------------+-----------------------+
+| "s.reverse()"                  | inverse sur place les éléments   | (7)                   |
+|                                | de *s*                           |                       |
++--------------------------------+----------------------------------+-----------------------+
+| "s.sort([cmp[, key[,           | sort the items of *s* in place   | (7)(8)(9)(10)         |
+| reverse]]])"                   |                                  |                       |
++--------------------------------+----------------------------------+-----------------------+
+
+Notes :
+
+1. *t* must have the same length as the slice it is  replacing.
+
+2. The C implementation of Python has historically accepted
+   multiple parameters and implicitly joined them into a tuple; this
+   no longer works in Python 2.0.  Use of this misfeature has been
+   deprecated since Python 1.4.
+
+3. *t* can be any iterable object.
+
+4. Raises "ValueError" when *x* is not found in *s*. When a
+   negative index is passed as the second or third parameter to the
+   "index()" method, the list length is added, as for slice indices.
+   If it is still negative, it is truncated to zero, as for slice
+   indices.
+
+   Modifié dans la version 2.3: Previously, "index()" didn’t have
+   arguments for specifying start and stop positions.
+
+5. When a negative index is passed as the first parameter to the
+   "insert()" method, the list length is added, as for slice indices.
+   If it is still negative, it is truncated to zero, as for slice
+   indices.
+
+   Modifié dans la version 2.3: Previously, all negative indices were
+   truncated to zero.
+
+6. The "pop()" method’s optional argument *i* defaults to "-1", so
+   that by default the last item is removed and returned.
+
+7. The "sort()" and "reverse()" methods modify the list in place
+   for economy of space when sorting or reversing a large list.  To
+   remind you that they operate by side effect, they don’t return the
+   sorted or reversed list.
+
+8. The "sort()" method takes optional arguments for controlling the
+   comparisons.
+
+   *cmp* specifies a custom comparison function of two arguments (list
+   items) which should return a negative, zero or positive number
+   depending on whether the first argument is considered smaller than,
+   equal to, or larger than the second argument: "cmp=lambda x,y:
+   cmp(x.lower(), y.lower())".  The default value is "None".
+
+   *key* specifies a function of one argument that is used to extract
+   a comparison key from each list element: "key=str.lower".  The
+   default value is "None".
+
+   *reverse*, une valeur booléenne. Si elle est "True", la liste
+   d’éléments est triée comme si toutes les comparaisons étaient
+   inversées.
+
+   In general, the *key* and *reverse* conversion processes are much
+   faster than specifying an equivalent *cmp* function.  This is
+   because *cmp* is called multiple times for each list element while
+   *key* and *reverse* touch each element only once.  Use
+   "functools.cmp_to_key()" to convert an old-style *cmp* function to
+   a *key* function.
+
+   Modifié dans la version 2.3: Support for "None" as an equivalent to
+   omitting *cmp* was added.
+
+   Modifié dans la version 2.4: Support for *key* and *reverse* was
+   added.
+
+9. Starting with Python 2.3, the "sort()" method is guaranteed to
+   be stable.  A sort is stable if it guarantees not to change the
+   relative order of elements that compare equal — this is helpful for
+   sorting in multiple passes (for example, sort by department, then
+   by salary grade).
+
+10. **CPython implementation detail:** While a list is being
+    sorted, the effect of attempting to mutate, or even inspect, the
+    list is undefined.  The C implementation of Python 2.3 and newer
+    makes the list appear empty for the duration, and raises
+    "ValueError" if it can detect that the list has been mutated
+    during a sort.
+
+11. The value *n* is an integer, or an object implementing
+    "__index__()".  Zero and negative values of *n* clear the
+    sequence.  Items in the sequence are not copied; they are
+    referenced multiple times, as explained for "s * n" under Sequence
+    Types — str, unicode, list, tuple, bytearray, buffer, xrange.
+
+
+Types d’ensembles — "set", "frozenset"
+======================================
+
+A *set* object is an unordered collection of distinct *hashable*
+objects. Common uses include membership testing, removing duplicates
+from a sequence, and computing mathematical operations such as
+intersection, union, difference, and symmetric difference. (For other
+containers see the built in "dict", "list", and "tuple" classes, and
+the "collections" module.)
+
+Nouveau dans la version 2.4.
+
+Comme pour les autres collections, les ensembles supportent "x in
+set", "len(set)", et "for x in set". En temps que collection non-
+triée, les ensembles n’enregistrent pas la position des éléments ou
+leur ordre d’insertion.  En conséquence, les *sets* n’autorisent ni
+l’indexation, ni le découpage, ou tout autre comportement de séquence.
+
+Il existe actuellement deux types natifs pour les ensembles, "set" et
+"fronzenset". Le type "set" est mutable — son contenu peut changer en
+utilisant des méthodes comme "add()" et "remove()". Puisqu’il est
+mutable, il n’a pas de valeur de hachage et ne peut donc pas être
+utilisé ni comme clef de dictionnaire ni comme élément d’un autre
+ensemble. Le type "frozenset" est immuable et *hashable* — son contenu
+ne peut être modifié après sa création, il peut ainsi être utilisé
+comme clef de dictionnaire ou élément d’un autre *set*.
+
+As of Python 2.7, non-empty sets (not frozensets) can be created by
+placing a comma-separated list of elements within braces, for example:
+"{'jack', 'sjoerd'}", in addition to the "set" constructor.
+
+Les constructeurs des deux classes fonctionnent pareil :
+
+class set([iterable])
+class frozenset([iterable])
+
+   Renvoie un nouveau *set* ou *frozenset* dont les éléments viennent
+   d”*iterable*.  Les éléments d’un *set* doivent être *hashable*.
+   Pour représenter des *sets* de *sets* les *sets* intérieurs doivent
+   être des "frozenset".  Si *iterable* n’est pas spécifié, un nouveau
+   *set* vide est renvoyé.
+
+   Les instances de "set" et "frozenset" fournissent les opérations
+   suivantes :
+
+   len(s)
+
+      Donne le nombre d’éléments dans le *set* *s* (cardinalité de
+      *s*).
+
+   x in s
+
+      Test d’appartenance de *x* dans *s*.
+
+   x not in s
+
+      Test de non-appartenance de *x* dans *s*.
+
+   isdisjoint(other)
+
+      Renvoie "True" si l’ensemble n’a aucun élément en commun avec
+      *other*.  Les ensembles sont disjoints si et seulement si leurs
+      intersection est un ensemble vide.
+
+      Nouveau dans la version 2.6.
+
+   issubset(other)
+   set <= other
+
+      Teste si tous les éléments du set sont dans *other*.
+
+   set < other
+
+      Teste si l’ensemble est un sous-ensemble de *other*,
+      c’est-à-dire, "set <= other and set != other".
+
+   issuperset(other)
+   set >= other
+
+      Teste si tous les éléments de *other* sont dans l’ensemble.
+
+   set > other
+
+      Teste si l’ensemble est un sur-ensemble de *other*,
+      c’est-à-dire, "set >= other and set != other".
+
+   union(*others)
+   set | other | ...
+
+      Renvoie un nouvel ensemble dont les éléments viennent de
+      l’ensemble et de tous les autres.
+
+      Modifié dans la version 2.6: Accepts multiple input iterables.
+
+   intersection(*others)
+   set & other & ...
+
+      Renvoie un nouvel ensemble dont les éléments sont commun à
+      l’ensemble et à tous les autres.
+
+      Modifié dans la version 2.6: Accepts multiple input iterables.
+
+   difference(*others)
+   set - other - ...
+
+      Renvoie un nouvel ensemble dont les éléments sont dans
+      l’ensemble mais ne sont dans aucun des autres.
+
+      Modifié dans la version 2.6: Accepts multiple input iterables.
+
+   symmetric_difference(other)
+   set ^ other
+
+      Renvoie un nouvel ensemble dont les éléments sont soit dans
+      l’ensemble, soit dans les autres, mais pas dans les deux.
+
+   copy()
+
+      Renvoie un nouvel ensemble, copie de surface de *s*.
+
+   Remarque : Les méthodes  "union()", "intersection()",
+   "difference()", et "symmetric_difference()", "issubset()", et
+   "issuperset`acceptent n'importe quel itérable comme argument,
+   contrairement aux opérateurs équivalents qui n'acceptent que des
+   *sets*. Il est donc préférable d'éviter les constructions comme
+   ``set('abc') & 'cbs'`()", sources typiques d’erreurs, en faveur
+   d’une construction plus lisible : "set('abc').intersection('cbs')".
+
+   Les classes "set" et "frozenset" supportent les comparaisons
+   d’ensemble à ensemble. Deux ensembles sont égaux si et seulement si
+   chaque éléments de chaque ensemble est contenu dans l’autre
+   (autrement dit que chaque ensemble est un sous-ensemble de
+   l’autre). Un ensemble est plus petit qu’un autre ensemble si et
+   seulement si le premier est un sous-ensemble du second (un sous-
+   ensemble, mais pas égal). Un ensemble est plus grand qu’un autre
+   ensemble si et seulement si le premier est un sur-ensemble du
+   second (est un sur-ensemble mais n’est pas égal).
+
+   Les instances de "set" se comparent aux instances de "frozenset" en
+   fonction de leurs membres.  Par exemple, "set('abc') ==
+   frozenset('abc')" envoie "True", ainsi que "set('abc') in
+   set([frozenset('abc')])".
+
+   The subset and equality comparisons do not generalize to a total
+   ordering function.  For example, any two non-empty disjoint sets
+   are not equal and are not subsets of each other, so *all* of the
+   following return "False": "a<b", "a==b", or "a>b". Accordingly,
+   sets do not implement the "__cmp__()" method.
+
+   Puisque les *sets* ne définissent qu’un ordre partiel (par leurs
+   relations de sous-ensembles), la sortie de la méthode "list.sort()"
+   n’est pas définie pour des listes d’ensembles.
+
+   Les éléments des *sets*, comme les clefs de dictionnaires, doivent
+   être *hashable*.
+
+   Les opérations binaires mélangeant des instances de "set" et
+   "frozenset" renvoient le type de la première opérande.  Par exemple
+   : "frozenset('ab') | set('bc')" renvoie une instance de
+   "frozenset".
+
+   La table suivante liste les opérations disponibles pour les "set"
+   mais qui ne s’appliquent pas aux instances de "frozenset" :
+
+   update(*others)
+   set |= other | ...
+
+      Met à jour l’ensemble, ajoutant les éléments de tous les autres.
+
+      Modifié dans la version 2.6: Accepts multiple input iterables.
+
+   intersection_update(*others)
+   set &= other & ...
+
+      Met à jour l’ensemble, ne gardant que les éléments trouvés dans
+      tous les autres.
+
+      Modifié dans la version 2.6: Accepts multiple input iterables.
+
+   difference_update(*others)
+   set -= other | ...
+
+      Met à jour l’ensemble, retirant les éléments trouvés dans les
+      autres.
+
+      Modifié dans la version 2.6: Accepts multiple input iterables.
+
+   symmetric_difference_update(other)
+   set ^= other
+
+      Met à jour le set, ne gardant que les éléments trouvés dans un
+      des ensembles mais pas dans les deux.
+
+   add(elem)
+
+      Ajoute l’élément *elem* au set.
+
+   remove(elem)
+
+      Retire l’élément *elem* de l’ensemble. Lève une exception
+      "KeyError" si *elem* n’est pas dans l’ensemble.
+
+   discard(elem)
+
+      Retire l’élément *elem* de l’ensemble s’il y est.
+
+   pop()
+
+      Retire et renvoie un élément arbitraire de l’ensemble. Lève une
+      exception "KeyError" si l’ensemble est vide.
+
+   clear()
+
+      Supprime tous les éléments du *set*.
+
+   Notez que les versions non-opérateurs des méthodes "update()",
+   "intersection_update()", "difference_update()", et
+   "symmetric_difference_update()" acceptent n’importe quel itérable
+   comme argument.
+
+   Notez que l’argument *elem* des méthodes "__contains__()",
+   "remove()", et "discard()" peut être un ensemble.  Pour supporter
+   la recherche d’un *frozenset* équivalent, un *frozenset* temporaire
+   est crée depuis *elem*.
+
+Voir aussi:
+
+  Comparison to the built-in set types
+     Differences between the "sets" module and the built-in set types.
+
+
+Les types de correspondances — "dict"
+=====================================
+
+A *mapping* object maps *hashable* values to arbitrary objects.
+Mappings are mutable objects.  There is currently only one standard
+mapping type, the *dictionary*.  (For other containers see the built
+in "list", "set", and "tuple" classes, and the "collections" module.)
+
+Les clefs d’un dictionnaire sont *presque* des données arbitraires.
+Les valeurs qui ne sont pas *hashable*, c’est-à-dire qui contiennent
+les listes, des dictionnaires ou autre type mutable (qui sont comparés
+par valeur plutôt que par leur identité) ne peuvent pas être utilisées
+comme clef de dictionnaire. Les types numériques utilisés comme clef
+obéissent aux règles classiques en ce qui concerne les comparaisons :
+si deux nombres sont égaux (comme "1" et "1.0") ils peuvent tous les
+deux être utilisés pour obtenir la même entrée d’un dictionnaire.
+(Notez cependant que puisque les ordinateurs stockent les nombres à
+virgule flottante sous forme d’approximations, il est généralement
+imprudent de les utiliser comme clefs de dictionnaires.)
+
+Il est possible de créer des dictionnaires en plaçant entre accolades
+une liste de paires de "key: value" séparés par des virgules, par
+exemple: "{'jack': 4098, 'sjoerd': 4127}" ou "{4098: 'jack', 4127:
+'sjoerd'}", ou en utilisant le constructeur de "dict".
+
+class dict(**kwarg)
+class dict(mapping, **kwarg)
+class dict(iterable, **kwarg)
+
+   Renvoie un nouveau dictionnaire initialisé depuis un argument
+   positionnel optionnel, et un ensemble (vide ou non) d’arguments par
+   mot clef.
+
+   Si aucun arument positionnel n’est donné, un dictionnaire vide est
+   crée. Si un argument positionnel est donné et est un *mapping
+   object*, un dictionnaire est crée avec les mêmes paires de clef-
+   valeurs que le *mapping* donné. Autrement, l’argument positionnel
+   doit être un objet *iterable*. Chaque élément de cet itérable doit
+   lui même être un itérable contenant exactement deux objets.  Le
+   premier objet de chaque élément devient la une clef du nouveau
+   dictionnaire, et le second devient sa valeur correspondante.  Si
+   une clef apparaît plus d’une fois, la dernière valeur pour cette
+   clef devient la valeur correspondante à cette clef dans le nouveau
+   dictionnaire.
+
+   Si des arguments nommés sont donnés, ils sont ajoutés au
+   dictionnaire crée depuis l’argument positionnel.  Si une clef est
+   déjà présente, la valeur de l’argument nommé remplace la valeur
+   reçue par l’argument positionnel.
+
+   Typiquement, les exemples suivants renvoient tous un dictionnaire
+   valant "{"one": 1, "two": 2, "three": 3}" :
+
+      >>> a = dict(one=1, two=2, three=3)
+      >>> b = {'one': 1, 'two': 2, 'three': 3}
+      >>> c = dict(zip(['one', 'two', 'three'], [1, 2, 3]))
+      >>> d = dict([('two', 2), ('one', 1), ('three', 3)])
+      >>> e = dict({'three': 3, 'one': 1, 'two': 2})
+      >>> a == b == c == d == e
+      True
+
+   Fournir les arguments nommés comme dans le premier exemple en
+   fonctionne que pour des clefs qui sont des identifiants valide en
+   Python.  Dans les autres cas, toutes les clefs valides sont
+   utilisables.
+
+   Nouveau dans la version 2.2.
+
+   Modifié dans la version 2.3: Support for building a dictionary from
+   keyword arguments added.
+
+   Voici les opérations gérées par les dictionnaires, (par conséquent,
+   d’autres types de *mapping* peuvent les gérer aussi) :
+
+   len(d)
+
+      Renvoie le nombre d’éléments dans le dictionnaire *d*.
+
+   d[key]
+
+      Donne l’élément de *d* dont la clef est *key*. Lève une
+      exception "KeyError" si *key* n’est pas dans le dictionnaire.
+
+      Si une sous-classe de *dict* définit une méthode "__missing__()"
+      et que *key* manque, l’opération "d[key]" appelle cette méthode
+      avec la clef *key* en argument. L’opération "d[key]" renverra la
+      valeur, ou lèvera l’exception renvoyée ou levée par l’appel à
+      "__missing__(key)". Aucune autre opération ni méthode
+      n’appellent "__missing__()". If "__missing__()" n’est pas
+      définie, une exception "KeyError" est levée. "__missing__()"
+      doit être une méthode; ça ne peut être une variable d’instance.
+
+         >>> class Counter(dict):
+         ...     def __missing__(self, key):
+         ...         return 0
+         >>> c = Counter()
+         >>> c['red']
+         0
+         >>> c['red'] += 1
+         >>> c['red']
+         1
+
+      L’exemple ci-dessus montre une partie de l’implémentation de
+      "collections.Counter".  "collections.defaultdict" implémente
+      aussi "__missing__".
+
+      Nouveau dans la version 2.5: Recognition of __missing__ methods
+      of dict subclasses.
+
+   d[key] = value
+
+      Assigne "d[key]" à *value*.
+
+   del d[key]
+
+      Supprime "d[key]" de *d*.  Lève une exception "KeyError" si
+      *key* n’est pas dans le dictionnaire.
+
+   key in d
+
+      Renvoie "True" si *d* a la clef *key*, sinon "False".
+
+      Nouveau dans la version 2.2.
+
+   key not in d
+
+      Équivalent à "not key in d".
+
+      Nouveau dans la version 2.2.
+
+   iter(d)
+
+      Return an iterator over the keys of the dictionary.  This is a
+      shortcut for "iterkeys()".
+
+   clear()
+
+      Supprime tous les éléments du dictionnaire.
+
+   copy()
+
+      Renvoie une copie de surface du dictionnaire.
+
+   fromkeys(seq[, value])
+
+      Crée un nouveau dictionnaire avec les clefs de *seq* et les
+      valeurs à *value*.
+
+      "fromkeys()" is a class method that returns a new dictionary.
+      *value* defaults to "None".
+
+      Nouveau dans la version 2.3.
+
+   get(key[, default])
+
+      Renvoie la valeur de *key* si *key* est dans le dictionnaire,
+      sinon *default*. Si *default* n’est pas donné, il vaut "None"
+      par défaut, de manière à ce que cette méthode ne lève jamais
+      "KeyError".
+
+   has_key(key)
+
+      Test for the presence of *key* in the dictionary.  "has_key()"
+      is deprecated in favor of "key in d".
+
+   items()
+
+      Return a copy of the dictionary’s list of "(key, value)" pairs.
+
+      **CPython implementation detail:** Keys and values are listed in
+      an arbitrary order which is non-random, varies across Python
+      implementations, and depends on the dictionary’s history of
+      insertions and deletions.
+
+      If "items()", "keys()", "values()", "iteritems()", "iterkeys()",
+      and "itervalues()" are called with no intervening modifications
+      to the dictionary, the lists will directly correspond.  This
+      allows the creation of "(value, key)" pairs using "zip()":
+      "pairs = zip(d.values(), d.keys())".  The same relationship
+      holds for the "iterkeys()" and "itervalues()" methods: "pairs =
+      zip(d.itervalues(), d.iterkeys())" provides the same value for
+      "pairs". Another way to create the same list is "pairs = [(v, k)
+      for (k, v) in d.iteritems()]".
+
+   iteritems()
+
+      Return an iterator over the dictionary’s "(key, value)" pairs.
+      See the note for "dict.items()".
+
+      Using "iteritems()" while adding or deleting entries in the
+      dictionary may raise a "RuntimeError" or fail to iterate over
+      all entries.
+
+      Nouveau dans la version 2.2.
+
+   iterkeys()
+
+      Return an iterator over the dictionary’s keys.  See the note for
+      "dict.items()".
+
+      Using "iterkeys()" while adding or deleting entries in the
+      dictionary may raise a "RuntimeError" or fail to iterate over
+      all entries.
+
+      Nouveau dans la version 2.2.
+
+   itervalues()
+
+      Return an iterator over the dictionary’s values.  See the note
+      for "dict.items()".
+
+      Using "itervalues()" while adding or deleting entries in the
+      dictionary may raise a "RuntimeError" or fail to iterate over
+      all entries.
+
+      Nouveau dans la version 2.2.
+
+   keys()
+
+      Return a copy of the dictionary’s list of keys.  See the note
+      for "dict.items()".
+
+   pop(key[, default])
+
+      Si *key* est dans le dictionnaire elle est supprimée et sa
+      valeur est renvoyée, sinon renvoie *default*.  Si *default*
+      n’est pas donné et que *key* n’est pas dans le dictionnaire, une
+      "KeyError" est levée.
+
+      Nouveau dans la version 2.3.
+
+   popitem()
+
+      Supprime et renvoie une "(key, value)" arbitraire du
+      dictionnaire.
+
+      "popitem()" is useful to destructively iterate over a
+      dictionary, as often used in set algorithms.  If the dictionary
+      is empty, calling "popitem()" raises a "KeyError".
+
+   setdefault(key[, default])
+
+      Si *key* est dans le dictionnaire, sa valeur est renvoyée.
+      Sinon, insère *key* avec comme valeur *default* et renvoie
+      *default*.  *default* vaut "None" par défaut.
+
+   update([other])
+
+      Met à jour le dictionnaire avec les paires de clef/valeur
+      d”*other*, écrasant les clefs existantes. Renvoie "None".
+
+      "update()" accepts either another dictionary object or an
+      iterable of key/value pairs (as tuples or other iterables of
+      length two).  If keyword arguments are specified, the dictionary
+      is then updated with those key/value pairs: "d.update(red=1,
+      blue=2)".
+
+      Modifié dans la version 2.4: Allowed the argument to be an
+      iterable of key/value pairs and allowed keyword arguments.
+
+   values()
+
+      Return a copy of the dictionary’s list of values.  See the note
+      for "dict.items()".
+
+   viewitems()
+
+      Return a new view of the dictionary’s items ("(key, value)"
+      pairs).  See below for documentation of view objects.
+
+      Nouveau dans la version 2.7.
+
+   viewkeys()
+
+      Return a new view of the dictionary’s keys.  See below for
+      documentation of view objects.
+
+      Nouveau dans la version 2.7.
+
+   viewvalues()
+
+      Return a new view of the dictionary’s values.  See below for
+      documentation of view objects.
+
+      Nouveau dans la version 2.7.
+
+   Dictionaries compare equal if and only if they have the same "(key,
+   value)" pairs.
+
+
+Les vues de dictionnaires
+-------------------------
+
+The objects returned by "dict.viewkeys()", "dict.viewvalues()" and
+"dict.viewitems()" are *view objects*.  They provide a dynamic view on
+the dictionary’s entries, which means that when the dictionary
+changes, the view reflects these changes.
+
+Les vues de dictonnaires peuvent être itérées et ainsi renvoyer les
+données du dictionnaire, elle gèrent aussi les tests de présence :
+
+len(dictview)
+
+   Renvoie le nombre d’entrées du dictionnaire.
+
+iter(dictview)
+
+   Renvoie un itérateur sur les clefs, les valeurs, ou les éléments
+   (représentés par des *tuples* de "(key, value)" du dictionnaire.
+
+   Les clefs et les valeurs sont itérées dans un ordre arbitraire qui
+   n’est pas aléatoire, qui peut varier d’une implémentation de Python
+   à l’autre, et qui dépend de l’historique d’insertion et de
+   suppressions d’éléments. Si les vues de clefs, de valeurs, et
+   d’éléments sont parcourues sans que le dictionnaire ne soit
+   modifié, l’ordre des éléments correspondra directement.  Ceci
+   permet la création de paires de "(key, value)" en utilisant "zip()"
+   : "pairs = zip(d.values(), d.keys())".  Un autre moyen de
+   construire la même liste est  "pairs = [(v, k) for (k, v) in
+   d.items()]".
+
+   Parcourir des vues tout en ajoutant ou supprimant des entrées dans
+   un dictionnaire peut lever une "RuntimeError" ou ne pas fournir
+   toutes les entrées.
+
+x in dictview
+
+   Renvioie "True" si *x* est dans les clefs, les valeurs, ou les
+   éléments du dictionnaire sous-jacent (dans le dernier cas, *x* doit
+   être un *tuple* "(key, value)").
+
+Keys views are set-like since their entries are unique and hashable.
+If all values are hashable, so that (key, value) pairs are unique and
+hashable, then the items view is also set-like.  (Values views are not
+treated as set-like since the entries are generally not unique.)  Then
+these set operations are available (« other » refers either to another
+view or a set):
+
+dictview & other
+
+   Return the intersection of the dictview and the other object as a
+   new set.
+
+dictview | other
+
+   Return the union of the dictview and the other object as a new set.
+
+dictview - other
+
+   Return the difference between the dictview and the other object
+   (all elements in *dictview* that aren’t in *other*) as a new set.
+
+dictview ^ other
+
+   Return the symmetric difference (all elements either in *dictview*
+   or *other*, but not in both) of the dictview and the other object
+   as a new set.
+
+Exemple d’utilisation de vue de dictionnaire :
+
+   >>> dishes = {'eggs': 2, 'sausage': 1, 'bacon': 1, 'spam': 500}
+   >>> keys = dishes.viewkeys()
+   >>> values = dishes.viewvalues()
+
+   >>> # iteration
+   >>> n = 0
+   >>> for val in values:
+   ...     n += val
+   >>> print(n)
+   504
+
+   >>> # keys and values are iterated over in the same order
+   >>> list(keys)
+   ['eggs', 'bacon', 'sausage', 'spam']
+   >>> list(values)
+   [2, 1, 1, 500]
+
+   >>> # view objects are dynamic and reflect dict changes
+   >>> del dishes['eggs']
+   >>> del dishes['sausage']
+   >>> list(keys)
+   ['spam', 'bacon']
+
+   >>> # set operations
+   >>> keys & {'eggs', 'bacon', 'salad'}
+   {'bacon'}
+
+
+File Objects
+============
+
+File objects are implemented using C’s "stdio" package and can be
+created with the built-in "open()" function.  File objects are also
+returned by some other built-in functions and methods, such as
+"os.popen()" and "os.fdopen()" and the "makefile()" method of socket
+objects. Temporary files can be created using the "tempfile" module,
+and high-level file operations such as copying, moving, and deleting
+files and directories can be achieved with the "shutil" module.
+
+When a file operation fails for an I/O-related reason, the exception
+"IOError" is raised.  This includes situations where the operation is
+not defined for some reason, like "seek()" on a tty device or writing
+a file opened for reading.
+
+Files have the following methods:
+
+file.close()
+
+   Close the file.  A closed file cannot be read or written any more.
+   Any operation which requires that the file be open will raise a
+   "ValueError" after the file has been closed.  Calling "close()"
+   more than once is allowed.
+
+   As of Python 2.5, you can avoid having to call this method
+   explicitly if you use the "with" statement.  For example, the
+   following code will automatically close *f* when the "with" block
+   is exited:
+
+      from __future__ import with_statement # This isn't required in Python 2.6
+
+      with open("hello.txt") as f:
+          for line in f:
+              print line,
+
+   In older versions of Python, you would have needed to do this to
+   get the same effect:
+
+      f = open("hello.txt")
+      try:
+          for line in f:
+              print line,
+      finally:
+          f.close()
+
+   Note: Not all « file-like » types in Python support use as a
+     context manager for the "with" statement.  If your code is
+     intended to work with any file-like object, you can use the
+     function "contextlib.closing()" instead of using the object
+     directly.
+
+file.flush()
+
+   Flush the internal buffer, like "stdio"’s "fflush()".  This may be
+   a no-op on some file-like objects.
+
+   Note: "flush()" does not necessarily write the file’s data to
+     disk. Use "flush()" followed by "os.fsync()" to ensure this
+     behavior.
+
+file.fileno()
+
+   Return the integer « file descriptor » that is used by the
+   underlying implementation to request I/O operations from the
+   operating system.  This can be useful for other, lower level
+   interfaces that use file descriptors, such as the "fcntl" module or
+   "os.read()" and friends.
+
+   Note: File-like objects which do not have a real file descriptor
+     should *not* provide this method!
+
+file.isatty()
+
+   Return "True" if the file is connected to a tty(-like) device, else
+   "False".
+
+   Note: If a file-like object is not associated with a real file,
+     this method should *not* be implemented.
+
+file.next()
+
+   A file object is its own iterator, for example "iter(f)" returns
+   *f* (unless *f* is closed).  When a file is used as an iterator,
+   typically in a "for" loop (for example, "for line in f: print
+   line.strip()"), the "next()" method is called repeatedly.  This
+   method returns the next input line, or raises "StopIteration" when
+   EOF is hit when the file is open for reading (behavior is undefined
+   when the file is open for writing).  In order to make a "for" loop
+   the most efficient way of looping over the lines of a file (a very
+   common operation), the "next()" method uses a hidden read-ahead
+   buffer.  As a consequence of using a read-ahead buffer, combining
+   "next()" with other file methods (like "readline()") does not work
+   right.  However, using "seek()" to reposition the file to an
+   absolute position will flush the read-ahead buffer.
+
+   Nouveau dans la version 2.3.
+
+file.read([size])
+
+   Read at most *size* bytes from the file (less if the read hits EOF
+   before obtaining *size* bytes).  If the *size* argument is negative
+   or omitted, read all data until EOF is reached.  The bytes are
+   returned as a string object.  An empty string is returned when EOF
+   is encountered immediately.  (For certain files, like ttys, it
+   makes sense to continue reading after an EOF is hit.)  Note that
+   this method may call the underlying C function "fread()" more than
+   once in an effort to acquire as close to *size* bytes as possible.
+   Also note that when in non-blocking mode, less data than was
+   requested may be returned, even if no *size* parameter was given.
+
+   Note: This function is simply a wrapper for the underlying
+     "fread()" C function, and will behave the same in corner cases,
+     such as whether the EOF value is cached.
+
+file.readline([size])
+
+   Read one entire line from the file.  A trailing newline character
+   is kept in the string (but may be absent when a file ends with an
+   incomplete line). [6] If the *size* argument is present and non-
+   negative, it is a maximum byte count (including the trailing
+   newline) and an incomplete line may be returned. When *size* is not
+   0, an empty string is returned *only* when EOF is encountered
+   immediately.
+
+   Note: Unlike "stdio"’s "fgets()", the returned string contains
+     null characters ("'\0'") if they occurred in the input.
+
+file.readlines([sizehint])
+
+   Read until EOF using "readline()" and return a list containing the
+   lines thus read.  If the optional *sizehint* argument is present,
+   instead of reading up to EOF, whole lines totalling approximately
+   *sizehint* bytes (possibly after rounding up to an internal buffer
+   size) are read.  Objects implementing a file-like interface may
+   choose to ignore *sizehint* if it cannot be implemented, or cannot
+   be implemented efficiently.
+
+file.xreadlines()
+
+   This method returns the same thing as "iter(f)".
+
+   Nouveau dans la version 2.1.
+
+   Obsolète depuis la version 2.3: Use "for line in file" instead.
+
+file.seek(offset[, whence])
+
+   Set the file’s current position, like "stdio"’s "fseek()". The
+   *whence* argument is optional and defaults to  "os.SEEK_SET" or "0"
+   (absolute file positioning); other values are "os.SEEK_CUR" or "1"
+   (seek relative to the current position) and "os.SEEK_END" or "2"
+   (seek relative to the file’s end).  There is no return value.
+
+   For example, "f.seek(2, os.SEEK_CUR)" advances the position by two
+   and "f.seek(-3, os.SEEK_END)" sets the position to the third to
+   last.
+
+   Note that if the file is opened for appending (mode "'a'" or
+   "'a+'"), any "seek()" operations will be undone at the next write.
+   If the file is only opened for writing in append mode (mode "'a'"),
+   this method is essentially a no-op, but it remains useful for files
+   opened in append mode with reading enabled (mode "'a+'").  If the
+   file is opened in text mode (without "'b'"), only offsets returned
+   by "tell()" are legal.  Use of other offsets causes undefined
+   behavior.
+
+   Note that not all file objects are seekable.
+
+   Modifié dans la version 2.6: Passing float values as offset has
+   been deprecated.
+
+file.tell()
+
+   Return the file’s current position, like "stdio"’s "ftell()".
+
+   Note: On Windows, "tell()" can return illegal values (after an
+     "fgets()") when reading files with Unix-style line-endings. Use
+     binary mode ("'rb'") to circumvent this problem.
+
+file.truncate([size])
+
+   Truncate the file’s size.  If the optional *size* argument is
+   present, the file is truncated to (at most) that size.  The size
+   defaults to the current position. The current file position is not
+   changed.  Note that if a specified size exceeds the file’s current
+   size, the result is platform-dependent:  possibilities include that
+   the file may remain unchanged, increase to the specified size as if
+   zero-filled, or increase to the specified size with undefined new
+   content. Availability:  Windows, many Unix variants.
+
+file.write(str)
+
+   Write a string to the file.  There is no return value.  Due to
+   buffering, the string may not actually show up in the file until
+   the "flush()" or "close()" method is called.
+
+file.writelines(sequence)
+
+   Write a sequence of strings to the file.  The sequence can be any
+   iterable object producing strings, typically a list of strings.
+   There is no return value. (The name is intended to match
+   "readlines()"; "writelines()" does not add line separators.)
+
+Files support the iterator protocol.  Each iteration returns the same
+result as "readline()", and iteration ends when the "readline()"
+method returns an empty string.
+
+File objects also offer a number of other interesting attributes.
+These are not required for file-like objects, but should be
+implemented if they make sense for the particular object.
+
+file.closed
+
+   bool indicating the current state of the file object.  This is a
+   read-only attribute; the "close()" method changes the value. It may
+   not be available on all file-like objects.
+
+file.encoding
+
+   The encoding that this file uses. When Unicode strings are written
+   to a file, they will be converted to byte strings using this
+   encoding. In addition, when the file is connected to a terminal,
+   the attribute gives the encoding that the terminal is likely to use
+   (that  information might be incorrect if the user has misconfigured
+   the  terminal). The attribute is read-only and may not be present
+   on all file-like objects. It may also be "None", in which case the
+   file uses the system default encoding for converting Unicode
+   strings.
+
+   Nouveau dans la version 2.3.
+
+file.errors
+
+   The Unicode error handler used along with the encoding.
+
+   Nouveau dans la version 2.6.
+
+file.mode
+
+   The I/O mode for the file.  If the file was created using the
+   "open()" built-in function, this will be the value of the *mode*
+   parameter.  This is a read-only attribute and may not be present on
+   all file-like objects.
+
+file.name
+
+   If the file object was created using "open()", the name of the
+   file. Otherwise, some string that indicates the source of the file
+   object, of the form "<...>".  This is a read-only attribute and may
+   not be present on all file-like objects.
+
+file.newlines
+
+   If Python was built with *universal newlines* enabled (the default)
+   this read-only attribute exists, and for files opened in universal
+   newline read mode it keeps track of the types of newlines
+   encountered while reading the file. The values it can take are
+   "'\r'", "'\n'", "'\r\n'", "None" (unknown, no newlines read yet) or
+   a tuple containing all the newline types seen, to indicate that
+   multiple newline conventions were encountered. For files not opened
+   in universal newlines read mode the value of this attribute will be
+   "None".
+
+file.softspace
+
+   Boolean that indicates whether a space character needs to be
+   printed before another value when using the "print" statement.
+   Classes that are trying to simulate a file object should also have
+   a writable "softspace" attribute, which should be initialized to
+   zero.  This will be automatic for most classes implemented in
+   Python (care may be needed for objects that override attribute
+   access); types implemented in C will have to provide a writable
+   "softspace" attribute.
+
+   Note: This attribute is not used to control the "print"
+     statement, but to allow the implementation of "print" to keep
+     track of its internal state.
+
+
+memoryview type
+===============
+
+Nouveau dans la version 2.7.
+
+"memoryview" objects allow Python code to access the internal data of
+an object that supports the buffer protocol without copying.  Memory
+is generally interpreted as simple bytes.
+
+class memoryview(obj)
+
+   Create a "memoryview" that references *obj*.  *obj* must support
+   the buffer protocol.  Built-in objects that support the buffer
+   protocol include "str" and "bytearray" (but not "unicode").
+
+   A "memoryview" has the notion of an *element*, which is the atomic
+   memory unit handled by the originating object *obj*.  For many
+   simple types such as "str" and "bytearray", an element is a single
+   byte, but other third-party types may expose larger elements.
+
+   "len(view)" returns the total number of elements in the memoryview,
+   *view*.  The "itemsize" attribute will give you the number of bytes
+   in a single element.
+
+   A "memoryview" supports slicing to expose its data.  Taking a
+   single index will return a single element as a "str" object.  Full
+   slicing will result in a subview:
+
+      >>> v = memoryview('abcefg')
+      >>> v[1]
+      'b'
+      >>> v[-1]
+      'g'
+      >>> v[1:4]
+      <memory at 0x77ab28>
+      >>> v[1:4].tobytes()
+      'bce'
+
+   If the object the memoryview is over supports changing its data,
+   the memoryview supports slice assignment:
+
+      >>> data = bytearray('abcefg')
+      >>> v = memoryview(data)
+      >>> v.readonly
+      False
+      >>> v[0] = 'z'
+      >>> data
+      bytearray(b'zbcefg')
+      >>> v[1:4] = '123'
+      >>> data
+      bytearray(b'z123fg')
+      >>> v[2] = 'spam'
+      Traceback (most recent call last):
+        File "<stdin>", line 1, in <module>
+      ValueError: cannot modify size of memoryview object
+
+   Notice how the size of the memoryview object cannot be changed.
+
+   "memoryview" has two methods:
+
+   tobytes()
+
+      Return the data in the buffer as a bytestring (an object of
+      class "str").
+
+         >>> m = memoryview("abc")
+         >>> m.tobytes()
+         'abc'
+
+   tolist()
+
+      Return the data in the buffer as a list of integers.
+
+         >>> memoryview("abc").tolist()
+         [97, 98, 99]
+
+   Plusieurs attributs en lecture seule sont également disponibles :
+
+   format
+
+      A string containing the format (in "struct" module style) for
+      each element in the view.  This defaults to "'B'", a simple
+      bytestring.
+
+   itemsize
+
+      The size in bytes of each element of the memoryview.
+
+   shape
+
+      Un *tuple* d’entiers de longueur "ndim" donnant la forme de la
+      *memoryview* sous forme d’un tableau à N dimensions.
+
+   ndim
+
+      Un nombre entier indiquant le nombre de dimensions d’un tableau
+      multi-dimensionnel représenté par la *memoryview*.
+
+   strides
+
+      Un *tuple* d’entiers de longueur "ndim" donnant la taille en
+      octets permettant d’accéder à chaque dimensions du tableau.
+
+   readonly
+
+      Un booléen indiquant si la mémoire est en lecture seule.
+
+
+Le type Gestionnaire de Contexte
+================================
+
+Nouveau dans la version 2.5.
+
+Python’s "with" statement supports the concept of a runtime context
+defined by a context manager.  This is implemented using two separate
+methods that allow user-defined classes to define a runtime context
+that is entered before the statement body is executed and exited when
+the statement ends.
+
+The *context management protocol* consists of a pair of methods that
+need to be provided for a context manager object to define a runtime
+context:
+
+contextmanager.__enter__()
+
+   Entre dans le contexte à l’exécution, soit se renvoyant lui-même,
+   soit en renvoyant un autre objet en lien avec ce contexte.  La
+   valeur renvoyée par cette méthode est liée à l’indentifiant donné
+   au "as" de l’instruction "with" utilisant ce gestionnaire de
+   contexte.
+
+   An example of a context manager that returns itself is a file
+   object. File objects return themselves from __enter__() to allow
+   "open()" to be used as the context expression in a "with"
+   statement.
+
+   Un exemple de gestionnaire de contexte renvoyant un objet connexe
+   est celui renvoyé par "decimal.localcontext()". Ces gestionnaires
+   remplacent le contexte décimal courant par une copie de l’original,
+   copie qui est renvoyée. Ça permet de changer le contexte courant
+   dans le corps du "with" sans affecter le code en dehors de
+   l’instruction "with".
+
+contextmanager.__exit__(exc_type, exc_val, exc_tb)
+
+   Sort du contexte et renvoie un booléen indiquant si une exception
+   survenue doit être supprimée.  Si une exception est survenue lors
+   de l’exécution du corps de l’instruction "with", les arguments
+   contiennent le type de l’exception, sa valeur, et la trace de la
+   pile (*traceback*). Sinon les trois arguments valent "None".
+
+   L’instruction "with" inhibera l’exception si cette méthode renvoie
+   une valeur vraie, l’execution continura ainsi à l’instruction
+   suivant immédiatement l’instruction "with". Sinon, l’exception
+   continura de se propager après la fin de cette méthode. Les
+   exceptions se produiseant pendant l’exécution de cette méthode
+   remplaceront toute exception qui s’est produite dans le corps du
+   "with".
+
+   The exception passed in should never be reraised explicitly -
+   instead, this method should return a false value to indicate that
+   the method completed successfully and does not want to suppress the
+   raised exception. This allows context management code (such as
+   "contextlib.nested") to easily detect whether or not an
+   "__exit__()" method has actually failed.
+
+Python définit plusieurs gestionnaires de contexte pour faciliter la
+synchronisation des threads, la fermeture des fichiers ou d’autres
+objets, et la configuration du contexte arithmétique décimal. Ces
+types spécifiques ne sont pas traités différement, ils respectement
+simplement le protocole de gestion du contexte. Voir les examples dans
+la documentation du module "contextlib".
+
+Python’s *generator*s and the "contextlib.contextmanager" *decorator*
+provide a convenient way to implement these protocols.  If a generator
+function is decorated with the "contextlib.contextmanager" decorator,
+it will return a context manager implementing the necessary
+"__enter__()" and "__exit__()" methods, rather than the iterator
+produced by an undecorated generator function.
+
+Notez qu’il n’y a pas de slot spécifique pour ces méthodes dans la
+structure de type pour les objets Python dans l’API Python/C. Les
+types souhaitant définir ces méthodes doivent les fournir comme une
+méthode accessible en Python. Comparé au coût de la mise en place du
+contexte d’exécution, les le coût d’un accès au dictionnaire d’une
+classe unique est négligeable.
+
+
+Autres types natifs
+===================
+
+L’interpréteur gère aussi d’autres types d’objets, la pluspart ne
+supportant cependant qu’une ou deux opérations.
+
+
+Modules
+-------
+
+La seule opération spéciale sur un module est l’accès à ses attributs
+: "m.name", où *m* est un module et *name* donne accès un nom défini
+dans la table des symboles de *m*.  Il est possible d’assigner un
+attribut de module.  (Notez que l’instruction "import" n’est pas
+strictement une opération sur un objet module. "import foo" ne
+nécessite pas qu’un objet module nommé *foo* existe, il nécessite
+cependant une *définition* (externe) d’un module nommé *foo* quelque
+part.)
+
+Un attribut spécial à chaque module est "__dict__". C’est le
+dictionnaire contenant la table des symbole du module. Modifier ce
+dictionnaire changera la table des symboles du module, mais assigner
+directement "__dict__" n’est pas possible (vous pouvez écrire
+"m.__dict__['a'] = 1", qui donne "1" comme valeur pour "m.a", mais
+vous ne pouvez pas écrire "m.__dict__ = {}"). Modifier "__dict__"
+directement n’est pas recommandé.
+
+Les modules natifs à l’interpréteur sont représentés "<module 'sys'
+(built-in)>".  S’ils sont chargés depuis un fichier, ils sont
+représentés "<module 'os' from '/usr/local/lib/pythonX.Y/os.pyc'>".
+
+
+Les Classes et Instances de Classes
+-----------------------------------
+
+Voir Objects, values and types et Class definitions.
+
+
+Fonctions
+---------
+
+Les objets fonctions sont crées par les définitions de fonctions.  La
+seule opération applicable à un objet fonction est de l’appeler :
+"func(argument-list)".
+
+Il existe en fait deux catégories d’objets fonctions : Les fonctions
+natives et les fonctions définies par l’utilisateur.  Les deux gèrent
+les mêmes opérations (l’appel à la fonction), mais leur implémentation
+est différente, d’où les deux types distincts.
+
+Voir Function definitions pour plus d’information.
+
+
+Méthodes
+--------
+
+Les méthodes sont des fonctions appelées via la notation d’attribut.
+Il en existe deux variantes : Les méthodes natives (tel que "append()"
+sur les listes), et les méthodes d’instances de classes. Les méthodes
+natives sont représentées avec le type qui les supporte.
+
+The implementation adds two special read-only attributes to class
+instance methods: "m.im_self" is the object on which the method
+operates, and "m.im_func" is the function implementing the method.
+Calling "m(arg-1, arg-2, ..., arg-n)" is completely equivalent to
+calling "m.im_func(m.im_self, arg-1, arg-2, ..., arg-n)".
+
+Class instance methods are either *bound* or *unbound*, referring to
+whether the method was accessed through an instance or a class,
+respectively.  When a method is unbound, its "im_self" attribute will
+be "None" and if called, an explicit "self" object must be passed as
+the first argument.  In this case, "self" must be an instance of the
+unbound method’s class (or a subclass of that class), otherwise a
+"TypeError" is raised.
+
+Like function objects, methods objects support getting arbitrary
+attributes. However, since method attributes are actually stored on
+the underlying function object ("meth.im_func"), setting method
+attributes on either bound or unbound methods is disallowed.
+Attempting to set an attribute on a method results in an
+"AttributeError" being raised.  In order to set a method attribute,
+you need to explicitly set it on the underlying function object:
+
+   >>> class C:
+   ...     def method(self):
+   ...         pass
+   ...
+   >>> c = C()
+   >>> c.method.whoami = 'my name is method'  # can't set on the method
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   AttributeError: 'instancemethod' object has no attribute 'whoami'
+   >>> c.method.im_func.whoami = 'my name is method'
+   >>> c.method.whoami
+   'my name is method'
+
+Voir The standard type hierarchy pour plus d’information.
+
+
+Objets Code
+-----------
+
+Code objects are used by the implementation to represent « pseudo-
+compiled » executable Python code such as a function body. They differ
+from function objects because they don’t contain a reference to their
+global execution environment.  Code objects are returned by the built-
+in "compile()" function and can be extracted from function objects
+through their "func_code" attribute. See also the "code" module.
+
+A code object can be executed or evaluated by passing it (instead of a
+source string) to the "exec" statement or the built-in "eval()"
+function.
+
+Voir The standard type hierarchy pour plus d’information.
+
+
+Objets Type
+-----------
+
+Les objets types représentent les différents types d’objets. Le type
+d’un objet est obtenu via la fonction native "type()". Il n’existe
+aucune opération spéciale sur les types. Le module standard "types"
+définit les noms de tous les types natifs.
+
+Types are written like this: "<type 'int'>".
+
+
+L’objet Null
+------------
+
+This object is returned by functions that don’t explicitly return a
+value.  It supports no special operations.  There is exactly one null
+object, named "None" (a built-in name).
+
+C’est écrit "None".
+
+
+L’objet Points de Suspension
+----------------------------
+
+This object is used by extended slice notation (see Slicings).  It
+supports no special operations.  There is exactly one ellipsis object,
+named "Ellipsis" (a built-in name).
+
+It is written as "Ellipsis".  When in a subscript, it can also be
+written as "...", for example "seq[...]".
+
+
+L’objet *NotImplemented*
+------------------------
+
+This object is returned from comparisons and binary operations when
+they are asked to operate on types they don’t support. See
+Comparaisons for more information.
+
+C’est écrit "NotImplemented".
+
+
+Valeurs Booléennes
+------------------
+
+Les valeurs booléennes sont les deux objet constants "False" et
+"True". Ils son utilisés pour représenter les valeurs de vérité (bien
+que d’autres valeurs peuvent être considérées vraies ou fausses). Dans
+des contextes numériques (par exemple en argument d’un opérateur
+arithmétique), ils se comportent comme les nombres entiers 0 et 1,
+respectivement.  La fonction native "bool()" peut être utilisée pour
+convertir n’importe quelle valeur en booléen tant que la valeur peut
+être interprétée en une valeur de vérité (voir Valeurs booléennes au
+dessus).
+
+Ils s’écrivent "False" et "True", respectivement.
+
+
+Objets Internes
+---------------
+
+Voir The standard type hierarchy. Ils décrivent les objets *stack
+frame*, *traceback*, et *slice*.
+
+
+Attributs Spéciaux
+==================
+
+L’implémentation ajoute quelques attributs spéciaux et en lecture
+seule, à certains types, lorsque ça a du sens. Certains ne sont *pas*
+listés par la fonction native "dir()".
+
+object.__dict__
+
+   Un dictionnaire ou un autre *mapping object* utilisé pour stocker
+   les attributs (modifiables) de l’objet.
+
+object.__methods__
+
+   Obsolète depuis la version 2.2: Use the built-in function "dir()"
+   to get a list of an object’s attributes. This attribute is no
+   longer available.
+
+object.__members__
+
+   Obsolète depuis la version 2.2: Use the built-in function "dir()"
+   to get a list of an object’s attributes. This attribute is no
+   longer available.
+
+instance.__class__
+
+   La classe de l’instance de classe.
+
+class.__bases__
+
+   Le *tuple* des classes parentes d’un objet classe.
+
+definition.__name__
+
+   The name of the class, type, function, method, descriptor, or
+   generator instance.
+
+The following attributes are only supported by *new-style class*es.
+
+class.__mro__
+
+   Cet attribut est un *tuple* contenant les classes parents prises en
+   compte lors de la résolution de méthode.
+
+class.mro()
+
+   Cette méthode peut être surchargée par une meta-classe pour
+   personnaliser l’ordre de la recherche de méthode pour ses
+   instances.  Elle est appelée à la l’initialisation de la classe, et
+   son résultat est stocké dans l’attribut "__mro__".
+
+class.__subclasses__()
+
+   Each new-style class keeps a list of weak references to its
+   immediate subclasses.  This method returns a list of all those
+   references still alive. Example:
+
+      >>> int.__subclasses__()
+      [<type 'bool'>]
+
+-[ Notes ]-
+
+[1] Plus d’informations sur ces méthodes spéciales peuvent être
+    trouvées dans le *Python Reference Manual* (Basic customization)
+
+[2] Par conséquent, la liste "[1, 2]" est considérée égale à
+    "[1.0, 2.0]". Idem avec des tuples.
+
+[3] Nécessairement, puisque le parseur ne peut pas discerner le
+    type des opérandes.
+
+[4] Les caractères capitalisables sont ceux dont la propriété
+    unicode *general category* est soit « Lu » (pour *Letter*,
+    *uppercase*), soit « Ll » (pour *Letter*, *lowercase*), soit « Lt
+    » (pour *Letter*, *titlecase*).
+
+[5] Pour insérer un *tuple*, vous devez donc donner un *tuple*
+    d’un seul élément, contenant le *tuple* à insérer.
+
+[6] The advantage of leaving the newline on is that returning an
+    empty string is then an unambiguous EOF indication.  It is also
+    possible (in cases where it might matter, for example, if you want
+    to make an exact copy of a file while scanning its lines) to tell
+    whether the last line of a file ended in a newline or not (yes
+    this happens!).

@@ -1,0 +1,435 @@
+Créer une Distribution Compilée
+*******************************
+
+Une « distribution compilée » vous fait surement penser à un « paquet
+binaire » ou à un « installateur » (tout dépend de votre
+environnement). Ce n’est cependant pas forcément un binaire, il peut
+ne contenir que des sources Python et/ou du byte-code; et nous
+n’appelons pas ça un *package* parce que ce mot est déjà utiliseé dans
+Python (et « installateur » est un terme spécifique au monde des
+systèmes de bureau).
+
+Une distribution compilée est une manière de rendre la vie plus facile
+à ceux qui installent votre module: pour les utilisateurs de système
+Linux basé sur RPM, ce sera des binaire RPM; pour les utilisateurs de
+Windows, c’est un installateur exécutable; pour les utilisateurs de
+Linux basé sur Debian, c’est un paquet Debian; et ainsi de suite.
+Évidemment, personne n’est capable de créer une distribution compilée
+pour toute les plateformes existantes, donc Distutils est fait pour
+permettre aux développeurs de se concentrer sur leurs
+spécialités—écrire du code et créer des distribution source—pendant
+que d’autres, appelés *packagers* s’occupent de transformer les
+sources en paquets pour chaques plateforme.
+
+Bien sur, le développeur du module peut être son propre *packager*; ou
+le *packager* peut être un volontaire « quelque part » qui a accès à
+une plateforme que le développeur initial n’a pas; ou bien un logiciel
+qui prend les sources périodiquement et les transforme en une
+distribution compilée pour autant de plateforme que le logiciel a
+accès.  Peu importe qui ils sont, les *packagers* utilisent "setup.py"
+et la command **bdist** afin de générer une distribution compilée.
+
+Pour prendre un exemple simple, si je lance la commande suivante dans
+les sources de Distutils
+
+   python setup.py bdist
+
+alors Distutils construit ma distribution du module (Distutils lui
+même dans ce cas), fait une « fausse » installation (aussi dans le
+dossier "build") et crée le type de distribution compilée par défaut
+pour ma plateforme. Le format par défaut est un « bête » fichier tar
+pour Unix et un simple installateur exécutable pour Windows (ce
+fichier tar est considéré comme « bête » car il doit être décompressé
+à un endroit précis pour fonctionner).
+
+Par conséquent, la commande si dessus crée le fichier
+"Distutils-1.0.*plat*.tar.gz" sur les systèmes Unix; décompresser
+cette tarball au bon endroit installe Distutils exactement comme si
+vous aviez téléchargé la distribution source et lancé "python setup.py
+install" (le « bon endroit » est soit la racine du système de fichier,
+ou le dossier de Python "*prefix*", tout dépend des options données à
+la commande **bdist_dumb** ;la valeur par défaut est de créer une
+distribution « bête » relative à "*prefix*").
+
+Évidemment, pour une distribution en Python pur, ce n’est pas aussi
+simple que de simplement lancer "python setup.py install"—mais pour
+une distribution non-pure qui inclut des extensions qui devraient être
+compilées, ça peut faire la différence entre quelqu’un qui sera
+capable d’utiliser votre extension, ou non. De plus créer une
+distribution compilée « intelligente » tel qu’un paquet RPM ou un
+installateur executable Windows, est bien plus pratique pour les
+utilisateurs, même si votre module n’inclut aucune extension.
+
+The **bdist** command has a "--formats" option, similar to the
+**sdist** command, which you can use to select the types of built
+distribution to generate: for example,
+
+   python setup.py bdist --format=zip
+
+aurait, quand lancé sur un système Unix, crée
+file:*Distutils-1.0.{plat}.zip*—à nouveau, cette archive devra être
+décompressé depuis la racine pour installer Distutils.
+
+Les formats disponible pour les distributions compilées sont:
+
++---------------+--------------------------------+-----------+
+| Format        | Description                    | Notes     |
++===============+================================+===========+
+| "gztar"       | Fichier tar gzippé (".tar.gz") | (1),(3)   |
++---------------+--------------------------------+-----------+
+| "ztar"        | Fichier tar compressé          | (3)       |
+|               | (".tar.Z")                     |           |
++---------------+--------------------------------+-----------+
+| "tar"         | Fichier tar (".tar")           | (3)       |
++---------------+--------------------------------+-----------+
+| "zip"         | Fichier zip (".zip")           | (2),(4)   |
++---------------+--------------------------------+-----------+
+| "rpm"         | RPM                            | (5)       |
++---------------+--------------------------------+-----------+
+| "pkgtool"     | Solaris **pkgtool**            |           |
++---------------+--------------------------------+-----------+
+| "sdux"        | HP-UX **swinstall**            |           |
++---------------+--------------------------------+-----------+
+| "wininst"     | Fichier zip auto-extracteur    | (4)       |
+|               | Windows                        |           |
++---------------+--------------------------------+-----------+
+| "msi"         | Installateur Microsoft         |           |
++---------------+--------------------------------+-----------+
+
+Notes :
+
+1. Par défaut sur Unix
+
+2. Par défaut sur Windows
+
+3. requires external utilities: **tar** and possibly one of
+   **gzip**, **bzip2**, or **compress**
+
+4. nécessite soit un utilitaire **zip** extérieur ou le module
+   "zipfile" (inclut dans la bibliothèque standard depuis Python 1.6)
+
+5. nécessite un programme externe **rpm** , version 3.0.4 ou mieux
+   (utilisez "rpm --version" pour connaître quelle version vous avez)
+
+You don’t have to use the **bdist** command with the "--formats"
+option; you can also use the command that directly implements the
+format you’re interested in.  Some of these **bdist** « sub-commands »
+actually generate several similar formats; for instance, the
+**bdist_dumb** command generates all the « dumb » archive formats
+("tar", "ztar", "gztar", and "zip"), and **bdist_rpm** generates both
+binary and source RPMs.  The **bdist** sub-commands, and the formats
+generated by each, are:
+
++----------------------------+-------------------------+
+| Command                    | Formats                 |
++============================+=========================+
+| **bdist_dumb**             | tar, ztar, gztar, zip   |
++----------------------------+-------------------------+
+| **bdist_rpm**              | rpm, srpm               |
++----------------------------+-------------------------+
+| **bdist_wininst**          | wininst                 |
++----------------------------+-------------------------+
+| **bdist_msi**              | msi                     |
++----------------------------+-------------------------+
+
+Le chapitre suivant donne des détails individuel sur les commandes
+**bdist_***
+
+
+Creating dumb built distributions
+=================================
+
+
+Créer un paquet RPM
+===================
+
+Le format RPM est utilisé par beaucoup de distributions Linux
+populaires, incluant Red Hat, SuSE et Mandrake. Si l’une d’entre elle
+(ou n’importe quelle autre distribution basé sur RPM) est votre
+environnement habituel, créer un paquet pour les autres utilisateur de
+ces distributions est trivial. Cela dépend de la complexité de votre
+module et des différences entre les distributions Linux, vous pourrez
+aussi créer des RPM qui fonctionneront sur des distributions RPM
+différentes.
+
+La manière habituelle de créer un RPM de votre module est d’utiliser
+la commande **bdist_rpm**:
+
+   python setup.py bdist_rpm
+
+or the **bdist** command with the "--format" option:
+
+   python setup.py bdist --formats=rpm
+
+La première vous permet de spécifier des options spécifique à RPM; la
+dernière vous permet de spécifier plusieurs format d’un seul coup. Si
+vous avez besoin d’utiliser les deux, vous pouvez explicitement
+spécifier plusieurs commande **bdist_*** et leurs options.
+
+   python setup.py bdist_rpm --packager="John Doe <jdoe@example.org>" \
+                   bdist_wininst --target-version="2.0"
+
+La création de Package RPM est configurée par une fichier ".spec", un
+peu comme Distutils est configuré par script setup. Pour vous
+faciliter la tâche, la commande **bdist_rpm** crée normalement un
+fichier ".spec" basé sur les informations que vous fournissez dans
+"setup.py",  dans les options de la ligne de commande et dans la
+configuration de Distutils. Beaucoup d’options du fichier ".spec" sont
+dérivées des options du script de préparation suivant :
+
++--------------------------------------------+------------------------------------------------+
+| Option de fichier RPM ".spec"              | Options du script de préparation Distutils     |
++============================================+================================================+
+| Nom                                        | "name"                                         |
++--------------------------------------------+------------------------------------------------+
+| *Summary* (dans le préambule)              | "description"                                  |
++--------------------------------------------+------------------------------------------------+
+| *Version*                                  | "version"                                      |
++--------------------------------------------+------------------------------------------------+
+| *vendor*                                   | "author" et "author_email", ou  — &            |
+|                                            | "maintainer" et "maintainer_email"             |
++--------------------------------------------+------------------------------------------------+
+| Copyright                                  | "license"                                      |
++--------------------------------------------+------------------------------------------------+
+| *Url*                                      | "url"                                          |
++--------------------------------------------+------------------------------------------------+
+| %description (section)                     | "long_description"                             |
++--------------------------------------------+------------------------------------------------+
+
+De plus, il y a beaucoup d’options dans le fichier ".spec" qui n’ont
+aucun équivalent dans le script de préparation. La plupart de celles
+ci sont gérées par les options de la commande **bdist_rpm** suivant:
+
++---------------------------------+-------------------------------+---------------------------+
+| Option de fichier RPM ".spec"   | Option de **bdist_rpm**       | Valeur par défaut         |
++=================================+===============================+===========================+
+| Version                         | "release"                     | « 1 »                     |
++---------------------------------+-------------------------------+---------------------------+
+| *Group*                         | "group"                       | « Développement/Biblioth  |
+|                                 |                               | èques »                   |
++---------------------------------+-------------------------------+---------------------------+
+| *vendor*                        | "vendor"                      | (voir au-dessus)          |
++---------------------------------+-------------------------------+---------------------------+
+| *Packager*                      | "packager"                    | (none)                    |
++---------------------------------+-------------------------------+---------------------------+
+| *Provides*                      | "provides"                    | (none)                    |
++---------------------------------+-------------------------------+---------------------------+
+| *Requires*                      | "requires"                    | (none)                    |
++---------------------------------+-------------------------------+---------------------------+
+| *Conflicts*                     | "conflicts"                   | (none)                    |
++---------------------------------+-------------------------------+---------------------------+
+| *Obsoletes*                     | "obsoletes"                   | (none)                    |
++---------------------------------+-------------------------------+---------------------------+
+| *Distribution*                  | "distribution_name"           | (none)                    |
++---------------------------------+-------------------------------+---------------------------+
+| *BuildRequires*                 | "build_requires"              | (none)                    |
++---------------------------------+-------------------------------+---------------------------+
+| *Icon*                          | "icon"                        | (none)                    |
++---------------------------------+-------------------------------+---------------------------+
+
+Obviously, supplying even a few of these options on the command-line
+would be tedious and error-prone, so it’s usually best to put them in
+the setup configuration file, "setup.cfg"—see section Writing the
+Setup Configuration File.  If you distribute or package many Python
+module distributions, you might want to put options that apply to all
+of them in your personal Distutils configuration file
+("~/.pydistutils.cfg").  If you want to temporarily disable this file,
+you can pass the –no-user-cfg option to setup.py.
+
+La création de binaire RPM se fait en trois étapes, chacune gérée
+automatiquement par Distutils:
+
+1. Créer un fichier ".spec" qui décrira le paquet (comme le script
+   de préparation Distutils, en réalité la plupart des informations du
+   script de préparation se retrouve dans le fichier ".spec")
+
+2. creer un RPM source
+
+3. Créer le RPM « binaire » (qui peut ou non contenir des binaires,
+   tout dépend de si votre module contiens des extensions)
+
+Normalement, RPM réunit les deux dernières étapes ensemble; quand vous
+utilisez Distutils, les trois étapes sont regroupées.
+
+If you wish, you can separate these three steps.  You can use the "--
+spec-only" option to make **bdist_rpm** just create the ".spec" file
+and exit; in this case, the ".spec" file will be written to the «
+distribution directory »—normally "dist/", but customizable with the "
+--dist-dir" option.  (Normally, the ".spec" file winds up deep in the
+« build tree, » in a temporary directory created by **bdist_rpm**.)
+
+
+Créer un installateur Windows
+=============================
+
+Les installateurs exécutable sont le format naturel pour les
+distributions sur Windows. Ils affichent une jolie interface
+graphique, montrent quelques informations à propos du module qui va
+être installé, tiré des métadonnées dans le script de préparation,
+laisse l’utilisateur choisir quelques options et démarrer ou annuler
+l’installation.
+
+Etant donné que les métadonnées sont tirées du script de préparation,
+créer un installateur Windows est généralement facile, il suffit de
+lancer:
+
+   python setup.py bdist_wininst
+
+or the **bdist** command with the "--formats" option:
+
+   python setup.py bdist --formats=wininst
+
+Si vous avez un module pur (contenant seulement des modules et des
+packages en Python pur), l’installateur final ne sera lié a aucune
+version de Python et aura un nom du type "foo-1.0.win32.exe". Ces
+installateurs peuvent même être créés sur les plateformes Unix ou Mac
+OS X.
+
+Si vous avez une distribution « non-pure », l’extension peut être
+créée uniquement pour les plateformes Windows et sera lié à une
+version de Python. Le nom de l’installateur reflétera ça et sera de
+format "foo-1.0.win32-py2.0.exe". Vous devrez créer un installateur
+pour chaque version de Python que vous voulez supporter.
+
+The installer will try to compile pure modules into *bytecode* after
+installation on the target system in normal and optimizing mode.  If
+you don’t want this to happen for some reason, you can run the
+**bdist_wininst** command with the "--no-target-compile" and/or the "
+--no-target-optimize" option.
+
+By default the installer will display the cool « Python Powered » logo
+when it is run, but you can also supply your own 152x261 bitmap which
+must be a Windows ".bmp" file with the "--bitmap" option.
+
+The installer will also display a large title on the desktop
+background window when it is run, which is constructed from the name
+of your distribution and the version number.  This can be changed to
+another text by using the "--title" option.
+
+The installer file will be written to the « distribution directory » —
+normally "dist/", but customizable with the "--dist-dir" option.
+
+
+Compiler pour toute les plateformes Windows
+===========================================
+
+Depuis Python 2.6, distutils est capable de compiler pour toute les
+plateformes de Windows. En pratique, cela signifie qu’avec les bons
+outils installés, vous pouvez utiliser une version 32 bits de Windows
+pour créer une extension 64 bits et vice-versa.
+
+To build for an alternate platform, specify the "--plat-name" option
+to the build command.  Valid values are currently “win32”, “win-amd64”
+and “win-ia64”.  For example, on a 32bit version of Windows, you could
+execute:
+
+   python setup.py build --plat-name=win-amd64
+
+Pour construire une version 64 bits de votre module. L’installateur
+Windows supporte aussi cette option, donc la commande:
+
+   python setup.py build --plat-name=win-amd64 bdist_wininst
+
+créera un installateur executable 64 bits depuis votre version 32 bits
+de Windows.
+
+Pour compiler pour toute les versions de Windows, vous devez
+télécharger le code source de Python et de le compiler pour la
+plateforme choisie - il est impossible de le faire depuis une
+installation de Python (vu que les fichiers .lib pour les autres
+plateformes ne sont pas inclut). En pratique, cela veut dire qu’un
+utilisateur de systeme 32 bits devra utiliser Visual Studio 2008 pour
+ouvrir la solution "PCBuild/PCbuild.sln" dans l’arborescence des
+sources de Python et construire la version « x64 » du projet «
+pythoncore » avant de pouvoir compiler son extension.
+
+Remarquez que par défaut Visual Studio 2008 n’installe pas les outils
+et compilateur 64 bits. Vous devrez peut être re-executer le processus
+d’installation et sélectionner ces outils (utiliser le Panneau de
+Contrôle->[Ajouter/Supprimer] est un bon moyen de vérifier ou modifier
+votre installation existante.)
+
+
+Le script de post-installation
+------------------------------
+
+Starting with Python 2.3, a postinstallation script can be specified
+with the "--install-script" option.  The basename of the script must
+be specified, and the script filename must also be listed in the
+scripts argument to the setup function.
+
+This script will be run at installation time on the target system
+after all the files have been copied, with "argv[1]" set to
+"-install", and again at uninstallation time before the files are
+removed with "argv[1]" set to "-remove".
+
+Le script d’installation s’exécute intégré à la fenêtre
+d’installation, chaque sortie ("sys.stdout", "sys.stderr") est
+redirigé dans le tampon et sera affiché dans le GUI après que les
+scripts soient finis.
+
+certaines fonctions spécialement utiles dans ce contexte sont
+disponibles comme fonctions intégrées additionnelles  dans le script
+d’installation.
+
+directory_created(path)
+file_created(path)
+
+   Ces fonctions peuvent être appelées lorsqu’un répertoire ou un
+   fichier est crée par le script de post installation au moment de
+   l’installation. Cela va enregistrer le *chemin* avec le des-
+   installeur, de sorte qu’il soit retiré lors de la des-installation
+   de la distribution. pour être sûr, les répertoires sont uniquement
+   retirés s’ils sont vides.
+
+get_special_folder_path(csidl_string)
+
+   Cette fonction peut être utilisée pour extraire des localisations
+   de fichiers spéciaux sous Windows comme un menu démarrer ou le
+   Bureau. Cela renvoie le chemin complet pour le fichier.
+   *csidl_string* doit être unes des chaines suivantes:
+
+      "CSIDL_APPDATA"
+
+      "CSIDL_COMMON_STARTMENU"
+      "CSIDL_STARTMENU"
+
+      "CSIDL_COMMON_DESKTOPDIRECTORY"
+      "CSIDL_DESKTOPDIRECTORY"
+
+      "CSIDL_COMMON_STARTUP"
+      "CSIDL_STARTUP"
+
+      "CSIDL_COMMON_PROGRAMS"
+      "CSIDL_PROGRAMS"
+
+      "CSIDL_FONTS"
+
+   Si le fichier ne peut être extrait, "OSError" est obtenu..
+
+   Quel dossier est disponible dépend de la version exacte de Windows,
+   et probablement aussi de la configuration. pour des détails se
+   référer à la documentation Microsoft de la fonction
+   "SHGetSpecialFolderPath()".
+
+create_shortcut(target, description, filename[, arguments[, workdir[, iconpath[, iconindex]]]])
+
+   Cette fonction crée un raccourci. *cible* est le chemin au
+   programme auquel mène le raccourci. *description* est la
+   description du raccourci. *nomfichier* est le titre du raccourci
+   que verra l’utilisateur. *arguments* spécifie les arguments de la
+   ligne de commande, si existant. *cheminRep* est le répertoire de
+   travail pour le programme. *cheminIcone* est le fichier contenant
+   l’icône pour le raccourci, et *IndexIcone* est l’index pour l’icône
+   dans le fichier *cheminIcone*. Encore, pour les details consulter
+   la documentation Microsoft pour l’interface "ILienShell".
+
+
+Controle d’accès utilisateur Vista (UAC)
+========================================
+
+Starting with Python 2.6, bdist_wininst supports a "--user-access-
+control" option.  The default is “none” (meaning no UAC handling is
+done), and other valid values are “auto” (meaning prompt for UAC
+elevation if Python was installed for all users) and “force” (meaning
+always prompt for elevation).

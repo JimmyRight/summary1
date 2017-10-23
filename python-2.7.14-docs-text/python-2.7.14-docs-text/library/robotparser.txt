@@ -1,0 +1,57 @@
+"robotparser" — robots.txt のためのパーザ
+*****************************************
+
+注釈: "robotparser" モジュールは、 Python 3 では
+  "urllib.robotparser" にリ ネームされました。 *2to3* ツールが自動的に
+  ソースコードの import を修 正します。
+
+このモジュールでは単一のクラス、 "RobotFileParser" を提供します。この
+クラスは、特定のユーザエージェントが "robots.txt" ファイルを公開してい
+る Web サイトのある URL を取得可能かどうかの質問に答えます。
+"robots.txt" ファイルの構造に関する詳細は
+http://www.robotstxt.org/orig.html を参照してください。
+
+class robotparser.RobotFileParser(url=」)
+
+   *url* の "robots.txt" に対し読み込み、パーズ、応答するメソッドを提
+   供します。
+
+   set_url(url)
+
+      "robots.txt" ファイルを参照するための URL を設定します。
+
+   read()
+
+      "robots.txt" URL を読み出し、パーザに入力します。
+
+   parse(lines)
+
+      引数 *lines* の内容を解釈します。
+
+   can_fetch(useragent, url)
+
+      解釈された "robots.txt" ファイル中に記載された規則に従ったとき、
+      *useragent* が *url* を取得してもよい場合には "True" を返します
+      。
+
+   mtime()
+
+      "robots.txt" ファイルを最後に取得した時刻を返します。この値は、
+      定期的に新たな "robots.txt" をチェックする必要がある、長時間動作
+      する Web スパイダープログラムを実装する際に便利です。
+
+   modified()
+
+      "robots.txt" ファイルを最後に取得した時刻を現在の時刻に設定しま
+      す。
+
+以下に RobotFileParser クラスの利用例を示します。
+
+   >>> import robotparser
+   >>> rp = robotparser.RobotFileParser()
+   >>> rp.set_url("http://www.musi-cal.com/robots.txt")
+   >>> rp.read()
+   >>> rp.can_fetch("*", "http://www.musi-cal.com/cgi-bin/search?city=San+Francisco")
+   False
+   >>> rp.can_fetch("*", "http://www.musi-cal.com/")
+   True

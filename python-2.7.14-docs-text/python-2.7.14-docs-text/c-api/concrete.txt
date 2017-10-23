@@ -1,0 +1,163 @@
+Couche des Objets Concrets
+**************************
+
+The functions in this chapter are specific to certain Python object
+types. Passing them an object of the wrong type is not a good idea; if
+you receive an object from a Python program and you are not sure that
+it has the right type, you must perform a type check first; for
+example, to check that an object is a dictionary, use
+"PyDict_Check()".  The chapter is structured like the « family tree »
+of Python object types.
+
+Avertissement: Tandis que les fonctions décrites dans ce chapitre
+  vérifient avec soin le type des objets qui leur sont passés,
+  beaucoup d’entre elles ne vérifient pas que *NULL* est passé au lieu
+  d’un objet valide. Autoriser *NULL* à être passé peut provoquer des
+  violations d’accès à la mémoire et ainsi terminer immédiatement
+  l’interpréteur.
+
+
+Objets fondamentaux
+===================
+
+Cette section décrit les objets de type Python et l’objet singleton
+"None".
+
+* Type Objects
+
+* The "None" Object
+
+
+Objets numériques
+=================
+
+* Objets association
+
+* Les objets booléens
+
+* Long Integer Objects
+
+* Floating Point Objects
+
+* Objets Nombres Complexes
+
+  * Nombres complexes en tant que structures C
+
+  * Nombres complexes en tant qu’objets Python
+
+
+Objets séquences
+================
+
+Les opérations génériques sur les objets séquences ont été discutées
+dans le chapitre précédent. Cette section traite des genres
+spécifiques d’objets séquences qui sont intrinsèques au langage
+Python.
+
+* Objets Tableau d’Octets
+
+  * Macros de vérification de type
+
+  * Fonctions directes sur l’API
+
+  * Macros
+
+* String/Bytes Objects
+
+* Unicode Objects and Codecs
+
+  * Unicode Objects
+
+    * Unicode Type
+
+    * Unicode Character Properties
+
+    * Plain Py_UNICODE
+
+    * wchar_t Support
+
+  * Built-in Codecs
+
+    * Generic Codecs
+
+    * UTF-8 Codecs
+
+    * UTF-32 Codecs
+
+    * UTF-16 Codecs
+
+    * UTF-7 Codecs
+
+    * Unicode-Escape Codecs
+
+    * Raw-Unicode-Escape Codecs
+
+    * Latin-1 Codecs
+
+    * ASCII Codecs
+
+    * Character Map Codecs
+
+    * MBCS codecs for Windows
+
+    * Methods & Slots
+
+  * Methods and Slot Functions
+
+* Buffers and Memoryview Objects
+
+  * The new-style Py_buffer struct
+
+  * Buffer related functions
+
+  * MemoryView objects
+
+  * Old-style buffer objects
+
+* Tuple Objects
+
+* List Objects
+
+
+Mapping Objects
+===============
+
+* Objets dictionnaires
+
+
+Autres Objets
+=============
+
+* Class and Instance Objects
+
+* Function Objects
+
+* Les objets méthode
+
+* Objets fichiers
+
+* Module Objects
+
+* Iterator Objects
+
+* Descriptor Objects
+
+* Slice Objects
+
+* Ellipsis Object
+
+* Weak Reference Objects
+
+* Capsules
+
+* Objets Cellules
+
+* Objets Cellules
+
+* Objets Générateur
+
+* Objets DateTime
+
+* Set Objects
+
+* Objets Code

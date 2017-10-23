@@ -1,0 +1,17 @@
+"whichdb" — どの DBM モジュールがデータベースを作ったかを推測する
+*****************************************************************
+
+注釈: "whichdb" モジュールが持っていた唯一の関数は、Python 3 では
+  "dbm" モ ジュールに移動されました。 *2to3* ツールは自動的に import
+  を修正しま す。
+
+The single function in this module attempts to guess which of the
+several simple database modules available—"dbm", "gdbm", or
+"dbhash"—should be used to open a given file.
+
+whichdb.whichdb(filename)
+
+   次の値のうち１つを返します: ファイルが読み取れないか存在しないため
+   に開くことができない場合は "None"; ファイルのフォーマットを推測する
+   ことができない場合は空文字列 ("''"); それ以外は "'dbm'" や "'gdbm'"
+   のような、必要なモジュール名を含む文字列。

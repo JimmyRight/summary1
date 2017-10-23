@@ -1,0 +1,45 @@
+Formats de fichiers
+*******************
+
+The modules described in this chapter parse various miscellaneous file
+formats that aren’t markup languages or are related to e-mail.
+
+* "csv" — Lecture et écriture de fichiers CSV
+
+  * Contenu du module
+
+  * Dialectes et paramètres de formatage
+
+  * Objets lecteurs
+
+  * Objets transcripteurs
+
+  * Exemples
+
+* "ConfigParser" — Configuration file parser
+
+  * RawConfigParser Objects
+
+  * ConfigParser Objects
+
+  * SafeConfigParser Objects
+
+  * Examples
+
+* "robotparser" —  Parser for robots.txt
+
+* "netrc" — netrc file processing
+
+  * netrc Objects
+
+* "xdrlib" — Encode and decode XDR data
+
+  * Packer Objects
+
+  * Unpacker Objects
+
+  * Les exceptions
+
+* "plistlib" — Generate and parse Mac OS X ".plist" files
+
+  * Exemples

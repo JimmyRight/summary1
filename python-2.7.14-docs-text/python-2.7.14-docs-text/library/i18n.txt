@@ -1,0 +1,45 @@
+Internationalization
+********************
+
+The modules described in this chapter help you write software that is
+independent of language and locale by providing mechanisms for
+selecting a language to be used in  program messages or by tailoring
+output to match local conventions.
+
+The list of modules described in this chapter is:
+
+* "gettext" — Services d’internationalisation multilingue
+
+  * API GNU **gettext**
+
+  * API basée sur les classes
+
+    * La classe "NullTranslations"
+
+    * La classe "GNUTranslations"
+
+    * Support du catalogue de message de Solaris
+
+    * Le constructeur *Catalog*
+
+  * Internationaliser vos programmes et modules
+
+    * Localiser votre module
+
+    * Localiser votre application
+
+    * Changer de langue à la volée
+
+    * Traductions différées
+
+    * "gettext()" vs. "lgettext()"
+
+  * Remerciements
+
+* "locale" — Internationalization services
+
+  * Background, details, hints, tips and caveats
+
+  * For extension writers and programs that embed Python
+
+  * Access to message catalogs

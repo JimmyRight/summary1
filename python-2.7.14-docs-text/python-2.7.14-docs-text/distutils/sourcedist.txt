@@ -1,0 +1,287 @@
+Créer une Distribution Source
+*****************************
+
+Comme montré dans le chapitre Un exemple simple, vous pouvez utiliser
+la commande **sdist** pour créer une distribution source. Dans le cas
+le plus simple,
+
+   python setup.py sdist
+
+(supposant que vous n’avez spécifié aucune option pour la commande
+**sdist** dans le script de préparation ou le fichier de
+configuration), **sdist** créé une archive au format par défaut pour
+la plateforme utilisé. Le format par défaut est un fichier tar gzippé
+(".tar.gz") sur Unix et un fichier ZIP sur Windows.
+
+You can specify as many formats as you like using the "--formats"
+option, for example:
+
+   python setup.py sdist --formats=gztar,zip
+
+pour créer un fichier tarball gzippé et un fichier ZIP. Les formats
+disponibles actuellement sont:
+
++-------------+---------------------------+-----------+
+| Format      | Description               | Notes     |
++=============+===========================+===========+
+| "zip"       | Fichier zip (".zip")      | (1),(3)   |
++-------------+---------------------------+-----------+
+| "gztar"     | Fichier tar gzippé        | (2)       |
+|             | (".tar.gz")               |           |
++-------------+---------------------------+-----------+
+| "bztar"     | Fichier tar bzip2         |           |
+|             | (".tar.bz2")              |           |
++-------------+---------------------------+-----------+
+| "ztar"      | Fichier tar compressé     | (4)       |
+|             | (".tar.Z")                |           |
++-------------+---------------------------+-----------+
+| "tar"       | Fichier tar (".tar")      |           |
++-------------+---------------------------+-----------+
+
+Notes :
+
+1. Par défaut sur Windows
+
+2. Par défaut sur Unix
+
+3. nécessite soit un utilitaire **zip** extérieur ou le module
+   "zipfile" (inclut dans la bibliothèque standard depuis Python 1.6)
+
+4. requires the **compress** program.
+
+When using any "tar" format ("gztar", "bztar", "ztar" or "tar") under
+Unix, you can specify the "owner" and "group" names that will be set
+for each member of the archive.
+
+Par exemple, si vous voulez que tous les fichiers de l’archive soient
+détenu par *root*:
+
+   python setup.py sdist --owner=root --group=root
+
+
+Spécifier les fichiers à distribuer
+===================================
+
+Si vous ne fournissez pas une liste explicite de fichiers (ou les
+instructions pour la générer), la commande **sdist** en met par défaut
+le minimum dans la distribution source:
+
+* tous les fichiers source Python sous-entendus par les options
+  "py_modules" et "packages"
+
+* tous les fichiers source C mentionnés dans les arguments
+  "ext_modules" ou "libraries"
+
+* scripts identifiés par l’argument "scripts". Voir Installing
+  Scripts.
+
+* tout ce qui ressemble a un script de test "test/test*.py" (pour
+  l’instant, Distutils ne fait rien avec ces scripts de test a part
+  les inclure dans les distributions source, mais dans le futur un
+  standard sera implémenté pour tester les distributions de module
+  Python)
+
+* "README.txt" (ou "README"), "setup.py"  (ou peut importe la
+  manière dont vous avez appelé votre script d’installation) et
+  "setup.cfg"
+
+* tous les fichiers associés aux méta-données "package_data". Voir
+  Installing Package Data.
+
+* tous les fichiers associés aux méta-données "data_files". Voir
+  Installing Additional Files.
+
+Parfois ce fonctionnement suffit, mais généralement vous voudrez
+spécifier des fichier supplémentaire a distribuer. La voie courante
+pour le faire est d’écrire un *manifeste modèle*, appelé "MANIFEST.in"
+par défaut. Ce modèle manifeste est juste une liste d’instructions
+pour générer votre fichier manifeste final, "MANIFEST", qui est liste
+exacte des fichiers à inclure dans votre distribution source. La
+commande **sdist** traite ce modèle et génère un manifeste basé sur
+ces instructions et ce qu’il trouve dans le système de fichier.
+
+Si vous préferez créer votre propre fichier manifeste, le format est
+simple: un nom de fichier par ligne, uniquement des fichiers normaux
+(ou leur lien symbolique). Si vous fournissez votre propre
+"MANIFEST", vous devez tout spécifier: le groupe de fichier par défaut
+décrit au dessus ne sera pas inclu automatiquement dans ce cas
+
+Modifié dans la version 2.7: Un "MANIFEST" généré existant sera
+regénéré sans que **sdist** compare son heure de modification à
+"MANIFEST.in" ou "setup.py".
+
+Modifié dans la version 2.7.1: Les fichiers "MANIFEST" commence avec
+un commentaire indiquant qu’ils sont générés. Les fichiers sans ce
+commentaire ne sont pas réécrits ou supprimés
+
+Modifié dans la version 2.7.3: **sdist** will read a "MANIFEST" file
+if no "MANIFEST.in" exists, like it did before 2.7.
+
+See The MANIFEST.in template section for a syntax reference.
+
+
+Options en rapport avec le manifeste
+====================================
+
+L’ordre normal des opérations pour la commande **sdist** est le
+suivant:
+
+* si le fichier manifeste ("MANIFEST" par défaut) existe et que la
+  première ligne n’a pas de commentaire indiquant qu’il a été généré
+  par "MANIFEST.in", alors il est utiliser tel quel, inchangé
+
+* si le manifeste n’existe pas ou qu’il a été généré
+  automatiquement, lire "MANIFEST.in" et créer le manifeste
+
+* si il n’existe ni  "MANIFEST" ni "MANIFEST.in", alors créer un
+  manifeste contenant uniquement le groupe de fichier par défaut
+
+* utiliser maintenant la liste de fichier de "MANIFEST"  (qu’il soit
+  généré ou lu) pour créer la ou les archive(s) de la distribution
+  source
+
+There are a couple of options that modify this behaviour.  First, use
+the "--no-defaults" and "--no-prune" to disable the standard « include
+» and « exclude » sets.
+
+Deuxièmement, si vous voulez (ré)généré le manifeste, mais pas créer
+la distribution source
+
+   python setup.py sdist --manifest-only
+
+"-o" is a shortcut for "--manifest-only".
+
+
+The MANIFEST.in template
+========================
+
+A "MANIFEST.in" file can be added in a project to define the list of
+files to include in the distribution built by the **sdist** command.
+
+When **sdist** is run, it will look for the "MANIFEST.in" file and
+interpret it to generate the "MANIFEST" file that contains the list of
+files that will be included in the package.
+
+This mechanism can be used when the default list of files is not
+enough. (See Spécifier les fichiers à distribuer).
+
+
+Principle
+---------
+
+The manifest template has one command per line, where each command
+specifies a set of files to include or exclude from the source
+distribution.  For an example, let’s look at the Distutils” own
+manifest template:
+
+   include *.txt
+   recursive-include examples *.txt *.py
+   prune examples/sample?/build
+
+The meanings should be fairly clear: include all files in the
+distribution root matching "*.txt", all files anywhere under the
+"examples" directory matching "*.txt" or "*.py", and exclude all
+directories matching "examples/sample?/build".  All of this is done
+*after* the standard include set, so you can exclude files from the
+standard set with explicit instructions in the manifest template.
+(Or, you can use the "--no-defaults" option to disable the standard
+set entirely.)
+
+L’ordre des commandes dans le modèle manifeste compte: nous avons a la
+base la liste de fichier par défaut tel que décrit plus haut et chaque
+commande du modèle ajoute ou supprime des fichier de cette liste. Une
+fois que vous avez fini de traiter le modèle manifeste, nous enlevons
+les fichiers qui ne doivent pas être inclut dans la distribution
+source:
+
+* tous les fichiers dans l’arborescence de *build* de Distutils (par
+  défaut "build/")
+
+* tous les fichiers dans les dossiers nommés "RCS", "CVS", ".svn",
+  ".hg", ".git", ".bzr" ou "_darcs"
+
+Maintenant nous avons notre liste complète de fichier, qui est
+désormais écrite dans le manifeste pour une utilisation future et qui
+est utilisé pour construire la ou les archive(s) de notre distribution
+source.
+
+You can disable the default set of included files with the "--no-
+defaults" option, and you can disable the standard exclude set with "
+--no-prune".
+
+Voici le modèle manifeste de Distutils, suivons comment la commande
+**sdist** contruit la liste des fichiers a inclure dans la
+distribution source de Distutils.
+
+1. inclure tous les fichier source Python dans les sous-dossiers
+   "distutils" et "distutils/command" (parce que des packages
+   correspondant à ces deux dossiers ont été mentionnés dans
+   l’argument "packages" du script d’installation —voir le chapitre
+   Writing the Setup Script)
+
+2. inclure "README.txt", "setup.py", et "setup.cfg" (fichiers
+   standard)
+
+3. inclure "test/test*.py" (fichiers standard)
+
+4. inclure "*.txt" à la racine de la distribution (ceci trouvera
+   "README.txt"  une seconde fois, mais les redondances sont
+   supprimées plus tard)
+
+5. inclure tout fichier ressemblant à "*.txt" ou "*.py" dans la
+   sous- arborescence de "examples",
+
+6. exclure tout les fichiers dans la sous-arborescence démarrant au
+   dossier ressemblant à "examples/sample?/build"— Ceci peut exclure
+   des fichiers inclut dans les étapes précédentes, il est donc
+   important que la commande "prune" dans le modèle manifeste vienne
+   après la commande "recursive-include"
+
+7. exclure l’arborescence de "build" ainsi que les dossiers  "RCS",
+   "CVS", ".svn", ".hg", ".git", ".bzr" et "_darcs"
+
+Comme dans le script de préparation, les chemins des fichier et des
+dossiers dans le modèle manifeste doivent toujours être séparés par
+des slash; Distutils s’occupera de les convertir a la représentation
+standard de votre plateforme. De cette manière, le modèle manifeste
+est portable sur tout système d’exploitation
+
+
+Commands
+--------
+
+The manifest template commands are:
+
++---------------------------------------------+-------------------------------------------------+
+| Command                                     | Description                                     |
++=============================================+=================================================+
+| **include pat1 pat2 ...**                   | include all files matching any of the listed    |
+|                                             | patterns                                        |
++---------------------------------------------+-------------------------------------------------+
+| **exclude pat1 pat2 ...**                   | exclude all files matching any of the listed    |
+|                                             | patterns                                        |
++---------------------------------------------+-------------------------------------------------+
+| **recursive-include dir pat1 pat2 ...**     | include all files under *dir* matching any of   |
+|                                             | the listed patterns                             |
++---------------------------------------------+-------------------------------------------------+
+| **recursive-exclude dir pat1 pat2 ...**     | exclude all files under *dir* matching any of   |
+|                                             | the listed patterns                             |
++---------------------------------------------+-------------------------------------------------+
+| **global-include pat1 pat2 ...**            | include all files anywhere in the source tree   |
+|                                             | matching — & any of the listed patterns         |
++---------------------------------------------+-------------------------------------------------+
+| **global-exclude pat1 pat2 ...**            | exclude all files anywhere in the source tree   |
+|                                             | matching — & any of the listed patterns         |
++---------------------------------------------+-------------------------------------------------+
+| **prune dir**                               | exclude all files under *dir*                   |
++---------------------------------------------+-------------------------------------------------+
+| **graft dir**                               | include all files under *dir*                   |
++---------------------------------------------+-------------------------------------------------+
+
+The patterns here are Unix-style « glob » patterns: "*" matches any
+sequence of regular filename characters, "?" matches any single
+regular filename character, and "[range]" matches any of the
+characters in *range* (e.g., "a-z", "a-zA-Z", "a-f0-9_.").  The
+definition of « regular filename character » is platform-specific: on
+Unix it is anything except slash; on Windows anything except backslash
+or colon.

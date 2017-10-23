@@ -1,0 +1,110 @@
+Outils de développement
+***********************
+
+Les modules décrits dans ce chapitre vous aident à écrire des
+logiciels.  Par exemple, le module "pydoc" prend un module et génère
+de la documentation basée sur son contenu.  Les modules "doctest" et
+"unittest" contiennent des frameworks pour écrire des tests unitaires
+qui permettent de valider automatiquement le code en vérifiant que
+chaque résultat attendu est produit. Le programme **2to3** peut
+traduire du code Python 2.x en Python 3.x.
+
+Voici la liste des modules documentés par ce chapitre:
+
+* "pydoc" — Documentation generator and online help system
+
+* "doctest" — Test interactive Python examples
+
+  * Simple Usage: Checking Examples in Docstrings
+
+  * Simple Usage: Checking Examples in a Text File
+
+  * How It Works
+
+    * Which Docstrings Are Examined?
+
+    * How are Docstring Examples Recognized?
+
+    * What’s the Execution Context?
+
+    * What About Exceptions?
+
+    * Option Flags
+
+    * Directives
+
+    * Warnings
+
+  * Basic API
+
+  * Unittest API
+
+  * Advanced API
+
+    * DocTest Objects
+
+    * Example Objects
+
+    * DocTestFinder objects
+
+    * DocTestParser objects
+
+    * DocTestRunner objects
+
+    * OutputChecker objects
+
+  * Debugging
+
+  * Soapbox
+
+* "unittest" — Unit testing framework
+
+  * Basic example
+
+  * Command-Line Interface
+
+    * Command-line options
+
+  * Test Discovery
+
+  * Organizing test code
+
+  * Re-using old test code
+
+  * Skipping tests and expected failures
+
+  * Classes and functions
+
+    * Test cases
+
+      * Deprecated aliases
+
+    * Grouping tests
+
+    * Loading and running tests
+
+      * load_tests Protocol
+
+  * Class and Module Fixtures
+
+    * setUpClass and tearDownClass
+
+    * setUpModule and tearDownModule
+
+  * Signal Handling
+
+* 2to3 - Automatise la traduction du code de Python 2 vers Python 3
+
+  * Utilisation de 2to3
+
+  * Fixers
+
+  * "lib2to3" - la bibliothèque de 2to3
+
+* "test" — Regression tests package for Python
+
+  * Writing Unit Tests for the "test" package
+
+  * Running tests using the command-line interface
+
+* "test.support" — Utility functions for tests

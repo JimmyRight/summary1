@@ -1,0 +1,165 @@
+Mac OS X 固有のサービス
+***********************
+
+この章では Mac OS X プラットフォームでのみ利用可能なモジュールについて
+説明します。
+
+さらに多くのモジュールについて MacPython OSA モジュール や 文書化され
+ていない Mac OS モジュール も参照してください。また HOWTO の Macintosh
+で Python を使う は Mac 固有の Python プログラミングについての一般的な
+入門編になっています。
+
+注釈: 最新バージョンの OS X では、このモジュールが使っている OS X
+  API のほ とんどが非推奨になっているか、もしくは削除されています。多
+  くは Python が 64 ビットモードで動作している場合には利用出来ません。
+  この モジュールは Python 3 では削除済みです。Python 2 でもこのモジュ
+  ール の利用は避けるべきです。
+
+* "ic" — Mac OS X のインターネット設定へのアクセス
+
+  * IC オブジェクト
+
+* "MacOS" — Mac OS インタプリタ機能へのアクセス
+
+* "macostools" — ファイル操作を便利にするルーチン集
+
+* "findertools" — **finder** のApple Events インターフェース
+
+* "EasyDialogs" — 基本的な Macintosh ダイアログ
+
+  * プログレスバーオブジェクト
+
+* "FrameWork" — 対話型アプリケーション・フレームワーク
+
+  * Application オブジェクト
+
+  * Window オブジェクト
+
+  * ControlsWindow オブジェクト
+
+  * ScrolledWindow オブジェクト
+
+  * DialogWindow オブジェクト
+
+* "autoGIL" — イベントループ中のグローバルインタープリタの取り扱い
+
+* Mac OS ツールボックスモジュール
+
+  * "Carbon.AE" — Apple Events
+
+  * "Carbon.AH" — Apple ヘルプ
+
+  * "Carbon.App" — Appearance Manager
+
+  * "Carbon.Appearance" — Appearance Manager 定数
+
+  * "Carbon.CF" — Core Foundation
+
+  * "Carbon.CG" — Core Graphics
+
+  * "Carbon.CarbonEvt" — Carbon Event Manager
+
+  * "Carbon.CarbonEvents" — Carbon Event Manager 定数
+
+  * "Carbon.Cm" — Component Manager
+
+  * "Carbon.Components" — Component Manager 定数
+
+  * "Carbon.ControlAccessor" — Control Manager アクセッサ
+
+  * "Carbon.Controls" — Control Manager 定数
+
+  * "Carbon.CoreFounation" — CoreFounation 定数
+
+  * "Carbon.CoreGraphics" — CoreGraphics 定数
+
+  * "Carbon.Ctl" — Control Manager
+
+  * "Carbon.Dialogs" — Dialog Manager 定数
+
+  * "Carbon.Dlg" — Dialog Manager
+
+  * "Carbon.Drag" — Drag and Drop Manager
+
+  * "Carbon.Dragconst" — Drag and Drop Manager 定数
+
+  * "Carbon.Events" — Event Manager 定数
+
+  * "Carbon.Evt" — Event Manager
+
+  * "Carbon.File" — File Manager
+
+  * "Carbon.Files" — File Manager 定数
+
+  * "Carbon.Fm" — Font Manager
+
+  * "Carbon.Folder" — Folder Manager
+
+  * "Carbon.Folders" — Folder Manager 定数
+
+  * "Carbon.Fonts" — Font Manager 定数
+
+  * "Carbon.Help" — Help Manager
+
+  * "Carbon.IBCarbon" — Carbon InterfaceBuilder
+
+  * "Carbon.IBCarbonRuntime" — Carbon InterfaceBuilder 定数
+
+  * "Carbon.Icn" — Carbon Icon Manager
+
+  * "Carbon.Icons" — Carbon Icon Manager 定数
+
+  * "Carbon.Launch" — Carbon Launch Services
+
+  * "Carbon.LaunchServices" — Carbon Launch Services 定数
+
+  * "Carbon.List" — List Manager
+
+  * "Carbon.Lists" — List Manager 定数
+
+  * "Carbon.MacHelp" — Help Manager 定数
+
+  * "Carbon.MediaDescr" — Parsers and generators for Quicktime Media
+    descriptors
+
+  * "Carbon.Menu" — Menu Manager
+
+  * "Carbon.Menus" — Menu Manager 定数
+
+  * "Carbon.Mlte" — MultiLingual Text Editor
+
+  * "Carbon.OSA" — Carbon OSA Interface
+
+  * "Carbon.OSAconst" — Carbon OSA Interface 定数
+
+  * "Carbon.QDOffscreen" — QuickDraw Offscreen 定数
+
+  * "Carbon.Qd" — QuickDraw
+
+  * "Carbon.Qdoffs" — QuickDraw Offscreen
+
+  * "Carbon.Qt" — QuickTime
+
+  * "Carbon.QuickDraw" — QuickDraw 定数
+
+  * "Carbon.QuickTime" — QuickTime 定数
+
+  * "Carbon.Res" — Resource Manager and Handles
+
+  * "Carbon.Resources" — Resource Manager and Handles 定数
+
+  * "Carbon.Scrap" — スクラップマネージャ
+
+  * "Carbon.Snd" — Sound Manager
+
+  * "Carbon.Sound" — Sound Manager 定数
+
+  * "Carbon.TE" — TextEdit
+
+  * "Carbon.TextEdit" — TextEdit 定数
+
+  * "Carbon.Win" — Window Manager
+
+  * "Carbon.Windows" — Window Manager 定数
+
+* "ColorPicker" — 色選択ダイアログ

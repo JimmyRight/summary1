@@ -1,0 +1,47 @@
+Les objets booléens
+*******************
+
+Les booléens en Python sont implémentés comme une classe dérivée des
+entiers. Il y a seulement deux booléens, "Py_False" et "Py_True".
+Comme tel, les fonctions de création de suppression ne s’appliquent
+pas aux booléens. Toutefois, les macros suivantes sont disponibles.
+
+int PyBool_Check(PyObject *o)
+
+   Renvoie vrai si *o* est de type "PyBook_Type".
+
+   Nouveau dans la version 2.3.
+
+PyObject* Py_False
+
+   L’objet Python "False". Cet objet n’a pas de méthodes. En ce qui
+   concerne le comptage de référence, il doit être traité comme
+   n’importe quel autre objet.
+
+PyObject* Py_True
+
+   L’objet Python "True". Cet objet n’a pas de méthodes. En ce qui
+   concerne le comptage de références, il doit être traité comme
+   n’importe quel autre objet.
+
+Py_RETURN_FALSE
+
+   Renvoie "Py_False" depuis une fonction tout en incrémentant son
+   nombre de références.
+
+   Nouveau dans la version 2.4.
+
+Py_RETURN_TRUE
+
+   Renvoie "Py_True" depuis une fonction, en incrémentant son nombre
+   de références.
+
+   Nouveau dans la version 2.4.
+
+PyObject* PyBool_FromLong(long v)
+    *Return value: New reference.*
+
+   Renvoie une nouvelle référence de "Py_True" ou "Py_False" en
+   fonction de la valeur de *v*.
+
+   Nouveau dans la version 2.3.

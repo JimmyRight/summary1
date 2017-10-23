@@ -1,0 +1,114 @@
+Allouer des objets dans le tas
+******************************
+
+PyObject* _PyObject_New(PyTypeObject *type)
+    *Return value: New reference.*
+
+PyVarObject* _PyObject_NewVar(PyTypeObject *type, Py_ssize_t size)
+    *Return value: New reference.*
+
+   Modifié dans la version 2.5: This function used an "int" type for
+   *size*. This might require changes in your code for properly
+   supporting 64-bit systems.
+
+void _PyObject_Del(PyObject *op)
+
+PyObject* PyObject_Init(PyObject *op, PyTypeObject *type)
+    *Return value: Borrowed reference.*
+
+   Permet d’initialiser un objet *op* nouvellement alloué ainsi que
+   son type et sa référence initiale.  Renvoie l’objet initialisé.  La
+   présence de *type* indique que l’objet doit être traité par le
+   détecteur d’ordures cycliques, il est de ce fait ajouté à
+   l’ensemble du détecteur d’objets observés. Les autres champs de
+   l’objet ne sont pas affectés.
+
+PyVarObject* PyObject_InitVar(PyVarObject *op, PyTypeObject *type, Py_ssize_t size)
+    *Return value: Borrowed reference.*
+
+   Ça fait tout ce que "PyObject_Init()" fait, et il initialise
+   également l’information de la longueur pour un objet de taille
+   variable.
+
+   Modifié dans la version 2.5: This function used an "int" type for
+   *size*. This might require changes in your code for properly
+   supporting 64-bit systems.
+
+TYPE* PyObject_New(TYPE, PyTypeObject *type)
+    *Return value: New reference.*
+
+   Alloue un nouvel objet Python en utilisant le type de structure C
+   *TYPE* et l’objet de type python *type*. Les champs non définis par
+   l’en-tête de l’objet Python ne sont pas initialisés; le compteur de
+   la référence objet sera un. La taille de l’allocation de la mémoire
+   est déterminé par le champs de l’objet type "tp_basicsize".
+
+TYPE* PyObject_NewVar(TYPE, PyTypeObject *type, Py_ssize_t size)
+    *Return value: New reference.*
+
+   Alloue un nouvel objet Python en utilisant le type de structure C
+   *TYPE* et l’objet de type Python *type*. Les champs non définis par
+   l’en-tête de l’objet Python ne sont pas initialisés. La mémoire
+   allouée autorise pour la structure *TYPE* plus *size* champs de la
+   taille donnée par le champ de *type* "tp_itemsize". C’est utile
+   pour l’implémentation d’objets comme les tuples, qui sont capables
+   de déterminer leur taille durant le temps de la construction.
+   Intégrer l’array de champs dans la même allocation diminue le
+   nombre d’allocations, mettant à l’épreuve l’efficacité de la
+   gestion de la mémoire.
+
+   Modifié dans la version 2.5: This function used an "int" type for
+   *size*. This might require changes in your code for properly
+   supporting 64-bit systems.
+
+void PyObject_Del(PyObject *op)
+
+   Libère la mémoire allouée à un objet utilisant "PyObject_New()" ou
+   "PyObject_NewVar()". C’est normalement appelé par le gestionnaire
+   "tp_dealloc" spécifié dans le type d’objet. Le champ de l’objet ne
+   devrait pas être accessible après cet appel puisque la mémoire
+   n’est plus un objet Python valide.
+
+PyObject* Py_InitModule(char *name, PyMethodDef *methods)
+    *Return value: Borrowed reference.*
+
+   Create a new module object based on a name and table of functions,
+   returning the new module object.
+
+   Modifié dans la version 2.3: Older versions of Python did not
+   support *NULL* as the value for the *methods* argument.
+
+PyObject* Py_InitModule3(char *name, PyMethodDef *methods, char *doc)
+    *Return value: Borrowed reference.*
+
+   Create a new module object based on a name and table of functions,
+   returning the new module object.  If *doc* is non-*NULL*, it will
+   be used to define the docstring for the module.
+
+   Modifié dans la version 2.3: Older versions of Python did not
+   support *NULL* as the value for the *methods* argument.
+
+PyObject* Py_InitModule4(char *name, PyMethodDef *methods, char *doc, PyObject *self, int apiver)
+    *Return value: Borrowed reference.*
+
+   Create a new module object based on a name and table of functions,
+   returning the new module object.  If *doc* is non-*NULL*, it will
+   be used to define the docstring for the module.  If *self* is
+   non-*NULL*, it will be passed to the functions of the module as
+   their (otherwise *NULL*) first parameter.  (This was added as an
+   experimental feature, and there are no known uses in the current
+   version of Python.)  For *apiver*, the only value which should be
+   passed is defined by the constant "PYTHON_API_VERSION".
+
+   Note: Most uses of this function should probably be using the
+     "Py_InitModule3()" instead; only use this if you are sure you
+     need it.
+
+   Modifié dans la version 2.3: Older versions of Python did not
+   support *NULL* as the value for the *methods* argument.
+
+PyObject _Py_NoneStruct
+
+   Object which is visible in Python as "None".  This should only be
+   accessed using the "Py_None" macro, which evaluates to a pointer to
+   this object.

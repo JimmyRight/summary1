@@ -1,0 +1,187 @@
+"functools" — Fonctions de haut niveau et opérations sur des objets appelables
+******************************************************************************
+
+Nouveau dans la version 2.5.
+
+**Code source :** Lib/functools.py
+
+======================================================================
+
+Le module "functools" est utilisé pour des fonctions de haut niveau :
+des fonctions qui agissent sur ou revoient d’autres fonctions. En
+général, tout objet appelable peut être utilisé comme une fonction
+pour les besoins de ce module.
+
+Le module "functools" définit les fonctions suivantes :
+
+functools.cmp_to_key(func)
+
+   Transform an old-style comparison function to a *key function*.
+   Used with tools that accept key functions (such as "sorted()",
+   "min()", "max()", "heapq.nlargest()", "heapq.nsmallest()",
+   "itertools.groupby()").  This function is primarily used as a
+   transition tool for programs being converted to Python 3 where
+   comparison functions are no longer supported.
+
+   Une fonction de comparaison est un appelable qui prend deux
+   arguments, les compare, et renvoie un nombre négatif pour
+   l’infériorité, zéro pour l’égalité ou un nombre positif pour la
+   supériorité.  Une fonction de clé est un appelable qui prend un
+   argument et retourne une autre valeur qui sera utilisée comme clé
+   de tri.
+
+   Exemples :
+
+      sorted(iterable, key=cmp_to_key(locale.strcoll))  # locale-aware sort order
+
+   Pour des exemples de tris et un bref tutoriel, consultez Sorting
+   HOW TO.
+
+   Nouveau dans la version 2.7.
+
+functools.total_ordering(cls)
+
+   A partir d’une classe définissant une ou plusieurs méthodes de
+   comparaison riches, ce décorateur de classe fournit le reste.  Ceci
+   simplifie l’effort à fournir dans la spécification de toutes les
+   opérations de comparaison riche :
+
+   La classe doit définir au moins une de ces méthodes "__lt__()",
+   "__le__()", "__gt__()", or "__ge__()". De plus, la classe doit
+   fournir une méthode "__eq__()".
+
+   Par exemple
+
+      @total_ordering
+      class Student:
+          def __eq__(self, other):
+              return ((self.lastname.lower(), self.firstname.lower()) ==
+                      (other.lastname.lower(), other.firstname.lower()))
+          def __lt__(self, other):
+              return ((self.lastname.lower(), self.firstname.lower()) <
+                      (other.lastname.lower(), other.firstname.lower()))
+
+   Nouveau dans la version 2.7.
+
+functools.reduce(function, iterable[, initializer])
+
+   This is the same function as "reduce()".  It is made available in
+   this module to allow writing code more forward-compatible with
+   Python 3.
+
+   Nouveau dans la version 2.6.
+
+functools.partial(func[,*args][, **keywords])
+
+   Retourne un nouvel objet "partial" qui, quand il est appelé,
+   fonctionne comme *func* appelée avec les arguments positionels
+   *args* et les arguments nommés *keywords*. Si plus d’arguments sont
+   fournis à l’appel, ils sont ajoutés à *args*. Si plus d’arguments
+   nommés sont fournis, ils étendent et surchargent *keywords*. A peu
+   près équivalent à
+
+      def partial(func, *args, **keywords):
+          def newfunc(*fargs, **fkeywords):
+              newkeywords = keywords.copy()
+              newkeywords.update(fkeywords)
+              return func(*(args + fargs), **newkeywords)
+          newfunc.func = func
+          newfunc.args = args
+          newfunc.keywords = keywords
+          return newfunc
+
+   "partial()" est utilisé pour une application de fonction partielle
+   qui « gèle » une portion des arguments et/ou mots-clés d’une
+   fonction donnant un nouvel objet avec une signature simplifiée.
+   Par exemple, "partial()" peut être utilisé pour créer un appelable
+   qui se comporte comme la fonction "int()" ou l’argument *base* est
+   deux par défaut :
+
+   >>> from functools import partial
+   >>> basetwo = partial(int, base=2)
+   >>> basetwo.__doc__ = 'Convert base 2 string to an int.'
+   >>> basetwo('10010')
+   18
+
+functools.update_wrapper(wrapper, wrapped[, assigned][, updated])
+
+   Update a *wrapper* function to look like the *wrapped* function.
+   The optional arguments are tuples to specify which attributes of
+   the original function are assigned directly to the matching
+   attributes on the wrapper function and which attributes of the
+   wrapper function are updated with the corresponding attributes from
+   the original function. The default values for these arguments are
+   the module level constants *WRAPPER_ASSIGNMENTS* (which assigns to
+   the wrapper function’s *__name__*, *__module__* and *__doc__*, the
+   documentation string) and *WRAPPER_UPDATES* (which updates the
+   wrapper function’s *__dict__*, i.e. the instance dictionary).
+
+   La principale utilisation de cette fonction est dans les fonctions
+   de *décoration* qui englobent la fonction décorée et renvoie
+   l’englobeur. Si la fonction englobante n’est pas mise à jour, les
+   métadonnées de la fonction retournée reflèteront la définition de
+   l’englobeur au lieu de la définition de la fonction originale, qui
+   souvent peu utile.
+
+functools.wraps(wrapped[, assigned][, updated])
+
+   Ceci est une fonction d’aide pour appeler "update_wrapper()"  comme
+   décorateur de fonction lors de la définition d’une fonction
+   englobante.  C’est équivalent à  "partial(update_wrapper,
+   wrapped=wrapped, assigned=assigned, updated=updated)". Par exemple
+
+      >>> from functools import wraps
+      >>> def my_decorator(f):
+      ...     @wraps(f)
+      ...     def wrapper(*args, **kwds):
+      ...         print 'Calling decorated function'
+      ...         return f(*args, **kwds)
+      ...     return wrapper
+      ...
+      >>> @my_decorator
+      ... def example():
+      ...     """Docstring"""
+      ...     print 'Called example function'
+      ...
+      >>> example()
+      Calling decorated function
+      Called example function
+      >>> example.__name__
+      'example'
+      >>> example.__doc__
+      'Docstring'
+
+   Sans l’utilisation de cette usine à décorateur, le nom de la
+   fonction d’exemple aurait été "'wrapper'", et la chaîne de
+   documentation de la fonction "example()" originale aurait été
+   perdue.
+
+
+Objets "partial"
+================
+
+Les objets "partial" sont des objets appelables créés par "partial()".
+Ils ont trois attributs en lecture seule :
+
+partial.func
+
+   Un objet ou une fonction appelable.  Les appels à l’objet "partial"
+   seront transmis à "func" avec les nouveaux arguments et mots-clés.
+
+partial.args
+
+   Les arguments positionnels qui seront ajoutés avant les arguments
+   fournis lors de l’appel d’un objet "partial".
+
+partial.keywords
+
+   Les arguments nommés qui seront fournis quand l’objet "partial" est
+   appelé.
+
+Les objets "partial" sont comme des objets "function" de par le fait
+qu’il sont appelables, référençables, et peuvent avoir des attributs.
+Il y a cependant des différences importantes.  Par exemple, les
+attributs "__name__" et "__doc__" ne sont pas créés automatiquement.
+De plus, les objets "partial" définis dans les classes se comportent
+comme des méthodes statiques et ne se transforment pas en méthodes
+liées durant la recherche d’attributs dans l’instance.

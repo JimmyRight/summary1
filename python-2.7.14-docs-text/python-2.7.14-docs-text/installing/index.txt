@@ -1,0 +1,212 @@
+L’installation de modules Python
+********************************
+
+Email:
+   distutils-sig@python.org
+
+En temps que logiciel libre populaire, Python bénéficie d’une
+communauté active de contributeurs et d’utilisateurs qui rendent à
+leur tour leurs logiciels disponibles, sous licence libre, pour les
+autres développeurs Python.
+
+Cela permet aux utilisateurs de Python de partager et de collaborer
+efficacement, bénéficiant des solutions que les autres ont déjà crées
+pour résoudre les problèmes communs (ou même, parfois, rares !), aussi
+que de partager leurs propres solutions à tous.
+
+Ce guide couvre la partie installation. Pour un guide sur la création
+et le partage de vos propres projets Python, voyez le guide de
+distribution.
+
+Note: Pour les entreprises et autres institutions, gardez en tête
+  que certaines organisations ont leur propres règles sur
+  l’utilisation et la contribution au logiciel libre. Prennez ces
+  règles en compte lorsque vous utilisez les outils de distribution et
+  d’installation fournis par Python.
+
+
+Vocabulaire
+===========
+
+* "pip" is the preferred installer program. Starting with Python
+  2.7.9, it is included by default with the Python binary installers.
+
+* a virtual environment is a semi-isolated Python environment that
+  allows packages to be installed for use by a particular application,
+  rather than being installed system wide
+
+* "virtualenv" is a third party tools for creating virtual
+  environments, it is defaults to installing "pip" into all created
+  virtual environments.
+
+* the Python Packaging Index is a public repository of open source
+  licensed packages made available for use by other Python users
+
+* the Python Packaging Authority are the group of developers and
+  documentation authors responsible for the maintenance and evolution
+  of the standard packaging tools and the associated metadata and file
+  format standards. They maintain a variety of tools, documentation
+  and issue trackers on both GitHub and BitBucket.
+
+* "distutils" est le premier système de construction et de
+  distribution ajouté à la bibliothèque standard en 1998. Bien que
+  l’utilisation directe de "distutils" soit progressivement supprimée,
+  elle reste le fondement de l’infrastructure actuelle de construction
+  de paquet et de distribution. Au delà de rester dans la bibliothèque
+  standard, son nom vit aussi sous d’autres formes, tel que la liste
+  de diffusion utilisée pour coordonner le développement et les
+  standards de la création de paquet.
+
+
+Utilisation de base
+===================
+
+Les outils standards de création de paquets sont tous conçus pour être
+utilisés à partir de la ligne de commande.
+
+La commande suivante va installer la dernière version d’un module et
+ses dépendances depuis le *Python Package Index*
+
+   python -m pip install SomePackage
+
+Note: For POSIX users (including Mac OS X and Linux users), the
+  examples in this guide assume the use of a *virtual environment*.
+  You may install "virtualenv" to provide such environments using
+  either pip ("pip install virtualenv") or through your system package
+  manager (commonly called "virtualenv" or "python-virtualenv").Pour
+  les utilisateurs de Windows, les exemples de ce quide supposent que
+  l’option proposant de modifier la variable d’environnement PATH à
+  été cochée lors de l’installation de Python.
+
+Il est aussi possible de préciser une version minimum exacte
+directement depuis la ligne de commande. Utiliser des caractères de
+comparaison tel que ">", "<" ou d’autres caractères spéciaux qui sont
+interprétés par le shell, le nom du paquet et la version doivent être
+mis entre guillemets:
+
+   python -m pip install SomePackage==1.0.4    # specific version
+   python -m pip install "SomePackage>=1.0.4"  # minimum version
+
+Normalement, si un module approprié est déjà installé, l’installer à
+nouveau n’aura aucun effet. La mise à jour de modules existants doit
+être demandée explicitement :
+
+   python -m pip install --upgrade SomePackage
+
+Plus d’informations et de ressources concernant "pip" et ses capacités
+peuvent être trouvées dans le Python Packaging User Guide.
+
+Voir aussi: Python Packaging User Guide: Installing Python
+  Distribution Packages
+
+
+Comment puis-je …?
+==================
+
+Ce sont des réponses rapides ou des liens pour certaines tâches
+courantes.
+
+
+… install "pip" in versions of Python prior to Python 2.7.9?
+------------------------------------------------------------
+
+Python only started bundling "pip" with Python 2.7.9. For earlier
+versions, "pip" needs to be « bootstrapped » as described in the
+Python Packaging User Guide.
+
+Voir aussi: Python Packaging User Guide: Requirements for Installing
+  Packages
+
+
+… Installer des paquets juste pour l’utilisateur actuel ?
+---------------------------------------------------------
+
+Donner l’option "--user" à "python -m pip install" lui fera installer
+un paquet juste pour l’utilisateur en cours, plutôt que pour tous les
+utilisateurs du système.
+
+
+… Installer des paquets Python scientifiques ?
+----------------------------------------------
+
+A number of scientific Python packages have complex binary
+dependencies, and aren’t currently easy to install using "pip"
+directly. At this point in time, it will often be easier for users to
+install these packages by other means rather than attempting to
+install them with "pip".
+
+Voir aussi: Python Packaging User Guide: Installing Scientific
+  Packages
+
+
+… Travailler avec plusieurs versions de Python installés en parallèle ?
+-----------------------------------------------------------------------
+
+On Linux, Mac OS X and other POSIX systems, use the versioned Python
+commands in combination with the "-m" switch to run the appropriate
+copy of "pip":
+
+   python2   -m pip install SomePackage  # default Python 2
+   python2.7 -m pip install SomePackage  # specifically Python 2.7
+   python3   -m pip install SomePackage  # default Python 3
+   python3.4 -m pip install SomePackage  # specifically Python 3.4
+
+(appropriately versioned "pip" commands may also be available)
+
+Sous Windows, utilisez le lanceur Python "py" en combinaison avec
+l’option "-m"
+
+   py -2   -m pip install SomePackage  # default Python 2
+   py -2.7 -m pip install SomePackage  # specifically Python 2.7
+   py -3   -m pip install SomePackage  # default Python 3
+   py -3.4 -m pip install SomePackage  # specifically Python 3.4
+
+
+Les problèmes d’installation typiques
+=====================================
+
+
+Installer dans le Python du système sur Linux
+---------------------------------------------
+
+Sur les systèmes Linux, une installation de Python sera généralement
+inclue dans le cadre de la distribution. Installer dans cette
+installation de Python nécessite un accès *root* sur le système, et
+peut interférer avec le fonctionnement du gestionnaire de paquets du
+système et d’autres composants du système si un composant est mis à
+jour de façon inattendue en utilisant "pip".
+
+Sur de tels systèmes, il est souvent préférable d’utiliser un
+environnement virtuel ou une installation par l’utilisateur lors de
+l’installation des paquets avec "pip".
+
+
+Pip not installed
+-----------------
+
+It is possible that "pip" does not get installed by default. One
+potential fix is:
+
+   python -m ensurepip --default-pip
+
+There are also additional resources for installing pip.
+
+
+Installation d’extensions binaires
+----------------------------------
+
+Python a généralement beaucoup misé sur une distribution basée sur les
+sources, avec laquelle les utilisateurs finaux devaient compiler, lors
+de l’installation, les modules d’extension à partir des sources.
+
+Avec l’introduction du format binaire "wheel", et la possibilité de
+publier des *wheels*, pour, au moins Windows et Mac OS X, via le
+*Python Package Index*, ce problème devrait diminuer au fil du temps,
+car les utilisateurs sont plus régulièrement en mesure d’installer des
+extensions pré-compilées plutôt que de devoir les compiler eux-mêmes.
+
+Some of the solutions for installing scientific software that is not
+yet available as pre-built "wheel" files may also help with obtaining
+other binary extensions without needing to build them locally.
+
+Voir aussi: Python Packaging User Guide: Binary Extensions

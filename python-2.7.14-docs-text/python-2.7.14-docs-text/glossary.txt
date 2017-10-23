@@ -1,0 +1,767 @@
+Glossaire
+*********
+
+">>>"
+   L’invite de commande utilisée par défaut dans l’interpréteur
+   interactif. On la voit souvent dans des exemples de code qui
+   peuvent être exécutés interactivement dans l’interpréteur.
+
+"..."
+   L’invite de commande utilisée par défaut dans l’interpréteur
+   interactif lorsqu’on entre un bloc de code indenté ou entre deux
+   délimiteurs (parenthèses, crochets ou accolades).
+
+3to3
+   Un outil qui essaie de convertir du code pour Python 2.x en code
+   pour Python 3.x en gérant la plupart des incompatibilités qui
+   peuvent être détectées en analysant la source et parcourant son
+   arbre syntaxique.
+
+   2to3 est disponible dans la bibliothèque standard sous le nom de
+   "lib2to3"; un point d’entrée indépendant est fourni via
+   "Tools/scripts/2to3". Cf. 2to3 - Automatise la traduction du code
+   de Python 2 vers Python 3.
+
+classe de base abstraite
+   Abstract base classes complement *duck-typing* by providing a way
+   to define interfaces when other techniques like "hasattr()" would
+   be clumsy or subtly wrong (for example with magic methods).  ABCs
+   introduce virtual subclasses, which are classes that don’t inherit
+   from a class but are still recognized by "isinstance()" and
+   "issubclass()"; see the "abc" module documentation.  Python comes
+   with many built-in ABCs for data structures (in the "collections"
+   module), numbers (in the "numbers" module), and streams (in the
+   "io" module). You can create your own ABCs with the "abc" module.
+
+argument
+   A value passed to a *function* (or *method*) when calling the
+   function.  There are two types of arguments:
+
+   * *argument nommé*: un argument précédé d’un identifiant (comme
+     "name=") ou un dictionnaire précédé de "**", lors d’un appel de
+     fonction. Par exemple, "3" et "5" sont tous les deux des
+     arguments nommés dans l’appel à "complex()" ici :
+
+        complex(real=3, imag=5)
+        complex(**{'real': 3, 'imag': 5})
+
+   * *argument positionnel* : Un argument qui n’est pas nommé. Les
+     arguments positionnels apparaissent au début de la liste des
+     arguments, ou donnés sous forme d’un *itérable* précédé par "*".
+     Par exemple, "3" et "5" sont tous les deux des arguments
+     positionnels dans les appels suivants :
+
+        complex(3, 5)
+        complex(*(3, 5))
+
+   Les arguments se retrouvent dans le corps de la fonction appelée
+   parmi les variables locales. Voir la section Appels à propos des
+   règles dictant cet affectation. Syntaxiquement, toute expression
+   est acceptée comme argument, et c’est la valeur résultante de
+   l’expression qui sera affectée à la variable locale.
+
+   See also the *parameter* glossary entry and the FAQ question on the
+   difference between arguments and parameters.
+
+attribut
+   Une valeur associée à un objet et désignée par son nom via une
+   notation utilisant des points. Par exemple, si un objet *o* a un
+   attribut *a*, il sera référencé par *o.a*.
+
+BDFL
+   Bienveillant dictateur à vie (de *Benevolent Dictator For Life*),
+   alias Guido van Rossum, le créateur de Python.
+
+Objet bytes-compatible
+   An object that supports the buffer protocol, like "str",
+   "bytearray" or "memoryview". Bytes-like objects can be used for
+   various operations that expect binary data, such as compression,
+   saving to a binary file or sending over a socket. Some operations
+   need the binary data to be mutable, in which case not all bytes-
+   like objects can apply.
+
+bytecode
+   Python source code is compiled into bytecode, the internal
+   representation of a Python program in the CPython interpreter.  The
+   bytecode is also cached in ".pyc" and ".pyo" files so that
+   executing the same file is faster the second time (recompilation
+   from source to bytecode can be avoided).  This « intermediate
+   language » is said to run on a *virtual machine* that executes the
+   machine code corresponding to each bytecode. Do note that bytecodes
+   are not expected to work between different Python virtual machines,
+   nor to be stable between Python releases.
+
+   Une liste des instructions du bytecode se trouve dans la
+   documentation du module dis.
+
+classe
+   Un modèle pour créer des objets définis par l’utilisateur. Les
+   définitions de classes (*class*) contiennent normalement des
+   définitions de méthodes qui agissent sur les instances de classe.
+
+classic class
+   Any class which does not inherit from "object".  See *new-style
+   class*.  Classic classes have been removed in Python 3.
+
+coercition
+   The implicit conversion of an instance of one type to another
+   during an operation which involves two arguments of the same type.
+   For example, "int(3.15)" converts the floating point number to the
+   integer "3", but in "3+4.5", each argument is of a different type
+   (one int, one float), and both must be converted to the same type
+   before they can be added or it will raise a "TypeError".  Coercion
+   between two operands can be performed with the "coerce" built-in
+   function; thus, "3+4.5" is equivalent to calling
+   "operator.add(*coerce(3, 4.5))" and results in "operator.add(3.0,
+   4.5)".  Without coercion, all arguments of even compatible types
+   would have to be normalized to the same value by the programmer,
+   e.g., "float(3)+4.5" rather than just "3+4.5".
+
+nombre complexe
+   Une extension du système numéral réel familier dans laquelle tous
+   les nombres sont exprimés sous la forme d’une somme d’un réel et
+   d’un imaginaire. Les nombres imaginaures sont de réels multiples
+   d’une unité imaginaire (la racine carrée de "-1"), souvent écrite
+   "i" en mathématiques ou "j" en ingénierie. Python supporte
+   nativement les nombres complexes, écrits avec cette dernière
+   notation; la partie imaginaire est écrite avec un suffixe "j",
+   exemple, "3+1j". Pour utiliser les équivalents complexes à "math",
+   utilisez "cmath". L’utilisation des nombres complexes est une
+   caractéristiques des mathématiques avancées. Si vous n’en avez pas
+   l’utilité, vous pouvez les ignorer en toute tranquilité.
+
+gestionnaire de contexte
+   Un objet contrôlant l’environnement a l’intérieur d’une instruction
+   "with" en définissant les méthodes "__enter__()" et "__exit__()".
+   Consultez la **PEP 343**.
+
+CPython
+   L’implémentation canonique du langage de programmation Python, tel
+   que distribué sur python.org. Le terme « CPython » est utilisé dans
+   certains contextes lorsqu’il est nécessaire de distinguer cette
+   implémentation des autres comme Jython ou IronPython.
+
+décorateur
+   Une fonction renvoyant une autre fonction, utilisé habituellement
+   dans une transformation de fonction via la syntaxe "@wrapper". Les
+   exemples habituels pour les décorateurs (*decorators*) sont
+   "classmethod()" et "staticmethod()".
+
+   La syntaxe des décorateurs est simplement du sucre syntaxique, les
+   définitions des deux fonctions suivantes sont sémantiquement
+   équivalentes :
+
+      def f(...):
+          ...
+      f = staticmethod(f)
+
+      @staticmethod
+      def f(...):
+          ...
+
+   Quoique moins fréquemment utilisé, le même concept existe pour les
+   classes. Consultez la documentation définitions de fonctions et
+   définitions de classes pour en savoir plus sur les décorateurs.
+
+descripteur
+   Any *new-style* object which defines the methods "__get__()",
+   "__set__()", or "__delete__()".  When a class attribute is a
+   descriptor, its special binding behavior is triggered upon
+   attribute lookup.  Normally, using *a.b* to get, set or delete an
+   attribute looks up the object named *b* in the class dictionary for
+   *a*, but if *b* is a descriptor, the respective descriptor method
+   gets called.  Understanding descriptors is a key to a deep
+   understanding of Python because they are the basis for many
+   features including functions, methods, properties, class methods,
+   static methods, and reference to super classes.
+
+   Pour plus d’informations sur les méthodes des descripteurs,
+   consultez Implementing Descriptors.
+
+dictionnaire
+   An associative array, where arbitrary keys are mapped to values.
+   The keys can be any object with "__hash__()"  and "__eq__()"
+   methods. Called a hash in Perl.
+
+vue de dictionnaire
+   The objects returned from "dict.viewkeys()", "dict.viewvalues()",
+   and "dict.viewitems()" are called dictionary views. They provide a
+   dynamic view on the dictionary’s entries, which means that when the
+   dictionary changes, the view reflects these changes. To force the
+   dictionary view to become a full list use "list(dictview)".  See
+   Les vues de dictionnaires.
+
+docstring
+   Une chaîne littérale étant la première expression d’une classe,
+   fonction, ou module. Bien qu’ignoré à l’exécution, elles sont
+   reconnues par le compilateur, et placées dans l’attribut "__doc__"
+   de sa classe, fonction, ou module respectif. Puisque cette chaîne
+   est disponible par introspection, c’est l’endroit idéal pour
+   documenter l’objet.
+
+duck-typing
+   Un style de programmation qui ne prend pas en compte le type d’un
+   objet pour déterminer s’il respecte une interface, mais qui qui
+   appelle simplement la méthode ou l’attribut (*Si ça a un bec et que
+   ça cancane, c’est un canard*). En se concentrant sur les interfaces
+   plutôt que les types, du code bien construit améliore sa
+   flexibilité en autorisant des substitutions polymorphiques. Un code
+   orienté *duck-typing* évite de vérifier les types via "type()" ou
+   "isinstance()", (notez cependant que le duck-typing peut travailler
+   de pair avec les *classes de base abstraites*.) À la place, le
+   *duck-typing* utilise plutôt "hasattr()" ou la programmation
+   *EAFP*.
+
+EAFP
+   Il est plus simple de demander pardon que demander la permission
+   (*Easier to Ask for Forgiveness than Permission*). Ce style de
+   développement Python fait l’hypothèse que le code est valide, et
+   attrape les exceptions si cette hypothèse s’avèrait fausse. Ce
+   style, propre et efficace, est caractérisé par la présence de
+   beaucoup de mot clé "try" et "except". Cette technique de
+   programmation contraste avec le style *LBYL* présent couramment
+   dans des langages tel que C.
+
+expression
+   A piece of syntax which can be evaluated to some value.  In other
+   words, an expression is an accumulation of expression elements like
+   literals, names, attribute access, operators or function calls
+   which all return a value.  In contrast to many other languages, not
+   all language constructs are expressions.  There are also
+   *statement*s which cannot be used as expressions, such as "print"
+   or "if".  Assignments are also statements, not expressions.
+
+module d’extension
+   Un module écrit en C ou C++, utilisant l’API C de Python pour
+   interagir avec Python et le code de l’utilisateur.
+
+objet fichier
+   Un objet exposant une ressource via une API orientée fichier (avec
+   les méthodes "read()" ou "write()"). En fonction de la manière dont
+   ils ont été créés, les objets fichiers peuvent exposer un fichier
+   sur le disque, ou un autre type de stockage ou de communication
+   (typiquement l’entrée standard, la sortie standard, un tampon en
+   mémoire, des sockets, …). Les objets fichiers sont aussi appelés
+   *file-like-objects* ou *streams*.
+
+   There are actually three categories of file objects: raw binary
+   files, buffered binary files and text files.  Their interfaces are
+   defined in the "io" module.  The canonical way to create a file
+   object is by using the "open()" function.
+
+objet fichier-compatible
+   Un synonyme de *objet fichier*.
+
+finder
+   An object that tries to find the *loader* for a module. It must
+   implement a method named "find_module()". See **PEP 302** for
+   details.
+
+division entière
+   Division mathématique arrondissant à l’entier le plus petit.
+   L’opérateur de la division entière est "//". Par exemple
+   l’expression "11 // 4" vaut "2", contrairement à "11 / 4" qui vaut
+   "2.75". Notez que "(-11) // 4" vaut "-3" car l’arrondi se fait par
+   le bas. Voir la **PEP 328**.
+
+fonction
+   Une suite d’instructions qui renvoient une valeur à celui qui
+   l’appelle. On peut aussi lui passer des *arguments* qui pourront
+   être utilisés dans le corps de la fonction. Voir aussi *paramètre*,
+   *méthode*, et Function definitions.
+
+__future__
+   A pseudo-module which programmers can use to enable new language
+   features which are not compatible with the current interpreter.
+   For example, the expression "11/4" currently evaluates to "2". If
+   the module in which it is executed had enabled *true division* by
+   executing:
+
+      from __future__ import division
+
+   the expression "11/4" would evaluate to "2.75".  By importing the
+   "__future__" module and evaluating its variables, you can see when
+   a new feature was first added to the language and when it will
+   become the default:
+
+      >>> import __future__
+      >>> __future__.division
+      _Feature((2, 2, 0, 'alpha', 2), (3, 0, 0, 'alpha', 0), 8192)
+
+ramasse-miettes
+   (*garbage collection*) Le mécanisme permettant de libérer de la
+   mémoire lorsqu’elle n’est plus utilisée. Python utilise un ramasse-
+   miettes par comptage de référence, et un ramasse-miettes cyclique
+   capable de détecter et casser les références circulaires.
+
+générateur
+   A function which returns an iterator.  It looks like a normal
+   function except that it contains "yield" statements for producing a
+   series of values usable in a for-loop or that can be retrieved one
+   at a time with the "next()" function. Each "yield" temporarily
+   suspends processing, remembering the location execution state
+   (including local variables and pending try-statements).  When the
+   generator resumes, it picks-up where it left-off (in contrast to
+   functions which start fresh on every invocation).
+
+expression génératrice
+   Une expression qui donne un itérateur. Cela ressemble à une
+   expression normale, suivie d’une expression "for" définissant une
+   variable de boucle, d’un range, et d’une expression, optionnelle,
+   "if". Cette expression combinée génère des valeurs pour la fonction
+   qui l’entoure :
+
+      >>> sum(i*i for i in range(10))         # sum of squares 0, 1, 4, ... 81
+      285
+
+GIL
+   Voir *global interpreter lock*.
+
+verrou global de l’interpréteur
+   Le mécanisme utilisé par l’interpréteur *CPython* pour s’assurer
+   qu’un seul thread n’execute du *bytecode* à la fois. Cela simplifie
+   l’implémentation de CPython en rendant le modèle objet (incluant
+   des parties critiques comme la classe native "dict") implicitement
+   protégé des accès concourants. Vérouiller l’interpréteur entier le
+   rend plus facile à rendre multi-thread, en perdant malheureusement
+   la majorité du parallélisme possible sur les machines ayant
+   plusieurs processeurs.
+
+   Cependant, certains modules d’extension, standards ou non, sont
+   construits de manière à libérer le GIL lorsqu’ils effectuent des
+   tâches lourdes tel que la compression ou le hachage. Aussi, le GIL
+   est toujours libéré lors des lectures et écritures.
+
+   Les tentatives précédentes d’implémenter un interpréteur Python
+   avec une granularité de verrouillage plus fine ont toutes échouées,
+   à cause de leur performances sur un seul processeur. Il est admis
+   que corriger c’est problèmes de performance induits mènerai vers
+   une implémentation compliquée et donc plus coûteuse à maintenir.
+
+hachable
+   An object is *hashable* if it has a hash value which never changes
+   during its lifetime (it needs a "__hash__()" method), and can be
+   compared to other objects (it needs an "__eq__()" or "__cmp__()"
+   method). Hashable objects which compare equal must have the same
+   hash value.
+
+   La hachabilité permet à un objet d’être utilisé comme clef de
+   dictionnaire, ou en temps que membre d’un *set*, car ces structures
+   de données utilisent ce *hash*.
+
+   All of Python’s immutable built-in objects are hashable, while no
+   mutable containers (such as lists or dictionaries) are.  Objects
+   which are instances of user-defined classes are hashable by
+   default; they all compare unequal (except with themselves), and
+   their hash value is derived from their "id()".
+
+IDLE
+   Un environnement de développement intégré pour Python. IDLE est un
+   éditeur et interpréteur basique livré avec la distribution standard
+   de Python.
+
+immuable
+   Un objet dont la valeur ne change pas. Les nombres, les chaînes et
+   les tuples sont immuables. Ils ne peuvent être modifiés. Un nouvel
+   objet doit être créé si une valeur différente doit être stockée.
+   Ils jouent un rôle important aux endroits où une valeur de *hash*
+   constante est requise, typiquement en clef de dictionnaire.
+
+integer division
+   Mathematical division discarding any remainder.  For example, the
+   expression "11/4" currently evaluates to "2" in contrast to the
+   "2.75" returned by float division.  Also called *floor division*.
+   When dividing two integers the outcome will always be another
+   integer (having the floor function applied to it). However, if one
+   of the operands is another numeric type (such as a "float"), the
+   result will be coerced (see *coercion*) to a common type.  For
+   example, an integer divided by a float will result in a float
+   value, possibly with a decimal fraction.  Integer division can be
+   forced by using the "//" operator instead of the "/" operator.  See
+   also *__future__*.
+
+importer
+   Le processus rendant le code d’un module disponible dans un autre.
+
+importateur
+   Un objet qui trouve et charge un module, en même temps un *finder*
+   et un *loader*.
+
+interactif
+   Python a un interpréteur interactif, ce qui signifie que vous
+   pouvez écrire des expressions et instructions à l’invite de
+   l’interpréteur, qui va les exécuter immédiatement, et vous en
+   présenter le résultat. Démarrez juste "python" (probablement depuis
+   un menu de votre ordinateur). C’est un moyen puissant pour tester
+   de nouvelles idées ou étudier de nouveaux modules (souvenez vous de
+   "help(x)").
+
+interprété
+   Python est un langage interprété, en opposition aux langages
+   compilés, bien que la frontière soit floue du à la présence d’un
+   compilateur en bytecode. Cela signifie que les fichiers sources
+   peuvent être exécutés directement, sans avoir à compiler un fichier
+   exécutable intermédiaire. Les langages interprétées ont
+   généralement un cycle de développement / débug plus rapide, et ils
+   s’exécutent généralement plus lentement. Voir aussi *interactif*.
+
+itérable
+   An object capable of returning its members one at a time. Examples
+   of iterables include all sequence types (such as "list", "str", and
+   "tuple") and some non-sequence types like "dict" and "file" and
+   objects of any classes you define with an "__iter__()" or
+   "__getitem__()" method.  Iterables can be used in a "for" loop and
+   in many other places where a sequence is needed ("zip()", "map()",
+   …).  When an iterable object is passed as an argument to the built-
+   in function "iter()", it returns an iterator for the object.  This
+   iterator is good for one pass over the set of values.  When using
+   iterables, it is usually not necessary to call "iter()" or deal
+   with iterator objects yourself.  The "for" statement does that
+   automatically for you, creating a temporary unnamed variable to
+   hold the iterator for the duration of the loop.  See also
+   *iterator*, *sequence*, and *generator*.
+
+itérateur
+   An object representing a stream of data.  Repeated calls to the
+   iterator’s "next()" method return successive items in the stream.
+   When no more data are available a "StopIteration" exception is
+   raised instead.  At this point, the iterator object is exhausted
+   and any further calls to its "next()" method just raise
+   "StopIteration" again.  Iterators are required to have an
+   "__iter__()" method that returns the iterator object itself so
+   every iterator is also iterable and may be used in most places
+   where other iterables are accepted.  One notable exception is code
+   which attempts multiple iteration passes.  A container object (such
+   as a "list") produces a fresh new iterator each time you pass it to
+   the "iter()" function or use it in a "for" loop.  Attempting this
+   with an iterator will just return the same exhausted iterator
+   object used in the previous iteration pass, making it appear like
+   an empty container.
+
+   Plus d’informations ici : Les types Itérateurs.
+
+fonction clef
+   Une fonction clef, est un objet appelable qui renvoie une valeur
+   utilisée pour trier ou organiser. Par exemple la fonction
+   "local.strxfrm()" sert à produire une fonction clef de tri prennant
+   en compte les conventions de tri spécifiques aux paramètres
+   régionaux courants.
+
+   A number of tools in Python accept key functions to control how
+   elements are ordered or grouped.  They include "min()", "max()",
+   "sorted()", "list.sort()", "heapq.nsmallest()", "heapq.nlargest()",
+   and "itertools.groupby()".
+
+   There are several ways to create a key function.  For example. the
+   "str.lower()" method can serve as a key function for case
+   insensitive sorts.  Alternatively, an ad-hoc key function can be
+   built from a "lambda" expression such as "lambda r: (r[0], r[2])".
+   Also, the "operator" module provides three key function
+   constructors: "attrgetter()", "itemgetter()", and "methodcaller()".
+   See the Sorting HOW TO for examples of how to create and use key
+   functions.
+
+argument nommé
+   Voir *argument*.
+
+lambda
+   Une fonction anonyme sous forme d’une *expression*, et ne contenant
+   qu’une expression, exécutée lorsqu’elle est appelée. La syntaxe
+   pour créer des fonctions lambda est: "lambda [arguments]:
+   expression"
+
+LBYL
+   Regarde devant avant de tomber, (*Look before you leap*). Ce style
+   de programmation consiste à vérifier des conditions avant
+   d’effectuer des appels ou des accès. Ce style contraste avec le
+   style *EAFP* et se caractérise par la présence de beaucoup
+   d’instructions "if".
+
+   Dans un environnement multi-thread, le style *LBYL* peut engendrer
+   une séquence critique (*race condition*) entre « regarder » et «
+   tomber ». Par exemple, le code "if key in mapping: return
+   mapping[key]" peut échouer si un autre thread supprime la clef
+   *key* du *mapping* après le test mais avant l’accès. Ce problème
+   peut être résolu avec des verrous (*locks*) ou avec l’approche
+   EAFP.
+
+*list*
+   Un type natif de *sequence* dans Python. En dépit de son nom, une
+   "list" ressemble plus à un *array* qu’à une liste chaînée puisque
+   les accès se font en O(1).
+
+liste en compréhension
+   A compact way to process all or part of the elements in a sequence
+   and return a list with the results.  "result = ["0x%02x" % x for x
+   in range(256) if x % 2 == 0]" generates a list of strings
+   containing even hex numbers (0x..) in the range from 0 to 255. The
+   "if" clause is optional.  If omitted, all elements in "range(256)"
+   are processed.
+
+loader
+   An object that loads a module. It must define a method named
+   "load_module()". A loader is typically returned by a *finder*. See
+   **PEP 302** for details.
+
+mapping
+   A container object that supports arbitrary key lookups and
+   implements the methods specified in the "Mapping" or
+   "MutableMapping" abstract base classes.  Examples include "dict",
+   "collections.defaultdict", "collections.OrderedDict" and
+   "collections.Counter".
+
+metaclasse
+   La classe d’une classe. Les définitions de classe créent un nom
+   pour la classe, un dictionnaire et une liste de classes patentes.
+   La métaclasse a pour rôle de réunir ces trois paramètres pour
+   construire la classe. La plupart des langages orientés objet
+   fournissent une implémentation par défaut. Ce qui rend Python
+   spécial, c’est de proposer de créer des métaclasses personnalisées.
+   La plupart des utilisateurs n’ont pas besoin de cet outil, mais
+   lorsque le besoin survient, les métaclasses sont souvent des
+   solutions élégantes, puissantes, et utiles. Elles ont été utilisées
+   pour journaliser les accès à des propriétés, rendre un objet sûr
+   pour une utilisation en environnement multi-thread, suivre la
+   création d’objets, implémenter des singleton, et bien d’autres
+   tâches.
+
+   Plus d’informations à ce sujet : Customizing class creation.
+
+méthode
+   Une fonction définie dans une classe. Lorsqu’elle est appelée comme
+   un attribut d’une instance, la méthode reçoit l’instance en premier
+   *argument* (qui par convention est nommé "self"). Voir *function*
+   et *nested scope*.
+
+ordre de résolution des méthodes
+   L’ordre de résolution des méthodes (*MRO* de *Method Resolution
+   Order*) est l’ordre par lequel les membres sont recherchées dans
+   les classes parentes. Voir The Python 2.3 Method Resolution Order
+   pour plus de détails sur l’algorithme utilisé par l’interpréteur
+   Python depuis la version 2.3.
+
+module
+   L’unité élémentaire de l’organisation du code en Python. Les
+   modules ont un espace de noms pouvant contenir n’importe quel objet
+   Python. Charger des modules est appelé *importer*.
+
+   Voir aussi *paquet*.
+
+MRO
+   Voir *ordre de résolution des méthodes*.
+
+mutable
+   Un objet mutable peut changer de valeur tout en gardant le même
+   "id()". Voir aussi *immuable*.
+
+named tuple
+   Une classe qui, comme *tuple* a ses éléments accessibles par leur
+   indice, mais en plus accessibles par leur nom (par exemple,
+   "time.localtime()" donne un objet ressemblant à un *tuple*, dont
+   *year* est accessible par son indice : "t[0]" ou par son nom :
+   "t.tm_year").
+
+   Un *named tuple* peut être un type natif tel que "time.struct_time"
+   ou il peut être construit comme une simple classe. Un *named tuple*
+   complet peut aussi être créé via la fonction
+   "collections.namedtuple()". Cette dernière approche fournit
+   automatiquement des fonctionnalités supplémentaires, tel qu’une
+   représentation lisible comme "Employee(name='jones',
+   title='programmer')".
+
+espace de nom
+   The place where a variable is stored.  Namespaces are implemented
+   as dictionaries.  There are the local, global and built-in
+   namespaces as well as nested namespaces in objects (in methods).
+   Namespaces support modularity by preventing naming conflicts.  For
+   instance, the functions "__builtin__.open()" and "os.open()" are
+   distinguished by their namespaces.  Namespaces also aid readability
+   and maintainability by making it clear which module implements a
+   function.  For instance, writing "random.seed()" or
+   "itertools.izip()" makes it clear that those functions are
+   implemented by the "random" and "itertools" modules, respectively.
+
+portée imbriquée
+   The ability to refer to a variable in an enclosing definition.  For
+   instance, a function defined inside another function can refer to
+   variables in the outer function.  Note that nested scopes work only
+   for reference and not for assignment which will always write to the
+   innermost scope.  In contrast, local variables both read and write
+   in the innermost scope.  Likewise, global variables read and write
+   to the global namespace.
+
+nouvelle classe
+   Any class which inherits from "object".  This includes all built-in
+   types like "list" and "dict".  Only new-style classes can use
+   Python’s newer, versatile features like "__slots__", descriptors,
+   properties, and "__getattribute__()".
+
+   More information can be found in New-style and classic classes.
+
+objet
+   N’importe quelle donnée comportant des états sous forme d’attributs
+   ou de valeurs, et un comportement (des méthodes). C’est aussi
+   ("object") l’ancêtre commun à absolument toutes les *nouvelles
+   classes*.
+
+paquet
+   Un *module* qui peut contenir des sous modules ou des sous paquets.
+   Techniquement, un paquet est un module qui a un attribut
+   "__path__".
+
+paramètre
+   A named entity in a *function* (or method) definition that
+   specifies an *argument* (or in some cases, arguments) that the
+   function can accept.  There are four types of parameters:
+
+   * *positional-or-keyword*: dit d’un argument qui peut être passé
+     soit par sa *position* soit en temps que *paramètre nommé*. C’est
+     le type de paramètre par défaut, par exemple, *foo* et *bar* dans
+     l’exemple suivant :
+
+        def func(foo, bar=None): ...
+
+   * *positional-only*: un argument qui ne peut être donné que par
+     sa position. Python n’a pas de syntaxe pour déclarer de tels
+     paramètre, cependant des fonctions natives, comme "abs()" en
+     utilisent.
+
+   * *var-positional*: spécifie qu’une séquence d’arguments
+     positionels peut être fourni (en plus de tous les arguments
+     positionels déjà acceptés par d’autres paramètres). Un tel
+     paramètre peut être définit en préfixant son nom par une "*", par
+     exemple *args* ici :
+
+        def func(*args, **kwargs): ...
+
+   * *var-keyword*: spécifie qu’une quantité arbitraire d’arguments
+     peuvent être passés par nom (en plus de tous les arguments nommés
+     déjà acceptés par d’autres paramètres). Un tel paramètre est
+     définit en préfixant le nom du paramètre par "**", par exemple,
+     *kwargs* ci-dessus.
+
+   Les paramètres peuvent décrire aussi bien des paramètres optionnels
+   ou obligatoires, aussi que des valeurs par défaut pour les
+   paramètres optionnels.
+
+   See also the *argument* glossary entry, the FAQ question on the
+   difference between arguments and parameters, and the Function
+   definitions section.
+
+augment positionnel
+   Voir *argument*.
+
+Python 3000
+   Surnom de la série des Python 3.x (très vieux surnom donné à
+   l’époque pour Python 3 n’était qu’un futur lointain). Aussi abrégé
+   « Py3k ».
+
+Pythonique
+   Une idée, ou un bout de code, qui suit de près la philosophie de
+   Python, parfois en opposition avec les concepts rencontrés dans
+   d’autres langages. Typiquement, la coutume en Python est de
+   parcourir les éléments d’un itérable en utilisant "for". Beaucoup
+   de langages n’ont pas cette possibilité, donc les gens qui ne sont
+   pas habitués à Python pourraient parfois utiliser un compteur à la
+   place :
+
+      for i in range(len(food)):
+          print food[i]
+
+   Plutôt qu’utiliser la méthode, plus propre et élégante, donc
+   Pythonique :
+
+      for piece in food:
+          print piece
+
+nombre de références
+   Le nombre de références à un objet. Lorsque le nombre de références
+   à un objet descend à zéro, l’objet est désalloué. Le comptage de
+   référence n’est généralement pas visible dans le code Python, mais
+   c’est un élément clef de l’implémentation *CPython*. Le module
+   "sys" défini une fonction "getrefcount()" que les développeurs
+   peuvent utiliser pour obtenir le nombre de référence d’un objet
+   donné.
+
+__slots__
+   A declaration inside a *new-style class* that saves memory by pre-
+   declaring space for instance attributes and eliminating instance
+   dictionaries.  Though popular, the technique is somewhat tricky to
+   get right and is best reserved for rare cases where there are large
+   numbers of instances in a memory-critical application.
+
+séquence
+   An *iterable* which supports efficient element access using integer
+   indices via the "__getitem__()" special method and defines a
+   "len()" method that returns the length of the sequence. Some built-
+   in sequence types are "list", "str", "tuple", and "unicode". Note
+   that "dict" also supports "__getitem__()" and "__len__()", but is
+   considered a mapping rather than a sequence because the lookups use
+   arbitrary *immutable* keys rather than integers.
+
+tranche
+   An object usually containing a portion of a *sequence*.  A slice is
+   created using the subscript notation, "[]" with colons between
+   numbers when several are given, such as in "variable_name[1:3:5]".
+   The bracket (subscript) notation uses "slice" objects internally
+   (or in older versions, "__getslice__()" and "__setslice__()").
+
+méthode spéciale
+   *special method*: Une méthode appelée implicitement par Python pour
+   exécuter une opération sur un type, tel qu’une addition. De telles
+   méthodes ont des noms commençant et terminant par des doubles
+   tirets bas. Les méthodes spéciales sont documentées dans Special
+   method names.
+
+instruction
+   Une instruction (*statement*) fait partie d’une suite, (un « bloc »
+   de code). Une instruction est soit une *expression* soit une ou
+   plusieurs constructions basées sur un mot-clef, tel qu’un "if",
+   "while", ou "for".
+
+struct sequence
+   A tuple with named elements. Struct sequences expose an interface
+   similiar to *named tuple* in that elements can either be accessed
+   either by index or as an attribute. However, they do not have any
+   of the named tuple methods like "_make()" or "_asdict()". Examples
+   of struct sequences include "sys.float_info" and the return value
+   of "os.stat()".
+
+chaîne entre triple guillemets
+   Une chaîne qui est assembée par trois guillemets simples ("'") ou
+   trois guillemets doubles ("""). Bien qu’elles ne fournissent aucune
+   fonctionalité qui ne serait pas disponnible avec les chaînes entre
+   guillemets, elles sont utiles pour moultes raisons. Elles vous
+   autorisent à insérer des guillemets simples et doubles dans une
+   chaîne sans avoir à les protéger, et elles peuvent s’étendre sur
+   plusieurs lignes sans avoir à les terminer par un "\", les rendant
+   ainsi particulièrement utile pour les chaînes de documentation
+   (*docstrings*).
+
+type
+   Le type d’un objet Python détermine quel genre d’objet c’est. Tous
+   les objets ont un type. Le type d’un objet peut être obtenu via son
+   attribut "__class__" ou via "type(obj)".
+
+retours à la ligne universels
+   A manner of interpreting text streams in which all of the following
+   are recognized as ending a line: the Unix end-of-line convention
+   "'\n'", the Windows convention "'\r\n'", and the old Macintosh
+   convention "'\r'".  See **PEP 278** and **PEP 3116**, as well as
+   "str.splitlines()" for an additional use.
+
+environnement virtuel
+   Un environnement isolé, coopérant à son isolement à l’execution,
+   qui permet aux utilisateurs de Python et aux applications
+   d’installer et de mettre à jour des paquets sans interférer avec
+   d’autres applications Python fonctionnant sur le même système.
+
+machine virtuelle
+   Un ordinateur défini entièrement par du logiciel. La machine
+   virtuelle (*virtual machine*) de Python exécute le *bytecode* donné
+   par le compilateur de *bytecode*.
+
+Le Zen de Python
+   Liste de principes et de philosophies utiles pour comprendre et
+   utiliser le langage. Cette liste peut être obtenue en tapant «
+   "import this" » dans une invite Python interactive.

@@ -1,0 +1,40 @@
+Les HOWTOs de Python
+********************
+
+les Guides Pratique Python sont des documents couvrant chacun un sujet
+unique et spécifique de la manière la plus complète possible. Créés à
+partir de la suite Documentation Project’s HOWTO Linux, cette suite
+essaie de promouvoir les documentations plus détaillées que la Python
+Library Reference.
+
+Actuellement, les HOWTOs sont :
+
+* Porting Python 2 Code to Python 3
+
+* Porting Extension Modules to Python 3
+
+* Curses Programming with Python
+
+* Descriptor HowTo Guide
+
+* Idioms and Anti-Idioms in Python
+
+* Functional Programming HOWTO
+
+* Logging HOWTO
+
+* Logging Cookbook
+
+* Regular Expression HOWTO
+
+* Socket Programming HOWTO
+
+* Sorting HOW TO
+
+* Unicode HOWTO
+
+* HOWTO Fetch Internet Resources Using urllib2
+
+* HOWTO Use Python in the web
+
+* Tutoriel Argparse

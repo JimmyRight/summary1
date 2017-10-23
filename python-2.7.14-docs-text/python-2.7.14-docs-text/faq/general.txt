@@ -1,0 +1,527 @@
+FAQ Générale sur Python
+***********************
+
+
+Informations Générales
+======================
+
+
+Qu’est-ce que Python ?
+----------------------
+
+Python is an interpreted, interactive, object-oriented programming
+language.  It incorporates modules, exceptions, dynamic typing, very
+high level dynamic data types, and classes.  Python combines
+remarkable power with very clear syntax. It has interfaces to many
+system calls and libraries, as well as to various window systems, and
+is extensible in C or C++.  It is also usable as an extension language
+for applications that need a programmable interface. Finally, Python
+is portable: it runs on many Unix variants, on the Mac, and on PCs
+under MS-DOS, Windows, Windows NT, and OS/2.
+
+Pour en savoir plus, commencez par Le tutoriel Python. Le « Guide des
+Débutants pour Python » renvoie vers d’autres tutoriels et ressources
+d’initiation pour apprendre Python.
+
+
+Qu’est ce que la Python Software Foundation ?
+---------------------------------------------
+
+La Python Software Foundation (PSF) est une organisation indépendante
+à but non lucratif qui détient les droits d’auteur sur les versions
+Python 2.1 et plus récentes. La mission de la PSF est de faire
+progresser les technologies ouvertes (*open source*) relatives au
+langage de programmation Python et de promouvoir son utilisation. Le
+page d’accueil de la PSF se trouve à l’adresse suivante :
+https://www.python.org/psf/.
+
+Si vous utilisez Python et que vous le trouvez utile, merci de
+contribuer par le biais de la page de donation de la PSF.
+
+
+Y’a-t-il des restrictions liées à la propriété intelectuelle quant à l’utilisation de Python ?
+----------------------------------------------------------------------------------------------
+
+Vous pouvez faire ce que vous souhaitez avec la source, tant que vous
+respecterez la licence d’utilisation et que vous l’afficherez dans
+toute documentation que vous produirez au sujet de Python. Si vous
+respectez ces règles, vous pouvez utiliser Python dans un cadre
+commercial, vendre le code source ou la forme binaire (modifiée ou
+non), ou vendre des produits qui incorporent Python sous une forme
+quelconque. Bien entendu, nous souhaiterions avoir connaissance de
+tous les projets commerciaux utilisant Python.
+
+Voir la page de licence d’utilisation de la PSF pour trouver davantage
+d’informations et un lien vers la version intégrale de la licence
+d’utilisation.
+
+Le logo de Python est une marque déposée, et dans certains cas une
+autorisation est nécessaire pour l’utiliser. Consultez la politique
+d’utilisation de la marque pour plus d’informations.
+
+
+Pourquoi Python a été créé ?
+----------------------------
+
+Voici un *très* bref résumé de comment tout a commencé, écrit par
+Guido van Rossum (puis traduit en français) :
+
+   J’avais une expérience complète avec la mise en œuvre du langage
+   interprété ABC au sein du CWI, et en travaillant dans ce groupe
+   j’ai appris beaucoup à propos de la conception de langage. C’est
+   l’origine de nombreuses fonctionnalités de Python, notamment
+   l’utilisation de l’indentation pour le groupement et l’inclusion de
+   types de très haut niveau (bien que dans les détails ils soient
+   tous différents dans Python).
+
+   J’avais un certain nombre de différends avec le langage ABC, mais
+   j’aimais aussi beaucoup de ses fonctionnalités. Il était impossible
+   d’étendre le langage ABC (ou ses implémentations) pour remédier à
+   mes réclamations – en vérité le manque d’extensibilité était l’un
+   des plus gros problème. J’avais un peu d’expérience avec
+   l’utilisation de Modula-2+ et j’en ai parlé avec les concepteurs de
+   Modula-3 et j’ai lu le rapport sur Modula-3. Modula-3 est à
+   l’origine de la syntaxe et de la sémantique utilisée pour les
+   exceptions, et quelques autres fonctionnalités en Python.
+
+   Je travaillais sur un groupe de systèmes d’exploitation distribués
+   Amoeba au CWI. Nous avions besoin d’un meilleur moyen pour gérer
+   l’administration système qu’écrire un programme en C ou en script
+   Bourne shell, puisque l’Amoeba avait sa propre interface d’appels
+   système qui n’était pas facilement accessible depuis les scripts
+   Bourne shell. Mon expérience avec le traitement des erreurs dans
+   l’Amoeba m’a vraiment fait prendre conscience de l’importance des
+   exceptions en tant que fonctionnalité d’un langage de
+   programmation.
+
+   Il m’est venu à l’esprit qu’un langage de script avec une syntaxe
+   comme ABC mais avec un accès aux appels systèmes d’Amoeba
+   remplirait les besoins. J’ai réalisé que ce serait idiot d’écrire
+   un langage spécifique à Amoeba, donc j’ai décidé que j’avais besoin
+   d’un langage qui serait généralement extensible.
+
+   Pendant les vacances de Noël 1989, j’avais beaucoup de temps à
+   disposition, donc j’ai décidé de faire un essai. Durant l’année
+   suivante, j’ai encore beaucoup travaillé dessus sur mon propre
+   temps. Python a été utilisé dans le projet Amoeba avec un succès
+   croissant, et les retours de mes collègues m’ont permis d’ajouter
+   beaucoup des premières améliorations.
+
+   En Février 1991, juste après un peu plus d’un an de développement,
+   j’ai décidé de le poster sur USENET. Le reste se trouve dans le
+   fichier « Misc/HISTORY ».
+
+
+Pour quoi Python est-il fait ?
+------------------------------
+
+Python est un langage de programmation haut niveau généraliste qui
+peut être utilisé pour pallier à différents problèmes.
+
+Le langage vient avec une bibliothèque standard importante qui couvre
+des domaines tels que le traitement des chaînes de caractères
+(expressions régulières, Unicode, calcul de différences entre les
+fichiers), les protocoles Internet (HTTP, FTP, SMTP, XML-RPC, POP,
+IMAP, script CGI), ingénierie logicielle (tests unitaires,
+enregistrement, analyse de code Python), et interfaces pour systèmes
+d’exploitation (appels système, système de fichiers, *socket* TCP/IP).
+Regardez la table des matières The Python Standard Library pour avoir
+une idée de ce qui est disponible. Une gande variété de greffons tiers
+existent aussi. Consultez le sommaire des paquets Python pour trouver
+les paquets qui pourraient vous intéresser.
+
+
+Comment fonctionne le numérotage des versions de Python ?
+---------------------------------------------------------
+
+Les versions de Python sont numérotées A.B.C ou A.B. A est une version
+majeure – elle est augmentée seulement lorsqu’il y a des changements
+conséquents dans le langage. B est une version mineure, elle est
+augmentée lors de changements de moindre importance. C est un micro-
+niveau – elle est augmentée à chaque sortie de correctifs de bogue.
+
+Toutes les sorties ne concernent pas la correction de bogues. A
+l’approche de la sortie d’une nouvelle version majeure, une série de
+versions de développement sont créées, dénommées alpha, beta, *release
+candidate*. Les alphas sont des versions primaires dans lesquelles les
+interfaces ne sont pas encore finalisées; ce n’est pas inattendu de
+voir des changements d’interface entre deux versions alpha. Les betas
+sont plus stables, préservent les interfaces existantes mais peuvent
+ajouter de nouveaux modules, les *release candidate* sont figées,
+elles ne font aucun changement à l’exception de ceux nécessaires pour
+corriger des bogues critiques.
+
+Les versions alpha, beta et *release candidate* ont un suffixe
+supplémentaire. Le suffixe pour une version alpha est « aN » où N est
+un petit nombre, le suffixe pour une version beta est « bN » où N est
+un petit nombre, et le suffixe pour une *release candidate* est « cN »
+où N est un petit nombre. En d’autres mots, toutes les versions
+nommées 2.0.aN précèdent les versions 2.0.bN, qui elles-mêmes
+précèdent 2.0cN, et *celles-ci* précèdent la version 2.0.
+
+Vous pouvez aussi trouver des versions avec un signe « + » en suffixe,
+par exemple « 2.2+». Ces versions sont non distribuées, construites
+directement depuis le dépôt de développement de CPython. En pratique,
+après la sortie finale d’une version mineure, la version est augmentée
+à la prochaine version mineure, qui devient la version « a0 »,
+c’est-à-dire « 2.4a0 ».
+
+Voir aussi la documentation pour for "sys.version", "sys.hexversion",
+et "sys.version_info".
+
+
+Comment obtenir une copie du code source de Python ?
+----------------------------------------------------
+
+La dernière version du code source déployée est toujours disponible
+sur python.org, à https://www.python.org/downloads/. Le code source de
+la dernière version en développement peut être obtenue à
+https://github.com/python/cpython/.
+
+Le code source est dans une archive *gzippée* au format tar, elle
+contient le code source C complet, la documentation formatée avec
+Sphinx, les libraires Python, des exemples de programmes, et plusieurs
+morceux de code utiles distribuables librement. Le code source sera
+compilé et prêt à fonctionner immédiatement sur la plupart des
+plateformes UNIX.
+
+Consult the Getting Started section of the Python Developer’s Guide
+for more information on getting the source code and compiling it.
+
+
+Comment obtenir la documentation de Python ?
+--------------------------------------------
+
+La documentation standard pour la version stable actuelle est
+disponible à https://docs.python.org/3/.  Des versions aux formats
+PDF, texte et HTML sont aussi disponibles à
+https://docs.python.org/3/download.html.
+
+La documentation est écrite au format reStructuredText et traitée par
+l’outil de documentation Sphinx <http://sphinx-doc.org/>`__. La source
+du reStructuredText pour la documentation constitue une partie des
+sources de Python.
+
+
+Je n’ai jamais prorgammé avant. Existe t-il un tutoriel Python ?
+----------------------------------------------------------------
+
+Il y a de nombreux tutoriels et livres disponibles. La documentation
+standard inclut Le tutoriel Python.
+
+Consultez le Guide du Débutant afin de trouver des informations pour
+les développeurs Python débutants, incluant une liste de tutoriels.
+
+
+Y a-t-il un forum ou une liste de diffusion dédié à Python ?
+------------------------------------------------------------
+
+Il y a un forum, *comp.lang.python* et une liste de diffusion, python-
+list. Le forum et la liste de diffusion sont des passerelles l’un vers
+l’autre – si vous pouvez lire les *news* ce n’est pas inutile de
+souscrire à la liste de diffusion. *comp.lang.python* a beaucoup
+d’activité, il reçoit des centaines de messages chaque jour, et les
+lecteurs du réseau Usenet sont souvent plus capables de faire face à
+ce volume.
+
+Les annonces pour les nouvelles versions et événements peuvent êtres
+trouvées dans comp.lang.python.announce, une liste diminuée peu active
+qui reçoit environ 5 messages par jour. C’est disponible à liste de
+diffusion des annonces Python.
+
+Plus d’informations à propos des autres listes de diffusion et forums
+peuvent être trouvées à https://www.python.org/community/lists/.
+
+
+Comment obtenir une version bêta test de Python ?
+-------------------------------------------------
+
+Les versions alpha et bêta sont disponibles depuis
+https://www.python.org/downloads/. Toutes les versions annoncées sur
+comp.lang.python and comp.lang.python.announce newsgroups et sur la
+page d’accueil de Python à https://www.python.org/; un flux RSS de
+*news* est disponible.
+
+You can also access the development version of Python through Git.
+See The Python Developer’s Guide for details.
+
+
+Comment soumettre un rapport de bogues ou un correctif pour Python ?
+--------------------------------------------------------------------
+
+Pour reporter un bogue ou soumettre un correctif, merci d’utiliser
+https://bugs.python.org/.
+
+Vous devez avoir un compte Roundup pour reporter des bogues; cela nous
+permet de vous contacter si nous avons des questions complémentaires.
+Cela permettra aussi le suivi de traitement de votre bogue. Si vous
+avez auparavant utilisé SourceForge pour reporter des bogues sur
+Python, vous pouvez obtenir un mot de passe Roundup grâce à la
+procédure de réinitialisation de mot de passe de Roundup.
+
+For more information on how Python is developed, consult the Python
+Developer’s Guide.
+
+
+Existe-t-il des articles publiés au sujet de Python auxquels je peux me référer ?
+---------------------------------------------------------------------------------
+
+C’est probablement mieux de vous référer à votre livre favori à propos
+de Python.
+
+Le tout premier article à propos de Python a été écrit en 1991 et est
+maintenant obsolète.
+
+   Guido van Rossum et Jelke de Boer, « Interactively Testing Remote
+   Servers Using the Python Programming Language », CWI Quarterly,
+   Volume 4, Issue 4 (December 1991), Amsterdam, pp 283–303.
+
+
+Y a-t-il des livres au sujet de Python ?
+----------------------------------------
+
+Oui, il y en a beaucoup, et d’autres sont en cours de publication.
+Voir le wiki python à https://wiki.python.org/moin/PythonBooks pour
+avoir une liste.
+
+Vous pouvez aussi chercher chez les revendeurs de livres en ligne avec
+le terme « Python » et éléminer les références concernant les Monty
+Python, ou peut-être faire une recherche avec les termes « langage »
+et « Python ».
+
+
+Où www.python.org est-il localisé dans le monde ?
+-------------------------------------------------
+
+L’infrastructure du projet Python est localisé dans le monde entier.
+www.python.org est gracieusement hébergé par Rackspace, avec un cache
+*CDN* fourni par Fastly.  Upfront Systems héberge bugs.python.org.
+
+
+Pourquoi le nom Python ?
+------------------------
+
+Quand il a commencé à implémenter Python, Guido van Rossum a aussi lu
+le script publié par « Monty Python’s Flying Circus », une série
+comique des années 1970 diffusée par la BBC. Van Rossum a pensé qu’il
+avait besoin d’un nom court, unique, et un peu mystérieux, donc il a
+décidé de l’appeler le langage Python.
+
+
+Dois-je aimer « Monty Python’s Flying Circus » ?
+------------------------------------------------
+
+Non, mais ça peut aider. :)
+
+
+Python c’est le monde réel
+==========================
+
+
+Quel est le niveau de stabilité de Python ?
+-------------------------------------------
+
+Très stable. Les versions stables sont sorties environ tous les 6 à 18
+mois depuis 1991, et il semble probable que ça continue. Actuellement
+il y a habituellement environ 18 mois entre deux sorties de version
+majeure.
+
+Les problèmes signalés par les développeurs dans les versions
+correctives des anciennes versions, donc la stabilité des versions
+existantes s’améliorent continuellement. Les versions correctives,
+indiquées par le troisième chiffre du numéro de version (e.g. 2.5.2,
+2.6.2), sont gérées pour la stabilité, seules les corrections pour les
+problèmes connus sont inclus dans les versions correctives, et il est
+garanti que les interfaces resteront les mêmes tout au long de la
+série de versions correctives.
+
+Les dernières versions stables peuvent toujours être trouvées sur la
+page de téléchargement Python. Il y a deux versions prêtes à l’emploi
+recommandées en ce moment, parce qu’il y a deux branches stables : 2.x
+et 3.x. Python 3.x devrait être moins utile que 2.x, étant donné
+qu’actuellement il y a plus de paquets tiers disponibles pour Python 2
+que pour Python 3. Le code Python 2 ne fonctionnera généralement pas
+sans changement sous Python 3.
+
+
+Combien de personnes utilisent Python ?
+---------------------------------------
+
+Il y a probablement des dizaines de milliers d’utilisateurs, cependant
+c’est difficile d’obtenir un nombre exact.
+
+Python est disponible en téléchargement gratuit, donc il n’y a pas de
+chiffres de ventes, il est disponible depuis de nombreux sites
+différents et il est inclus avec de beaucoup de distributions Linux,
+donc les statistisques de téléchargement ne donnent pas la totalité
+non plus.
+
+Le forum comp.lang.python est très actif, mais tous les utilisateurs
+de Python ne laissent pas de messages dessus ou même ne le lisent pas.
+
+
+Y a-t-il un nombre de projets significatif réalisés en Python ?
+---------------------------------------------------------------
+
+Voir https://www.python.org/about/success pour avoir une liste des
+projets qui utilisent Python. En consultant les comptes-rendu des
+conférences Python précédentes il s’avère que les contributions
+proviennent de nombreux organismes et entreprises divers.
+
+Les projets Python à grande visibilité incluent Mailman mailing list
+manager et l’application serveur Zope.  Plusieurs distributions Linux,
+notamment Red Hat, qui a écrit tout ou partie de son installateur et
+de son logiciel d’administration système en Python.  Les entreprises
+qui utilisent Python en interne comprennent Google, Yahoo, and
+Lucasfilm Ltd.
+
+
+Quelles sont les nouveautés en développement attendues pour Python ?
+--------------------------------------------------------------------
+
+Regardez https://www.python.org/dev/peps/ pour Python Enhancement
+Proposals (PEPs). PEPs sont des documents techniques qui décrivent une
+nouvelle fonctionnalité qui a été suggérée pour Python, en fournissant
+une spécification technique concise et logique. Recherchez une PEP
+intitulée « Python X.Y Release Schedule », où X.Y est la version qui
+n’a pas encore été publiée.
+
+Le nouveau développement est discuté sur la liste de diffusion python-
+dev.
+
+
+Est-il raisonnable de proposer des changements incompatibles dans Python ?
+--------------------------------------------------------------------------
+
+En général, non. Il y a déjà des millions de lignes de code de Python
+tout autour du monde, donc n’importe quel changement dans le langage
+qui rend invalide ne serait-ce qu’une très petite fraction du code de
+programmes existants doit être désapprouvé. Même si vous pouvez
+fournir un programme de conversion, il y a toujours des problèmes de
+mise à jour dans toutes les documentations, beaucoup de livres ont été
+écrits au sujet de Python, et nous ne voulons pas les rendre invalides
+soudainement.
+
+En fournissant un rythme de mise à jour progressif qui est obligatoire
+si une fonctionnalité doit être changée.
+
+
+Existe-t-il un meilleur langage de programmation pour les programmeurs débutants ?
+----------------------------------------------------------------------------------
+
+Oui.
+
+Il reste commun pour les étudiants de commencer avec un langage
+procédural et à typage statique comme le Pascal, le C, ou un sous-
+ensemble du C++ ou Java. Les étudiants pourraient être mieux servis en
+apprenant Python comme premier langage. Python a une syntaxe très
+simple et cohérente ainsi qu’une vaste libraire standard, plus
+important encore, utiliser Python dans les cours d’initiation à la
+programmation permet aux étudiants de se concentrer sur les
+compétences de programmation les cruciales comme les problèmes de
+découpage et d’architecture. Avec Python, les étudiants peuvent
+rapidement aborder des concepts fondamentaux comme les boucles et les
+procédures. Ils peuvent même probablement travailler avec des objets
+définis dans leurs premiers cours.
+
+Pour un étudiant qui n’a jamais programmé avant, utiliser un langage à
+typage statique peut sembler contre-nature. Cela représente une
+complexité additionnelle que l’étudiant doit maîtriser ce qui ralentit
+le cours. Les étudiants essaient d’apprendre à penser comme un
+ordinateur, décomposer les problèmes, établir une architecture propre,
+et résumer les données. Apprendre à utiliser un langage typé
+statiquement est important sur le long terme, ce n’est pas
+nécessairement la meilleure idée pour s’adresser aux étudiants durant
+leur tout premier cours.
+
+De nombreux autres aspects de Python en font un bon premier langage.
+Comme Java, Python a une large bibliothèque standard donc les
+étudiants peuvent être assigner à la programmation de projets très tôt
+dans leur apprentissage qui *fait* quelque chose. Les missions ne sont
+pas restreintes aux quatres fonction standards. En utilisant la
+bibliothèque standard, les étudiants peuvent ressentir de la
+satisfaction en travaillant sur des applications réalistes alors
+qu’ils apprenent les fondamentaux de la programmation. Utiliser la
+bibliothèque standard apprend aussi aux étudiants la réutilisation de
+code. Les modules tiers tels que PyGame sont aussi très utiles pour
+étendre les compétences des étudiants.
+
+L’interpréteur interactif de Python permet aux étudiants de tester les
+fonctionnalités du langage pendant qu’ils programment. Ils peuvent
+garder une fenêtre avec l’interpréteur en fonctionnement pendant
+qu’ils rentrent la source de leur programme dans une autre fenêtre.
+S’ils ne peuvent pas se souvenir des méthodes pour une listen, ils
+peuvent faire quelque chose comme ça :
+
+   >>> L = []
+   >>> dir(L) # doctest: +NORMALIZE_WHITESPACE
+   ['__add__', '__class__', '__contains__', '__delattr__', '__delitem__',
+   '__delslice__', '__doc__', '__eq__', '__format__', '__ge__',
+   '__getattribute__', '__getitem__', '__getslice__', '__gt__',
+   '__hash__', '__iadd__', '__imul__', '__init__', '__iter__', '__le__',
+   '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__',
+   '__reduce_ex__', '__repr__', '__reversed__', '__rmul__',
+   '__setattr__', '__setitem__', '__setslice__', '__sizeof__', '__str__',
+   '__subclasshook__', 'append', 'count', 'extend', 'index', 'insert',
+   'pop', 'remove', 'reverse', 'sort']
+   >>> help(L.append)
+   Help on built-in function append:
+   <BLANKLINE>
+   append(...)
+       L.append(object) -- append object to end
+   <BLANKLINE>
+   >>> L.append(1)
+   >>> L
+   [1]
+
+With the interpreter, documentation is never far from the student as
+he’s programming.
+
+Il y a aussi de bons environnements de développement intégrés (EDIs)
+pour Python. IDLE est un EDI multiplateforme pour Python qui est écrit
+en Python en utilisant Tkinter. PythonWin est EDI spécifique à
+Windows. Les utilisateurs d’Emcs seront heureux d’apprendre qu’il y a
+un très bon mode Python pour Emacs. Tous ces environnements de
+développement intégrés fournissent la coloration syntaxique, l’auto-
+indentation, et l’accès à l’interpréteur interactif durant le codage.
+Consultez le wiki Python pour une liste complète des environnements de
+développement intégrés.
+
+Si vous voulez discuter de l’usage fe Python dans l’éducation, vous
+devriez intéressé pour rejoindre la liste de diffusion pour
+l’enseignement.
+
+
+Upgrading Python
+================
+
+
+What is this bsddb185 module my application keeps complaining about?
+--------------------------------------------------------------------
+
+Starting with Python2.3, the distribution includes the *PyBSDDB
+package <http://pybsddb.sf.net/>* as a replacement for the old bsddb
+module.  It includes functions which provide backward compatibility at
+the API level, but requires a newer version of the underlying Berkeley
+DB library.  Files created with the older bsddb module can’t be opened
+directly using the new module.
+
+Using your old version of Python and a pair of scripts which are part
+of Python 2.3 (db2pickle.py and pickle2db.py, in the Tools/scripts
+directory) you can convert your old database files to the new format.
+Using your old Python version, run the db2pickle.py script to convert
+it to a pickle, e.g.:
+
+   python2.2 <pathto>/db2pickley.py database.db database.pck
+
+Rename your database file:
+
+   mv database.db olddatabase.db
+
+Now convert the pickle file to a new format database:
+
+   python <pathto>/pickle2db.py database.db database.pck
+
+The precise commands you use will vary depending on the particulars of
+your installation.  For full details about operation of these two
+scripts check the doc string at the start of each one.

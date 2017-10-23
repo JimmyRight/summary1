@@ -1,0 +1,168 @@
+Outils de traitement de balises structurées
+*******************************************
+
+Python intègre une variété de modules pour fonctionner avec
+différentes formes de données structurées et balisées, comme le SGML
+(*Standard Generalized Markup Language*), le HTML (*Hypert Markup
+Language*), et quelques interfaces pour travailler avec du XML
+(*eXtensible Markup Language*).
+
+It is important to note that modules in the "xml" package require that
+there be at least one SAX-compliant XML parser available. Starting
+with Python 2.3, the Expat parser is included with Python, so the
+"xml.parsers.expat" module will always be available. You may still
+want to be aware of the PyXML add-on package; that package provides an
+extended set of XML libraries for Python.
+
+The documentation for the "xml.dom" and "xml.sax" packages are the
+definition of the Python bindings for the DOM and SAX interfaces.
+
+* "HTMLParser" — Simple HTML and XHTML parser
+
+  * Example HTML Parser Application
+
+  * "HTMLParser" Methods
+
+  * Exemples
+
+* "sgmllib" — Simple SGML parser
+
+* "htmllib" — A parser for HTML documents
+
+  * HTMLParser Objects
+
+* "htmlentitydefs" — Definitions of HTML general entities
+
+* Modules de traitement XML
+
+* Vulnérabilités XML
+
+  * defused packages
+
+* "xml.etree.ElementTree" — The ElementTree XML API
+
+  * Tutoriel
+
+    * XML tree and elements
+
+    * Parsing XML
+
+    * Finding interesting elements
+
+    * Modifying an XML File
+
+    * Building XML documents
+
+    * Parsing XML with Namespaces
+
+    * Additional resources
+
+  * XPath support
+
+    * Exemple
+
+    * Supported XPath syntax
+
+  * Reference
+
+    * Fonctions
+
+    * Element Objects
+
+    * ElementTree Objects
+
+    * QName Objects
+
+    * TreeBuilder Objects
+
+    * XMLParser Objects
+
+* "xml.dom" — The Document Object Model API
+
+  * Contenu du module
+
+  * Objects in the DOM
+
+    * DOMImplementation Objects
+
+    * Node Objects
+
+    * NodeList Objects
+
+    * DocumentType Objects
+
+    * Document Objects
+
+    * Element Objects
+
+    * Attr Objects
+
+    * NamedNodeMap Objects
+
+    * Comment Objects
+
+    * Text and CDATASection Objects
+
+    * ProcessingInstruction Objects
+
+    * Les exceptions
+
+  * Conformance
+
+    * Type Mapping
+
+    * Accessor Methods
+
+* "xml.dom.minidom" — Minimal DOM implementation
+
+  * DOM Objects
+
+  * DOM Example
+
+  * minidom and the DOM standard
+
+* "xml.dom.pulldom" — Support for building partial DOM trees
+
+  * DOMEventStream Objects
+
+* "xml.sax" — Support for SAX2 parsers
+
+  * SAXException Objects
+
+* "xml.sax.handler" — Base classes for SAX handlers
+
+  * ContentHandler Objects
+
+  * DTDHandler Objects
+
+  * EntityResolver Objects
+
+  * ErrorHandler Objects
+
+* "xml.sax.saxutils" — SAX Utilities
+
+* "xml.sax.xmlreader" — Interface for XML parsers
+
+  * XMLReader Objects
+
+  * IncrementalParser Objects
+
+  * Locator Objects
+
+  * InputSource Objects
+
+  * The "Attributes" Interface
+
+  * The "AttributesNS" Interface
+
+* "xml.parsers.expat" — Fast XML parsing using Expat
+
+  * XMLParser Objects
+
+  * ExpatError Exceptions
+
+  * Exemple
+
+  * Content Model Descriptions
+
+  * Expat error constants

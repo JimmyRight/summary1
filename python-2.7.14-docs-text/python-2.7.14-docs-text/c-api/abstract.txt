@@ -1,0 +1,25 @@
+Couche d’Abstraction des Objets
+*******************************
+
+Dans ce chapitre, les fonctions s’appliquent à des objets Python sans
+tenir compte de leur type, ou des classes d’objets au sens large (par
+exemple, tous les types numériques, ou tous les types de séquence).
+Quand ils sont utilisés sur des types d’objets qui ne correspondent
+pas, ils lèveront une exception Python.
+
+Il n’est pas possible d’utiliser ces fonctions sur des objets qui
+n’ont pas été correctement initialisés, comme un objet liste qui a été
+créé avec "PyList_New()" mais dont les éléments n’ont pas encore été
+mis à une valeur non-"NULL".
+
+* Object Protocol
+
+* Number Protocol
+
+* Sequence Protocol
+
+* Mapping Protocol
+
+* Iterator Protocol
+
+* Old Buffer Protocol

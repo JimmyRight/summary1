@@ -1,0 +1,124 @@
+Python/C API Reference Manual
+*****************************
+
+This manual documents the API used by C and C++ programmers who want
+to write extension modules or embed Python.  It is a companion to
+Extending and Embedding the Python Interpreter, which describes the
+general principles of extension writing but does not document the API
+functions in detail.
+
+* Introduction
+
+  * Include Files
+
+  * Objects, Types and Reference Counts
+
+  * Les exceptions
+
+  * Embedding Python
+
+  * Debugging Builds
+
+* The Very High Level Layer
+
+* Reference Counting
+
+* Gestion des exceptions
+
+  * Objets Exception Unicode
+
+  * Contrôle de la récursion
+
+  * Exceptions standards
+
+  * Standard Warning Categories
+
+  * String Exceptions
+
+* Utilitaires
+
+  * Operating System Utilities
+
+  * System Functions
+
+  * Process Control
+
+  * Importing Modules
+
+  * Data marshalling support
+
+  * Analyse des arguments et construction des valeurs
+
+  * Conversion et formatage de chaînes
+
+  * Reflection
+
+  * Codec registry and support functions
+
+* Couche d’Abstraction des Objets
+
+  * Object Protocol
+
+  * Number Protocol
+
+  * Sequence Protocol
+
+  * Mapping Protocol
+
+  * Iterator Protocol
+
+  * Old Buffer Protocol
+
+* Couche des Objets Concrets
+
+  * Objets fondamentaux
+
+  * Objets numériques
+
+  * Objets séquences
+
+  * Mapping Objects
+
+  * Autres Objets
+
+* Initialization, Finalization, and Threads
+
+  * Initializing and finalizing the interpreter
+
+  * Process-wide parameters
+
+  * Thread State and the Global Interpreter Lock
+
+  * Sub-interpreter support
+
+  * Asynchronous Notifications
+
+  * Profiling and Tracing
+
+  * Support avancé du debugger
+
+* Memory Management
+
+  * Overview
+
+  * Memory Interface
+
+  * Exemples
+
+* Object Implementation Support
+
+  * Allouer des objets dans le tas
+
+  * Common Object Structures
+
+  * Type Objects
+
+  * Number Object Structures
+
+  * Mapping Object Structures
+
+  * Sequence Object Structures
+
+  * Buffer Object Structures
+
+  * Supporting Cyclic Garbage Collection

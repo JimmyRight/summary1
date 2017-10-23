@@ -1,0 +1,769 @@
+"gettext" — Services d’internationalisation multilingue
+*******************************************************
+
+**Code source :** Lib/gettext.py
+
+======================================================================
+
+Le module "gettext" fournit un service d’internationalisation (I18N)
+et de localisation linguistique (L10N) pour vos modules et
+applications Python.  Il est compatible avec l’API du catalogue de
+messages GNU *gettext* et à un plus haut niveau, avec l’API basée sur
+les classes qui serait peut-être plus adaptée aux fichiers Python.
+L’interface décrite ci-dessous vous permet d’écrire les textes de vos
+modules et applications dans une langue naturelle, puis de fournir un
+catalogue de traductions pour les lancer ensuite dans d’autres langues
+naturelles.
+
+Quelques astuces sur la localisation de vos modules et applications
+Python sont également données.
+
+
+API GNU **gettext**
+===================
+
+Le module "gettext" définit l’API suivante, qui est très proche de
+l’API de GNU **gettext**.  Si vous utilisez cette API, cela affectera
+la traduction de toute votre application.  C’est souvent le
+comportement attendu si votre application est monolingue, avec le
+choix de la langue qui dépend des paramètres linguistiques de
+l’utilisateur.  Si vous localisez un module Python ou si votre
+application a besoin de changer de langue à la volée, il est plus
+judicieux d’utiliser l’API basée sur des classes.
+
+gettext.bindtextdomain(domain[, localedir])
+
+   Lie *domain* au répertoire *localedir* des localisations.  Plus
+   spécifiquement, "gettext" va chercher les fichiers binaires ".mo"
+   pour un domaine donné, en utilisant le chemin suivant (sous Unix) :
+   "localedir/language/LC_MESSAGES/domain.mo", où *language* est
+   contenu respectivement dans l’une des variables d’environnement
+   suivantes : "LANGUAGE", "LC_ALL", "LC_MESSAGES" et "LANG".
+
+   Si *localedir* n’est pas renseigné ou vaut "None", alors le lien
+   actuel de *domain* est renvoyé. [1]
+
+gettext.bind_textdomain_codeset(domain[, codeset])
+
+   Bind the *domain* to *codeset*, changing the encoding of strings
+   returned by the "gettext()" family of functions. If *codeset* is
+   omitted, then the current binding is returned.
+
+   Nouveau dans la version 2.4.
+
+gettext.textdomain([domain])
+
+   Change ou interroge le domaine global actuel.  Si *domain* vaut
+   "None", alors le domaine global actuel est renvoyé.  Sinon, le
+   domaine global est positionné à *domain*, puis renvoyé.
+
+gettext.gettext(message)
+
+   Renvoie la traduction localisée de *message*, en se basant sur le
+   domaine global actuel, la langue et le répertoire des
+   localisations.
+
+gettext.lgettext(message)
+
+   Equivalent to "gettext()", but the translation is returned in the
+   preferred system encoding, if no other encoding was explicitly set
+   with "bind_textdomain_codeset()".
+
+   Nouveau dans la version 2.4.
+
+gettext.dgettext(domain, message)
+
+   Like "gettext()", but look the message up in the specified
+   *domain*.
+
+gettext.ldgettext(domain, message)
+
+   Equivalent to "dgettext()", but the translation is returned in the
+   preferred system encoding, if no other encoding was explicitly set
+   with "bind_textdomain_codeset()".
+
+   Nouveau dans la version 2.4.
+
+gettext.ngettext(singular, plural, n)
+
+   Like "gettext()", but consider plural forms. If a translation is
+   found, apply the plural formula to *n*, and return the resulting
+   message (some languages have more than two plural forms). If no
+   translation is found, return *singular* if *n* is 1; return
+   *plural* otherwise.
+
+   The Plural formula is taken from the catalog header. It is a C or
+   Python expression that has a free variable *n*; the expression
+   evaluates to the index of the plural in the catalog. See the GNU
+   gettext documentation for the precise syntax to be used in ".po"
+   files and the formulas for a variety of languages.
+
+   Nouveau dans la version 2.3.
+
+gettext.lngettext(singular, plural, n)
+
+   Equivalent to "ngettext()", but the translation is returned in the
+   preferred system encoding, if no other encoding was explicitly set
+   with "bind_textdomain_codeset()".
+
+   Nouveau dans la version 2.4.
+
+gettext.dngettext(domain, singular, plural, n)
+
+   Comme "ngettext()", mais cherche le message dans le domaine
+   spécifié.
+
+   Nouveau dans la version 2.3.
+
+gettext.ldngettext(domain, singular, plural, n)
+
+   Equivalent to "dngettext()", but the translation is returned in the
+   preferred system encoding, if no other encoding was explicitly set
+   with "bind_textdomain_codeset()".
+
+   Nouveau dans la version 2.4.
+
+Notez que GNU **gettext** a aussi une méthode "dcgettext()", mais elle
+a été considérée comme inutile et donc actuellement marquée comme non
+implémentée.
+
+Voici un exemple classique d’utilisation de cette API :
+
+   import gettext
+   gettext.bindtextdomain('myapplication', '/path/to/my/language/directory')
+   gettext.textdomain('myapplication')
+   _ = gettext.gettext
+   # ...
+   print _('This is a translatable string.')
+
+
+API basée sur les classes
+=========================
+
+The class-based API of the "gettext" module gives you more flexibility
+and greater convenience than the GNU **gettext** API.  It is the
+recommended way of localizing your Python applications and modules.
+"gettext" defines a « translations » class which implements the
+parsing of GNU ".mo" format files, and has methods for returning
+either standard 8-bit strings or Unicode strings. Instances of this «
+translations » class can also install themselves  in the built-in
+namespace as the function "_()".
+
+gettext.find(domain[, localedir[, languages[, all]]])
+
+   Cette fonction implémente l’algorithme standard de recherche de
+   fichier "mo".  Il prend en entrée un *domain*, tout comme la
+   fonction "textdomain()".  Le paramètre optionnel *localedir* est le
+   même que celui de "bindtextdomain()".  Le paramètre optionnel
+   *langages* est une liste de chaînes de caractères correspondants au
+   code d’une langue.
+
+   Si *localedir* n’est pas renseigné, alors le répertoire de la
+   locale par défaut du système est utilisé. [2]  Si *languages* n’est
+   pas renseigné, alors les variables d’environnement suivantes sont
+   utilisées : "LANGUAGE", "LC_ALL", "LC_MESSAGES" et "LANG".  La
+   première à renvoyer une valeur non vide est alors utilisée pour
+   *languages*.  Ces variables d’environnement doivent contenir une
+   liste de langues, séparées par des deux-points, qui sera utilisée
+   pour générer la liste des codes de langues attendue.
+
+   Recherche avec "find()", découvre et normalise les langues, puis
+   itère sur la liste obtenue afin de trouver un fichier de traduction
+   existant et correspondant :
+
+   "localedir/language/LC_MESSAGES/domain.mo"
+
+   Le premier nom de fichier trouvé est renvoyé par "find()".  Si
+   aucun fichier n’a été trouvé, alors *None* est renvoyé.  Si *all*
+   est vrai, est renvoyée la liste de tous les noms de fichiers, dans
+   l’ordre dans lequel ils apparaissent dans *languages* ou dans les
+   variables d’environnement.
+
+gettext.translation(domain[, localedir[, languages[, class_[, fallback[, codeset]]]]])
+
+   Return a "Translations" instance based on the *domain*,
+   *localedir*, and *languages*, which are first passed to "find()" to
+   get a list of the associated ".mo" file paths.  Instances with
+   identical ".mo" file names are cached.  The actual class
+   instantiated is either *class_* if provided, otherwise
+   "GNUTranslations".  The class’s constructor must take a single file
+   object argument. If provided, *codeset* will change the charset
+   used to encode translated strings.
+
+   Si plusieurs fichiers ont été trouvés, les derniers sont utilisés
+   comme substitut des premiers.  Pour rendre possible cette
+   substitution, "copy.copy()" est utilisé pour copier chaque objet
+   traduit depuis le cache ; les vraies données de l’instance étant
+   toujours recopiées dans le cache.
+
+   If no ".mo" file is found, this function raises "IOError" if
+   *fallback* is false (which is the default), and returns a
+   "NullTranslations" instance if *fallback* is true.
+
+   Modifié dans la version 2.4: Added the *codeset* parameter.
+
+gettext.install(domain[, localedir[, unicode[, codeset[, names]]]])
+
+   This installs the function "_()" in Python’s builtins namespace,
+   based on *domain*, *localedir*, and *codeset* which are passed to
+   the function "translation()".  The *unicode* flag is passed to the
+   resulting translation object’s "install()" method.
+
+   Concernant le paramètre *names*, se référer à la description de la
+   méthode "install()".
+
+   Habituellement, la fonction "_()" est appliquée aux chaînes de
+   caractères qui doivent être traduites comme suit :
+
+      print _('This string will be translated.')
+
+   Pour plus de confort, il vaut mieux positionner la fonction "_()"
+   dans l’espace de noms natif à Python pour la rendre plus accessible
+   dans tous les modules de votre application.
+
+   Modifié dans la version 2.4: Added the *codeset* parameter.
+
+   Modifié dans la version 2.5: Added the *names* parameter.
+
+
+La classe "NullTranslations"
+----------------------------
+
+Les classes de traduction implémentent le fait de passer d’une chaîne
+de caractères du fichier original à traduire à la traduction de celle-
+ci.  La classe de base utilisée est "NullTranslations".  C’est
+l’interface de base à utiliser lorsque vous souhaitez écrire vos
+propres classes spécifiques à la traduction.  Voici les méthodes de
+"NullTranslations" :
+
+class gettext.NullTranslations([fp])
+
+   Takes an optional file object *fp*, which is ignored by the base
+   class. Initializes « protected » instance variables *_info* and
+   *_charset* which are set by derived classes, as well as
+   *_fallback*, which is set through "add_fallback()".  It then calls
+   "self._parse(fp)" if *fp* is not "None".
+
+   _parse(fp)
+
+      Cette méthode, non exécutée dans la classe de base, prend en
+      paramètre un objet fichier *fp* et lit les données de ce
+      dernier.  Si vous avez un catalogue de messages dont le format
+      n’est pas pris en charge, vous devriez surcharger cette méthode
+      pour analyser votre format.
+
+   add_fallback(fallback)
+
+      Ajoute *fallback* comme objet de substitution pour l’objet de
+      traduction courant.  Un objet de traduction devrait interroger
+      cet objet de substitution s’il ne peut fournir une traduction
+      pour un message donné.
+
+   gettext(message)
+
+      If a fallback has been set, forward "gettext()" to the fallback.
+      Otherwise, return the translated message.  Overridden in derived
+      classes.
+
+   lgettext(message)
+
+      If a fallback has been set, forward "lgettext()" to the
+      fallback. Otherwise, return the translated message.  Overridden
+      in derived classes.
+
+      Nouveau dans la version 2.4.
+
+   ugettext(message)
+
+      If a fallback has been set, forward "ugettext()" to the
+      fallback. Otherwise, return the translated message as a Unicode
+      string. Overridden in derived classes.
+
+   ngettext(singular, plural, n)
+
+      If a fallback has been set, forward "ngettext()" to the
+      fallback. Otherwise, return the translated message.  Overridden
+      in derived classes.
+
+      Nouveau dans la version 2.3.
+
+   lngettext(singular, plural, n)
+
+      If a fallback has been set, forward "lngettext()" to the
+      fallback. Otherwise, return the translated message.  Overridden
+      in derived classes.
+
+      Nouveau dans la version 2.4.
+
+   ungettext(singular, plural, n)
+
+      If a fallback has been set, forward "ungettext()" to the
+      fallback. Otherwise, return the translated message as a Unicode
+      string. Overridden in derived classes.
+
+      Nouveau dans la version 2.3.
+
+   info()
+
+      Renvoie la variable « protégée » "_info".
+
+   charset()
+
+      Return the « protected » "_charset" variable.
+
+   output_charset()
+
+      Return the « protected » "_output_charset" variable, which
+      defines the encoding used to return translated messages.
+
+      Nouveau dans la version 2.4.
+
+   set_output_charset(charset)
+
+      Change the « protected » "_output_charset" variable, which
+      defines the encoding used to return translated messages.
+
+      Nouveau dans la version 2.4.
+
+   install([unicode[, names]])
+
+      If the *unicode* flag is false, this method installs
+      "self.gettext()" into the built-in namespace, binding it to "_".
+      If *unicode* is true, it binds "self.ugettext()" instead.  By
+      default, *unicode* is false.
+
+      If the *names* parameter is given, it must be a sequence
+      containing the names of functions you want to install in the
+      builtins namespace in addition to "_()".  Supported names are
+      "'gettext'" (bound to "self.gettext()" or "self.ugettext()"
+      according to the *unicode* flag), "'ngettext'" (bound to
+      "self.ngettext()" or "self.ungettext()" according to the
+      *unicode* flag), "'lgettext'" and "'lngettext'".
+
+      Notez que ce n’est là qu’un moyen parmi d’autres, quoique le
+      plus pratique, pour rendre la fonction "_()" accessible à votre
+      application.  Puisque cela affecte toute l’application, et plus
+      particulièrement l’espace de noms natif, les modules localisés
+      ne devraient jamais y positionner "_()".  Au lieu de cela, ces
+      derniers doivent plutôt utiliser le code suivant pour rendre
+      "_()" accessible par leurs modules :
+
+         import gettext
+         t = gettext.translation('mymodule', ...)
+         _ = t.gettext
+
+      Cela met "_()" dans l’espace de noms global du module uniquement
+      et donc n’affectera ses appels que dans ce module.
+
+      Modifié dans la version 2.5: Added the *names* parameter.
+
+
+La classe "GNUTranslations"
+---------------------------
+
+The "gettext" module provides one additional class derived from
+"NullTranslations": "GNUTranslations".  This class overrides
+"_parse()" to enable reading GNU **gettext** format ".mo" files in
+both big-endian and little-endian format. It also coerces both message
+ids and message strings to Unicode.
+
+"GNUTranslations" parses optional meta-data out of the translation
+catalog.  It is convention with GNU **gettext** to include meta-data
+as the translation for the empty string.  This meta-data is in **RFC
+822**-style "key: value" pairs, and should contain the "Project-Id-
+Version" key.  If the key "Content-Type" is found, then the "charset"
+property is used to initialize the « protected » "_charset" instance
+variable, defaulting to "None" if not found.  If the charset encoding
+is specified, then all message ids and message strings read from the
+catalog are converted to Unicode using this encoding.  The
+"ugettext()" method always returns a Unicode, while the "gettext()"
+returns an encoded 8-bit string.  For the message id arguments of both
+methods, either Unicode strings or 8-bit strings containing only US-
+ASCII characters are acceptable.  Note that the Unicode version of the
+methods (i.e. "ugettext()" and "ungettext()") are the recommended
+interface to use for internationalized Python programs.
+
+La totalité des paires clef / valeur est insérée dans un dictionnaire
+et représente la variable d’instance « protégée » "_info".
+
+If the ".mo" file’s magic number is invalid, or if other problems
+occur while reading the file, instantiating a "GNUTranslations" class
+can raise "IOError".
+
+Les méthodes suivantes, provenant de l’implémentation de la classe de
+base, ont été surchargée :
+
+GNUTranslations.gettext(message)
+
+   Look up the *message* id in the catalog and return the
+   corresponding message string, as an 8-bit string encoded with the
+   catalog’s charset encoding, if known.  If there is no entry in the
+   catalog for the *message* id, and a fallback has been set, the look
+   up is forwarded to the fallback’s "gettext()" method. Otherwise,
+   the *message* id is returned.
+
+GNUTranslations.lgettext(message)
+
+   Equivalent to "gettext()", but the translation is returned in the
+   preferred system encoding, if no other encoding was explicitly set
+   with "set_output_charset()".
+
+   Nouveau dans la version 2.4.
+
+GNUTranslations.ugettext(message)
+
+   Look up the *message* id in the catalog and return the
+   corresponding message string, as a Unicode string.  If there is no
+   entry in the catalog for the *message* id, and a fallback has been
+   set, the look up is forwarded to the fallback’s "ugettext()"
+   method.  Otherwise, the *message* id is returned.
+
+GNUTranslations.ngettext(singular, plural, n)
+
+   Do a plural-forms lookup of a message id.  *singular* is used as
+   the message id for purposes of lookup in the catalog, while *n* is
+   used to determine which plural form to use.  The returned message
+   string is an 8-bit string encoded with the catalog’s charset
+   encoding, if known.
+
+   If the message id is not found in the catalog, and a fallback is
+   specified, the request is forwarded to the fallback’s "ngettext()"
+   method.  Otherwise, when *n* is 1 *singular* is returned, and
+   *plural* is returned in all other cases.
+
+   Nouveau dans la version 2.3.
+
+GNUTranslations.lngettext(singular, plural, n)
+
+   Equivalent to "gettext()", but the translation is returned in the
+   preferred system encoding, if no other encoding was explicitly set
+   with "set_output_charset()".
+
+   Nouveau dans la version 2.4.
+
+GNUTranslations.ungettext(singular, plural, n)
+
+   Effectue une recherche sur les formes plurielles de l’identifiant
+   d’un message.  *singular* est utilisé pour la recherche de
+   l’identifiant dans le catalogue, alors que *n* permet de savoir
+   quelle forme plurielle utiliser.  La chaîne de caractère du message
+   renvoyée est une chaîne Unicode.
+
+   If the message id is not found in the catalog, and a fallback is
+   specified, the request is forwarded to the fallback’s "ungettext()"
+   method.  Otherwise, when *n* is 1 *singular* is returned, and
+   *plural* is returned in all other cases.
+
+   Voici un exemple :
+
+      n = len(os.listdir('.'))
+      cat = GNUTranslations(somefile)
+      message = cat.ungettext(
+          'There is %(num)d file in this directory',
+          'There are %(num)d files in this directory',
+          n) % {'num': n}
+
+   Nouveau dans la version 2.3.
+
+
+Support du catalogue de message de Solaris
+------------------------------------------
+
+Le système d’exploitation Solaris possède son propre format de fichier
+binaire ".mo", mais pour l’heure, puisqu’on ne peut trouver de
+documentation sur ce format, il n’est pas géré.
+
+
+Le constructeur *Catalog*
+-------------------------
+
+GNOME utilise une version du module "gettext" de James Henstridge,
+mais qui a une API légèrement différente.  D’après la documentation,
+elle s’utilise ainsi :
+
+   import gettext
+   cat = gettext.Catalog(domain, localedir)
+   _ = cat.gettext
+   print _('hello world')
+
+Pour des raisons de compatibilité avec cet ancien module, la fonction
+"Catalog()" est un alias de la fonction "translation()" décrite ci-
+dessous.
+
+Une différence entre ce module et celui de Henstridge : les objets de
+son catalogue étaient accessibles depuis un schéma de l’API, mais cela
+semblait ne pas être utilisé et donc n’est pas pris en charge.
+
+
+Internationaliser vos programmes et modules
+===========================================
+
+L’internationalisation (I18N) consiste à permettre à un programme de
+recevoir des traductions dans plusieurs langues.  La localisation
+(L10N) consiste à adapter un programme à la langue et aux habitudes
+culturelles locales, une fois celui-ci internationalisé.  Afin de
+fournir du texte multilingue à votre programme Python, les étapes
+suivantes sont nécessaires :
+
+1. préparer votre programme ou module en marquant spécifiquement
+   les chaînes à traduire
+
+2. lancer une suite d’outils sur les fichiers contenant des chaînes
+   à traduire pour générer des catalogues de messages brut
+
+3. créer les traductions spécifiques à une langue des catalogues de
+   messages
+
+4. utiliser le module "gettext" pour que les chaînes de caractères
+   soient bien traduites
+
+Afin de préparer votre code à être traduit (I18N), vous devrez
+rechercher toutes les chaînes de caractères de vos fichiers.  À chaque
+chaîne de caractères à traduire doit être appliqué le marqueur
+"_('...')" — c’est-à-dire en appelant la fonction "_()".  Par exemple
+:
+
+   filename = 'mylog.txt'
+   message = _('writing a log message')
+   fp = open(filename, 'w')
+   fp.write(message)
+   fp.close()
+
+Dans cet exemple, la chaîne "'writing a log message'" est maquée comme
+traduite, contrairement aux chaînes "'mylog.txt'" et "'w'".
+
+The Python distribution comes with two tools which help you generate
+the message catalogs once you’ve prepared your source code.  These may
+or may not be available from a binary distribution, but they can be
+found in a source distribution, in the "Tools/i18n" directory.
+
+The **pygettext** [3] program scans all your Python source code
+looking for the strings you previously marked as translatable.  It is
+similar to the GNU **gettext** program except that it understands all
+the intricacies of Python source code, but knows nothing about C or
+C++ source code.  You don’t need GNU "gettext" unless you’re also
+going to be translating C code (such as C extension modules).
+
+**pygettext** generates textual Uniforum-style human readable message
+catalog ".pot" files, essentially structured human readable files
+which contain every marked string in the source code, along with a
+placeholder for the translation strings. **pygettext** is a command
+line script that supports a similar command line interface as
+**xgettext**; for details on its use, run:
+
+   pygettext.py --help
+
+Copies of these ".pot" files are then handed over to the individual
+human translators who write language-specific versions for every
+supported natural language.  They send you back the filled in
+language-specific versions as a ".po" file.  Using the **msgfmt.py**
+[4] program (in the "Tools/i18n" directory), you take the ".po" files
+from your translators and generate the machine-readable ".mo" binary
+catalog files. The ".mo" files are what the "gettext" module uses for
+the actual translation processing during run-time.
+
+La façon dont vous utilisez le module "gettext" dans votre code dépend
+de si vous internationalisez un seul module ou l’ensemble de votre
+application.  Les deux sections suivantes traitent chacune des cas.
+
+
+Localiser votre module
+----------------------
+
+Si vous localisez votre module, veillez à ne pas faire de changements
+globaux, e.g. dans l’espace de nom natif.  Vous ne devriez pas
+utiliser l’API GNU "gettext" mais plutôt celle basée sur les classes.
+
+Disons que votre module s’appelle « spam » et que les fichiers ".mo"
+de traduction dans les différentes langues naturelles soient dans
+"/usr/share/locale" au format GNU **gettext**.  Voici ce que vous
+pouvez alors mettre en haut de votre module :
+
+   import gettext
+   t = gettext.translation('spam', '/usr/share/locale')
+   _ = t.lgettext
+
+If your translators were providing you with Unicode strings in their
+".po" files, you’d instead do:
+
+   import gettext
+   t = gettext.translation('spam', '/usr/share/locale')
+   _ = t.ugettext
+
+
+Localiser votre application
+---------------------------
+
+Si vous localisez votre application, vous pouvez positionner la
+fonction "_()" de manière globale dans l’espace de noms natif,
+généralement dans le fichier principal de votre application.  Cela
+permettra à tous les fichiers de votre application de n’utiliser que
+"_('...')" sans devoir le redéfinir explicitement dans chaque fichier.
+
+Dans ce cas, vous n’aurez à ajouter que le bout de code suivant au
+fichier principal de votre application :
+
+   import gettext
+   gettext.install('myapplication')
+
+If you need to set the locale directory or the *unicode* flag, you can
+pass these into the "install()" function:
+
+   import gettext
+   gettext.install('myapplication', '/usr/share/locale', unicode=1)
+
+
+Changer de langue à la volée
+----------------------------
+
+Si votre programme a besoin de prendre en charge plusieurs langues en
+même temps, vous pouvez créer plusieurs instances de traduction, puis
+basculer entre elles de façon explicite, comme ceci :
+
+   import gettext
+
+   lang1 = gettext.translation('myapplication', languages=['en'])
+   lang2 = gettext.translation('myapplication', languages=['fr'])
+   lang3 = gettext.translation('myapplication', languages=['de'])
+
+   # start by using language1
+   lang1.install()
+
+   # ... time goes by, user selects language 2
+   lang2.install()
+
+   # ... more time goes by, user selects language 3
+   lang3.install()
+
+
+Traductions différées
+---------------------
+
+Dans la plupart des cas, en programmation, les chaînes de caractères
+sont traduites à l’endroit où on les écrit.  Cependant, il peut
+arriver que vous ayez besoin de traduire une chaîne de caractères un
+peu plus loin.  Un exemple classique est :
+
+   animals = ['mollusk',
+              'albatross',
+              'rat',
+              'penguin',
+              'python', ]
+   # ...
+   for a in animals:
+       print a
+
+Ici, vous voulez marquer les chaînes de caractères de la liste
+"animals" comme étant traduisibles, mais ne les traduire qu’au moment
+de les afficher.
+
+Voici un moyen de gérer ce cas :
+
+   def _(message): return message
+
+   animals = [_('mollusk'),
+              _('albatross'),
+              _('rat'),
+              _('penguin'),
+              _('python'), ]
+
+   del _
+
+   # ...
+   for a in animals:
+       print _(a)
+
+Cela fonctionne car la définition factice de "_()" renvoie simplement
+la chaîne de caractères passée en entrée.  Et cette définition factice
+va temporairement outrepasser toute autre définition de "_()" dans
+l’espace de noms natif (jusqu’à l’utilisation de la commande "del").
+Attention toutefois si vous avez déjà une autre définition de "_()"
+dans l’espace de noms local.
+
+Note that the second use of "_()" will not identify « a » as being
+translatable to the **pygettext** program, since it is not a string.
+
+Voici une autre solution :
+
+   def N_(message): return message
+
+   animals = [N_('mollusk'),
+              N_('albatross'),
+              N_('rat'),
+              N_('penguin'),
+              N_('python'), ]
+
+   # ...
+   for a in animals:
+       print _(a)
+
+In this case, you are marking translatable strings with the function
+"N_()", [5] which won’t conflict with any definition of "_()".
+However, you will need to teach your message extraction program to
+look for translatable strings marked with "N_()". **pygettext** and
+**xpot** both support this through the use of command line switches.
+
+
+"gettext()" vs. "lgettext()"
+----------------------------
+
+In Python 2.4 the "lgettext()" family of functions were introduced.
+The intention of these functions is to provide an alternative which is
+more compliant with the current implementation of GNU gettext. Unlike
+"gettext()", which returns strings encoded with the same codeset used
+in the translation file, "lgettext()" will return strings encoded with
+the preferred system encoding, as returned by
+"locale.getpreferredencoding()". Also notice that Python 2.4
+introduces new functions to explicitly choose the codeset used in
+translated strings. If a codeset is explicitly set, even "lgettext()"
+will return translated strings in the requested codeset, as would be
+expected in the GNU gettext implementation.
+
+
+Remerciements
+=============
+
+Les personnes suivantes ont contribué au code, ont fait des retours,
+ont participé aux suggestions de conception et aux implémentations
+précédentes, et ont partagé leur expérience précieuse pour la création
+de ce module :
+
+* Peter Funk
+
+* James Henstridge
+
+* Juan David Ibáñez Palomar
+
+* Marc-André Lemburg
+
+* Martin von Löwis
+
+* François Pinard
+
+* Barry Warsaw
+
+* Gustavo Niemeyer
+
+-[ Notes ]-
+
+[1] Le dossier par défaut pour les localisations dépend du système
+    : par exemple, sur RedHat c’est "/usr/share/locale", mais sur
+    Solaris c’est "/usr/lib/locale".  Le module "gettext" n’essaie pas
+    de prendre en charge ce paramètre système, mais utilise le dossier
+    "sys.prefix/share/locale".  C’est pour cette raison qu’il est
+    toujours préférable d’appeler "bindtextdomain()" en donnant
+    explicitement un chemin absolu au début de votre application.
+
+[2] Voir la note de "bindtextdomain()" ci-dessus.
+
+[3] François Pinard has written a program called **xpot** which
+    does a similar job.  It is available as part of his po-utils
+    package.
+
+[4] **msgfmt.py** is binary compatible with GNU **msgfmt** except
+    that it provides a simpler, all-Python implementation.  With this
+    and **pygettext.py**, you generally won’t need to install the GNU
+    **gettext** package to internationalize your Python applications.
+
+[5] The choice of "N_()" here is totally arbitrary; it could have
+    just as easily been "MarkThisStringForTranslation()".

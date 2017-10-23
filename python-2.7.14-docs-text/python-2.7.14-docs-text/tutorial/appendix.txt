@@ -1,0 +1,116 @@
+Annexe
+******
+
+
+Mode interactif
+===============
+
+
+Gestion des erreurs
+-------------------
+
+Quand une erreur se produit, l’interpréteur affiche un message
+d’erreur et le suivit de la pile. En mode interactif, il revient à
+l’invite de commande primaire; si l’entrée provient d’un fichier,
+l’interpréteur se termine avec un état de sortie non nul après avoir
+affiché le suivit de la pile. (Les exceptions gérées par une clause
+"except" dans une instruction "try" ne sont pas des erreurs dans ce
+contexte.) Certaines erreurs sont inconditionnellement fatales et
+cause une sortie avec un état non nul; les incohérences internes et,
+dans certains cas, les pénuries de mémoires, sont traitées de la
+sorte. Tous les messages d’erreur sont écrits sur la sortie d’erreur
+standard; les sorties normales issues des commandes exécutées sont
+écrites sur la sortie standard.
+
+Taper le caractère d’interruption (généralement "Ctrl+C" ou
+"Supprimer") au niveau de l’invite de commande primaire annule
+l’entrée et revient à l’invite. [1] Saisir une interruption tandis
+qu’une commande s’exécute lève une exception "KeyboardInterrupt" qui
+peut être gérée par une instruction "try".
+
+
+Scripts Python exécutables
+--------------------------
+
+Sur les systèmes Unix, un script Python peut être rendu directement
+exécutable comme un script shell en ajoutant la ligne :
+
+   #!/usr/bin/env python
+
+(en supposant que l’interpréteur est dans le "PATH" de l’utilisateur)
+au début du script et en rendant le fichier exécutable. "#!" doivent
+être les deux premiers caractères du fichier. Sur certaines
+plateformes, cette première ligne doit finir avec une fin de ligne de
+type Unix ("'\n'") et pas de type Windows ("'\r\n'"). Notez que le
+caractère dièse, "'#'", est utilisé pour initier un commentaire en
+Python.
+
+Un script peut être rendu utilisable en utilisant la commande
+**chmod**.
+
+   $ chmod +x myscript.py
+
+Sur les système windows il n’y a pas de « mode executable ».
+L’installateur Python associe automatiquement les fichier en ".py"
+avec "python.exe" de telle sorte qu’un double clic sur un fichier
+Python le lance comme un script. L’extension peut aussi être ".pyw",
+dans ce cas, la console n’apparait pas.
+
+
+La configuration du mode interactif
+-----------------------------------
+
+En mode interactif, il peut être pratique de faire exécuter quelques
+commandes au lancement de l’interprète. C’est possible en configurant
+la variable d’environnement "PYTHONSTARTUP" » avec le nom d’un fichier
+contenant les instructions à exécuter, à la même manière du ".profile"
+dans un shell Unix.
+
+Ce fichier n’est lu qu’en mode interactif, pas quand Python lis les
+instructions depuis un fichier, ni quand "/dev/tty" est donné
+explicitement comme fichier source (qui d’ailleurs se compterait comme
+une session interactive). Les instructions de ce fichier, sont
+exécutées dans le même espace de noms que vos commandes, donc les
+objets définis et modules importés peuvent être utilisées directement
+dans la session interactive. Dans ce fichier il est aussi possible de
+changer les prompts "sys.ps1" et "sys.ps2".
+
+Si vous voulez exécuter d’autres fichiers dans le dossier courant,
+vous pouvez le programmer dans le fichier global, par exemple: "if
+os.""path.isfile('.pythonrc.py'): exec(open('.pythonrc.py').read())".
+Et si vous voulez exécuter le fichier depuis un script, vous devez le
+faire explicitement.
+
+   import os
+   filename = os.environ.get('PYTHONSTARTUP')
+   if filename and os.path.isfile(filename):
+       with open(filename) as fobj:
+           startup_file = fobj.read()
+       exec(startup_file)
+
+
+Les modules de Personnalisation
+-------------------------------
+
+Python peut être personnalisé via les modules "sitecustomize" et
+"usercustomize". Pour découvrir comment ils fonctionnent vous devez
+d’abord les trouver, ils sont dans un dossier appelé user site-
+packages. Démarrez Python et exécutez : code:
+
+   >>> import site
+   >>> site.getusersitepackages()
+   '/home/user/.local/lib/python2.7/site-packages'
+
+Vous pouvez maintenant y créer un fichier "usercustomize.py"  » et y
+écrire ce que vous voulez. Il sera toujours pris en compte par Python
+peut importe le mode, sauf si il est démarré avec l’option "-s", qui
+désactive l’import automatique.
+
+"sitecustomize" fonctionne de la même manière, mais plus typiquement
+créé par un administrateur et stocké dans le dossier site-packages
+global. Il est importé avant "usercustomize". Pour plus de détails,
+consultez la documentation de "site".
+
+-[ Notes ]-
+
+[1] Un problème avec GNU Readline peut l’en empêcher.

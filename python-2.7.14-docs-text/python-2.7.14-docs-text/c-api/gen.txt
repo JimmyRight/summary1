@@ -1,0 +1,31 @@
+Objets Générateur
+*****************
+
+Generator objects are what Python uses to implement generator
+iterators. They are normally created by iterating over a function that
+yields values, rather than explicitly calling "PyGen_New()".
+
+PyGenObject
+
+   La structure C utilisée pour les objets générateurs
+
+PyTypeObject PyGen_Type
+
+   Le type objet correspondant aux objets générateurs.
+
+int PyGen_Check(ob)
+
+   Renvoie "True" si *ob* est un objet générateur. *ob* ne doit pas
+   être *NULL*.
+
+int PyGen_CheckExact(ob)
+
+   Return true if *ob*’s type is *PyGen_Type* is a generator object;
+   *ob* must not be *NULL*.
+
+PyObject* PyGen_New(PyFrameObject *frame)
+    *Return value: New reference.*
+
+   Create and return a new generator object based on the *frame*
+   object. A reference to *frame* is stolen by this function. The
+   parameter must not be *NULL*.

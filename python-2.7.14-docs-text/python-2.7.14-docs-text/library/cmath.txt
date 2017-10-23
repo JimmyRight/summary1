@@ -1,0 +1,237 @@
+Fonctions mathématiques pour nombres complexes — "cmath"
+********************************************************
+
+Ce module est toujours disponible. Il fournit l’accès aux fonctions
+mathématiques pour les nombres complexes.Les fonctions de ce module
+acceptent les entiers, les nombres flottants ou les nombres complexes
+comme arguments. Elles accepteront également tout objet Python ayant
+une méthode "__complex__()" ou "__float__()" : ces méthodes sont
+utilisées pour convertir l’objet en un nombre complexe ou
+respectivement un nombre flottant, et la fonction est ensuite
+appliquée sur le résultat de la conversion.
+
+Note: Sur les plate-formes  avec un support système et matériel des
+  zéros signés, les fonctions incluant une coupure complexe sont
+  continues *de chaque* côté de la coupure : le signe du zéro
+  distingue les deux extrémités de la coupure. Sur les plate-formes ne
+  supportant pas les zéros signés, la continuité est spécifiée en-
+  dessous.
+
+
+Conversion vers et à partir de coordonnées polaires
+===================================================
+
+Un nombre complexe Python "z" est stocké de manière interne en
+coordonnées *cartésiennes*. Il est entièrement défini par sa *partie
+réelle* "z.real" et sa *partie complexe* "z.imag". En d’autres termes
+:
+
+   z == z.real + z.imag*1j
+
+Les *coordonnées polaires* donnent une manière alternative de
+représenter un nombre complexe. En coordonnées polaires, un nombre
+complexe *z* est défini par son module *r* et par son argument (*angle
+de phase*) *phi*. Le module *r* est la distance entre *z* et
+l’origine, alors que l’argument *phi* est l’angle (dans le sens anti-
+horlogique, ou trigonométrique), mesuré en radians, à partir de l’axe
+X positif, et vers le segment de droite joignant *z* à l’origine.
+
+Les fonctions suivantes peuvent être utilisées pour convertir à partir
+des coordonnées rectangulaires natives vers les coordonnées polaires,
+et vice-versa.
+
+cmath.phase(x)
+
+   Renvoie l’argument de *x*, dans un nombre flottant. "phase(x)" est
+   équivalent à "math.atan2(x.imag, x.real)". Le résultat se situe
+   dans l’intervalle [-π, +π], et la coupure par cette opération se
+   situe sur l’axe X négatif, continue par au-dessus. Sur les systèmes
+   supportant les zéros signés (ce qui inclut la plupart des systèmes
+   utilisés actuellement), cela signifie que le signe du résultat est
+   le même que "x.imag" même quand "x.imag" vaut zéro :
+
+      >>> phase(complex(-1.0, 0.0))
+      3.1415926535897931
+      >>> phase(complex(-1.0, -0.0))
+      -3.1415926535897931
+
+   Nouveau dans la version 2.6.
+
+Note: Le module (valeur absolue) d’un nombre complexe *x* peut être
+  calculé en utilisant la primitive "abs()". Il n’y a pas de fonction
+  spéciale du module "cmath" pour cette opération.
+
+cmath.polar(x)
+
+   Renvoie la représentation de *x* en coordonnées polaires. Renvoie
+   une paire "(r, phi)" où *r* est le module de *x* et phi est
+   l’argument de *x*. "polar(x)" est équivalent à "(abs(x),
+   phase(x))".
+
+   Nouveau dans la version 2.6.
+
+cmath.rect(r, phi)
+
+   Renvoie le nombre complexe *x* dont les coordonnées polaires sont
+   *r* et *phi*. Équivalent à "r * (math.cos(phi) +
+   math.sin(phi)*1j)".
+
+   Nouveau dans la version 2.6.
+
+
+Fonctions logarithme et exponentielle
+=====================================
+
+cmath.exp(x)
+
+   Renvoie la valeur exponentielle "e**x".
+
+cmath.log(x[, base])
+
+   Renvoie le logarithme de *x* dans la *base* précisée. Si la *base*
+   n’est pas spécifiée, le logarithme *naturel* (népérien) de *x* est
+   renvoyé. Il y a une coupure, partant de 0 sur l’axe réel négatif et
+   vers -∞, continue par au-dessus.
+
+   Modifié dans la version 2.4: *base* argument added.
+
+cmath.log10(x)
+
+   Renvoie le logarithme en base 10 de *x*. Elle a la même coupure que
+   "log()".
+
+cmath.sqrt(x)
+
+   Renvoie la racine carrée de *x*. Elle a la même coupure que
+   "log()".
+
+
+Fonctions trigonométriques
+==========================
+
+cmath.acos(x)
+
+   Renvoie l’arc cosinus de *x*. Il y a deux coupures : une allant de
+   1 sur l’axe réel vers ∞, continue par en-dessous ; l’autre allant
+   de -1 sur l’axe réel vers -∞, continue par au-dessus.
+
+cmath.asin(x)
+
+   Renvoie l’arc sinus de *x*. Elle a les mêmes coupures que "acos()".
+
+cmath.atan(x)
+
+   Renvoie la tangente de *x*. l y a deux coupures : une allant de
+   "1j" sur l’axe imaginaire vers "∞j", continue par la droite ;
+   l’autre allant de "-1j" sur l’axe imaginaire vers "-∞j", continue
+   par la gauche.
+
+   Modifié dans la version 2.6: direction of continuity of upper cut
+   reversed
+
+cmath.cos(x)
+
+   Renvoie le cosinus de *x*.
+
+cmath.sin(x)
+
+   Renvoie le sinus de *x*.
+
+cmath.tan(x)
+
+   Renvoie la tangente de *x*.
+
+
+Fonctions hyperboliques
+=======================
+
+cmath.acosh(x)
+
+   Renvoie l’arc cosinus hyperbolique de *x*. Il y a une coupure,
+   allant de 1 sur l’axe réel vers -∞, continue par au-dessus.
+
+cmath.asinh(x)
+
+   Renvoie l’arc sinus hyperbolique de *x*. Il y a deux coupures : une
+   allant de "1j" sur l’axe imaginaire vers "∞j", continue par la
+   droite ; l’autre allant de "-1j" sur l’axe imaginaire vers "∞j",
+   continue par la gauche.
+
+   Modifié dans la version 2.6: branch cuts moved to match those
+   recommended by the C99 standard
+
+cmath.atanh(x)
+
+   Renvoie l’arc tangente hyperbolique de *x*. Il y a deux coupures :
+   une allant de "1" sur l’axe réel allant vers "∞", continue par en-
+   dessous ; l’autre allant de "-1" sur l’axe réel vers "-∞", continue
+   par au-dessus.
+
+   Modifié dans la version 2.6: direction of continuity of right cut
+   reversed
+
+cmath.cosh(x)
+
+   Renvoie le cosinus hyperbolique de *x*.
+
+cmath.sinh(x)
+
+   Renvoie le sinus hyperbolique de *x*.
+
+cmath.tanh(x)
+
+   Renvoie la tangente hyperbolique de *x*.
+
+
+Fonctions de classifications
+============================
+
+cmath.isinf(x)
+
+   Return "True" if the real or the imaginary part of x is positive or
+   negative infinity.
+
+   Nouveau dans la version 2.6.
+
+cmath.isnan(x)
+
+   Return "True" if the real or imaginary part of x is not a number
+   (NaN).
+
+   Nouveau dans la version 2.6.
+
+
+Constantes
+==========
+
+cmath.pi
+
+   La constante mathématique *π*, en tant que flottant.
+
+cmath.e
+
+   La constante mathématique *e*, en tant que flottant.
+
+Notez que la sélection de fonctions est similaire - mais pas identique
+- à celles du module "math". La raison d’avoir deux modules est que
+certains utilisateurs ne sont pas intéressés par les nombres
+complexes, et peut-être ne savent même pas ce qu’ils sont. Ils
+préféreraient alors que "math.sqrt(-1)" lève une exception au lieu de
+renvoyer un nombre complexe. Également, notez que les fonctions
+définies dans "cmath" renvoient toujours un nombre complexe, même si
+le résultat peut être exprimé à l’aide d’un nombre réel (en quel cas
+la partie imaginaire du complexe vaut zéro).
+
+Une note sur les *coupures* : ce sont des courbes sur lesquelles la
+fonction n’est pas continue. Ce sont des caractéristiques nécessaires
+de beaucoup de fonctions complexes. Il est supposé que si vous avez
+besoin d’utiliser des fonctions complexes, vous comprendrez ce que
+sont les coupures. Consultez n’importe quel livre (pas trop
+élémentaire) sur les variables complexes pour plus d’informations.
+Pour des informations sur les choix des coupures à des fins
+numériques, voici une bonne référence :
+
+Voir aussi: Kahan, W:  Branch cuts for complex elementary functions;
+  or, Much ado about nothing’s sign bit.  In Iserles, A., and Powell,
+  M. (eds.), The state of the art in numerical analysis. Clarendon
+  Press (1987) pp165–211.

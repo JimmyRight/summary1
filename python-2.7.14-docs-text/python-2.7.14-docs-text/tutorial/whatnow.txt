@@ -1,0 +1,65 @@
+Et Maintenant ?
+***************
+
+Lire ce tutoriel a probablement renforcé votre intérêt pour Python, en
+der l’utiliser pour résoudre des vrais problèmes. Ou devriez vous
+aller pour en apprendre plus ?
+
+Ce tutoriel fait partie de la documentation de Python, mais la
+documentation de Python est vaste :
+
+* The Python Standard Library:
+
+  Vous devriez naviguer dans le manuel, il est une référence complète,
+  (et donc laconique…) sur les types, fonctions, et modules de la
+  bibliothèque standard. La distribution standard de Python inclus
+  *énormément* de code supplémentaire. Il existe des modules pour lire
+  des emails, récupérer des documents via HTTP, générer des nombres
+  aléatoires, analyser les paramètres de la ligne de commande, écrire
+  des programmes CGI, compresser de la donnée, et plein d’autres
+  tâches. Vous balader dans la documentation de la bibliothèque vous
+  donnera une idée de ce qui est disponnible.
+
+* installation des modules python (Version historique) explains how
+  to install external modules written by other Python users.
+
+* The Python Language Reference: Une explication détaillée de la
+  syntaxe et sémantique de Python. C’est une lecture fastidieuse, mais
+  qui a sa place dans une documentation exhaustive.
+
+D’autres ressources:
+
+* https://www.python.org: C’est le site principal pour Python, il y
+  contient du code, de la documentation, des liens vers d’autres sites
+  à propos de Python tout autour d’internet. Il est répliqué dans
+  différents endroits autours du globe, comme en Europe, au Japon, et
+  en Australie, ces répliques peuvent dans certains cas être plus
+  rapides que le site principal, tout dépend d’où vous vous situez.
+
+* https://docs.python.org/fr/:  Un accès rapide à la documentation
+  de Python en français.
+
+* https://pypi.python.org/pypi: « The Python Package Index », (Le
+  Répertoire des Paquets Python), ou auparavant surnommé « The Cheese
+  Shop » (La Fromagerie), est un catalogue de modules Python
+  disponibles au téléchargement, construit par les utilisateurs.
+  Lorsque vous commencez à distribuer du code, vous pouvez l’inscrire
+  ici afin que les autres puissent le trouver.
+
+* https://code.activestate.com/recipes/langs/python/: « The Python
+  Cookbook » est un recueil assez important d’exemples de code, de
+  modules, et de scripts. Les contributions les plus remarquables y
+  sont regroupées dans un livre appelé « Python Cookbook » (O’Reilly &
+  Associates, ISBN 0-596-00797-3.)
+
+For Python-related questions and problem reports, you can post to the
+newsgroup *comp.lang.python*, or send them to the mailing list at
+python-list@python.org.  The newsgroup and mailing list are gatewayed,
+so messages posted to one will automatically be forwarded to the
+other.  There are around 120 postings a day (with peaks up to several
+hundred), asking (and answering) questions, suggesting new features,
+and announcing new modules. Before posting, be sure to check the list
+of Frequently Asked Questions (also called the FAQ).  Mailing list
+archives are available at https://mail.python.org/pipermail/. The FAQ
+answers many of the questions that come up again and again, and may
+already contain the solution for your problem.

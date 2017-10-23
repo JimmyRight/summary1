@@ -1,0 +1,96 @@
+MacPython OSA モジュール
+************************
+
+この章では、オープンスクリプティングアーキテクチャ (Open Scripting
+Architecture、OSA、一般的には AppleScript として知られている) の現在の
+Python 用実装について説明します。これを使うとスクリプト可能なアプリケ
+ーションを Python プログラムから実に python らしいインタフェースととも
+に制御することができます。このモジュール群の開発は停止しました。
+
+AppleScript や OSA の様々なコンポーネントの説明、およびそのアーキテク
+チャや用語の理解のために、 Apple のドキュメントを読んでおく方がよいで
+しょう。 「Applescript Language Guide」 は概念モデルと用語を説明し、標
+準スイートについて文書にまとめてあります。 「Open Scripting
+Architecture」 はアプリケーションプログラマの視点から、 OSA を使用する
+方法について説明しています。 Apple ヘルプビューワにおいてこれらは
+Developer Documentation, Core Technologies セクションで見つかります。
+
+アプリケーションでスクリプト制御する例として、以下の AppleScript コー
+ドは、最前面にある **Finder** のウィンドウの名前を取得して表示させます
+:
+
+   tell application "Finder"
+       get name of window 1
+   end tell
+
+Python では、以下のコードで同じ事ができます:
+
+   import Finder
+
+   f = Finder.Finder()
+   print f.get(f.window(1).name)
+
+配布されている Python ライブラリには、標準スイートを実装したパッケージ
+に加えて、いくつかのよくあるアプリケーションへのインタフェースを実装し
+たパッケージが含まれています。
+
+AppleEvent をアプリケーションに送るためには、最初にアプリケーションの
+用語 (**Script Editor** が「辞書」と呼んでいるもの) を話せる Python パ
+ッケージを作らなければなりません。この作業は **PythonIDE** の中から行
+うこともできますし、コマンドラインから "gensuitemodule.py" モジュール
+をスタンドアロンのプログラムとして実行することでもできます。
+
+作成されるのはいくつものモジュールからなるパッケージで、それぞれのモジ
+ュールはプログラムで使われるスイートであり "__init__" モジュールがそれ
+らを取りまとめています。 Python の継承グラフは AppleScript の継承グラ
+フに従っていますので、プログラムの辞書が標準スイートのサポートを含みつ
+つ、一つ二つ動詞を追加の引数で拡張するように指定しているならば、出力さ
+れるスイートは "Standard_Suite" という "StdSuites.Standard_Suite" から
+すべてをインポートしてエクスポートし直しつつ追加された機能を持つように
+メソッドをオーバーライドしたモジュールを含みます。 "gensuitemodule" の
+出力は非常に読み易く、また元々の AppleScript 辞書にあったドキュメント
+を Python 文書化文字列 (docstring) 中に含みますので、それを読むことは
+有用な情報源となります。
+
+出力されたパッケージはパッケージと同じ名前のメインクラスを実装しており
+、これは全ての AppleScript 動詞を直接のオブジェクトは第 1 引数で、オプ
+ションのパラメータはキーワード引数で受けるメソッドとして含みます。
+AppleScript クラスも Python クラスとして実装されたり、その他諸々も同様
+です。
+
+動詞を実装しているメインの Python クラスはまた AppleScript の 「
+application」 クラスで宣言されたプロパティおよび要素へのアクセスも許し
+ます。現在のリリースではこれはオブジェクト指向的というには程遠く、上の
+例で見たように "f.get(f.window(1).name)" と書かねばならず、より Python
+らしい "f.window(1).name.get()" という書き方はできません。
+
+AppleScript の識別子が Python の識別子として扱えない場合以下の少数のル
+ールで変換します:
+
+* 空白はアンダースコアに置き換えられます
+
+* その他の英数字以外の文字は "_xx_" に置き換えられます。ここで "xx"
+  は その文字の 16 進値です。
+
+* Python の予約語にはアンダースコアが後ろに付けられます
+
+Python はスクリプト可能なアプリケーションを Python で作成することもサ
+ポートしていますが、以下のモジュールは MacPython の AppleScript サポー
+トに関係するモジュールのみです:
+
+* "gensuitemodule" — OSA スタブ作成パッケージ
+
+* "aetools" — OSA クライアントのサポート
+
+* "aepack" — Python 変数と AppleEvent データコンテナ間の変換
+
+* "aetypes" — AppleEvent オブジェクト
+
+* "MiniAEFrame" — オープンスクリプティングアーキテクチャサーバのサポ
+  ー ト
+
+  * AEServer オブジェクト
+
+他に、以下のサポートモジュールが事前に生成されています: "Finder",
+"Terminal", "Explorer", "Netscape", "CodeWarrior", "SystemEvents",
+"StdSuites" 。

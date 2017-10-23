@@ -1,0 +1,109 @@
+"StringIO" — ファイルのように文字列を読み書きする
+*************************************************
+
+このモジュールは、(*メモリファイル* としても知られている) 文字列のバッ
+ファに対して読み書きを行うファイルのようなクラス、 "StringIO" を実装し
+ています。 操作方法についてはファイルオブジェクトの説明を参照してくだ
+さい (ファイルオブジェクト )。 (通常の文字列については "str" と
+"unicode" を参照してください)
+
+class StringIO.StringIO([buffer])
+
+   "StringIO" オブジェクトを作る際に、コンストラクタに文字列を渡してオ
+   ブジェクトを初期化できます。 文字列を渡さない場合、最初は
+   "StringIO" は空です。 どちらの場合でも最初のファイル位置は 0 から始
+   まります。
+
+   "StringIO" オブジェクトは Unicode も 8 ビットの文字列も受け付けます
+   が、この 2 つを混ぜることには少し注意が必要です。 この 2 つが一緒に
+   使われると、 (8  ビット目を使っていて) 7-bit ASCII として解釈できな
+   い 8-bit の文字列は、 "getvalue()" が呼ばれたときに "UnicodeError"
+   を引き起こします。
+
+次にあげる "StringIO" オブジェクトのメソッドには特別な説明が必要です:
+
+StringIO.getvalue()
+
+   "StringIO" オブジェクトの "close()" メソッドが呼ばれる前ならいつで
+   も、 「file」 の中身全体を返します。 Unicode と 8 ビット文字列を混
+   ぜることの説明は、上の注意を参照してください; この 2 つの文字コード
+   を混ぜると、このメソッドは "UnicodeError" を引き起こす可能性があり
+   ます。
+
+StringIO.close()
+
+   メモリバッファを解放します。 close された後の "StringIO" オブジェク
+   トを操作しようとすると "ValueError" が送出されます。
+
+使い方の例:
+
+   import StringIO
+
+   output = StringIO.StringIO()
+   output.write('First line.\n')
+   print >>output, 'Second line.'
+
+   # Retrieve file contents -- this will be
+   # 'First line.\nSecond line.\n'
+   contents = output.getvalue()
+
+   # Close object and discard memory buffer --
+   # .getvalue() will now raise an exception.
+   output.close()
+
+
+"cStringIO" — 高速化された "StringIO"
+*************************************
+
+"cStringIO" モジュールは "StringIO" モジュールと同様のインターフェース
+を提供しています。 "StringIO.StringIO" オブジェクトを酷使する場合、こ
+のモジュールにある "StringIO()" 関数をかわりに使うと効果的です。
+
+cStringIO.StringIO([s])
+
+   読み書きのための StringIO 類似ストリームを返します。
+
+   組み込み型オブジェクトを返す factory 関数なので、サブクラス化して独
+   自の関数を組むことはできません。属性の追加もできません。これらをす
+   るにはオリジナルの "StringIO" モジュールを使ってください。
+
+   "StringIO" モジュールとは異なり、このモジュールで提供されているもの
+   は、プレイン ASCII 文字列にエンコードできない Unicode を受け付ける
+   ことができません。
+
+   もう一つ違いがあります。引数に文字列を指定して "StringIO()" 呼び出
+   すと読み出し専用のオブジェクトが生成されますが、これの場合
+   "cStringIO.StringIO()" では write()メソッドを持たないオブジェクトを
+   生成します。これらのオブジェクトは普段は見えません。トレースバック
+   に "StringI" と "StringO" として表示されます。
+
+次にあげるデータオブジェクトも提供されています:
+
+cStringIO.InputType
+
+   文字列をパラメーターに渡して "StringIO()" を呼ぶことで作られるオブ
+   ジェクトのオブジェクト型。
+
+cStringIO.OutputType
+
+   パラメーターを渡さずに "StringIO()" を呼ぶことで返されるオブジェク
+   トのオブジェクト型。
+
+このモジュールには C API もあります。詳しくはこのモジュールのソースを
+参照してください。
+
+使い方の例:
+
+   import cStringIO
+
+   output = cStringIO.StringIO()
+   output.write('First line.\n')
+   print >>output, 'Second line.'
+
+   # Retrieve file contents -- this will be
+   # 'First line.\nSecond line.\n'
+   contents = output.getvalue()
+
+   # Close object and discard memory buffer --
+   # .getvalue() will now raise an exception.
+   output.close()

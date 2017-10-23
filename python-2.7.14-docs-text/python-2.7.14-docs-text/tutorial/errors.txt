@@ -1,0 +1,424 @@
+Erreurs et exceptions
+*********************
+
+Jusqu’à maintenant, les messages d’erreurs ont seulement été
+mentionnés, mais si vous avez essayé les exemples vous avez
+certainement vu plus que cela. En fait, il y a au moins deux types
+d’erreurs à distinguer : les *erreurs de syntaxe* et les *exceptions*.
+
+
+Les erreurs de syntaxe
+======================
+
+Les erreurs de syntaxe, qui sont des erreurs d’analyse du code, sont
+peut-être celles que vous rencontrez le plus souvent lorsque vous êtes
+encore en phase d’apprentissage de Python :
+
+   >>> while True print 'Hello world'
+     File "<stdin>", line 1
+       while True print 'Hello world'
+                      ^
+   SyntaxError: invalid syntax
+
+The parser repeats the offending line and displays a little “arrow”
+pointing at the earliest point in the line where the error was
+detected.  The error is caused by (or at least detected at) the token
+*preceding* the arrow: in the example, the error is detected at the
+keyword "print", since a colon ("':'") is missing before it.  File
+name and line number are printed so you know where to look in case the
+input came from a script.
+
+
+Les exceptions
+==============
+
+Même si une instruction ou une expression est syntaxiquement correcte,
+elle peut générer une erreur lors de son exécution. Les erreurs
+détectées durant l’exécution son appelées des *exceptions* et ne sont
+pas toujours fatales : vous apprendrez bientôt comment les traîter
+dans vos programmes. La plupart des exceptions toutefois ne sont pas
+prises en charge par les programmes, ce qui génère des messages
+d’erreurs comme celui-ci :
+
+   >>> 10 * (1/0)
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   ZeroDivisionError: integer division or modulo by zero
+   >>> 4 + spam*3
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   NameError: name 'spam' is not defined
+   >>> '2' + 2
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   TypeError: cannot concatenate 'str' and 'int' objects
+
+La dernière ligne du message d’erreur indique la cause de l’erreur.
+Les exceptions peuvent être de différents types, et ce type est
+indiqué dans le message : les types indiqués dans l’exemple sont
+"ZeroDivisionError", "NameError" et "TypeError". Le texte affiché
+comme type de l’exception est le nom de l’exception native qui a été
+déclenchée. Ceci est vrai pour toutes les exceptions natives, mais
+n’est pas une obligation pour les exceptions définies par
+l’utilisateur (même si c’est une convention bien pratique). Les noms
+des exceptions standards sont des identifiants natifs (pas des mots
+réservés).
+
+Le reste de la ligne fournit plus de détails en fonction du type de
+l’exception et de ce qui l’a causé.
+
+La partie précédente du message d’erreur montre le contexte dans
+lequel s’est produite l’exception, sous la forme d’une trace de pile
+d’exécution. En général, celle-ci contient les lignes du code source ;
+toutefois, les lignes lues à partir de l’entrée standard ne seront pas
+affichées.
+
+Vous trouverez dans Built-in Exceptions la liste des exceptions
+natives et leur signification.
+
+
+Gestion des exceptions
+======================
+
+Il est possible d’écrire des programmes qui prennent en charge
+certaines exceptions. Regardez l’exemple suivant, qui demande une
+saisie à l’utilisateur jusqu’à ce qu’un entier valide ait été entré,
+mais permet à l’utilisateur d’interrompre le programme (en utilisant
+"Control-C" ou un autre raccourci que le système supporte) ; notez
+qu’une interruption générée par l’utilisateur est signalée en levant
+l’exception "KeyboardInterrupt".
+
+   >>> while True:
+   ...     try:
+   ...         x = int(raw_input("Please enter a number: "))
+   ...         break
+   ...     except ValueError:
+   ...         print "Oops!  That was no valid number.  Try again..."
+   ...
+
+L’instruction "try" fonctionne comme ceci.
+
+* Premièrement, la *clause try* (instruction(s) placée(s) entre les
+  mots-clés "try" et "except") est exécutée.
+
+* Si aucune exception n’intervient, la *clause except* est sautée et
+  l’exécution de l’instruction "try" est terminée.
+
+* Si une exception intervient pendant l’exécution de la clause
+  “try”, le reste de cette clause est sauté. Si son type correspond à
+  un nom d’exception indiqué après le mot-clé "except", la clause
+  “except” correspondante est exécutée, puis l’exécution continue
+  après l’instruction "try".
+
+* Si une exception intervient qui ne corresponde à aucune exception
+  mentionnée dans la clause “except”, elle est transmise à
+  l’instruction "try" de niveau supérieur ; si aucun gestionnaire
+  d’exception n’est trouvé, il s’agit d’une *exception non gérée* et
+  l’exécution s’arrête avec un message comme indiqué ci-dessus.
+
+Une instruction "try" peut comporter plusieurs clauses except, pour
+permettre la prise en charge de différentes exceptions. Mais un seul
+gestionnaire, au plus, sera exécuté. Les gestionnaires ne prennent en
+charge que les exceptions qui interviennent dans la clause try
+correspondante, pas dans d’autres gestionnaires de la même instruction
+"try". Mais une même clause except peut citer plusieurs exceptions
+sous la forme d’un tuple entre parenthèses, comme dans cet exemple :
+
+   ... except (RuntimeError, TypeError, NameError):
+   ...     pass
+
+Note that the parentheses around this tuple are required, because
+"except ValueError, e:" was the syntax used for what is normally
+written as "except ValueError as e:" in modern Python (described
+below). The old syntax is still supported for backwards compatibility.
+This means "except RuntimeError, TypeError" is not equivalent to
+"except (RuntimeError, TypeError):" but to "except RuntimeError as
+TypeError:" which is not what you want.
+
+La dernière clause except peut omettre le(s) nom(s) d’exception(s),
+pour servir de joker. C’est toutefois à utiliser avec beaucoup de
+précautions, car il est très facile de masquer une vraie erreur de
+programmation par ce biais. Elle peut aussi être utilisée pour
+afficher un message d’erreur avant de re-lever l’exception (en
+permettant à un appelant de prendre également en charge l’exception)
+
+   import sys
+
+   try:
+       f = open('myfile.txt')
+       s = f.readline()
+       i = int(s.strip())
+   except IOError as e:
+       print "I/O error({0}): {1}".format(e.errno, e.strerror)
+   except ValueError:
+       print "Could not convert data to an integer."
+   except:
+       print "Unexpected error:", sys.exc_info()[0]
+       raise
+
+L’instruction "try" … "except" a également une *clause else*
+optionnelle qui, lorsqu’elle est présente, doit suivre toutes les
+clauses except. Elle est utile pour du code qui doit être exécuté
+lorsqu’aucune exception n’a été levée par la clause try. Par exemple :
+
+   for arg in sys.argv[1:]:
+       try:
+           f = open(arg, 'r')
+       except IOError:
+           print 'cannot open', arg
+       else:
+           print arg, 'has', len(f.readlines()), 'lines'
+           f.close()
+
+Il vaut mieux utiliser la clause "else", plutôt que d’ajouter du code
+à la clause "try", car cela évite de capturer accidentellement une
+exception qui n’a pas été levée par le code initialement protégé par
+l’instruction "try" … "except".
+
+Quand une exception intervient, une valeur peut lui être associée, que
+l’on appelle également *l’argument* de l’exception. La présence de cet
+argument et son type dépendent du type de l’exception.
+
+The except clause may specify a variable after the exception name (or
+tuple). The variable is bound to an exception instance with the
+arguments stored in "instance.args".  For convenience, the exception
+instance defines "__str__()" so the arguments can be printed directly
+without having to reference ".args".
+
+One may also instantiate an exception first before raising it and add
+any attributes to it as desired.
+
+   >>> try:
+   ...     raise Exception('spam', 'eggs')
+   ... except Exception as inst:
+   ...     print type(inst)     # the exception instance
+   ...     print inst.args      # arguments stored in .args
+   ...     print inst           # __str__ allows args to be printed directly
+   ...     x, y = inst.args
+   ...     print 'x =', x
+   ...     print 'y =', y
+   ...
+   <type 'exceptions.Exception'>
+   ('spam', 'eggs')
+   ('spam', 'eggs')
+   x = spam
+   y = eggs
+
+If an exception has an argument, it is printed as the last part
+(“detail”) of the message for unhandled exceptions.
+
+Les gestionnaires d’exceptions n’interceptent pas que les exceptions
+qui sont levées immédiatement dans leur clause try, mais aussi celles
+qui sont levées au sein de fonctions appelées (parfois indirectement)
+dans la clause try. Par exemple :
+
+   >>> def this_fails():
+   ...     x = 1/0
+   ...
+   >>> try:
+   ...     this_fails()
+   ... except ZeroDivisionError as detail:
+   ...     print 'Handling run-time error:', detail
+   ...
+   Handling run-time error: integer division or modulo by zero
+
+
+Déclencher des exceptions
+=========================
+
+L’instruction "raise" permet au programmeur de déclencher une
+exception spécifique. Par exemple :
+
+   >>> raise NameError('HiThere')
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   NameError: HiThere
+
+The sole argument to "raise" indicates the exception to be raised.
+This must be either an exception instance or an exception class (a
+class that derives from "Exception").
+
+Si vous devez savoir qu’une exception a été levée mais sans intention
+de la prendre en charge, une forme plus simple de l’instruction
+"raise" permet de re-déclencher l’exception :
+
+   >>> try:
+   ...     raise NameError('HiThere')
+   ... except NameError:
+   ...     print 'An exception flew by!'
+   ...     raise
+   ...
+   An exception flew by!
+   Traceback (most recent call last):
+     File "<stdin>", line 2, in <module>
+   NameError: HiThere
+
+
+Exceptions définies par l’utilisateur
+=====================================
+
+Programs may name their own exceptions by creating a new exception
+class (see Classes for more about Python classes).  Exceptions should
+typically be derived from the "Exception" class, either directly or
+indirectly.  For example:
+
+   >>> class MyError(Exception):
+   ...     def __init__(self, value):
+   ...         self.value = value
+   ...     def __str__(self):
+   ...         return repr(self.value)
+   ...
+   >>> try:
+   ...     raise MyError(2*2)
+   ... except MyError as e:
+   ...     print 'My exception occurred, value:', e.value
+   ...
+   My exception occurred, value: 4
+   >>> raise MyError('oops!')
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   __main__.MyError: 'oops!'
+
+In this example, the default "__init__()" of "Exception" has been
+overridden.  The new behavior simply creates the *value* attribute.
+This replaces the default behavior of creating the *args* attribute.
+
+Les classes d’exceptions peuvent être définies pour faire tout ce
+qu’une autre classe peut faire. Mais elles sont le plus souvent assez
+simples, n’offrant que les attributs permettant aux gestionnaires de
+ces exceptions d’extraire les informations relatives à l’erreur qui
+s’est produite. Lorsque l’on crée un module qui peut déclencher
+plusieurs types d’erreurs distincts, une pratique courante est de
+créer une classe de base pour l’ensemble des exceptions définies dans
+ce module, et de créer des sous-classes spécifiques d’exceptions pour
+les différentes conditions d’erreurs :
+
+   class Error(Exception):
+       """Base class for exceptions in this module."""
+       pass
+
+   class InputError(Error):
+       """Exception raised for errors in the input.
+
+       Attributes:
+           expr -- input expression in which the error occurred
+           msg  -- explanation of the error
+       """
+
+       def __init__(self, expr, msg):
+           self.expr = expr
+           self.msg = msg
+
+   class TransitionError(Error):
+       """Raised when an operation attempts a state transition that's not
+       allowed.
+
+       Attributes:
+           prev -- state at beginning of transition
+           next -- attempted new state
+           msg  -- explanation of why the specific transition is not allowed
+       """
+
+       def __init__(self, prev, next, msg):
+           self.prev = prev
+           self.next = next
+           self.msg = msg
+
+La plupart des exceptions sont définies avec des noms qui se terminent
+par « Error », comme pour les exceptions standards.
+
+La plupart des modules standards définissent leurs propres exceptions
+pour décrire les erreurs que l’on peut rencontrer dans les fonctions
+qu’ils définissent. Plus d’informations sur les classes sont
+présentées dans le chapitre Classes.
+
+
+Définition d’actions de nettoyage
+=================================
+
+L’instruction "try" a une autre clause optionnelle qui est destinée à
+définir des actions de nettoyage devant être exécutées dans certaines
+circonstances. Par exemple :
+
+   >>> try:
+   ...     raise KeyboardInterrupt
+   ... finally:
+   ...     print 'Goodbye, world!'
+   ...
+   Goodbye, world!
+   Traceback (most recent call last):
+     File "<stdin>", line 2, in <module>
+   KeyboardInterrupt
+
+A *finally clause* is always executed before leaving the "try"
+statement, whether an exception has occurred or not. When an exception
+has occurred in the "try" clause and has not been handled by an
+"except" clause (or it has occurred in an "except" or "else" clause),
+it is re-raised after the "finally" clause has been executed.  The
+"finally" clause is also executed « on the way out » when any other
+clause of the "try" statement is left via a "break", "continue" or
+"return" statement.  A more complicated example (having "except" and
+"finally" clauses in the same "try" statement works as of Python 2.5):
+
+   >>> def divide(x, y):
+   ...     try:
+   ...         result = x / y
+   ...     except ZeroDivisionError:
+   ...         print "division by zero!"
+   ...     else:
+   ...         print "result is", result
+   ...     finally:
+   ...         print "executing finally clause"
+   ...
+   >>> divide(2, 1)
+   result is 2
+   executing finally clause
+   >>> divide(2, 0)
+   division by zero!
+   executing finally clause
+   >>> divide("2", "1")
+   executing finally clause
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+     File "<stdin>", line 3, in divide
+   TypeError: unsupported operand type(s) for /: 'str' and 'str'
+
+Comme vous pouvez le voir, la clause "finally" est exécutée dans tous
+les cas. L’exception de type "TypeError" déclenchée en divisant deux
+chaînes de caractères n’est pas prise en charge par la clause "except"
+et est donc re-déclenchée après que la clause "finally" ait été
+exécutée.
+
+Dans les vraies applicatons, la clause "finally" est notamment utile
+pour libérer des ressources externes (telles que des fichiers ou des
+connections réseau), que l’utilisation de ces ressources ait réussi ou
+non.
+
+
+Actions de nettoyage prédéfinies
+================================
+
+Certains objets définissent des actions de nettoyage standards qui
+doivent être exécutées lorsque l’objet n’est plus nécessaire,
+indépendamment du fait que l’opération ayant utilisé l’objet ait
+réussi ou non. Regardez l’exemple suivant, qui tente d’ouvrir un
+fichier et d’afficher son contenu à l’écran :
+
+   for line in open("myfile.txt"):
+       print line,
+
+The problem with this code is that it leaves the file open for an
+indeterminate amount of time after the code has finished executing.
+This is not an issue in simple scripts, but can be a problem for
+larger applications. The "with" statement allows objects like files to
+be used in a way that ensures they are always cleaned up promptly and
+correctly.
+
+   with open("myfile.txt") as f:
+       for line in f:
+           print line,
+
+After the statement is executed, the file *f* is always closed, even
+if a problem was encountered while processing the lines. Other objects
+which provide predefined clean-up actions will indicate this in their
+documentation.

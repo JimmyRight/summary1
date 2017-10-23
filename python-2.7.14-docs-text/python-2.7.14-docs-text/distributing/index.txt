@@ -1,0 +1,164 @@
+Distribuer des Modules Python
+*****************************
+
+Email:
+   distutils-sig@python.org
+
+En temps que logiciel libre populaire, Python bénéficie d’une
+communauté active de contributeurs et d’utilisateurs qui rendent à
+leur tour leurs logiciels disponibles, sous licence libre, pour les
+autres développeurs Python.
+
+Cela permet aux utilisateurs de Python de partager et de collaborer
+efficacement, bénéficiant des solutions que les autres ont déjà crées
+pour résoudre les problèmes communs (ou même, parfois, rares !), aussi
+que de partager leurs propres solutions à tous.
+
+Ce guide couvre la partie distribution du processus. Pour un guide sur
+l’installation d’autres projets Python, voir installation guide.
+
+Note: Pour les entreprises et autres institutions, gardez en tête
+  que certaines organisations ont leur propres règles sur
+  l’utilisation et la contribution au logiciel libre. Prennez ces
+  règles en compte lorsque vous utilisez les outils de distribution et
+  d’installation fournis par Python.
+
+
+Vocabulaire
+===========
+
+* le Python Packaging Index est un dépôt public de paquets sous
+  licence libre rendus disponibles par d’autres utilisateurs Python
+
+* le Python Packaging Authority est le groupe de développeurs et
+  d’auteurs de documentation responsables de la maintenance et de
+  l’évolution des outils standards de création de paquets, des
+  métadonnées, et des formats de fichiers standards. Ils maintiennent
+  quelques outils, documentation, et gestionnaires de ticket, aussi
+  bien sur GitHub que sur BitBucket.
+
+* "distutils" est le premier système de construction et de
+  distribution ajouté à la bibliothèque standard en 1998. Bien que
+  l’utilisation directe de "distutils" est progressivement supprimée,
+  elle reste le fondement de l’infrastructure actuelle de construction
+  de paquet et de distribution. Au delà de rester dans la bibliothèque
+  standard, son nom vit aussi sous d’autres formes, tel que la liste
+  de diffusion utilisée pour coordonner le développement et les
+  standards de la création de paquet.
+
+* setuptools, d’abord publié en 2004, est (en grande partie) le
+  remplaçant de "distutils". La nouveauté la plus notable, au delà des
+  outils non modifiés de "distutils" est la possibilité de déclarer
+  des dépendances à d’autres paquets. C’est l’alternative actuellement
+  recommandée car plus régulièrement mise à jour que "distutils" et
+  gère mieux les standards de créaction de paquets actuels, pour un
+  large choix de version de Python.
+
+* wheel (dans ce contexte) est un projet qui ajoute la commande
+  "bdist_wheel" à "distutils"/setuptools. Cela produit un paquet
+  binaire multiplateforme (nommé « *wheels* » ou « *wheel files* » et
+  définis dans la **PEP 427**) qui permet aux bibliothèques Python,
+  même celles incluant des extensions binaires, d’être installées sur
+  un système sans avoir à les compiler localement.
+
+
+Licence libre et collaboration
+==============================
+
+Dans la plupart des pays du monde, le logiciel est automatiquement
+couvert par les droits d’auteur. Cela signifie que les autres
+développeurs ont besoin d’une autorisation explicite pour copier,
+utiliser, modifier, et redistribuer le logiciel.
+
+Les licences libres sont un moyen d’autoriser explicitement ces
+permissions par un moyen relativement cohérent, autorisant les
+développeurs à partager et collaborer efficacement en rendant des
+solutions communes à divers problèmes librement disponibles. Cela
+laisse beaucoup de développeurs libres de dépenser plus de temps
+concentrés sur des problèmes relativement uniques à leur cas
+spécifiques.
+
+Les outils de distribution fournis avec Python sont conçus pour rendre
+la vie des développeurs relativement simple lorsqu’ils souhaitent
+contribuer, s’il le désirent, à ces ressources communes.
+
+Ces mêmes outils de distribution peuvent aussi être utilisés pour
+distribuer du logiciel à l’intérieur d’une organisation, que ce soit
+du logiciel libre ou non.
+
+
+Installer les outils
+====================
+
+La bibliothèque standard n’inclut pas d’outils capable de créer des
+paquets selon les standards modernes, car l’équipe fondamentale de
+développement à trouvé qu’il était plus important d’avoir des outils
+standards qui fonctionnent de manière cohérente, même avec de plus
+vieilles versions de Python.
+
+Les outils de construction de paquets et de distribution actuellement
+recommandées peuvent être installées en invoquant le module "pip" dans
+une invite de commande :
+
+   python -m pip install setuptools wheel twine
+
+Note: Pour les utilisateurs d’environnements POSIX (incluant Mac OS
+  X et les utilisateurs de Linux), ces instructions supposent
+  l’utilisation d’un *environnement virtuel*.Pour les utilisateurs de
+  Windows, ces instructions supposent que l’option proposant de
+  modifier la variable d’environnement PATH à été cochée lors de
+  l’installation de Python.
+
+The Python Packaging User Guide includes more details on the currently
+recommended tools.
+
+
+Lire le manuel
+==============
+
+Le *Python Packaging User Guide* couvre les différentes étapes et les
+éléments clés de la création d’un projet :
+
+* (en) Structure d’un projet
+
+* (en) Construire et empaqueter le projet
+
+* (en) Téléverser le projet sur le Python Packaging Index
+
+
+Comment puis-je …?
+==================
+
+Ce sont des réponses rapides ou des liens pour certaines tâches
+courantes.
+
+
+… choisir un nom pour mon projet ?
+----------------------------------
+
+Ce n’est pas un sujet facile, mais voici quelques conseils :
+
+* vérifiez dans le *Python Packaging Index* si le nom est déjà
+  utilisé
+
+* vérifiez sur quelques sites d’hébergement populaires tels que
+  GitHub, BitBucket, etc pour voir s’il y existe déjà un projet avec
+  ce nom
+
+* vérifiez ce qui sort en recherchant sur le web le nom que vous
+  envisagez
+
+* évitez les mots trop communs, plus particulièrement ceux ayant
+  plusieurs significations, car pour vos utilisateurs, cela complique
+  la recherche de votre logiciel
+
+
+… créer et distribuer des extensions binaires ?
+-----------------------------------------------
+
+C’est un sujet particulièrement compliqué, avec pléthore alternatives
+disponibles dont le choix dépend de votre objectif exact. Voir le
+*Python Packaging User Guide* pour plus d’informations et de
+recommandations.
+
+Voir aussi: Python Packaging User Guide: Binary Extensions

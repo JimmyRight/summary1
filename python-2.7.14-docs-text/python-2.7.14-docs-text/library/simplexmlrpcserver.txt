@@ -1,0 +1,274 @@
+"SimpleXMLRPCServer" — 基本的なXML-RPCサーバー
+**********************************************
+
+注釈: "SimpleXMLRPCServer" モジュールは、Python 3では
+  "xmlrpc.server" モジ ュールに統合されました。 *2to3* ツールが自動的
+  にソースコード内の importを修正します。
+
+バージョン 2.2 で追加.
+
+**Source code:** Lib/SimpleXMLRPCServer.py
+
+======================================================================
+
+The "SimpleXMLRPCServer" module provides a basic server framework for
+XML-RPC servers written in Python.  Servers can either be free
+standing, using "SimpleXMLRPCServer", or embedded in a CGI
+environment, using "CGIXMLRPCRequestHandler".
+
+class SimpleXMLRPCServer.SimpleXMLRPCServer(addr[, requestHandler[, logRequests[, allow_none[, encoding[, bind_and_activate]]]])
+
+   新しくサーバーインスタンスを作成します。このクラスはXML-RPCプロトコ
+   ルで呼ばれる関数の登録のためのメソッドを提供します。引数
+   *requestHandler* には、リクエストハンドラーインスタンスのファクトリ
+   ーを設定します。デフォルトは "SimpleXMLRPCRequestHandler" です。引
+   数 *addr* と *requestHandler* は "SocketServer.TCPServer" のコンス
+   トラクターに引き渡されます。もし引数 *logRequests* が真(true)であれ
+   ば、(それがデフォルトですが、)リクエストはログに記録されます。偽
+   (false)である場合にはログは記録されません。引数 *allow_none* と
+   *encoding* は "xmlrpclib" に引き継がれ、サーバーから返されるXML-RPC
+   レスポンスを制御します。 *bind_and_activate* 引数は、コンストラクタ
+   の呼び出し直後に "server_bind()" と "server_activate()" を呼ぶかど
+   うかを指定します。デフォルトでは "True" です。この引数に "False" を
+   指定することで、バインドする前に、 *allow_reuse_address* クラス変数
+   を操作することができます。 (訳注: 同じ名前のインスタンス変数を追加
+   することで、クラス変数をオーバーライドすることができます。)
+
+   バージョン 2.5 で変更: 引数 *allow_none* と *encoding* が追加されま
+   した.
+
+   バージョン 2.6 で変更: *bind_and_activate* 引数が追加されました。
+
+class SimpleXMLRPCServer.CGIXMLRPCRequestHandler([allow_none[, encoding]])
+
+   CGI 環境における XML-RPC リクエストハンドラーを、新たに作成します。
+   引数 *allow_none* と *encoding* は "xmlrpclib" に引き継がれ、サーバ
+   ーから返されるXML-RPCレスポンスを制御します。
+
+   バージョン 2.3 で追加.
+
+   バージョン 2.5 で変更: 引数 *allow_none* と *encoding* が追加されま
+   した.
+
+class SimpleXMLRPCServer.SimpleXMLRPCRequestHandler
+
+   Create a new request handler instance.  This request handler
+   supports "POST" requests and modifies logging so that the
+   *logRequests* parameter to the "SimpleXMLRPCServer" constructor
+   parameter is honored.
+
+
+SimpleXMLRPCServer オブジェクト
+===============================
+
+The "SimpleXMLRPCServer" class is based on "SocketServer.TCPServer"
+and provides a means of creating simple, stand alone XML-RPC servers.
+
+SimpleXMLRPCServer.register_function(function[, name])
+
+   XML- RPCリクエストに応じる関数を登録します。引数 *name* が与えられ
+   ている場合はその値が、関数 *function* に関連付けられます。これが与
+   えられない場合は "function.__name__" の値が用いられます。引数
+   *name* は通常の文字列でもユニコード文字列でも良く、Pythonで識別子と
+   して正しくない文字(」 . 「ピリオドなど )を含んでいても。
+
+SimpleXMLRPCServer.register_instance(instance[, allow_dotted_names])
+
+   オブジェクトを登録し、そのオブジェクトの "register_function()" で登
+   録されていないメソッドを公開します。もし、 *instance* がメソッド
+   "_dispatch()" を定義していれば、 "_dispatch()" が、リクエストされた
+   メソッド名とパラメータの組を引数として呼び出されます。そして、
+   "_dispatch()" の返り値が結果としてクライアントに返されます。そのAPI
+   は "def _dispatch(self, method, params)" (注意: *params* は可変引数
+   リストではありません)です。仕事をするために下位の関数を呼ぶ時には、
+   その関数は "func(*params)" のように呼ばれます。 "_dispatch()" の返
+   り値はクライアントへ結果として返されます。もし、 *instance* がメソ
+   ッド "_dispatch()" を定義していなければ、リクエストされたメソッド名
+   がそのインスタンスに定義されているメソッド名から探されます。
+
+   もしオプション引数 *allow_dotted_names* が真(true)で、インスタンス
+   がメソッド "_dispatch()" を定義していないとき、リクエストされたメソ
+   ッド名がピリオドを含む場合は、（訳注: 通常のPythonでのピリオドの解
+   釈と同様に）階層的にオブジェクトを探索します。そして、そこで見つか
+   ったオブジェクトをリクエストから渡された引数で呼び出し、その返り値
+   をクライアントに返します。
+
+   警告: *allow_dotted_names* オプションを有効にすると、侵入者にあな
+     たのモ ジュールのグローバル変数にアクセスすることを許し、あなたの
+     コンピ ュータで任意のコードを実行することを許すことがあります。こ
+     のオプ ションは安全な閉じたネットワークでのみお使い下さい。
+
+   バージョン 2.3.5, で変更: 2.4.1 *allow_dotted_names* はセキュリティ
+   ホールを塞ぐために追加されました。以前のバージョンは安全ではありま
+   せん.
+
+SimpleXMLRPCServer.register_introspection_functions()
+
+   XML-RPC のイントロスペクション関数、 "system.listMethods" 、
+   "system.methodHelp" 、 "system.methodSignature" を登録します。
+
+   バージョン 2.3 で追加.
+
+SimpleXMLRPCServer.register_multicall_functions()
+
+   XML-RPC における複数の要求を処理する関数 system.multicall を登録し
+   ます。
+
+SimpleXMLRPCRequestHandler.rpc_paths
+
+   この属性値はXML-RPCリクエストを受け付けるURLの正当なパス部分をリス
+   トするタプルでなければなりません。これ以外のパスへのリクエストは404
+   「そのようなページはありません」 HTTPエラーになります。このタプルが
+   空の場合は全てのパスが正当であると見なされます。デフォルト値は
+   "('/', '/RPC2')" です。
+
+   バージョン 2.5 で追加.
+
+SimpleXMLRPCRequestHandler.encode_threshold
+
+   この属性が "None" でない場合、クライアントが受け付けるのであれば、
+   この値よりも大きいサイズのレスポンスを *gzip* transfer encoding を
+   利用して圧縮されます、デフォルト値は、だいたいTCPの1パケットに収ま
+   るように "1400" です。
+
+   バージョン 2.7 で追加.
+
+
+SimpleXMLRPCServer の例
+-----------------------
+
+サーバーのコード:
+
+   from SimpleXMLRPCServer import SimpleXMLRPCServer
+   from SimpleXMLRPCServer import SimpleXMLRPCRequestHandler
+
+   # Restrict to a particular path.
+   class RequestHandler(SimpleXMLRPCRequestHandler):
+       rpc_paths = ('/RPC2',)
+
+   # Create server
+   server = SimpleXMLRPCServer(("localhost", 8000),
+                               requestHandler=RequestHandler)
+   server.register_introspection_functions()
+
+   # Register pow() function; this will use the value of
+   # pow.__name__ as the name, which is just 'pow'.
+   server.register_function(pow)
+
+   # Register a function under a different name
+   def adder_function(x,y):
+       return x + y
+   server.register_function(adder_function, 'add')
+
+   # Register an instance; all the methods of the instance are
+   # published as XML-RPC methods (in this case, just 'div').
+   class MyFuncs:
+       def div(self, x, y):
+           return x // y
+
+   server.register_instance(MyFuncs())
+
+   # Run the server's main loop
+   server.serve_forever()
+
+以下のクライアントコードは上のサーバーで使えるようになったメソッドを呼
+び出します:
+
+   import xmlrpclib
+
+   s = xmlrpclib.ServerProxy('http://localhost:8000')
+   print s.pow(2,3)  # Returns 2**3 = 8
+   print s.add(2,3)  # Returns 5
+   print s.div(5,2)  # Returns 5//2 = 2
+
+   # Print list of available methods
+   print s.system.listMethods()
+
+The following "SimpleXMLRPCServer" example is included in the module
+*Lib/SimpleXMLRPCServer.py*:
+
+   server = SimpleXMLRPCServer(("localhost", 8000))
+   server.register_function(pow)
+   server.register_function(lambda x,y: x+y, 'add')
+   server.register_multicall_functions()
+   server.serve_forever()
+
+このデモサーバはコマンドラインから起動することができます。
+
+   python -m SimpleXMLRPCServer
+
+上記サーバとお喋りをするクライアントのコード例は *Lib/xmlrpclib.py* に
+含まれています:
+
+   server = ServerProxy("http://localhost:8000")
+   print server
+   multi = MultiCall(server)
+   multi.pow(2, 9)
+   multi.add(5, 1)
+   multi.add(24, 11)
+   try:
+       for response in multi():
+           print response
+   except Error, v:
+       print "ERROR", v
+
+このクライアントは以下コマンドを使って直接起動することも出来ます:
+
+   python -m xmlrpclib
+
+
+CGIXMLRPCRequestHandler
+=======================
+
+"CGIXMLRPCRequestHandler" クラスは、Python の CGI スクリプトに送られた
+XML-RPC リクエストを処理するときに使用できます。
+
+CGIXMLRPCRequestHandler.register_function(function[, name])
+
+   XML-RPC リクエストに応じる関数を登録します。引数 *name* が与えられ
+   ている場合はその値が、関数 *function* に関連付けられます。これが与
+   えられない場合は "function.__name__" の値が用いられます。引数
+   *name* は通常の文字列でもユニコード文字列でも良く、Pythonで識別子と
+   して正しくない文字(」 . 「ピリオドなど )を含んでもかまいません。
+
+CGIXMLRPCRequestHandler.register_instance(instance)
+
+   オブジェクトを登録し、そのオブジェクトの "register_function()" で登
+   録されていないメソッドを公開します。もし、 *instance* がメソッド
+   "_dispatch()" を定義していれば、 "_dispatch()" が、リクエストされた
+   メソッド名とパラメータの組を引数として呼び出されます。そして、
+   "_dispatch()" の返り値が結果としてクライアントに返されます。もし、
+   *instance* がメソッド "_dispatch()" を定義していなければ、リクエス
+   トされたメソッド名がそのインスタンスに定義されているメソッド名から
+   探されます。リクエストされたメソッド名がピリオドを含む場合は、（訳
+   注: 通常のPythonでのピリオドの解釈と同様に）階層的にオブジェクトを
+   探索します。そして、そこで見つかったオブジェクトをリクエストから渡
+   された引数で呼び出し、その返り値をクライアントに返します。
+
+CGIXMLRPCRequestHandler.register_introspection_functions()
+
+   XML-RPC のイントロスペクション関数、 "system.listMethods" 、
+   "system.methodHelp" 、 "system.methodSignature" を登録します。
+
+CGIXMLRPCRequestHandler.register_multicall_functions()
+
+   XML-RPC マルチコール関数 "system.multicall" を登録します。
+
+CGIXMLRPCRequestHandler.handle_request([request_text = None])
+
+   XML-RPC リクエストを処理します。 与えられた場合、 *request_text* は
+   HTTP サーバが提供する POST データでなければなりません。 そうでない
+   場合、標準入力の内容が使われます。
+
+例:
+
+   class MyFuncs:
+       def div(self, x, y): return x // y
+
+
+   handler = CGIXMLRPCRequestHandler()
+   handler.register_function(pow)
+   handler.register_function(lambda x,y: x+y, 'add')
+   handler.register_introspection_functions()
+   handler.register_instance(MyFuncs())
+   handler.handle_request()

@@ -1,0 +1,55 @@
+"uu" — Encode et decode les fichiers uuencode
+*********************************************
+
+**Code source :** Lib/uu.py
+
+======================================================================
+
+Ce module encode et décode les fichiers au format uuencode, permettant
+à des données binaires d’être transférées lors de connexion ASCII.
+Pour tous les arguments où un fichier est attendu, les fonctions
+acceptent un « objet fichier-compatible ». Pour des raisons de
+compatibilité avec les anciennes versions de Python, une chaîne de
+caractère contenant un chemin est aussi acceptée, et le fichier
+correspondant sera ouvert en lecture et écriture; le chemin "'-'" est
+considéré comme l’entrée ou la sortie standard. Cependant cette
+interface est dépréciée; il est mieux que l’appelant ouvre le fichier
+soi-même, en s’assurant que, lorsque c’est nécessaire, le mode
+d’ouverture soit "'rb'" ou "'wb'" sur Windows.
+
+Ce code a été contribué par Lance Ellinghouse, et modifié par Jack
+Jansen.
+
+Le module "uu" définit les fonctions suivantes :
+
+uu.encode(in_file, out_file[, name[, mode]])
+
+   Uuencode file *in_file* into file *out_file*.  The uuencoded file
+   will have the header specifying *name* and *mode* as the defaults
+   for the results of decoding the file. The default defaults are
+   taken from *in_file*, or "'-'" and "0666" respectively.
+
+uu.decode(in_file[, out_file[, mode[, quiet]]])
+
+   This call decodes uuencoded file *in_file* placing the result on
+   file *out_file*. If *out_file* is a pathname, *mode* is used to set
+   the permission bits if the file must be created. Defaults for
+   *out_file* and *mode* are taken from the uuencode header.  However,
+   if the file specified in the header already exists, a "uu.Error" is
+   raised.
+
+   "decode()" may print a warning to standard error if the input was
+   produced by an incorrect uuencoder and Python could recover from
+   that error.  Setting *quiet* to a true value silences this warning.
+
+exception uu.Error
+
+   Subclass of "Exception", this can be raised by "uu.decode()" under
+   various situations, such as described above, but also including a
+   badly formatted header, or truncated input file.
+
+Voir aussi:
+
+  Module "binascii"
+     Module secondaire contenant les conversions ASCII-à-binaire et
+     binaire-à-ASCII.

@@ -1,0 +1,410 @@
+Services génériques du système d’exploitation
+*********************************************
+
+Les modules documentés dans ce chapitre fournissent des interfaces
+vers des fonctionalités communes à la grande majorité des systèmes
+d’explotation, telles que les fichiers et l’horloge.  Bien que ces
+interfaces soient classiquement calquées sur les interfaces Unix ou C,
+elles sont aussi disponnibles sur la pluspart des autres sytèmes. En
+voici un aperçu.
+
+* "os" — Diverses interfaces pour le système d’exploitation
+
+  * Paramètres de proccessus
+
+  * Création de Fichiers Objets
+
+  * Opérations sur les Descripteurs de Fichiers
+
+    * "open()" flag constants
+
+  * Fichiers et Répertoires
+
+  * Gestion des processus
+
+  * Diverses informations sur le système
+
+  * Miscellaneous Functions
+
+* "io" — Core tools for working with streams
+
+  * Module Interface
+
+  * I/O Base Classes
+
+  * Raw File I/O
+
+  * Buffered Streams
+
+  * Text I/O
+
+  * Advanced topics
+
+    * Performance
+
+      * Binary I/O
+
+      * Text I/O
+
+    * Threads
+
+    * Reentrancy
+
+* "time" — Time access and conversions
+
+* "argparse" – Parseur d’arguments, d’options, et de sous-commandes
+  de ligne de commande
+
+  * Exemple
+
+    * Créer un parseur
+
+    * Ajouter des arguments
+
+    * Analyse des arguments
+
+  * Objets ArgumentParser
+
+    * prog
+
+    * usage
+
+    * description
+
+    * epilog
+
+    * parents
+
+    * formatter_class
+
+    * préfixe_chars
+
+    * fromfile_préfixe_chars
+
+    * argument_default
+
+    * conflict_handler
+
+    * add_help
+
+  * La méthode add_argument()
+
+    * nom ou option
+
+    * action
+
+    * nargs
+
+    * const
+
+    * default
+
+    * type
+
+    * choices
+
+    * required
+
+    * help
+
+    * metavar
+
+    * dest
+
+    * Classes Action
+
+  * La méthode parse_args()
+
+    * Option value syntax
+
+    * Arguments invalides
+
+    * Arguments contenant "-"
+
+    * Arguments abrégés (Part comparaison de leur préfixes)
+
+    * Au delà de "sys.argv"
+
+    * L’objet Namespace
+
+  * Autres outils
+
+    * Sous commandes
+
+    * Objets "FileType"
+
+    * Groupes d’arguments
+
+    * Exclusion mutuelle
+
+    * Valeurs par défaut du parseur
+
+    * Afficher l’aide
+
+    * *Parsing* partiel
+
+    * Personnaliser le *parsing* de fichiers
+
+    * Exiting methods
+
+  * Mettre à jour du code "optparse"
+
+* "optparse" — Parser for command line options
+
+  * Background
+
+    * Terminology
+
+    * What are options for?
+
+    * What are positional arguments for?
+
+  * Tutoriel
+
+    * Understanding option actions
+
+    * The store action
+
+    * Handling boolean (flag) options
+
+    * Other actions
+
+    * Valeurs par défaut
+
+    * Generating help
+
+      * Grouping Options
+
+    * Printing a version string
+
+    * How "optparse" handles errors
+
+    * Putting it all together
+
+  * Reference Guide
+
+    * Creating the parser
+
+    * Populating the parser
+
+    * Defining options
+
+    * Option attributes
+
+    * Standard option actions
+
+    * Standard option types
+
+    * Analyse des arguments
+
+    * Querying and manipulating your option parser
+
+    * Conflicts between options
+
+    * Cleanup
+
+    * Other methods
+
+  * Option Callbacks
+
+    * Defining a callback option
+
+    * How callbacks are called
+
+    * Raising errors in a callback
+
+    * Callback example 1: trivial callback
+
+    * Callback example 2: check option order
+
+    * Callback example 3: check option order (generalized)
+
+    * Callback example 4: check arbitrary condition
+
+    * Callback example 5: fixed arguments
+
+    * Callback example 6: variable arguments
+
+  * Extending "optparse"
+
+    * Adding new types
+
+    * Adding new actions
+
+* "getopt" — C-style parser for command line options
+
+* "logging" — Logging facility for Python
+
+  * Logger Objects
+
+  * Logging Levels
+
+  * Handler Objects
+
+  * Formatter Objects
+
+  * Filter Objects
+
+  * LogRecord Objects
+
+  * LogRecord attributes
+
+  * LoggerAdapter Objects
+
+  * Thread Safety
+
+  * Module-Level Functions
+
+  * Integration with the warnings module
+
+* "logging.config" — Logging configuration
+
+  * Configuration functions
+
+  * Configuration dictionary schema
+
+    * Dictionary Schema Details
+
+    * Incremental Configuration
+
+    * Object connections
+
+    * User-defined objects
+
+    * Access to external objects
+
+    * Access to internal objects
+
+    * Import resolution and custom importers
+
+  * Configuration file format
+
+* "logging.handlers" — Logging handlers
+
+  * StreamHandler
+
+  * FileHandler
+
+  * NullHandler
+
+  * WatchedFileHandler
+
+  * RotatingFileHandler
+
+  * TimedRotatingFileHandler
+
+  * SocketHandler
+
+  * DatagramHandler
+
+  * SysLogHandler
+
+  * NTEventLogHandler
+
+  * SMTPHandler
+
+  * MemoryHandler
+
+  * HTTPHandler
+
+* Saisie de mot de passe portable
+
+* "curses" — Terminal handling for character-cell displays
+
+  * Fonctions
+
+  * Window Objects
+
+  * Constantes
+
+* "curses.textpad" — Text input widget for curses programs
+
+  * Textbox objects
+
+* "curses.ascii" — Utilities for ASCII characters
+
+* "curses.panel" — A panel stack extension for curses
+
+  * Fonctions
+
+  * Panel Objects
+
+* "platform" —  Access to underlying platform’s identifying data
+
+  * Cross Platform
+
+  * Java Platform
+
+  * Windows Platform
+
+    * Win95/98 specific
+
+  * Mac OS Platform
+
+  * Unix Platforms
+
+* "errno" — Standard errno system symbols
+
+* "ctypes" — A foreign function library for Python
+
+  * ctypes tutorial
+
+    * Loading dynamic link libraries
+
+    * Accessing functions from loaded dlls
+
+    * Calling functions
+
+    * Fundamental data types
+
+    * Calling functions, continued
+
+    * Calling functions with your own custom data types
+
+    * Specifying the required argument types (function prototypes)
+
+    * Return types
+
+    * Passing pointers (or: passing parameters by reference)
+
+    * Structures and unions
+
+    * Structure/union alignment and byte order
+
+    * Bit fields in structures and unions
+
+    * Arrays
+
+    * Pointers
+
+    * Type conversions
+
+    * Incomplete Types
+
+    * Callback functions
+
+    * Accessing values exported from dlls
+
+    * Surprises
+
+    * Variable-sized data types
+
+  * ctypes reference
+
+    * Finding shared libraries
+
+    * Loading shared libraries
+
+    * Foreign functions
+
+    * Function prototypes
+
+    * Utility functions
+
+    * Types de données
+
+    * Fundamental data types
+
+    * Structured data types
+
+    * Arrays and pointers

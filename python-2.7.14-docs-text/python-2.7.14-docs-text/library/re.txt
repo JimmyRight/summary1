@@ -1,0 +1,1320 @@
+"re" — Opérations à base d’expressions rationnelles
+***************************************************
+
+This module provides regular expression matching operations similar to
+those found in Perl. Both patterns and strings to be searched can be
+Unicode strings as well as 8-bit strings.
+
+Les expressions rationnelles utilisent le caractère *backslash*
+("'\'") pour indiquer des formes spéciales ou permettre d’utiliser des
+caractères spéciaux sans en invoquer le sens.  Cela entre en conflit
+avec l’utilisation en Python du même caractère pour la même raison
+dans les chaînes littérales ; par exemple, pour rechercher un
+*backslash* littéral il faudrait écrire "'\\\\'" comme motif, parce
+que l’expression rationnelle devrait être "\\", et chaque *backslash*
+exprimé par "\\" au sein des chaînes littérales Python.
+
+La solution est d’utiliser la notation des chaînes brutes en Python
+pour les expressions rationnelles ; Les *backslashes* ne provoquent
+aucun traitement spécifique dans les chaînes littérales préfixées par
+"'r'".  Ainsi, "r"\n"" est une chaîne de deux caractères contenant
+"'\'" et "'n'", tandis que ""\n"" est une chaîne contenant un unique
+caractère : un saut de ligne. Généralement, les motifs seront exprimés
+en Python à l’aide de chaînes brutes.
+
+It is important to note that most regular expression operations are
+available as module-level functions and "RegexObject" methods.  The
+functions are shortcuts that don’t require you to compile a regex
+object first, but miss some fine-tuning parameters.
+
+Voir aussi: Le module tiers regex, dont l’interface est compatible
+  avec le module "re" de la bibliothèque standard, mais offre des
+  fonctionnalités additionnelles et un meilleur support de l’Unicode.
+
+
+Syntaxe des Expressions Rationnelles
+====================================
+
+Une expression rationnelle (*regular expression* ou *RE*) spécifie un
+ensemble de chaînes de caractères qui lui correspondent ; les
+fonctions de ce module vous permettent de vérifier si une chaîne
+particulière correspond à une expression rationnelle donnée (ou si un
+expression rationnelle donnée correspond à une chaîne particulière, ce
+qui revient à la même chose).
+
+Les expressions rationnelles peuvent être concaténées pour former de
+nouvelles expressions : si *A* et *B* sont deux expressions
+rationnelles, alors *AB* est aussi une expression rationnelle. En
+général, si une chaîne *p* valide *A* et qu’une autre chaîne *q*
+valide *B*, la chaîne *pq* validera AB. Cela est vrai tant que *A* et
+*B* ne contiennent pas d’opérations de précédence ; de conditions
+liées entre *A* et *B* ; ou de références vers des groupes numérotés.
+Ainsi, des expressions complexes peuvent facilement être construites
+depuis de plus simples expressions primitives comme celles décrites
+ici.  Pour plus de détails sur la théorie et l’implémentation des
+expressions rationnelles, consultez le livre de Frield référencé plus
+tôt, ou à peu près n’importe quel livre dédié à la construction de
+compilateurs.
+
+Une brève explication sur le format des expressions rationnelles suit.
+Pour de plus amples informations, et une meilleure présentation,
+référez-vous au Regular Expression HOWTO.
+
+Les expressions rationnelles peuvent contenir à la fois des caractères
+spéciaux et ordinaires. Les plus ordinaires, comme "'A'", "'a'" ou
+"'0'" sont les expressions rationnelles les plus simples : elles
+correspondent simplement à elles-mêmes.  Vous pouvez concaténer deux
+caractères ordinaires, donc "last" correspond à la chaîne "'last'".
+(Dans la suite de cette section, nous écrirons les expressions
+rationnelles dans "ce style spécifique", généralement sans guillemets,
+et les chaînes à tester "'entourées de simples guillemets'".)
+
+Some characters, like "'|'" or "'('", are special. Special characters
+either stand for classes of ordinary characters, or affect how the
+regular expressions around them are interpreted. Regular expression
+pattern strings may not contain null bytes, but can specify the null
+byte using the "\number" notation, e.g., "'\x00'".
+
+Les caractères de répétition ("*", "+", "?", "{m,n}", etc.) ne peuvent
+être directement imbriqués. Cela empêche l’ambiguïté avec le suffixe
+modificateur non gourmand "?", et avec les autres modificateurs dans
+d’autres implémentations. Pour appliquer une seconde répétition à une
+première, des parenthèses peuvent être utilisées. Par exemple,
+l’expression "(?:a{6})*" valide toutes les chaînes composées d’un
+nombre de caractères "'a'" multiple de six.
+
+Les caractères spéciaux sont :
+
+"'.'"
+   (Point.)  Dans le mode par défaut, il valide tout caractère à
+   l’exception du saut de ligne.  Si l’option "DOTALL" a été
+   spécifiée, il valide tout caractère, saut de ligne compris.
+
+"'^'"
+   (Accent circonflexe.)  Valide le début d’une chaîne de caractères,
+   ainsi que ce qui suit chaque saut de ligne en mode "MULTILINE".
+
+"'$'"
+   Valide la fin d’une chaîne de caractères, ou juste avant le saut de
+   ligne à la fin de la chaîne, ainsi qu’avant chaque saut de ligne en
+   mode "MULTILINE".  "foo" valide à la fois “foo” et “foobar”, tandis
+   que l’expression rationnelle "foo$" ne correspond qu’à “foo”.  Plus
+   intéressant, chercher "foo.$" dans "'foo1\nfoo2\n'" trouve
+   normalement “foo2”, mais “foo1” en mode "MULTILINE" ; chercher un
+   simple "$" dans "'foo\n'" trouvera deux correspondances (vides) :
+   une juste avant le saut de ligne, et une à la fin de la chaîne.
+
+"'*'"
+   Implique à l’expression rationnelle résultante de valider 0
+   répétition ou plus de l’expression qui précède, avec autant de
+   répétitions que possible.  "ab*" validera “a”, “ab” ou “a” suivi de
+   n’importe quel nombre de “b”.
+
+"'+'"
+   Implique à l’expression rationnelle résultante de valider une
+   répétition ou plus de l’expression qui précède. "ab+" validera “a”
+   suivi de n’importe quel nombre non nul de “b” ; ça ne validera pas
+   la chaîne “a”.
+
+"'?'"
+   Implique à l’expression rationnelle résultante de valider 0 ou 1
+   répétition de l’expression qui précède. "ab?" correspondra à la
+   fois à “a” et “ab”.
+
+"*?", "+?", "??"
+   Les qualificateurs "'*'", "'+'" et "'?'" sont tous *greedy*
+   (gourmands) ; ils valident autant de texte que possible.  Parfois
+   ce comportement n’est pas désiré ; si l’expression rationnelle
+   "<.*>" est testée avec la chaîne "<a> b <c>", cela correspondra à
+   la chaîne entière, et non juste à "<a>".  Ajouter "?" derrière le
+   qualificateur lui fait réaliser l’opération de façon *non-greedy*
+   (ou *minimal*) ; le *moins* de caractères possibles seront validés.
+   Utiliser l’expression rationnelle "<.*?>" validera uniquement
+   "<a>".
+
+"{m}"
+   Spécifie qu’exactement *m* copies de l’expression rationnelle qui
+   précède devront être validées ; un nombre plus faible de
+   correspondances empêche l’expression entière de correspondre.  Par
+   exemple, "a{6}" correspondra exactement à six caractères "'a'",
+   mais pas à cinq.
+
+"{m,n}"
+   Implique à l’expression rationnelle résultante de valider entre *m*
+   et *n* répétitions de l’expression qui précède, cherchant à en
+   valider le plus possible.  Par exemple, "a{3,5}" validera entre 3
+   et 5 caractères "'a'".  Omettre *m* revient à spécifier 0 comme
+   borne inférieure, et omettre *n* à avoir une borne supérieure
+   infinie.  Par exemple, "a{4,}b" correspondra à "aaaab" ou à un
+   millier de caractères "'a'" suivis d’un "b", mais pas à "aaab". La
+   virgule ne doit pas être omise, auquel cas le modificateur serait
+   confondu avec la forme décrite précédemment.
+
+"{m,n}?"
+   Implique à l’expression rationnelle résultante de valider entre *m*
+   et *n* répétitions de l’expression qui précède, cherchant à en
+   valider le moins possible.  Il s’agit de la version non gourmande
+   du précédent qualificateur.  Par exemple, dans la chaîne de 6
+   caractères "'aaaaaa'", "a{3,5}" trouvera 5 caractères "'a'", alors
+   que "a{3,5}?" n’en trouvera que 3.
+
+"'\'"
+   Échappe à la fois les caractères spéciaux (permettant d’utiliser
+   des caractères comme "'*'", "'?'" et autres), ou signale une
+   séquence spéciale ; les séquences spéciales sont décrites ci-
+   dessous.
+
+   Si vous n’utilisez pas de chaînes brutes pour exprimer le motif,
+   souvenez-vous que Python utilise aussi le *backslash* comme une
+   séquence d’échappement dans les chaînes littérales ; si la séquence
+   d’échappement n’est pas reconnue par le parseur Python, le
+   *backslash* et les caractères qui le suivent sont inclus dans la
+   chaîne renvoyée.  Cependant, si Python avait reconnu la séquence,
+   le *backslash* aurait dû être doublé.  C’est assez compliqué et
+   difficile à comprendre, c’est pourquoi il est hautement recommandé
+   d’utiliser des chaînes brutes pour tout sauf les expressions les
+   plus simples.
+
+"[]"
+   Utilisé pour indiquer un ensemble de caractères.  Dans un ensemble
+   :
+
+   * Les caractères peuvent être listés individuellement, e.g.
+     "[amk]" correspondra à "'a'", "'m'" ou "'k'".
+
+   * Des intervalles de caractères peuvent être indiqués en donnant
+     deux caractères et les séparant par un "'-'", par exemple "[a-z]"
+     correspondra à toute lettre minuscule *ASCII*, "[0-5][0-9]" à
+     tous nombres de deux chiffres entre "00` et ``59", et "[0-9A-
+     Fa-f]" correspondra à n’importe quel chiffre hexadécimal.  Si
+     "'-'" est échappé ("[a\-z]") ou s’il est placé comme premier ou
+     dernier caractère (e.g. "[a-]"), il correspondra à un "'-'"
+     littéral.
+
+   * Les caractères spéciaux perdent leur sens à l’intérieur des
+     ensembles.  Par exemple, "[(+*)]" validera chacun des caractères
+     littéraux "'('", "'+'", "'*'" ou "')'".
+
+   * Character classes such as "\w" or "\S" (defined below) are also
+     accepted inside a set, although the characters they match depends
+     on whether "LOCALE" or  "UNICODE" mode is in force.
+
+   * Les caractères qui ne sont pas dans un intervalle peuvent être
+     trouvés avec l’ensemble complémentaire (*complementing*).  Si le
+     premier caractère de l’ensemble est "'^'", tous les caractères
+     qui *ne sont pas* dans l’ensemble seront validés.  Par exemple,
+     "[^5]" correspondra à tout caractère autre que "'5'", et "[^^]"
+     validera n’importe quel caractère excepté "'^'".  "^" n’a pas de
+     sens particulier s’il n’est pas le premier caractère de
+     l’ensemble.
+
+   * Pour insérer un "']'" littéral dans un ensemble, il faut le
+     précéder d’un *backslash* ou le placer au début de l’ensemble.
+     Par exemple, "[()[\]{}]" et "[]()[{}]" vont tous deux
+     correspondre à une parenthèse, un crochet ou une accolade.
+
+"'|'"
+   "A|B", où A et B peuvent être deux expressions rationnelles
+   arbitraires, crée une expression rationnelle qui validera à la fois
+   A et B.  Un nombre arbitraire d’expressions peuvent être séparées
+   de cette façon par des "'|'".  Cela peut aussi être utilisé au sein
+   de groupes (voir ci-dessous).  Quand une chaîne cible est analysée,
+   les expressions séparées par "'|'" sont essayées de la gauche vers
+   la droite. Quand un motif correspond complètement, cette branche
+   est acceptée. Cela signifie qu’une fois que "A" correspond, "B" ne
+   sera pas testée plus loin, même si elle pourrait provoquer une plus
+   ample correspondance.  En d’autres termes, l’opérateur "'|'" n’est
+   jamais gourmand.  Pour valider un "'|'" littéral, utilisez "\|", ou
+   enveloppez-le dans une classe de caractères, comme "[|]".
+
+"(...)"
+   Valide n’importe quelle expression rationnelle comprise entre les
+   parenthèses, et indique le début et la fin d’un groupe ; le contenu
+   d’un groupe peut être récupéré après qu’une analyse a été
+   effectuée, et peut être réutilisé plus loin dans la chaîne avec une
+   séquence spéciale "\number", décrite ci-dessous.  Pour écrire des
+   "'('" ou "')'" littéraux, utilisez "\(" ou "\)", ou enveloppez-les
+   dans une classe de caractères : "[(] [)]".
+
+"(?...)"
+   Il s’agit d’une notation pour les extensions (un "'?'" suivant une
+   "'('" n’a pas de sens autrement).  Le premier caractère après le
+   "'?'" détermine quel sens donner à l’expression. Les extensions ne
+   créent généralement pas de nouveaux groupes ; "(?P<name>...)" est
+   la seule exception à la règle. Retrouvez ci-dessous la liste des
+   extensions actuellement supportées.
+
+"(?iLmsux)"
+   (One or more letters from the set "'i'", "'L'", "'m'", "'s'",
+   "'u'", "'x'".)  The group matches the empty string; the letters set
+   the corresponding flags: "re.I" (ignore case), "re.L" (locale
+   dependent), "re.M" (multi-line), "re.S" (dot matches all), "re.U"
+   (Unicode dependent), and "re.X" (verbose), for the entire regular
+   expression. (The flags are described in Contenu du module.) This is
+   useful if you wish to include the flags as part of the regular
+   expression, instead of passing a *flag* argument to the
+   "re.compile()" function.
+
+   Note that the "(?x)" flag changes how the expression is parsed. It
+   should be used first in the expression string, or after one or more
+   whitespace characters. If there are non-whitespace characters
+   before the flag, the results are undefined.
+
+"(?:...)"
+   Une version non capturante des parenthèses habituelles.  Valide
+   n’importe quelle expression rationnelle à l’intérieur des
+   parenthèses, mais la sous-chaîne correspondant au groupe *ne peut
+   pas* être récupérée après l’analyse ou être référencée plus loin
+   dans le motif.
+
+"(?P<name>...)"
+   Similaires aux parenthèses habituelles, mais la sous-chaîne validée
+   par le groupe est accessible via le nom *name* du groupe
+   symbolique.  Les noms de groupes doivent être des identifiants
+   Python valides, et chaque nom de groupe ne doit être défini qu’une
+   seule fois dans une expression rationnelle.  Un groupe symbolique
+   est aussi un groupe numéroté, de la même manière que si le groupe
+   n’était pas nommé.
+
+   Les groupes nommés peuvent être référencés dans trois contextes.
+   Si le motif est "(?P<quote>['"]).*?(?P=quote)" (i.e. correspondant
+   à une chaîne entourée de guillemets simples ou doubles).
+
+   +-----------------------------------------+------------------------------------+
+   | Contexte de référence au groupe « quote | Manières de le référencer          |
+   | »                                       |                                    |
+   +=========================================+====================================+
+   | lui-même dans le même motif             | * "(?P=quote)" (comme vu)  * "\1"  |
+   +-----------------------------------------+------------------------------------+
+   | en analysant l’objet résultat "m"       | * "m.group('quote')"  *            |
+   |                                         | "m.end('quote')" (etc.)            |
+   +-----------------------------------------+------------------------------------+
+   | dans une chaîne passée à l’argument     | * "\g<quote>"  * "\g<1>"  * "\1"   |
+   | "repl" de "re.sub()"                    |                                    |
+   +-----------------------------------------+------------------------------------+
+
+"(?P=name)"
+   Une référence arrière à un groupe nommé ; elle correspond à
+   n’importe quel texte validé plus tôt par le groupe nommé *name*.
+
+"(?#...)"
+   Un commentaire ; le contenu des parenthèses est simplement ignoré.
+
+"(?=...)"
+   Valide si "..." valide la suite, mais ne consomme rien de la
+   chaîne.  On appelle cela une assertion *lookahead*.  Par exemple,
+   "Isaac (?=Asimov)" correspondra à la chaîne "'Isaac'" seulement si
+   elle est suivie par "'Asimov'".
+
+"(?!...)"
+   Valide si "..." ne valide pas la suite.  C’est une assertion
+   *lookahead* négative. Par exemple, "Isaac (?!Asimov)" correspondra
+   à la chaîne "'Isaac'" seulement si elle *n’est pas* suivie par
+   "'Asimov'".
+
+"(?<=...)"
+   Matches if the current position in the string is preceded by a
+   match for "..." that ends at the current position.  This is called
+   a *positive lookbehind assertion*. "(?<=abc)def" will find a match
+   in "abcdef", since the lookbehind will back up 3 characters and
+   check if the contained pattern matches. The contained pattern must
+   only match strings of some fixed length, meaning that "abc" or
+   "a|b" are allowed, but "a*" and "a{3,4}" are not.  Group references
+   are not supported even if they match strings of some fixed length.
+   Note that patterns which start with positive lookbehind assertions
+   will not match at the beginning of the string being searched; you
+   will most likely want to use the "search()" function rather than
+   the "match()" function:
+
+   >>> import re
+   >>> m = re.search('(?<=abc)def', 'abcdef')
+   >>> m.group(0)
+   'def'
+
+   Cet exemple recherche un mot suivi d’un trait d’union :
+
+   >>> m = re.search('(?<=-)\w+', 'spam-egg')
+   >>> m.group(0)
+   'egg'
+
+"(?<!...)"
+   Matches if the current position in the string is not preceded by a
+   match for "...".  This is called a *negative lookbehind assertion*.
+   Similar to positive lookbehind assertions, the contained pattern
+   must only match strings of some fixed length and shouldn’t contain
+   group references. Patterns which start with negative lookbehind
+   assertions may match at the beginning of the string being searched.
+
+"(?(id/name)yes-pattern|no-pattern)"
+   Will try to match with "yes-pattern" if the group with given *id*
+   or *name* exists, and with "no-pattern" if it doesn’t. "no-pattern"
+   is optional and can be omitted. For example,
+   "(<)?(\w+@\w+(?:\.\w+)+)(?(1)>)" is a poor email matching pattern,
+   which will match with "'<user@host.com>'" as well as
+   "'user@host.com'", but not with "'<user@host.com'".
+
+   Nouveau dans la version 2.4.
+
+The special sequences consist of "'\'" and a character from the list
+below. If the ordinary character is not on the list, then the
+resulting RE will match the second character.  For example, "\$"
+matches the character "'$'".
+
+"\number"
+   Correspond au contenu du groupe du même nombre. Les groupes sont
+   numérotés à partir de 1.  Par exemple, "(.+) \1" correspond à "'the
+   the'" ou "'55 55'", mais pas à "'thethe'" (notez l’espace après le
+   groupe).  Cette séquence spéciale ne peut être utilisée que pour
+   faire référence aux 99 premiers groupes.  Si le premier chiffre de
+   *number* est 0, ou si *number* est un nombre octal de 3 chiffres,
+   il ne sera pas interprété comme une référence à un groupe, mais
+   comme le caractère à la valeur octale *number*. À l’intérieur des
+   "'['" et "']'" d’une classe de caractères, tous les échappements
+   numériques sont traités comme des caractères.
+
+"\A"
+   Correspond uniquement au début d’une chaîne de caractères.
+
+"\b"
+   Matches the empty string, but only at the beginning or end of a
+   word.  A word is defined as a sequence of alphanumeric or
+   underscore characters, so the end of a word is indicated by
+   whitespace or a non-alphanumeric, non-underscore character. Note
+   that formally, "\b" is defined as the boundary between a "\w" and a
+   "\W" character (or vice versa), or between "\w" and the
+   beginning/end of the string, so the precise set of characters
+   deemed to be alphanumeric depends on the values of the "UNICODE"
+   and "LOCALE" flags. For example, "r'\bfoo\b'" matches "'foo'",
+   "'foo.'", "'(foo)'", "'bar foo baz'" but not "'foobar'" or
+   "'foo3'". Inside a character range, "\b" represents the backspace
+   character, for compatibility with Python’s string literals.
+
+"\B"
+   Matches the empty string, but only when it is *not* at the
+   beginning or end of a word.  This means that "r'py\B'" matches
+   "'python'", "'py3'", "'py2'", but not "'py'", "'py.'", or "'py!'".
+   "\B" is just the opposite of "\b", so is also subject to the
+   settings of "LOCALE" and "UNICODE".
+
+"\d"
+   When the "UNICODE" flag is not specified, matches any decimal
+   digit; this is equivalent to the set "[0-9]".  With "UNICODE", it
+   will match whatever is classified as a decimal digit in the Unicode
+   character properties database.
+
+"\D"
+   When the "UNICODE" flag is not specified, matches any non-digit
+   character; this is equivalent to the set  "[^0-9]".  With
+   "UNICODE", it will match  anything other than character marked as
+   digits in the Unicode character  properties database.
+
+"\s"
+   When the "UNICODE" flag is not specified, it matches any whitespace
+   character, this is equivalent to the set "[ \t\n\r\f\v]". The
+   "LOCALE" flag has no extra effect on matching of the space. If
+   "UNICODE" is set, this will match the characters "[ \t\n\r\f\v]"
+   plus whatever is classified as space in the Unicode character
+   properties database.
+
+"\S"
+   When the "UNICODE" flag is not specified, matches any non-
+   whitespace character; this is equivalent to the set "[^
+   \t\n\r\f\v]" The "LOCALE" flag has no extra effect on non-
+   whitespace match.  If "UNICODE" is set, then any character not
+   marked as space in the Unicode character properties database is
+   matched.
+
+"\w"
+   When the "LOCALE" and "UNICODE" flags are not specified, matches
+   any alphanumeric character and the underscore; this is equivalent
+   to the set "[a-zA-Z0-9_]".  With "LOCALE", it will match the set
+   "[0-9_]" plus whatever characters are defined as alphanumeric for
+   the current locale.  If "UNICODE" is set, this will match the
+   characters "[0-9_]" plus whatever is classified as alphanumeric in
+   the Unicode character properties database.
+
+"\W"
+   When the "LOCALE" and "UNICODE" flags are not specified, matches
+   any non-alphanumeric character; this is equivalent to the set
+   "[^a-zA-Z0-9_]". With "LOCALE", it will match any character not in
+   the set "[0-9_]", and not defined as alphanumeric for the current
+   locale. If "UNICODE" is set, this will match anything other than
+   "[0-9_]" plus characters classified as not alphanumeric in the
+   Unicode character properties database.
+
+"\Z"
+   Correspond uniquement à la fin d’une chaîne de caractères.
+
+If both "LOCALE" and "UNICODE" flags are included for a particular
+sequence, then "LOCALE" flag takes effect first followed by the
+"UNICODE".
+
+La plupart des échappements standards supportés par les chaînes
+littérales sont aussi acceptés par le parseur d’expressions
+rationnelles:
+
+   \a      \b      \f      \n
+   \r      \t      \v      \x
+   \\
+
+(Notez que "\b" est utilisé pour représenter les bornes d’un mot, et
+signifie « *backspace* » uniquement à l’intérieur d’une classe de
+caractères.)
+
+Octal escapes are included in a limited form: If the first digit is a
+0, or if there are three octal digits, it is considered an octal
+escape. Otherwise, it is a group reference.  As for string literals,
+octal escapes are always at most three digits in length.
+
+Voir aussi:
+
+  Maîtriser les expression rationnelles
+     Livre sur les expressions rationnelles par Jeffrey Friedl, publié
+     chez OReilly.  La seconde édition de ce livre ne couvre plus du
+     tout Python, mais la première version explique en détails comment
+     écrire de bonnes expressions rationnelles.
+
+
+Contenu du module
+=================
+
+Le module définit plusieurs fonctions, constantes, et une exception.
+Certaines fonctions sont des versions simplifiées des méthodes plus
+complètes des expressions rationnelles compilées.  La plupart des
+applications non triviales utilisent toujours la version compilée.
+
+re.compile(pattern, flags=0)
+
+   Compile a regular expression pattern into a regular expression
+   object, which can be used for matching using its "match()" and
+   "search()" methods, described below.
+
+   Le comportement des expressions peut être modifié en spécifiant une
+   valeur *flags*. Les valeurs sont comprises dans les variables
+   suivantes, et peuvent être combinées avec un *ou* bit-à-bit
+   (opérateur "|").
+
+   La séquence :
+
+      prog = re.compile(pattern)
+      result = prog.match(string)
+
+   est équivalente à :
+
+      result = re.match(pattern, string)
+
+   mais utiliser "re.compile()" et sauvegarder l’expression
+   rationnelle renvoyée pour la réutiliser est plus efficace quand
+   l’expression est amenée à être utilisée plusieurs fois dans un même
+   programme.
+
+   Note: The compiled versions of the most recent patterns passed to
+     "re.match()", "re.search()" or "re.compile()" are cached, so
+     programs that use only a few regular expressions at a time
+     needn’t worry about compiling regular expressions.
+
+re.DEBUG
+
+   Affiche des informations de debug à propos de l’expression
+   compilée.
+
+re.I
+re.IGNORECASE
+
+   Perform case-insensitive matching; expressions like "[A-Z]" will
+   match lowercase letters, too.  This is not affected by the current
+   locale.  To get this effect on non-ASCII Unicode characters such as
+   "ü" and "Ü", add the "UNICODE" flag.
+
+re.L
+re.LOCALE
+
+   Make "\w", "\W", "\b", "\B", "\s" and "\S" dependent on the current
+   locale.
+
+re.M
+re.MULTILINE
+
+   Quand spécifiée, le caractère "'^'" correspond au début d’une
+   chaîne et au début d’une ligne (caractère suivant directement le
+   saut de ligne) ; et le caractère "'$'" correspond à la fin d’une
+   chaîne et à la fin d’une ligne (juste avant le saut de ligne).  Par
+   défaut, "'^'" correspond uniquement au début de la chaîne, et "'$'"
+   uniquement à la fin de la chaîne, ou immédiatement avant le saut de
+   ligne (s’il y a) à la fin de la chaîne.
+
+re.S
+re.DOTALL
+
+   Fait correspondre tous les caractères possibles à "'.'", incluant
+   le saut de ligne ; sans cette option, "'.'" correspondrait à tout
+   caractère à l’exception du saut de ligne.
+
+re.U
+re.UNICODE
+
+   Make the "\w", "\W", "\b", "\B", "\d", "\D", "\s" and "\S"
+   sequences dependent on the Unicode character properties database.
+   Also enables non-ASCII matching for "IGNORECASE".
+
+   Nouveau dans la version 2.0.
+
+re.X
+re.VERBOSE
+
+   Cette option vous autorise à écrire des expressions rationnelles
+   qui présentent mieux et sont plus lisibles en vous permettant de
+   séparer visuellement les sections logiques du motif et d’ajouter
+   des commentaires. Les caractères d’espacement à l’intérieur du
+   motif sont ignorés, sauf à l’intérieur des classes de caractères ou
+   quand précédés d’un *backslash* non échappé. Quand une ligne
+   contient un "#" qui n’est pas dans une classe de caractères ou
+   précédé d’un *backslash* non échappé, tous les caractères depuis le
+   "#" le plus à gauche jusqu’à la fin de la ligne sont ignorés.
+
+   Cela signifie que les deux expressions rationnelles suivantes qui
+   valident un nombre décimal sont fonctionnellement égales :
+
+      a = re.compile(r"""\d +  # the integral part
+                         \.    # the decimal point
+                         \d *  # some fractional digits""", re.X)
+      b = re.compile(r"\d+\.\d*")
+
+re.search(pattern, string, flags=0)
+
+   Scan through *string* looking for the first location where the
+   regular expression *pattern* produces a match, and return a
+   corresponding "MatchObject" instance. Return "None" if no position
+   in the string matches the pattern; note that this is different from
+   finding a zero-length match at some point in the string.
+
+re.match(pattern, string, flags=0)
+
+   If zero or more characters at the beginning of *string* match the
+   regular expression *pattern*, return a corresponding "MatchObject"
+   instance. Return "None" if the string does not match the pattern;
+   note that this is different from a zero-length match.
+
+   Notez que même en mode "MULTILINE", "re.match()" ne validera qu’au
+   début de la chaîne et non au début de chaque ligne.
+
+   Si vous voulez trouver une correspondance n’importe où dans
+   *string*, utilisez plutôt "search()" (voir aussi search() vs.
+   match()).
+
+re.split(pattern, string, maxsplit=0, flags=0)
+
+   Split *string* by the occurrences of *pattern*.  If capturing
+   parentheses are used in *pattern*, then the text of all groups in
+   the pattern are also returned as part of the resulting list. If
+   *maxsplit* is nonzero, at most *maxsplit* splits occur, and the
+   remainder of the string is returned as the final element of the
+   list.  (Incompatibility note: in the original Python 1.5 release,
+   *maxsplit* was ignored.  This has been fixed in later releases.)
+
+   >>> re.split('\W+', 'Words, words, words.')
+   ['Words', 'words', 'words', '']
+   >>> re.split('(\W+)', 'Words, words, words.')
+   ['Words', ', ', 'words', ', ', 'words', '.', '']
+   >>> re.split('\W+', 'Words, words, words.', 1)
+   ['Words', 'words, words.']
+   >>> re.split('[a-f]+', '0a3B9', flags=re.IGNORECASE)
+   ['0', '3', '9']
+
+   S’il y a des groupes capturants dans le séparateur et qu’ils
+   trouvent une correspondance au début de la chaîne, le résultat
+   commencera par une chaîne vide.  La même chose se produit pour la
+   fin de la chaîne :
+
+   >>> re.split('(\W+)', '...words, words...')
+   ['', '...', 'words', ', ', 'words', '...', '']
+
+   That way, separator components are always found at the same
+   relative indices within the result list (e.g., if there’s one
+   capturing group in the separator, the 0th, the 2nd and so forth).
+
+   Note that *split* will never split a string on an empty pattern
+   match. For example:
+
+   >>> re.split('x*', 'foo')
+   ['foo']
+   >>> re.split("(?m)^$", "foo\n\nbar\n")
+   ['foo\n\nbar\n']
+
+   Modifié dans la version 2.7: Ajout de l’argument optionnel *flags*
+
+re.findall(pattern, string, flags=0)
+
+   Renvoie toutes les correspondances de *pattern* dans *string* qui
+   ne se chevauchent pas, sous forme d’une liste de chaînes.  Le
+   chaîne *string* est analysée de la gauche vers la droite, et les
+   correspondances sont renvoyées dans l’ordre où elles sont trouvées.
+   Si un groupe ou plus sont présents dans le motif, renvoie une liste
+   de groupes ; il s’agira d’une liste de *tuples* si le motif a plus
+   d’un groupe.  Les correspondances vides sont inclues dans le
+   résultat sauf si elles touchent le début d’une autre
+   correspondance.
+
+   Nouveau dans la version 1.5.2.
+
+   Modifié dans la version 2.4: Ajout de l’argument optionnel *flags*
+
+re.finditer(pattern, string, flags=0)
+
+   Return an *iterator* yielding "MatchObject" instances over all non-
+   overlapping matches for the RE *pattern* in *string*.  The *string*
+   is scanned left-to-right, and matches are returned in the order
+   found.  Empty matches are included in the result unless they touch
+   the beginning of another match.
+
+   Nouveau dans la version 2.2.
+
+   Modifié dans la version 2.4: Ajout de l’argument optionnel *flags*
+
+re.sub(pattern, repl, string, count=0, flags=0)
+
+   Return the string obtained by replacing the leftmost non-
+   overlapping occurrences of *pattern* in *string* by the replacement
+   *repl*.  If the pattern isn’t found, *string* is returned
+   unchanged.  *repl* can be a string or a function; if it is a
+   string, any backslash escapes in it are processed.  That is, "\n"
+   is converted to a single newline character, "\r" is converted to a
+   carriage return, and so forth.  Unknown escapes such as "\j" are
+   left alone.  Backreferences, such as "\6", are replaced with the
+   substring matched by group 6 in the pattern. For example:
+
+   >>> re.sub(r'def\s+([a-zA-Z_][a-zA-Z_0-9]*)\s*\(\s*\):',
+   ...        r'static PyObject*\npy_\1(void)\n{',
+   ...        'def myfunc():')
+   'static PyObject*\npy_myfunc(void)\n{'
+
+   Si *repl* est une fonction, elle est appelée pour chaque occurrence
+   non chevauchante de *pattern*.  La fonction prend comme argument un
+   objet de correspondance, et renvoie la chaîne de remplacement.  Par
+   exemple :
+
+   >>> def dashrepl(matchobj):
+   ...     if matchobj.group(0) == '-': return ' '
+   ...     else: return '-'
+   >>> re.sub('-{1,2}', dashrepl, 'pro----gram-files')
+   'pro--gram files'
+   >>> re.sub(r'\sAND\s', ' & ', 'Baked Beans And Spam', flags=re.IGNORECASE)
+   'Baked Beans & Spam'
+
+   Le motif peut être une chaîne de caractères ou un objet expression
+   rationnelle.
+
+   L’argument optionnel *count* est le nombre maximum d’occurrences du
+   motif à remplacer : *count* ne doit pas être un nombre négatif.  Si
+   omis ou nul, toutes les occurrences seront remplacées. Les
+   correspondances vides avec le motif sont remplacées uniquement
+   quand elles ne sont pas adjacentes à une précédente correspondance,
+   ainsi "sub('x*', '-', 'abc')" renvoie "'-a-b-c-'".
+
+   Dans les arguments *repl* de type *string*, en plus des séquences
+   d’échappement et références arrières décrites au-dessus, "\g<name>"
+   utilisera la sous-chaîne correspondant au groupe nommé "name",
+   comme défini par la syntaxe "(?P<name>...)". "\g<number>" utilise
+   le groupe numéroté associé ; "\g<2>" est ainsi équivalent à "\2",
+   mais n’est pas ambigu dans un remplacement tel que "\g<2>0", "\20"
+   serait interprété comme une référence au groupe 20, et non une
+   référence au groupe 2 suivie par un caractère littéral "'0'".  La
+   référence arrière "\g<0>" est remplacée par la sous-chaîne entière
+   validée par l’expression rationnelle.
+
+   Modifié dans la version 2.7: Ajout de l’argument optionnel *flags*
+
+re.subn(pattern, repl, string, count=0, flags=0)
+
+   Réalise la même opération que "sub()", mais renvoie un *tuple*
+   "(nouvelle_chaîne, nombre_de_substitutions_réalisées)".
+
+   Modifié dans la version 2.7: Ajout de l’argument optionnel *flags*
+
+re.escape(pattern)
+
+   Escape all the characters in *pattern* except ASCII letters and
+   numbers. This is useful if you want to match an arbitrary literal
+   string that may have regular expression metacharacters in it.  For
+   example:
+
+      >>> print re.escape('python.exe')
+      python\.exe
+
+      >>> legal_chars = string.ascii_lowercase + string.digits + "!#$%&'*+-.^_`|~:"
+      >>> print '[%s]+' % re.escape(legal_chars)
+      [abcdefghijklmnopqrstuvwxyz0123456789\!\#\$\%\&\'\*\+\-\.\^\_\`\|\~\:]+
+
+      >>> operators = ['+', '-', '*', '/', '**']
+      >>> print '|'.join(map(re.escape, sorted(operators, reverse=True)))
+      \/|\-|\+|\*\*|\*
+
+re.purge()
+
+   Vide le cache d’expressions rationnelles.
+
+exception re.error
+
+   Exception raised when a string passed to one of the functions here
+   is not a valid regular expression (for example, it might contain
+   unmatched parentheses) or when some other error occurs during
+   compilation or matching.  It is never an error if a string contains
+   no match for a pattern.
+
+
+Objets d’expressions rationnelles
+=================================
+
+class re.RegexObject
+
+   The "RegexObject" class supports the following methods and
+   attributes:
+
+   search(string[, pos[, endpos]])
+
+      Scan through *string* looking for a location where this regular
+      expression produces a match, and return a corresponding
+      "MatchObject" instance. Return "None" if no position in the
+      string matches the pattern; note that this is different from
+      finding a zero-length match at some point in the string.
+
+      Le second paramètre *pos* (optionnel) donne l’index dans la
+      chaîne où la recherche doit débuter ; il vaut "0" par défaut.
+      Cela n’est pas complètement équivalent à un *slicing* sur la
+      chaîne ; le caractère de motif "'^'" correspond au début réel de
+      la chaîne et aux positions juste après un saut de ligne, mais
+      pas nécessairement à l’index où la recherche commence.
+
+      The optional parameter *endpos* limits how far the string will
+      be searched; it will be as if the string is *endpos* characters
+      long, so only the characters from *pos* to "endpos - 1" will be
+      searched for a match.  If *endpos* is less than *pos*, no match
+      will be found, otherwise, if *rx* is a compiled regular
+      expression object, "rx.search(string, 0, 50)" is equivalent to
+      "rx.search(string[:50], 0)".
+
+      >>> pattern = re.compile("d")
+      >>> pattern.search("dog")     # Match at index 0
+      <_sre.SRE_Match object at ...>
+      >>> pattern.search("dog", 1)  # No match; search doesn't include the "d"
+
+   match(string[, pos[, endpos]])
+
+      If zero or more characters at the *beginning* of *string* match
+      this regular expression, return a corresponding "MatchObject"
+      instance.  Return "None" if the string does not match the
+      pattern; note that this is different from a zero-length match.
+
+      The optional *pos* and *endpos* parameters have the same meaning
+      as for the "search()" method.
+
+      >>> pattern = re.compile("o")
+      >>> pattern.match("dog")      # No match as "o" is not at the start of "dog".
+      >>> pattern.match("dog", 1)   # Match as "o" is the 2nd character of "dog".
+      <_sre.SRE_Match object at ...>
+
+      If you want to locate a match anywhere in *string*, use
+      "search()" instead (see also search() vs. match()).
+
+   split(string, maxsplit=0)
+
+      Identique à la fonction "split()", en utilisant le motif
+      compilé.
+
+   findall(string[, pos[, endpos]])
+
+      Similaire à la fonction "findall()", en utilisant le motif
+      compilé, mais accepte aussi des paramètres *pos* et *endpos*
+      optionnels qui limitent la région de recherche comme pour
+      "match()".
+
+   finditer(string[, pos[, endpos]])
+
+      Similaire à la fonction "finditer()", en utilisant le motif
+      compilé, mais accepte aussi des paramètres *pos* et *endpos*
+      optionnels qui limitent la région de recherche comme pour
+      "match()".
+
+   sub(repl, string, count=0)
+
+      Identique à la fonction "sub()", en utilisant le motif compilé.
+
+   subn(repl, string, count=0)
+
+      Identique à la fonction "subn()", en utilisant le motif compilé.
+
+   flags
+
+      The regex matching flags.  This is a combination of the flags
+      given to "compile()" and any "(?...)" inline flags in the
+      pattern.
+
+   groups
+
+      Le nombre de groupes capturants dans le motif.
+
+   groupindex
+
+      Un dictionnaire associant les noms de groupes symboliques
+      définis par "(?P<id>)" aux groupes numérotés.  Le dictionnaire
+      est vide si aucun groupe symbolique n’est utilisé dans le motif.
+
+   pattern
+
+      La chaîne de motif depuis laquelle l’objet expression
+      rationnelle a été compilé.
+
+
+Objets de correspondance
+========================
+
+class re.MatchObject
+
+   Les objets de correspondance ont toujours une valeur booléenne
+   "True". Puisque "match()" et "search()" renvoient "None" quand il
+   n’y a pas de correspondance, vous pouvez tester s’il y a eu
+   correspondance avec une simple instruction "if" :
+
+      match = re.search(pattern, string)
+      if match:
+          process(match)
+
+   Les objets de correspondance supportent les méthodes et attributs
+   suivants :
+
+   expand(template)
+
+      Return the string obtained by doing backslash substitution on
+      the template string *template*, as done by the "sub()" method.
+      Escapes such as "\n" are converted to the appropriate
+      characters, and numeric backreferences ("\1", "\2") and named
+      backreferences ("\g<1>", "\g<name>") are replaced by the
+      contents of the corresponding group.
+
+   group([group1, …])
+
+      Renvoie un ou plus sous-groupes de la correspondance.  Si un
+      seul argument est donné, le résultat est une chaîne simple ;
+      s’il y a plusieurs arguments, le résultat est un *tuple*
+      comprenant un élément par argument. Sans arguments, *group1*
+      vaut par défaut zéro (la correspondance entière est renvoyée).
+      Si un argument *groupN* vaut zéro, l’élément associé sera la
+      chaîne de correspondance entière ; s’il est dans l’intervalle
+      fermé [1..99], c’est la correspondance avec le groupe de
+      parenthèses associé.  Si un numéro de groupe est négatif ou
+      supérieur au nombre de groupes définis dans le motif, une
+      exception "indexError" est levée. Si un groupe est contenu dans
+      une partie du motif qui n’a aucune correspondance, l’élément
+      associé sera "None". Si un groupe est contenu dans une partie du
+      motif qui a plusieurs correspondances, seule la dernière
+      correspondance est renvoyée.
+
+      >>> m = re.match(r"(\w+) (\w+)", "Isaac Newton, physicist")
+      >>> m.group(0)       # The entire match
+      'Isaac Newton'
+      >>> m.group(1)       # The first parenthesized subgroup.
+      'Isaac'
+      >>> m.group(2)       # The second parenthesized subgroup.
+      'Newton'
+      >>> m.group(1, 2)    # Multiple arguments give us a tuple.
+      ('Isaac', 'Newton')
+
+      Si l’expression rationnelle utilise la syntaxe "(?P<name>...)",
+      les arguments *groupN* peuvent alors aussi être des chaînes
+      identifiant les groupes par leurs noms.  Si une chaîne donnée en
+      argument n’est pas utilisée comme nom de groupe dans le motif,
+      une exception "IndexError" est levée.
+
+      Un exemple modérément compliqué :
+
+      >>> m = re.match(r"(?P<first_name>\w+) (?P<last_name>\w+)", "Malcolm Reynolds")
+      >>> m.group('first_name')
+      'Malcolm'
+      >>> m.group('last_name')
+      'Reynolds'
+
+      Les groupes nommés peuvent aussi être référencés par leur index
+      :
+
+      >>> m.group(1)
+      'Malcolm'
+      >>> m.group(2)
+      'Reynolds'
+
+      Si un groupe a plusieurs correspondances, seule la dernière est
+      accessible :
+
+      >>> m = re.match(r"(..)+", "a1b2c3")  # Matches 3 times.
+      >>> m.group(1)                        # Returns only the last match.
+      'c3'
+
+   groups([default])
+
+      Return a tuple containing all the subgroups of the match, from 1
+      up to however many groups are in the pattern.  The *default*
+      argument is used for groups that did not participate in the
+      match; it defaults to "None".  (Incompatibility note: in the
+      original Python 1.5 release, if the tuple was one element long,
+      a string would be returned instead.  In later versions (from
+      1.5.1 on), a singleton tuple is returned in such cases.)
+
+      Par exemple :
+
+      >>> m = re.match(r"(\d+)\.(\d+)", "24.1632")
+      >>> m.groups()
+      ('24', '1632')
+
+      Si on rend la partie décimale et tout ce qui la suit optionnels,
+      tous les groupes ne figureront pas dans la correspondance.  Ces
+      groupes sans correspondance vaudront "None" sauf si une autre
+      valeur est donnée à l’argument *default* :
+
+      >>> m = re.match(r"(\d+)\.?(\d+)?", "24")
+      >>> m.groups()      # Second group defaults to None.
+      ('24', None)
+      >>> m.groups('0')   # Now, the second group defaults to '0'.
+      ('24', '0')
+
+   groupdict([default])
+
+      Renvoie un dictionnaire contenant tous les sous-groupes *nommés*
+      de la correspondance, accessibles par leurs noms.  L’argument
+      *default* est utilisé pour les groupes qui ne figurent pas dans
+      la correspondance ; il vaut "None" par défaut.  Par exemple :
+
+      >>> m = re.match(r"(?P<first_name>\w+) (?P<last_name>\w+)", "Malcolm Reynolds")
+      >>> m.groupdict()
+      {'first_name': 'Malcolm', 'last_name': 'Reynolds'}
+
+   start([group])
+   end([group])
+
+      Renvoie les indices de début et de fin de la sous-chaîne
+      correspondant au groupe *group* ; *group* vaut par défaut zéro
+      (pour récupérer les indices de la correspondance complète).
+      Renvoie "-1" si *group* existe mais ne figure pas dans la
+      correspondance.  Pour un objet de correspondance *m*, et un
+      groupe *g* qui y figure, la sous-chaîne correspondant au groupe
+      *g* (équivalente à "m.group(g)") est :
+
+         m.string[m.start(g):m.end(g)]
+
+      Notez que "m.start(group)" sera égal à "m.end(group)" si *group*
+      correspond à une chaîne vide.  Par exemple, après "m =
+      re.search('b(c?)', 'cba')", "m.start(0)" vaut 1, "m.end(0)" vaut
+      2, "m.start(1)" et "m.end(1)" valent tous deux 2, et
+      "m.start(2)" lève une exception "IndexError".
+
+      Un exemple qui supprimera *remove_this* d’une adresse email :
+
+      >>> email = "tony@tiremove_thisger.net"
+      >>> m = re.search("remove_this", email)
+      >>> email[:m.start()] + email[m.end():]
+      'tony@tiger.net'
+
+   span([group])
+
+      For "MatchObject" *m*, return the 2-tuple "(m.start(group),
+      m.end(group))". Note that if *group* did not contribute to the
+      match, this is "(-1, -1)".  *group* defaults to zero, the entire
+      match.
+
+   pos
+
+      The value of *pos* which was passed to the "search()" or
+      "match()" method of the "RegexObject".  This is the index into
+      the string at which the RE engine started looking for a match.
+
+   endpos
+
+      The value of *endpos* which was passed to the "search()" or
+      "match()" method of the "RegexObject".  This is the index into
+      the string beyond which the RE engine will not go.
+
+   lastindex
+
+      L’index entier du dernier groupe de capture validé, ou "None" si
+      aucun groupe ne correspondait. Par exemple, les expressions
+      "(a)b", "((a)(b))" et "((ab))" auront un "lastindex == 1" si
+      appliquées à la chaîne "'ab'", alors que l’expression "(a)(b)"
+      aura un "lastindex == 2" si appliquée à la même chaîne.
+
+   lastgroup
+
+      Le nom du dernier groupe capturant validé, ou "None" si le
+      groupe n’a pas de nom, ou si aucun groupe ne correspondait.
+
+   re
+
+      The regular expression object whose "match()" or "search()"
+      method produced this "MatchObject" instance.
+
+   string
+
+      The string passed to "match()" or "search()".
+
+
+Examples
+========
+
+
+Checking For a Pair
+-------------------
+
+Dans cet exemple, nous utiliserons cette fonction de facilité pour
+afficher les objets de correspondance sous une meilleure forme :
+
+   def displaymatch(match):
+       if match is None:
+           return None
+       return '<Match: %r, groups=%r>' % (match.group(), match.groups())
+
+Supposez que vous écriviez un jeu de poker où la main d’un joueur est
+représentée par une chaîne de 5 caractères avec chaque caractère
+représentant une carte, « a » pour l’as, « k » pour le roi (*king*), «
+q » pour la reine (*queen*), « j » pour le valet (*jack*), « t » pour
+10 (*ten*), et les caractères de « 2 » à « 9 » représentant les cartes
+avec ces valeurs.
+
+Pour vérifier qu’une chaîne donnée est une main valide, on pourrait
+faire comme suit :
+
+>>> valid = re.compile(r"^[a2-9tjqk]{5}$")
+>>> displaymatch(valid.match("akt5q"))  # Valid.
+"<Match: 'akt5q', groups=()>"
+>>> displaymatch(valid.match("akt5e"))  # Invalid.
+>>> displaymatch(valid.match("akt"))    # Invalid.
+>>> displaymatch(valid.match("727ak"))  # Valid.
+"<Match: '727ak', groups=()>"
+
+La dernière main, ""727ak"", contenait une paire, deux cartes de la
+même valeur. Pour valider cela avec une expression rationnelle, on
+pourrait utiliser des références arrière comme :
+
+>>> pair = re.compile(r".*(.).*\1")
+>>> displaymatch(pair.match("717ak"))     # Pair of 7s.
+"<Match: '717', groups=('7',)>"
+>>> displaymatch(pair.match("718ak"))     # No pairs.
+>>> displaymatch(pair.match("354aa"))     # Pair of aces.
+"<Match: '354aa', groups=('a',)>"
+
+To find out what card the pair consists of, one could use the
+"group()" method of "MatchObject" in the following manner:
+
+   >>> pair.match("717ak").group(1)
+   '7'
+
+   # Error because re.match() returns None, which doesn't have a group() method:
+   >>> pair.match("718ak").group(1)
+   Traceback (most recent call last):
+     File "<pyshell#23>", line 1, in <module>
+       re.match(r".*(.).*\1", "718ak").group(1)
+   AttributeError: 'NoneType' object has no attribute 'group'
+
+   >>> pair.match("354aa").group(1)
+   'a'
+
+
+Simuler scanf()
+---------------
+
+Python n’a actuellement pas d’équivalent à la fonction C "scanf()".
+Les expressions rationnelles sont généralement plus puissantes, mais
+aussi plus verbeuses, que les chaînes de format "scanf()".  Le tableau
+suivant présente des expressions rationnelles plus ou moins
+équivalentes aux éléments de formats de "scanf()".
+
++----------------------------------+-----------------------------------------------+
+| Élément de "scanf()"             | Expression rationnelle                        |
++==================================+===============================================+
+| "%c"                             | "."                                           |
++----------------------------------+-----------------------------------------------+
+| "%5c"                            | ".{5}"                                        |
++----------------------------------+-----------------------------------------------+
+| "%d"                             | "[-+]?\d+"                                    |
++----------------------------------+-----------------------------------------------+
+| "%e", "%E", "%f", "%g"           | "[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?"     |
++----------------------------------+-----------------------------------------------+
+| "%i"                             | "[-+]?(0[xX][\dA-Fa-f]+|0[0-7]*|\d+)"         |
++----------------------------------+-----------------------------------------------+
+| "%o"                             | "[-+]?[0-7]+"                                 |
++----------------------------------+-----------------------------------------------+
+| "%s"                             | "\S+"                                         |
++----------------------------------+-----------------------------------------------+
+| "%u"                             | "\d+"                                         |
++----------------------------------+-----------------------------------------------+
+| "%x", "%X"                       | "[-+]?(0[xX])?[\dA-Fa-f]+"                    |
++----------------------------------+-----------------------------------------------+
+
+Pour extraire le nom de fichier et les nombres depuis une chaîne comme
+:
+
+   /usr/sbin/sendmail - 0 errors, 4 warnings
+
+vous utiliseriez un format "scanf()" comme :
+
+   %s - %d errors, %d warnings
+
+L’expression rationnelle équivalente serait :
+
+   (\S+) - (\d+) errors, (\d+) warnings
+
+
+search() vs. match()
+--------------------
+
+Python offre deux opérations primitives basées sur les expressions
+rationnelles : "re.match()" cherche une correspondance uniquement au
+début de la chaîne, tandis que "re.search()" en recherche une
+n’importe où dans la chaîne (ce que fait Perl par défaut).
+
+Par exemple :
+
+   >>> re.match("c", "abcdef")    # No match
+   >>> re.search("c", "abcdef")   # Match
+   <_sre.SRE_Match object at ...>
+
+Les expressions rationnelles commençant par "'^'" peuvent être
+utilisées avec "search()" pour restreindre la recherche au début de la
+chaîne :
+
+   >>> re.match("c", "abcdef")    # No match
+   >>> re.search("^c", "abcdef")  # No match
+   >>> re.search("^a", "abcdef")  # Match
+   <_sre.SRE_Match object at ...>
+
+Notez cependant qu’en mode "MULTILINE", "match()" ne recherche qu’au
+début de la chaîne, alors que "search()" avec une expression
+rationnelle commençant par "'^'" recherchera au début de chaque ligne.
+
+>>> re.match('X', 'A\nB\nX', re.MULTILINE)  # No match
+>>> re.search('^X', 'A\nB\nX', re.MULTILINE)  # Match
+<_sre.SRE_Match object at ...>
+
+
+Construire un répertoire téléphonique
+-------------------------------------
+
+"split()" découpe une chaîne en une liste délimitée par le motif
+donné.  La méthode est inestimable pour convertir des données
+textuelles vers des structures de données qui peuvent être lues et
+modifiées par Python comme démontré dans l’exemple suivant qui crée un
+répertoire téléphonique.
+
+Premièrement, voici l’entrée.  Elle provient normalement d’un fichier,
+nous utilisons ici une chaîne à guillemets triples :
+
+>>> text = """Ross McFluff: 834.345.1254 155 Elm Street
+...
+... Ronald Heathmore: 892.345.3428 436 Finley Avenue
+... Frank Burger: 925.541.7625 662 South Dogwood Way
+...
+...
+... Heather Albrecht: 548.326.4584 919 Park Place"""
+
+Les entrées sont séparées par un saut de ligne ou plus. Nous
+convertissons maintenant la chaîne en une liste où chaque ligne non
+vide aura sa propre entrée :
+
+   >>> entries = re.split("\n+", text)
+   >>> entries
+   ['Ross McFluff: 834.345.1254 155 Elm Street',
+   'Ronald Heathmore: 892.345.3428 436 Finley Avenue',
+   'Frank Burger: 925.541.7625 662 South Dogwood Way',
+   'Heather Albrecht: 548.326.4584 919 Park Place']
+
+Finalement, on sépare chaque entrée en une liste avec prénom, nom,
+numéro de téléphone et adresse.  Nous utilisons le paramètre
+"maxsplit" de "split()" parce que l’adresse contient des espaces, qui
+sont notre motif de séparation :
+
+   >>> [re.split(":? ", entry, 3) for entry in entries]
+   [['Ross', 'McFluff', '834.345.1254', '155 Elm Street'],
+   ['Ronald', 'Heathmore', '892.345.3428', '436 Finley Avenue'],
+   ['Frank', 'Burger', '925.541.7625', '662 South Dogwood Way'],
+   ['Heather', 'Albrecht', '548.326.4584', '919 Park Place']]
+
+Le motif ":?" trouve les deux points derrière le nom de famille, pour
+qu’ils n’apparaissent pas dans la liste résultante.  Avec un
+"maxsplit" de "4", nous pourrions séparer le numéro du nom de la rue.
+
+   >>> [re.split(":? ", entry, 4) for entry in entries]
+   [['Ross', 'McFluff', '834.345.1254', '155', 'Elm Street'],
+   ['Ronald', 'Heathmore', '892.345.3428', '436', 'Finley Avenue'],
+   ['Frank', 'Burger', '925.541.7625', '662', 'South Dogwood Way'],
+   ['Heather', 'Albrecht', '548.326.4584', '919', 'Park Place']]
+
+
+Mélanger les lettres des mots
+-----------------------------
+
+"sub()" remplace toutes les occurrences d’un motif par une chaîne ou
+le résultat d’une fonction.  Cet exemple le montre, en utilisant
+"sub()" avec une fonction qui mélange aléatoirement les caractères de
+chaque mot dans une phrase (à l’exception des premiers et derniers
+caractères) :
+
+   >>> def repl(m):
+   ...     inner_word = list(m.group(2))
+   ...     random.shuffle(inner_word)
+   ...     return m.group(1) + "".join(inner_word) + m.group(3)
+   >>> text = "Professor Abdolmalek, please report your absences promptly."
+   >>> re.sub(r"(\w)(\w+)(\w)", repl, text)
+   'Poefsrosr Aealmlobdk, pslaee reorpt your abnseces plmrptoy.'
+   >>> re.sub(r"(\w)(\w+)(\w)", repl, text)
+   'Pofsroser Aodlambelk, plasee reoprt yuor asnebces potlmrpy.'
+
+
+Trouver tous les adverbes
+-------------------------
+
+"findall()" trouve *toutes* les occurrences d’un motif, pas juste la
+première comme le fait "search()".  Par exemple, si un(e) écrivain(e)
+voulait trouver tous les adverbes dans un texte, il/elle devrait
+utiliser "findall()" de la manière suivante :
+
+>>> text = "He was carefully disguised but captured quickly by police."
+>>> re.findall(r"\w+ly", text)
+['carefully', 'quickly']
+
+
+Trouver tous les adverbes et leurs positions
+--------------------------------------------
+
+If one wants more information about all matches of a pattern than the
+matched text, "finditer()" is useful as it provides instances of
+"MatchObject" instead of strings.  Continuing with the previous
+example, if one was a writer who wanted to find all of the adverbs
+*and their positions* in some text, he or she would use "finditer()"
+in the following manner:
+
+>>> text = "He was carefully disguised but captured quickly by police."
+>>> for m in re.finditer(r"\w+ly", text):
+...     print '%02d-%02d: %s' % (m.start(), m.end(), m.group(0))
+07-16: carefully
+40-47: quickly
+
+
+Notation brutes de chaînes
+--------------------------
+
+La notation brute de chaînes ("r"text"") garde saines les expressions
+rationnelles.  Sans elle, chaque *backslash* ("'\'") dans une
+expression rationnelle devrait être préfixé d’un autre *backslash*
+pour l’échapper.  Par exemple, les deux lignes de code suivantes sont
+fonctionnellement identiques :
+
+>>> re.match(r"\W(.)\1\W", " ff ")
+<_sre.SRE_Match object at ...>
+>>> re.match("\\W(.)\\1\\W", " ff ")
+<_sre.SRE_Match object at ...>
+
+Pour rechercher un *backslash* littéral, il faut l’échapper dans
+l’expression rationnelle.  Avec la notation brute, cela signifie
+"r"\\"".  Sans elle, il faudrait utiliser ""\\\\"", faisant que les
+deux lignes de code suivantes sont fonctionnellement identiques :
+
+>>> re.match(r"\\", r"\\")
+<_sre.SRE_Match object at ...>
+>>> re.match("\\\\", r"\\")
+<_sre.SRE_Match object at ...>

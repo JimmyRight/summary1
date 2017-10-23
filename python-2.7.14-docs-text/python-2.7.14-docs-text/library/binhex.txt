@@ -1,0 +1,54 @@
+"binhex" — Encode et décode les fichiers binhex4
+************************************************
+
+This module encodes and decodes files in binhex4 format, a format
+allowing representation of Macintosh files in ASCII.  On the
+Macintosh, both forks of a file and the finder information are encoded
+(or decoded), on other platforms only the data fork is handled.
+
+Note: In Python 3.x, special Macintosh support has been removed.
+
+Le module "binhex" définit les fonctions suivantes :
+
+binhex.binhex(input, output)
+
+   Converti un fichier binaire avec comme nom *input* en fichier
+   binhex *output*. Le paramètre *output* peut être soit un nom de
+   fichier, soit un objet s’apparentant à un fichier (tout objet
+   supportant les méthodes "write()" et "close()").
+
+binhex.hexbin(input[, output])
+
+   Decode a binhex file *input*. *input* may be a filename or a file-
+   like object supporting "read()" and "close()" methods. The
+   resulting file is written to a file named *output*, unless the
+   argument is omitted in which case the output filename is read from
+   the binhex file.
+
+L’exception suivante est aussi définie :
+
+exception binhex.Error
+
+   Exception levée quand quelque chose ne peut être encodé en
+   utilisant le format binhex (par exemple, un nom de fichier trop
+   long pour rentrer dans le champ filename) ou quand les données
+   d’entrée ne sont pas encodées correctement en binhex.
+
+Voir aussi:
+
+  Module "binascii"
+     Module secondaire contenant les conversions ASCII-à-binaire et
+     binaire-à-ASCII.
+
+
+Notes
+=====
+
+Il y a une alternative, une interface plus puissante pour le codeur et
+décodeur, voir les sources pour les détails.
+
+Si vous codez ou décodez sur des plateformes non-Macintosh, elles
+utiliseront l’ancienne convention Macintosh newline (retour-chariot
+comme fin de ligne).
+
+As of this writing, "hexbin()" appears to not work in all cases.

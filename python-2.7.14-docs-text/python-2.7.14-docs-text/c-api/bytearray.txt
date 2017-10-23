@@ -1,0 +1,75 @@
+Objets Tableau d’Octets
+***********************
+
+Nouveau dans la version 2.6.
+
+PyByteArrayObject
+
+   Ce sous-type e "PyObject" représente un objet bytearray Python.
+
+PyTypeObject PyByteArray_Type
+
+   This instance of "PyTypeObject" represents the Python bytearray
+   type; it is the same object as "bytearray" in the Python layer.
+
+
+Macros de vérification de type
+==============================
+
+int PyByteArray_Check(PyObject *o)
+
+   Renvoie la valeur true (vrai) si l’objet *o* est un objet bytearray
+   ou une instance d’un sous-type du type bytearray.
+
+int PyByteArray_CheckExact(PyObject *o)
+
+   Renvoie la valeur true si l’objet *o* est un objet bytearray, mais
+   pas une instance d’un sous-type du type bytearray.
+
+
+Fonctions directes sur l’API
+============================
+
+PyObject* PyByteArray_FromObject(PyObject *o)
+
+   Return a new bytearray object from any object, *o*, that implements
+   the buffer protocol.
+
+PyObject* PyByteArray_FromStringAndSize(const char *string, Py_ssize_t len)
+
+   Crée un nouvel objet bytearray à partir d’un objet *string* et de
+   sa longueur, *len*. En cas d’échec, *NULL* est renvoyé.
+
+PyObject* PyByteArray_Concat(PyObject *a, PyObject *b)
+
+   Concatène les bytearrays *a* et *b* et renvoit un nouveau bytearray
+   avec le résultat.
+
+Py_ssize_t PyByteArray_Size(PyObject *bytearray)
+
+   Renvoit la taille de *bytearray* après vérification de la présence
+   d’un pointeur *NULL*.
+
+char* PyByteArray_AsString(PyObject *bytearray)
+
+   Return the contents of *bytearray* as a char array after checking
+   for a *NULL* pointer.
+
+int PyByteArray_Resize(PyObject *bytearray, Py_ssize_t len)
+
+   Redimensionne le buffer interne de *bytearray* à la taille *len*.
+
+
+Macros
+======
+
+Ces macros sont taillées pour la vitesse d’exécution et ne vérifient
+pas les pointeurs.
+
+char* PyByteArray_AS_STRING(PyObject *bytearray)
+
+   Version macro de "PyByteArray_AsString()".
+
+Py_ssize_t PyByteArray_GET_SIZE(PyObject *bytearray)
+
+   Version macro de "PyByteArray_Size()".

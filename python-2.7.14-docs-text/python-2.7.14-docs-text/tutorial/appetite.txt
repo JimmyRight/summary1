@@ -1,0 +1,100 @@
+Mise en bouche
+**************
+
+Si vous faites beaucoup de travail sur ordinateur, vous finirez par
+vouloir automatiser certaines tâches. Par exemple vous pouvez avoir
+besoin d’effectuer une recherche et un remplacement sur un grand
+nombre de fichiers de texte, ou de renommer et réorganiser des photos
+d’une manière sophistiquée. Peut-être avez-vous besoin de créer une
+petite base de données ou une application graphique, ou un simple jeu.
+
+Si vous êtes un développeur professionnel, vous pouvez avoir besoin de
+travailler avec certaines bibliothèques C/C++/Java, mais vous trouvez
+que le cycle habituel écriture/compilation/test/recompilation est trop
+lourd. Peut-être écrivez-vous une suite de tests pour une telle
+bibliothèque et trouvez-vous que l’écriture du code de test est
+pénible. Ou bien vous avez écrit un logiciel qui a besoin d’être
+extensible grâce à un langage de script, mais vous ne voulez pas
+concevoir ni implémenter un nouveau langage pour votre application.
+
+Python est le langage parfait pour vous.
+
+Vous pouvez écrire un script shell Unix ou des fichiers batch Windows
+pour certaines de ces tâches. Les scripts shell sont appropriés pour
+déplacer des fichiers et modifier des données textuelles, mais pas
+pour une application ayant une interface graphique ni pour des jeux.
+Vous pouvez écrire un programme en C/C++/Java, mais cela peut prendre
+beaucoup de temps, ne serait-ce que pour avoir une première maquette.
+Python est plus facile à utiliser, il est disponible sous Windows, Mac
+OS X et Unix, et il vous aidera à terminer plus rapidement votre
+travail.
+
+Python est facile à utiliser, mais c’est un vrai langage de
+programmation, offrant une bien meilleure structure et prise en charge
+des grands programmes que les scripts shell ou les fichiers batch.
+D’un autre coté, Python offre beaucoup plus de méthodes de
+vérification d’erreurs que le langage C et, étant un *langage de très
+haut niveau*, il possède nativement des types de données très évolués
+tels que des tableaux flexibles ou des dictionnaires. Grâce à ses
+types de données plus universels, Python est utilisable pour des
+domaines beaucoup plus variés que Awk ou même Perl. Pourtant, de
+nombreuses choses sont au moins aussi faciles en Python que dans ces
+langages.
+
+Python vous permet de découper votre programme en modules qui peuvent
+être réutilisés dans d’autres programmes en Python. Il est fourni avec
+une vaste collection de modules standards que vous pouvez utiliser
+comme base de vos programmes, ou comme exemples pour apprendre à
+programmer. Certains de ces modules fournissent des services tels que
+les entrées/sorties, les appels système, les sockets, et même des
+accès aux outils comme Tk pour créer des interfaces graphiques.
+
+Python est un langage interprété, ce qui peut vous faire gagner un
+temps considérable pendant le développement du programme car aucune
+compilation ni édition de liens n’est nécessaire. L’interpréteur peut
+être utilisé de manière interactive, pour vous permettre
+d’expérimenter avec les fonctionnalités du langage, d’écrire des
+programmes jetables ou de tester des fonctions lors d’un développement
+incrémental. Il constitue aussi une calculatrice de bureau pratique.
+
+Python permet d’écrire des programmes compacts et lisibles. Les
+programmes écrits en Python sont généralement beaucoup plus court que
+l’équivalent en C, C++, ou Java, pour plusieurs raisons :
+
+* les types de données de haut niveau vous permettent d’exprimer des
+  opérations complexes en une seule instruction ;
+
+* les instructions sont regroupées entre elles grâce à
+  l’indentation, plutôt que par l’utilisation d’accolades ;
+
+* aucune déclaration de variable ou d’argument n’est nécessaire.
+
+Python est *extensible* : si vous savez écrire un programme en C, il
+est aisé d’ajouter à l’interpréteur une nouvelle fonction primitive ou
+un module, soit pour effectuer des opérations critiques à vitesse
+maximale, soit pour lier des programmes en Python à des bibliothèques
+disponibles uniquement sous forme binaire (par exemple des
+bibliothèques graphiques dédiées à un matériel). Une fois que vous
+êtes à l’aise avec ces principes, vous pouvez relier l’interpréteur
+Python à une application écrite en C et l’utiliser comme un langage
+d’extensions ou de commandes pour cette application.
+
+À ce sujet, le nom du langage provient de l’émission de la BBC « Monty
+Python’s Flying Circus » et n’a rien à voir avec les reptiles. Faire
+référence aux sketchs des Monty Python dans de la documentation n’est
+pas seulement permis, c’est encouragé !
+
+Votre soudain enthousiasme à propos de Python va vous pousser à
+l’examiner un peu plus en détail. Comme la meilleure façon d’apprendre
+un langage est de l’utiliser, le tutoriel vous invite à jouer avec
+l’interpréteur pendant la lecture.
+
+Dans le prochain chapitre, nous allons expliquer comment utiliser
+l’interpréteur. Ce n’est pas la section la plus passionnante, mais
+c’est un passage obligé pour tester les exemples montrés plus loin.
+
+Le reste du tutoriel présente diverses fonctionnalités du langage et
+du système Python au travers d’exemples, depuis les simples
+expressions, instructions ou types de données, jusqu’aux fonctions et
+modules, pour finalement aborder des concepts avancés comme les
+exceptions et les classes.

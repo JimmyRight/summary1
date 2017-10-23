@@ -1,0 +1,132 @@
+Modules de traitement XML
+*************************
+
+Les interfaces de Python de traitement de xml sont regroupées dans le
+paquet "xml".
+
+Avertissement: The XML modules are not secure against erroneous or
+  maliciously constructed data.  If you need to parse untrusted or
+  unauthenticated data see Vulnérabilités XML.
+
+Il est important de noter que les modules dans le paquet "xml"
+nécessitent qu’au moins un parseur compatible SAX soit disponible. Le
+parseur Expat est inclu dans Python, ainsi le module
+"xml.parsers.expat" est toujours disponible.
+
+La documentation des *bindings* des interfaces DOM et SAX  se trouve
+dans "xml.dom" et "xml.sax".
+
+Les sous-modules de traitement XML sont :
+
+* "xml.etree.ElementTree": l’API ElementTree, un proceseur simple et
+  léger
+
+* "xml.dom": la défintion de l’API DOM
+
+* "xml.dom.minidom": une implémentation minimale de DOM
+
+* "xml.dom.pulldom": gestion de la construction partiel des arbres
+  DOM
+
+* "xml.sax": classes de bases SAX2 base et fonctions utilitaires
+
+* "xml.parsers.expat": le *binding* du parseur Expat
+
+
+Vulnérabilités XML
+******************
+
+The XML processing modules are not secure against maliciously
+constructed data. An attacker can abuse vulnerabilities for e.g.
+denial of service attacks, to access local files, to generate network
+connections to other machines, or to or circumvent firewalls. The
+attacks on XML abuse unfamiliar features like inline DTD (document
+type definition) with entities.
+
+The following table gives an overview of the known attacks and if the
+various modules are vulnerable to them.
+
++---------------------------+----------------+-----------------+----------------+----------------+----------------+
+| type                      | sax            | etree           | minidom        | pulldom        | xmlrpc         |
++===========================+================+=================+================+================+================+
+| *billion laughs*          | **Vulnérable** | **Vulnérable**  | **Vulnérable** | **Vulnérable** | **Vulnérable** |
++---------------------------+----------------+-----------------+----------------+----------------+----------------+
+| *quadratic blowup*        | **Vulnérable** | **Vulnérable**  | **Vulnérable** | **Vulnérable** | **Vulnérable** |
++---------------------------+----------------+-----------------+----------------+----------------+----------------+
+| *external entity          | **Vulnérable** | Sûr    (1)      | Sûr    (2)     | **Vulnérable** | Sûr    (3)     |
+| expansion*                |                |                 |                |                |                |
++---------------------------+----------------+-----------------+----------------+----------------+----------------+
+| Récupération de DTD       | **Vulnérable** | Sûr             | Sûr            | **Vulnérable** | Sûr            |
++---------------------------+----------------+-----------------+----------------+----------------+----------------+
+| *decompression bomb*      | Sûr            | Sûr             | Sûr            | Sûr            | **Vulnérable** |
++---------------------------+----------------+-----------------+----------------+----------------+----------------+
+
+1. "xml.etree.ElementTree" doesn’t expand external entities and
+   raises a ParserError when an entity occurs.
+
+2. "xml.dom.minidom" n’étend pas les entités externe et renvoie
+   simplement le verbatim de l’entité non étendu.
+
+3. "xmlrpclib" n’étend pas les entités externes et les omet.
+
+*billion laughs* / *exponential entity expansion*
+   The Billion Laughs attack – also known as exponential entity
+   expansion – uses multiple levels of nested entities. Each entity
+   refers to another entity several times, the final entity definition
+   contains a small string. Eventually the small string is expanded to
+   several gigabytes. The exponential expansion consumes lots of CPU
+   time, too.
+
+*quadratic blowup entity expansion*
+   A quadratic blowup attack is similar to a Billion Laughs attack; it
+   abuses entity expansion, too. Instead of nested entities it repeats
+   one large entity with a couple of thousand chars over and over
+   again. The attack isn’t as efficient as the exponential case but it
+   avoids triggering countermeasures of parsers against heavily nested
+   entities.
+
+*external entity expansion*
+   Entity declarations can contain more than just text for
+   replacement. They can also point to external resources by public
+   identifiers or system identifiers. System identifiers are standard
+   URIs or can refer to local files. The XML parser retrieves the
+   resource with e.g. HTTP or FTP requests and embeds the content into
+   the XML document.
+
+Récupération de DTD
+   Certaines bibliothèques XML comme "xml.dom.pulldom" de Python
+   récupère les documents de définitions de types (DTD) depuis des
+   emplacements distants ou locaux. La fonctionnalité a des
+   implications similaires que le problème d’extension d’entités
+   externes.
+
+*decompression bomb*
+   The issue of decompression bombs (aka ZIP bomb) apply to all XML
+   libraries that can parse compressed XML stream like gzipped HTTP
+   streams or LZMA-ed files. For an attacker it can reduce the amount
+   of transmitted data by three magnitudes or more.
+
+The documentation of defusedxml on PyPI has further information about
+all known attack vectors with examples and references.
+
+
+defused packages
+================
+
+These external packages are recommended for any code that parses
+untrusted XML data.
+
+defusedxml is a pure Python package with modified subclasses of all
+stdlib XML parsers that prevent any potentially malicious operation.
+The package also ships with example exploits and extended
+documentation on more XML exploits like xpath injection.
+
+defusedexpat provides a modified libexpat and patched replacement
+"pyexpat" extension module with countermeasures against entity
+expansion DoS attacks. Defusedexpat still allows a sane and
+configurable amount of entity expansions. The modifications will be
+merged into future releases of Python.
+
+The workarounds and modifications are not included in patch releases
+as they break backward compatibility. After all inline DTD and entity
+expansion are well-defined XML features.

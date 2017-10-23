@@ -1,0 +1,361 @@
+Intégrer Python dans une autre Application
+******************************************
+
+Les chapitres précédents couvraient l’extension de Python, c’est à
+dire, comment enrichir une fonctionnalité de Python en y attachant une
+bibliothèque de fonctions C. C’est aussi possible dans l’autre sens:
+enrichir vos applications C/C++ en y intégrant Python. Intégrer Python
+vous permet d’implémenter certaines fonctionnalités de vos
+applications en Python plutôt qu’en C ou C++. C’est utile dans de
+nombreux cas, un exemple serait de permettre aux utilisateurs
+d’adapter une application à leur besoins en y écrivant des scripts
+Python. Vous pouvez aussi l’utiliser vous même si certaines
+fonctionnalités peuvent être rédigées plus facilement en Python.
+
+Intégrer et étendre Python sont des tâches presque identiques. La
+différence est qu’en étendant Python, le programme principal reste
+l’interpréteur Python, alors qu’en intégrant Python le programme
+principal peut ne rien à voir avec Python. C’est simplement quelques
+parties du programme qui appellent l’interprète Python pour exécuter
+un peu de code Python.
+
+En intégrant Python, vous fournissez le programme principal. L’une de
+ses tâches sera d’initialiser l’interpréteur. Au minimum vous devrez
+appeler "Py_Initialize()". Il est possible, avec quelques appels
+supplémentaires, de passer des options à Python. Ensuite vous pourrez
+appeler l’interpréteur depuis n’importe quelle partie de votre
+programme.
+
+Il existe différents moyens d’appeler l’interpréteur: vous pouvez
+donner une chaîne contenant des instructions Python à
+"PyRun_SimpleString()", ou vous pouvez donner un pointeur de fichier
+*stdio* et un nom de fichier (juste pour nommer les messages d’erreur)
+à "PyRunSimpleFile()". Vous pouvez aussi appeler les API de bas niveau
+décrites dans les chapitres précédents pour construire et utiliser des
+objets Python.
+
+A simple demo of embedding Python can be found in the directory
+"Demo/embed/" of the source distribution.
+
+Voir aussi:
+
+  Python/C API Reference Manual
+     Les détails sur l’interface entre Python et le C sont donnés dans
+     ce manuel. Pléthore informations s’y trouvent.
+
+
+Intégration de Très Haut Niveau
+===============================
+
+La manière la plus simple d’intégrer Python est d’utiliser une
+interface de très haut niveau. Cette interface a pour but d’exécuter
+un script Python sans avoir à interagir avec directement. C’est utile,
+par exemple, pour effectuer une opération sur un fichier.
+
+   #include <Python.h>
+
+   int
+   main(int argc, char *argv[])
+   {
+     Py_SetProgramName(argv[0]);  /* optional but recommended */
+     Py_Initialize();
+     PyRun_SimpleString("from time import time,ctime\n"
+                        "print 'Today is',ctime(time())\n");
+     Py_Finalize();
+     return 0;
+   }
+
+The "Py_SetProgramName()" function should be called before
+"Py_Initialize()" to inform the interpreter about paths to Python run-
+time libraries.  Next, the Python interpreter is initialized with
+"Py_Initialize()", followed by the execution of a hard-coded Python
+script that prints the date and time.  Afterwards, the "Py_Finalize()"
+call shuts the interpreter down, followed by the end of the program.
+In a real program, you may want to get the Python script from another
+source, perhaps a text-editor routine, a file, or a database.  Getting
+the Python code from a file can better be done by using the
+"PyRun_SimpleFile()" function, which saves you the trouble of
+allocating memory space and loading the file contents.
+
+
+Au delà de l’Intégration de Haut Niveau: Survol
+===============================================
+
+L’interface de haut niveau vous permet d’exécuter n’importe quel
+morceau de code Python depuis votre application, mais échanger des
+données est quelque peu alambiqué. Si c’est ce dont vous avez besoin,
+vous devez utiliser des appels de niveau plus bas. Il vous en coûtera
+plus de lignes de C à écrire, mais vous pourrez presque tout faire.
+
+Il est à souligner qu’étendre ou intégrer Python revient à la louche
+au même, en dépit de la différence d’intention. La plupart des sujets
+parcourus dans les chapitres précédents sont toujours valides. Pour le
+prouver, regardez ce qu’un code d’extension de Python vers C fait
+réellement :
+
+1. Convertir des valeurs de Python vers le C,
+
+2. Appeler une fonction C en utilisant les valeurs converties, et
+
+3. Convertir les résultats de l’appel à la fonction C pour Python.
+
+Lors de l’intégration de Python, le code de l’interface fait :
+
+1. Convertir les valeurs depuis le C vers Python,
+
+2. Effectuer un appel de fonction de l’interface Python en
+   utilisant les valeurs converties, et
+
+3. Convertir les valeurs de l’appel Python pour le C.
+
+Tel que vous le voyez, les conversions sont simplement inversées pour
+s’adapter au différentes directions de transfert inter-langage. La
+seule différence est la fonction que vous appelez entre les deux
+conversions de données. Lors de l’extension, vous appelez une fonction
+C, lors de l’intégration vous appelez une fonction Python.
+
+Ce chapitre ne couvrira pas la conversion des données de Python vers
+le C ni l’inverse. Aussi, un usage correct des références, ainsi que
+savoir gérer les erreurs sont considérés acquis. Ces aspects étant
+identiques à l’extension de l’interpréteur, vous pouvez vous référer
+aux chapitres précédents.
+
+
+Intégration Pure
+================
+
+L’objectif du premier programme est d’exécuter une fonction dans un
+script Python. Comme dans la section à propos des interfaces de haut
+niveau, l’interpréteur n’interagit pas directement avec l’application
+(mais le fera dans la section suivante).
+
+Le code pour appeler une fonction définie dans un script Python est :
+
+   #include <Python.h>
+
+   int
+   main(int argc, char *argv[])
+   {
+       PyObject *pName, *pModule, *pDict, *pFunc;
+       PyObject *pArgs, *pValue;
+       int i;
+
+       if (argc < 3) {
+           fprintf(stderr,"Usage: call pythonfile funcname [args]\n");
+           return 1;
+       }
+
+       Py_Initialize();
+       pName = PyString_FromString(argv[1]);
+       /* Error checking of pName left out */
+
+       pModule = PyImport_Import(pName);
+       Py_DECREF(pName);
+
+       if (pModule != NULL) {
+           pFunc = PyObject_GetAttrString(pModule, argv[2]);
+           /* pFunc is a new reference */
+
+           if (pFunc && PyCallable_Check(pFunc)) {
+               pArgs = PyTuple_New(argc - 3);
+               for (i = 0; i < argc - 3; ++i) {
+                   pValue = PyInt_FromLong(atoi(argv[i + 3]));
+                   if (!pValue) {
+                       Py_DECREF(pArgs);
+                       Py_DECREF(pModule);
+                       fprintf(stderr, "Cannot convert argument\n");
+                       return 1;
+                   }
+                   /* pValue reference stolen here: */
+                   PyTuple_SetItem(pArgs, i, pValue);
+               }
+               pValue = PyObject_CallObject(pFunc, pArgs);
+               Py_DECREF(pArgs);
+               if (pValue != NULL) {
+                   printf("Result of call: %ld\n", PyInt_AsLong(pValue));
+                   Py_DECREF(pValue);
+               }
+               else {
+                   Py_DECREF(pFunc);
+                   Py_DECREF(pModule);
+                   PyErr_Print();
+                   fprintf(stderr,"Call failed\n");
+                   return 1;
+               }
+           }
+           else {
+               if (PyErr_Occurred())
+                   PyErr_Print();
+               fprintf(stderr, "Cannot find function \"%s\"\n", argv[2]);
+           }
+           Py_XDECREF(pFunc);
+           Py_DECREF(pModule);
+       }
+       else {
+           PyErr_Print();
+           fprintf(stderr, "Failed to load \"%s\"\n", argv[1]);
+           return 1;
+       }
+       Py_Finalize();
+       return 0;
+   }
+
+This code loads a Python script using "argv[1]", and calls the
+function named in "argv[2]".  Its integer arguments are the other
+values of the "argv" array.  If you compile and link this program
+(let’s call the finished executable **call**), and use it to execute a
+Python script, such as:
+
+   def multiply(a,b):
+       print "Will compute", a, "times", b
+       c = 0
+       for i in range(0, a):
+           c = c + b
+       return c
+
+alors, le résultat sera:
+
+   $ call multiply multiply 3 2
+   Will compute 3 times 2
+   Result of call: 6
+
+Bien que le programme soit plutôt gros pour ses fonctionnalités, la
+plupart du code n’est que conversion de données entre Python et C,
+aussi que pour rapporter les erreurs. La partie intéressante, qui
+concerne l’intégration de Python débute par :
+
+   Py_Initialize();
+   pName = PyString_FromString(argv[1]);
+   /* Error checking of pName left out */
+   pModule = PyImport_Import(pName);
+
+After initializing the interpreter, the script is loaded using
+"PyImport_Import()".  This routine needs a Python string as its
+argument, which is constructed using the "PyString_FromString()" data
+conversion routine.
+
+   pFunc = PyObject_GetAttrString(pModule, argv[2]);
+   /* pFunc is a new reference */
+
+   if (pFunc && PyCallable_Check(pFunc)) {
+       ...
+   }
+   Py_XDECREF(pFunc);
+
+Une fois le script chargé, le nom recherché est obtenu en utilisant
+"PyObject_GetAttrString()". Si le nom existe, et que l’objet récupéré
+peut être appelé, vous pouvez présumer sans risque que c’est une
+fonction. Le programme continue, classiquement, par la construction de
+n-uplet d’arguments. L’appel à la fonction Python est alors effectué
+avec :
+
+   pValue = PyObject_CallObject(pFunc, pArgs);
+
+Après l’exécution de la fonction, "pValue" est soit *NULL*, soit une
+référence sur la valeur donnée par la fonction. Assurez-vous de
+libérer la référence après avoir utilisé la valeur.
+
+
+Étendre un Python Intégré
+=========================
+
+Jusqu’à présent, l’interpréteur Python intégré n’avait pas accès aux
+fonctionnalités de l’application elle-même. L’API Python le permet en
+étendant l’interpréteur intégré. Autrement dit, l’interpréteur intégré
+est étendu avec des fonctions fournies par l’application. Bien que
+cela puisse sembler complexe, ce n’est pas si dur. Il suffit d’oublier
+que l’application démarre l’interpréteur Python, au lieu de cela,
+voyez l’application comme un ensemble de fonctions, et rédigez un peu
+de code pour exposer ces fonctions à Python, tout comme vous écririez
+une extension Python normale. Par exemple :
+
+   static int numargs=0;
+
+   /* Return the number of arguments of the application command line */
+   static PyObject*
+   emb_numargs(PyObject *self, PyObject *args)
+   {
+       if(!PyArg_ParseTuple(args, ":numargs"))
+           return NULL;
+       return Py_BuildValue("i", numargs);
+   }
+
+   static PyMethodDef EmbMethods[] = {
+       {"numargs", emb_numargs, METH_VARARGS,
+        "Return the number of arguments received by the process."},
+       {NULL, NULL, 0, NULL}
+   };
+
+Insert the above code just above the "main()" function. Also, insert
+the following two statements directly after "Py_Initialize()":
+
+   numargs = argc;
+   Py_InitModule("emb", EmbMethods);
+
+Ces deux lignes initialisent la variable "numarg", et rend la fonction
+"emb.numargs()" accessible à l’interprète intégré. Avec ces ajouts, le
+script Python petit maintenant faire des choses comme
+
+   import emb
+   print "Number of arguments", emb.numargs()
+
+Dans un cas réel, les méthodes exposeraient une API de l’application a
+Python.
+
+
+Intégrer Python dans du C++
+===========================
+
+Il est aussi possible d’intégrer Python dans un programme en C++, la
+manière exacte dont cela se fait dépend de détails du système C++
+utilisé. En général vous écrirez le programme principal en C++,
+utiliserez un compilateur C++ pour compiler et lier votre programme.
+Il n’y a pas besoin de recompiler Python en utilisant C++.
+
+
+Compiler et Lier en environnement Unix ou similaire
+===================================================
+
+Ce n’est pas évident de trouver les bonnes options à passer au
+compilateur (et *linker*) pour intégrer l’interpréteur Python dans une
+application, Python ayant besoin de charger des extensions sous forme
+de bibliothèques dynamiques en C (des ".so") pour se lier avec.
+
+To find out the required compiler and linker flags, you can execute
+the "python*X.Y*-config" script which is generated as part of the
+installation process (a "python-config" script may also be available).
+This script has several options, of which the following will be
+directly useful to you:
+
+* "pythonX.Y-config --cflags" vous donnera les options recommandées
+  pour compiler:
+
+     $ /opt/bin/python2.7-config --cflags
+     -I/opt/include/python2.7 -fno-strict-aliasing -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes
+
+* "pythonX.Y-config --ldflags" vous donnera les drapeaux recommandés
+  lors de l’édition de lien:
+
+     $ /opt/bin/python2.7-config --ldflags
+     -L/opt/lib/python2.7/config -lpthread -ldl -lutil -lm -lpython2.7 -Xlinker -export-dynamic
+
+Note: Pour éviter la confusion entre différentes installations de
+  Python, (et plus spécialement entre celle de votre système et votre
+  version compilée), il est recommandé d’utiliser un chemin absolu
+  vers "python*X.Y*-config", comme dans l’exemple précédent.
+
+Si cette procédure ne fonctionne pas pour vous (il n’est pas garanti
+qu’elle fonctionne pour toutes les plateformes Unix, mais nous
+traiteront volontiers les rapports de bugs), vous devrez lire
+ladocumentation de votre système sur la liaison dynamique (*dynamic
+linking*) et / ouexaminer le "Makefile" de Python (utilisez
+"sysconfig.get_makefile_filename()" pour trouver son emplacement) et
+les options de compilation. Dans ce cas, le module "sysconfig" est un
+outil utile pour extraire automatiquement les valeurs de configuration
+que vous voudrez combiner ensemble. Par example :
+
+   >>> import sysconfig
+   >>> sysconfig.get_config_var('LIBS')
+   '-lpthread -ldl  -lutil'
+   >>> sysconfig.get_config_var('LINKFORSHARED')
+   '-Xlinker -export-dynamic'

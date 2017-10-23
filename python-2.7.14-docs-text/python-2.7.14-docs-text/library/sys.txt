@@ -1,0 +1,1050 @@
+"sys" — Paraètres et fonctions propres à des systèmes
+*****************************************************
+
+Ce module fournit un accès à certaines variables utilisées et
+maintenues par l’interpréteur, et à des fonctions interagissant
+fortement avec ce dernier. Ce module est toujours disponnible.
+
+sys.argv
+
+   La liste des arguments de la ligne de commande passés à un script
+   Python. "argv[0]" est le nom du script (chemin complet, ou non, en
+   fonction du système d’exploitation).  Si la commande a été éxécutée
+   avec l’option "-c" de l’interpréteur, "argv[0]" vaut la chaîne
+   "'-c'".  Si aucun nom de script n’a été donné à l’interpréteur
+   Python, "argv[0]" sera une chaîne vide.
+
+   Pour boucler sur l’entrée standard, ou la liste des fichiers donnés
+   sur la ligne de commande, utilisez le module "fileinput".
+
+sys.byteorder
+
+   Un indicateur de l’ordre natif des octets.  Vaudra "'big'" sur les
+   plateformes gros-boutistes (octet le plus significatif en premier),
+   et "'little'" sur les plateformes petit-boutiste (octet le moins
+   significatif en premier).
+
+   Nouveau dans la version 2.0.
+
+sys.builtin_module_names
+
+   Un *tuple* de chaînes de caractères donnant les noms de tous les
+   modules compilés dans l’interpréteur Python.  (Cette information
+   n’est pas disponnible autremment — "`modules.keys()" liste
+   seulement les modules importés.)
+
+sys.call_tracing(func, args)
+
+   Appelle "func(*args)", avec le traçage activé. Le l’état du tracage
+   est sauvegardé et restauré après l’appel.  Ceci est destiné à être
+   appelé depuis un débogueur à partir d’un point de contrôle, pour
+   déboguer récursivement un autre code.
+
+sys.copyright
+
+   Une chaîne contenant le copyright relatif à l’interpréteur Python.
+
+sys._clear_type_cache()
+
+   Vide le cache interne de types. Le cache de types est utilisé pour
+   accélérer les recherches d’attributs et de méthodes. N’utilisez
+   cette fonction *que* pour libérer des références inutiles durant le
+   débugage de fuite de référence.
+
+   Cette fonction ne devrait être utilisée que pour un usage interne
+   et spécialisé.
+
+   Nouveau dans la version 2.6.
+
+sys._current_frames()
+
+   Renvoie un dictionnaire faisant correspondre chaque identifiant de
+   *thread* à la *stack frame* actuellement active pour ces *threads*
+   au moment où la fonction est appelée. Notez que les fonctions du
+   module "traceback" peuvent construire une *call stack* à partir
+   d’une telle *frame*.
+
+   N’ayant pas besoin de la coopération des *threads* bloqués, cette
+   fonction est très utile pour déboguer un *deadlock*. Aussi, les
+   *call stack* de ces threads ne changeront pas tant qu’ils seront
+   bloqués. La *frame* renvoyée pour un *thread* non bloqué peut ne
+   plus être liée à l’activitée courante du *thread* au moment où le
+   code appelant examine la frame.
+
+   Cette fonction ne devrait être utilisée que pour un usage interne
+   et spécialisé.
+
+   Nouveau dans la version 2.5.
+
+sys.dllhandle
+
+   Nombre entier spécifiant le descripteur de la DLL Python sur
+   Windows,
+
+sys.displayhook(value)
+
+   If *value* is not "None", this function prints it to "sys.stdout",
+   and saves it in "__builtin__._".
+
+   "sys.displayhook" est appelé avec le résultat de l’évaluation d’une
+   *expression* entrée dans une session Python interactive.
+   L’affichage de ces valeurs peut être personalisé en assignant une
+   autre fonction d’un argument à "sys.displayhook".
+
+sys.dont_write_bytecode
+
+   If this is true, Python won’t try to write ".pyc" or ".pyo" files
+   on the import of source modules.  This value is initially set to
+   "True" or "False" depending on the "-B" command line option and the
+   "PYTHONDONTWRITEBYTECODE" environment variable, but you can set it
+   yourself to control bytecode file generation.
+
+   Nouveau dans la version 2.6.
+
+sys.excepthook(type, value, traceback)
+
+   Cette fonction affiche la *traceback* et l’exception donnée sur
+   "sys.stderr".
+
+   Lorsqu’une exception est levée et n’est pas attrapée,
+   l’interpréteur appele "sys.excepthook" avec trois arguments, la
+   classe de l’exception, l’instance de l’exception, et un objet
+   *traceback*.  Dans une session interactive, cela se produit juste
+   avant que le que l’invite soit rendue.  Dans un programme Python,
+   cela se produit juste avant que le programme quitte. La gestion de
+   ces exceptions peut être personalisé en affectant une autre
+   fonction de trois arguments à "sys.excepthook".
+
+sys.__displayhook__
+sys.__excepthook__
+
+   Ces objets contiennent les valeurs originales de "displayhook" et
+   "excepthook" au début du programme.  Elles sont sauvegardées de
+   façon à ce que "displayhook" et "excepthook" puisse être restaurées
+   au cas où elles seraient remplacées par des objets cassés.
+
+sys.exc_info()
+
+   This function returns a tuple of three values that give information
+   about the exception that is currently being handled.  The
+   information returned is specific both to the current thread and to
+   the current stack frame.  If the current stack frame is not
+   handling an exception, the information is taken from the calling
+   stack frame, or its caller, and so on until a stack frame is found
+   that is handling an exception.  Here, « handling an exception » is
+   defined as « executing or having executed an except clause. »  For
+   any stack frame, only information about the most recently handled
+   exception is accessible.
+
+   If no exception is being handled anywhere on the stack, a tuple
+   containing three "None" values is returned.  Otherwise, the values
+   returned are "(type, value, traceback)".  Their meaning is: *type*
+   gets the exception type of the exception being handled (a class
+   object); *value* gets the exception parameter (its *associated
+   value* or the second argument to "raise", which is always a class
+   instance if the exception type is a class object); *traceback* gets
+   a traceback object (see the Reference Manual) which encapsulates
+   the call stack at the point where the exception originally
+   occurred.
+
+   If "exc_clear()" is called, this function will return three "None"
+   values until either another exception is raised in the current
+   thread or the execution stack returns to a frame where another
+   exception is being handled.
+
+   Avertissement: Assigning the *traceback* return value to a local
+     variable in a function that is handling an exception will cause a
+     circular reference.  This will prevent anything referenced by a
+     local variable in the same function or by the traceback from
+     being garbage collected.  Since most functions don’t need access
+     to the traceback, the best solution is to use something like
+     "exctype, value = sys.exc_info()[:2]" to extract only the
+     exception type and value.  If you do need the traceback, make
+     sure to delete it after use (best done with a "try" … "finally"
+     statement) or to call "exc_info()" in a function that does not
+     itself handle an exception.
+
+   Note: Beginning with Python 2.2, such cycles are automatically
+     reclaimed when garbage collection is enabled and they become
+     unreachable, but it remains more efficient to avoid creating
+     cycles.
+
+sys.exc_clear()
+
+   This function clears all information relating to the current or
+   last exception that occurred in the current thread.  After calling
+   this function, "exc_info()" will return three "None" values until
+   another exception is raised in the current thread or the execution
+   stack returns to a frame where another exception is being handled.
+
+   This function is only needed in only a few obscure situations.
+   These include logging and error handling systems that report
+   information on the last or current exception.  This function can
+   also be used to try to free resources and trigger object
+   finalization, though no guarantee is made as to what objects will
+   be freed, if any.
+
+   Nouveau dans la version 2.3.
+
+sys.exc_type
+sys.exc_value
+sys.exc_traceback
+
+   Obsolète depuis la version 1.5: Use "exc_info()" instead.
+
+   Since they are global variables, they are not specific to the
+   current thread, so their use is not safe in a multi-threaded
+   program.  When no exception is being handled, "exc_type" is set to
+   "None" and the other two are undefined.
+
+sys.exec_prefix
+
+   A string giving the site-specific directory prefix where the
+   platform-dependent Python files are installed; by default, this is
+   also "'/usr/local'".  This can be set at build time with the "--
+   exec-prefix" argument to the **configure** script.  Specifically,
+   all configuration files (e.g. the "pyconfig.h" header file) are
+   installed in the directory "*exec_prefix*/lib/python*X.Y*/config",
+   and shared library modules are installed in
+   "*exec_prefix*/lib/python*X.Y*/lib-dynload", where *X.Y* is the
+   version number of Python, for example "2.7".
+
+sys.executable
+
+   Une chaîne donnant le chemin absolu vers l’interpréteur Python, un
+   fichier binaire exécutable, sur les système sur lesquels ça à du
+   sense. Si Python n’est pas capable de récupérer le chemin réel de
+   son exécutable, "sys.executable" sera une chaîne vide ou "None".
+
+sys.exit([arg])
+
+   Quitte Python.  C’est implémente en levant l’exception
+   "SystemExit", afin que toutes les actions de nettoyage spécifiées
+   par des clauses *finally* des instructions "try" soient
+   correctement exécutées. Il est aussi possible d’intercepter la
+   tentative de sortie à un niveau au dessus.
+
+   L’argument optionnel *arg* peut être un nombre entier donnant
+   l’état de sortie (zéro par défaut), ou un autre type d’objet.  Pour
+   les shells (et autres), si c’est un entier, zéro signifie « terminé
+   avec succès », et toutes les autres valeurs signifient « terminé
+   anormalement ». La pluspart des systèmes imposent qu’il se situe
+   dans la plage 0–127, et leur comportement n’est pas défini pour les
+   autres cas. Certains systèmes peu communs ont pour convention
+   d’assigner un sens particulier à des valeur spécifiques. Les
+   programmes Unix utilisent généralement 2 pour les erreurs de
+   syntaxe dans les arguments de la ligne de commande, et 1 pour
+   toutes les autres erreurs. Si un autre type est passé, "None" est
+   équivalent à zéro, et tout autre objet est écrit sur "stderr" et
+   donne un code de sortie 1. Typiquement, "sys.exit("some error
+   message")" est un moyen rapide de quitter un programme en cas
+   d’erreur.
+
+   Puisque la fonction "exit()" ne fait « que » lever une exception,
+   elle ne fera quiter le processus que si elle est appelée depuis le
+   *thread* principal, et que l’exception n’est pas interceptée.
+
+sys.exitfunc
+
+   This value is not actually defined by the module, but can be set by
+   the user (or by a program) to specify a clean-up action at program
+   exit.  When set, it should be a parameterless function.  This
+   function will be called when the interpreter exits.  Only one
+   function may be installed in this way; to allow multiple functions
+   which will be called at termination, use the "atexit" module.
+
+   Note: The exit function is not called when the program is killed
+     by a signal, when a Python fatal internal error is detected, or
+     when "os._exit()" is called.
+
+   Obsolète depuis la version 2.4: Use "atexit" instead.
+
+sys.flags
+
+   The struct sequence *flags* exposes the status of command line
+   flags. The attributes are read only.
+
+   +-------------------------------+-------------------------------------+
+   | attribut                      | option                              |
+   +===============================+=====================================+
+   | "debug"                       | "-d"                                |
+   +-------------------------------+-------------------------------------+
+   | "py3k_warning"                | "-3"                                |
+   +-------------------------------+-------------------------------------+
+   | "division_warning"            | "-Q"                                |
+   +-------------------------------+-------------------------------------+
+   | "division_new"                | "-Qnew"                             |
+   +-------------------------------+-------------------------------------+
+   | "inspect"                     | "-i"                                |
+   +-------------------------------+-------------------------------------+
+   | "interactive"                 | "-i"                                |
+   +-------------------------------+-------------------------------------+
+   | "optimize"                    | "-O" or "-OO"                       |
+   +-------------------------------+-------------------------------------+
+   | "dont_write_bytecode"         | "-B"                                |
+   +-------------------------------+-------------------------------------+
+   | "no_user_site"                | "-s"                                |
+   +-------------------------------+-------------------------------------+
+   | "no_site"                     | "-S"                                |
+   +-------------------------------+-------------------------------------+
+   | "ignore_environment"          | "-E"                                |
+   +-------------------------------+-------------------------------------+
+   | "tabcheck"                    | "-t" or "-tt"                       |
+   +-------------------------------+-------------------------------------+
+   | "verbose"                     | "-v"                                |
+   +-------------------------------+-------------------------------------+
+   | "unicode"                     | "-U"                                |
+   +-------------------------------+-------------------------------------+
+   | "bytes_warning"               | "-b"                                |
+   +-------------------------------+-------------------------------------+
+   | "hash_randomization"          | "-R"                                |
+   +-------------------------------+-------------------------------------+
+
+   Nouveau dans la version 2.6.
+
+   Nouveau dans la version 2.7.3: L’attribut "hash_randomization".
+
+sys.float_info
+
+   A structseq holding information about the float type. It contains
+   low level information about the precision and internal
+   representation.  The values correspond to the various floating-
+   point constants defined in the standard header file "float.h" for
+   the “C” programming language; see section 5.2.4.2.2 of the 1999
+   ISO/IEC C standard [C99], “Characteristics of floating types”, for
+   details.
+
+   +-----------------------+------------------+----------------------------------------------------+
+   | attribut              | macro float.h    | explication                                        |
+   +=======================+==================+====================================================+
+   | "epsilon"             | DBL_EPSILON      | difference entre 1 et la plus petite valeur plus   |
+   |                       |                  | grande que 1 représentable en *float*              |
+   +-----------------------+------------------+----------------------------------------------------+
+   | "dig"                 | DBL_DIG          | nombre maximum de décimales pouvant être           |
+   |                       |                  | représentées fidèlement dans un *float* (voir ci-  |
+   |                       |                  | desous)                                            |
+   +-----------------------+------------------+----------------------------------------------------+
+   | "mant_dig"            | DBL_MANT_DIG     | précision: nombre de base-"radix" chiffres dans la |
+   |                       |                  | mantisse du *float*                                |
+   +-----------------------+------------------+----------------------------------------------------+
+   | "max"                 | DBL_MAX          | plus grand float fini représentable                |
+   +-----------------------+------------------+----------------------------------------------------+
+   | "max_exp"             | DBL_MAX_EXP      | plus grand nombre entier *e* tel que               |
+   |                       |                  | "radix**(e-1)" soit représentable sous forme de    |
+   |                       |                  | *float* finit                                      |
+   +-----------------------+------------------+----------------------------------------------------+
+   | "max_10_exp"          | DBL_MAX_10_EXP   | plus grand nombre entier *e* tel que "10**e" est   |
+   |                       |                  | dans l’intervalle des nombre flotants finis        |
+   +-----------------------+------------------+----------------------------------------------------+
+   | "min"                 | DBL_MIN          | plus petit nombre à virgule flottante positif      |
+   |                       |                  | normalisé                                          |
+   +-----------------------+------------------+----------------------------------------------------+
+   | "min_exp"             | DBL_MIN_EXP      | plus petit entier *e* tel que "radix**(e-1)" est   |
+   |                       |                  | un *float* normalisé                               |
+   +-----------------------+------------------+----------------------------------------------------+
+   | "min_10_exp"          | DBL_MIN_10_EXP   | plus petit nombre entier *e* tel que "10**e" est   |
+   |                       |                  | un float normalisé                                 |
+   +-----------------------+------------------+----------------------------------------------------+
+   | "radix"               | FLT_RADIX        | base de la représentation de l’exposant            |
+   +-----------------------+------------------+----------------------------------------------------+
+   | "rounds"              | FLT_ROUNDS       | constante, nombre entier représentant le mode      |
+   |                       |                  | d’arrondi utilisé pour les opérations              |
+   |                       |                  | arithmétiques. Elle reflète la valeur de la macro  |
+   |                       |                  | système FLT_ROUNDS au moment du démarrage de       |
+   |                       |                  | l’interpréteur. Voir section 5.2.4.4.2.2 de la     |
+   |                       |                  | norme C99 pour une explication des valeurs         |
+   |                       |                  | possibles et de leurs significations.              |
+   +-----------------------+------------------+----------------------------------------------------+
+
+   L’attribut "sys.float_info.dig" nécessite plus d’explications : Si
+   "s" est une chaîne représentant un nombre décimal avec au plus
+   "sys.float_info.dig" chiffres significatifs, alors, convertir "s"
+   en un nombre à virgule flottante puis à nouveau en chaîne redonnera
+   la même valeure.
+
+      >>> import sys
+      >>> sys.float_info.dig
+      15
+      >>> s = '3.14159265358979'    # decimal string with 15 significant digits
+      >>> format(float(s), '.15g')  # convert to float and back -> same value
+      '3.14159265358979'
+
+   Cependant, pour les chaînes avec plus de "sys.float_info.dig"
+   chiffres significatifs, ce n’est pas toujours vrai :
+
+      >>> s = '9876543211234567'    # 16 significant digits is too many!
+      >>> format(float(s), '.16g')  # conversion changes value
+      '9876543211234568'
+
+   Nouveau dans la version 2.6.
+
+sys.float_repr_style
+
+   A string indicating how the "repr()" function behaves for floats.
+   If the string has value "'short'" then for a finite float "x",
+   "repr(x)" aims to produce a short string with the property that
+   "float(repr(x)) == x".  This is the usual behaviour in Python 2.7
+   and later.  Otherwise, "float_repr_style" has value "'legacy'" and
+   "repr(x)" behaves in the same way as it did in versions of Python
+   prior to 2.7.
+
+   Nouveau dans la version 2.7.
+
+sys.getcheckinterval()
+
+   Renvoie le *check interval* de l’interpréteur, voir
+   "setcheckinterval()".
+
+   Nouveau dans la version 2.3.
+
+sys.getdefaultencoding()
+
+   Renvoie le nom du codage par défaut actuellement utilisé par
+   l’implémentation *Unicode* pour coder les chaînes.
+
+   Nouveau dans la version 2.0.
+
+sys.getdlopenflags()
+
+   Return the current value of the flags that are used for "dlopen()"
+   calls. The flag constants are defined in the "dl" and "DLFCN"
+   modules. Availability: Unix.
+
+   Nouveau dans la version 2.2.
+
+sys.getfilesystemencoding()
+
+   Return the name of the encoding used to convert Unicode filenames
+   into system file names, or "None" if the system default encoding is
+   used. The result value depends on the operating system:
+
+   * Sur Mac OS X, l’encodage est "'utf-8'".
+
+   * On Unix, the encoding is the user’s preference according to the
+     result of nl_langinfo(CODESET), or "None" if the
+     "nl_langinfo(CODESET)" failed.
+
+   * On Windows NT+, file names are Unicode natively, so no
+     conversion is performed. "getfilesystemencoding()" still returns
+     "'mbcs'", as this is the encoding that applications should use
+     when they explicitly want to convert Unicode strings to byte
+     strings that are equivalent when used as file names.
+
+   * On Windows 9x, the encoding is "'mbcs'".
+
+   Nouveau dans la version 2.3.
+
+sys.getrefcount(object)
+
+   Donne le nombre de référence de l’objet *object*. Le nombre renvoyé
+   est généralement d’une référence de plus qu’attendu, puisqu’il
+   compte la référence (temporaire) de l’argument à "getrefcount()".
+
+sys.getrecursionlimit()
+
+   Donne la limite actuelle de la limite de récursion, la profondeur
+   maximum de la pile de l’interpréteur.  Cette limite empêche Python
+   de planter lors d’une récursion infinie à cause d’un débordement de
+   la pile. Elle peut être modifiée par "setrecursionlimit()".
+
+sys.getsizeof(object[, default])
+
+   Donne la taille d’un objet en octets. L’objet peut être de
+   n’importe quel type. Le résultat sera correct pour tous les objets
+   natifs, mais le résultat peut ne pas être toujours vrai pour les
+   extensions, la valeur étant dépendante de l’implémentation.
+
+   S’il est fourni, *default* sera renvoyé si l’objet ne fournit aucun
+   moyen de récupérer sa taille.  Sinon, une exception "TypeError"
+   sera levée.
+
+   "getsizeof()" appelle la méthode "__sizeof__" de l’objet, et s’il
+   est géré par lui, ajoute le surcût du ramasse-miettes.
+
+   Nouveau dans la version 2.6.
+
+sys._getframe([depth])
+
+   Renvoie une *frame* de la pile d’appels. Si le nombre entier
+   optionnel *depth* est donné, la *frame* donnée sera de *depth*
+   appels depuis le haut de la pile. Si c’est plus profond que la
+   hauteur de la pile, une exception "ValueError" est levée. La
+   profondeur par défaut est zéro, donnant ainsi la *frame* du dessus
+   de la pile.
+
+   Cette fonction ne devrait être utilisée que pour une utilisation
+   interne et spécifique. Il n’est pas garanti qu’elle existe dans
+   toutes les implémentations de Python.
+
+sys.getprofile()
+
+   Renvoie la fonction de profilage tel que défini par "setprofile()".
+
+   Nouveau dans la version 2.6.
+
+sys.gettrace()
+
+   Renvoie la fonction de traçage tel que définie par "settrace()".
+
+   La fonction "gettrace()" ne sert que pour implémenter des
+   débuggeers, des profilers, outils d’analyse de couverture, etc….
+   Son comportement dépend de l’implémentation et non du langage, elle
+   n’est donc pas forcément disponnible dans toutes les
+   implémentations de Python.
+
+   Nouveau dans la version 2.6.
+
+sys.getwindowsversion()
+
+   Return a named tuple describing the Windows version currently
+   running.  The named elements are *major*, *minor*, *build*,
+   *platform*, *service_pack*, *service_pack_minor*,
+   *service_pack_major*, *suite_mask*, and *product_type*.
+   *service_pack* contains a string while all other values are
+   integers. The components can also be accessed by name, so
+   "sys.getwindowsversion()[0]" is equivalent to
+   "sys.getwindowsversion().major". For compatibility with prior
+   versions, only the first 5 elements are retrievable by indexing.
+
+   *platform* may be one of the following values:
+
+   +-------------------------------------------+---------------------------+
+   | Constante                                 | Platform                  |
+   +===========================================+===========================+
+   | "0 (VER_PLATFORM_WIN32s)"                 | Win32s on Windows 3.1     |
+   +-------------------------------------------+---------------------------+
+   | "1 (VER_PLATFORM_WIN32_WINDOWS)"          | Windows 95/98/ME          |
+   +-------------------------------------------+---------------------------+
+   | "2 (VER_PLATFORM_WIN32_NT)"               | Windows NT/2000/XP/x64    |
+   +-------------------------------------------+---------------------------+
+   | "3 (VER_PLATFORM_WIN32_CE)"               | Windows CE                |
+   +-------------------------------------------+---------------------------+
+
+   *product_type* peut être une des valeurs suivantes:
+
+   +-----------------------------------------+-----------------------------------+
+   | Constante                               | Signification                     |
+   +=========================================+===================================+
+   | "1 (VER_NT_WORKSTATION)"                | Le système une station de         |
+   |                                         | travail.                          |
+   +-----------------------------------------+-----------------------------------+
+   | "2 (VER_NT_DOMAIN_CONTROLLER)"          | Le système est un controlleur de  |
+   |                                         | domaine.                          |
+   +-----------------------------------------+-----------------------------------+
+   | "3 (VER_NT_SERVER)"                     | Le système est un serveur, mais   |
+   |                                         | pas un controlleur de domaine.    |
+   +-----------------------------------------+-----------------------------------+
+
+   Cette fonction enveloppe la fonction Win32 "GetVersionEx()". Voir
+   la documentation de Microsoft sur "OSVERSIONINFOEX()" pour plus
+   d’informations sur ces champs.
+
+   Disponibilité : Windows.
+
+   Nouveau dans la version 2.3.
+
+   Modifié dans la version 2.7: Changé en un *tuple* nommé, et ajout
+   de *service_pack_minor*, *service_pack_major*, *suite_mask*, et
+   *product_type*.
+
+sys.hexversion
+
+   Le numéro de version codé sous forme d’un seul nombre entier.  Ce
+   numéro augmente avec chaque version, y compris pour les versions
+   hors production.  Par exemple, pour vérifier que l’interpréteur
+   Python est au moins la version 1.5, utilisez :
+
+      if sys.hexversion >= 0x010502F0:
+          # use some advanced feature
+          ...
+      else:
+          # use an alternative implementation or warn the user
+          ...
+
+   This is called "hexversion" since it only really looks meaningful
+   when viewed as the result of passing it to the built-in "hex()"
+   function.  The "version_info" value may be used for a more human-
+   friendly encoding of the same information.
+
+   The "hexversion" is a 32-bit number with the following layout:
+
+   +---------------------------+--------------------------------------------------+
+   | Bits (big endian order)   | Signification                                    |
+   +===========================+==================================================+
+   | "1-8"                     | "PY_MAJOR_VERSION"  (the "2" in "2.1.0a3")       |
+   +---------------------------+--------------------------------------------------+
+   | "9-16"                    | "PY_MINOR_VERSION"  (the "1" in "2.1.0a3")       |
+   +---------------------------+--------------------------------------------------+
+   | "17-24"                   | "PY_MICRO_VERSION"  (the "0" in "2.1.0a3")       |
+   +---------------------------+--------------------------------------------------+
+   | "25-28"                   | "PY_RELEASE_LEVEL"  ("0xA" for alpha, "0xB" for  |
+   |                           | beta, "0xC" for release candidate and "0xF" for  |
+   |                           | final)                                           |
+   +---------------------------+--------------------------------------------------+
+   | "29-32"                   | "PY_RELEASE_SERIAL"  (the "3" in "2.1.0a3", zero |
+   |                           | for final releases)                              |
+   +---------------------------+--------------------------------------------------+
+
+   Thus "2.1.0a3" is hexversion "0x020100a3".
+
+   Nouveau dans la version 1.5.2.
+
+sys.long_info
+
+   A struct sequence that holds information about Python’s internal
+   representation of integers.  The attributes are read only.
+
+   +---------------------------+------------------------------------------------+
+   | Attribut                  | Explication                                    |
+   +===========================+================================================+
+   | "bits_per_digit"          | number of bits held in each digit.  Python     |
+   |                           | integers are stored internally in base         |
+   |                           | "2**long_info.bits_per_digit"                  |
+   +---------------------------+------------------------------------------------+
+   | "sizeof_digit"            | size in bytes of the C type used to represent  |
+   |                           | a digit                                        |
+   +---------------------------+------------------------------------------------+
+
+   Nouveau dans la version 2.7.
+
+sys.last_type
+sys.last_value
+sys.last_traceback
+
+   These three variables are not always defined; they are set when an
+   exception is not handled and the interpreter prints an error
+   message and a stack traceback. Their intended use is to allow an
+   interactive user to import a debugger module and engage in post-
+   mortem debugging without having to re-execute the command that
+   caused the error.  (Typical use is "import pdb; pdb.pm()" to enter
+   the post-mortem debugger; see chapter pdb — The Python Debugger for
+   more information.)
+
+   The meaning of the variables is the same as that of the return
+   values from "exc_info()" above.  (Since there is only one
+   interactive thread, thread-safety is not a concern for these
+   variables, unlike for "exc_type" etc.)
+
+sys.maxint
+
+   The largest positive integer supported by Python’s regular integer
+   type.  This is at least 2**31-1.  The largest negative integer is
+   "-maxint-1" — the asymmetry results from the use of 2’s complement
+   binary arithmetic.
+
+sys.maxsize
+
+   The largest positive integer supported by the platform’s Py_ssize_t
+   type, and thus the maximum size lists, strings, dicts, and many
+   other containers can have.
+
+sys.maxunicode
+
+   An integer giving the largest supported code point for a Unicode
+   character.  The value of this depends on the configuration option
+   that specifies whether Unicode characters are stored as UCS-2 or
+   UCS-4.
+
+sys.meta_path
+
+   A list of *finder* objects that have their "find_module()" methods
+   called to see if one of the objects can find the module to be
+   imported. The "find_module()" method is called at least with the
+   absolute name of the module being imported. If the module to be
+   imported is contained in package then the parent package’s
+   "__path__" attribute is passed in as a second argument. The method
+   returns "None" if the module cannot be found, else returns a
+   *loader*.
+
+   "sys.meta_path" is searched before any implicit default finders or
+   "sys.path".
+
+   See **PEP 302** for the original specification.
+
+sys.modules
+
+   This is a dictionary that maps module names to modules which have
+   already been loaded.  This can be manipulated to force reloading of
+   modules and other tricks. Note that removing a module from this
+   dictionary is *not* the same as calling "reload()" on the
+   corresponding module object.
+
+sys.path
+
+   A list of strings that specifies the search path for modules.
+   Initialized from the environment variable "PYTHONPATH", plus an
+   installation-dependent default.
+
+   As initialized upon program startup, the first item of this list,
+   "path[0]", is the directory containing the script that was used to
+   invoke the Python interpreter.  If the script directory is not
+   available (e.g.  if the interpreter is invoked interactively or if
+   the script is read from standard input), "path[0]" is the empty
+   string, which directs Python to search modules in the current
+   directory first.  Notice that the script directory is inserted
+   *before* the entries inserted as a result of "PYTHONPATH".
+
+   A program is free to modify this list for its own purposes.
+
+   Modifié dans la version 2.3: Unicode strings are no longer ignored.
+
+   Voir aussi: Module "site" This describes how to use .pth files to
+     extend "sys.path".
+
+sys.path_hooks
+
+   A list of callables that take a path argument to try to create a
+   *finder* for the path. If a finder can be created, it is to be
+   returned by the callable, else raise "ImportError".
+
+   Originally specified in **PEP 302**.
+
+sys.path_importer_cache
+
+   A dictionary acting as a cache for *finder* objects. The keys are
+   paths that have been passed to "sys.path_hooks" and the values are
+   the finders that are found. If a path is a valid file system path
+   but no explicit finder is found on "sys.path_hooks" then "None" is
+   stored to represent the implicit default finder should be used. If
+   the path is not an existing path then "imp.NullImporter" is set.
+
+   Originally specified in **PEP 302**.
+
+sys.platform
+
+   This string contains a platform identifier that can be used to
+   append platform-specific components to "sys.path", for instance.
+
+   For most Unix systems, this is the lowercased OS name as returned
+   by "uname -s" with the first part of the version as returned by
+   "uname -r" appended, e.g. "'sunos5'", *at the time when Python was
+   built*.  Unless you want to test for a specific system version, it
+   is therefore recommended to use the following idiom:
+
+      if sys.platform.startswith('freebsd'):
+          # FreeBSD-specific code here...
+      elif sys.platform.startswith('linux'):
+          # Linux-specific code here...
+
+   Modifié dans la version 2.7.3: Since lots of code check for
+   "sys.platform == 'linux2'", and there is no essential change
+   between Linux 2.x and 3.x, "sys.platform" is always set to
+   "'linux2'", even on Linux 3.x.  In Python 3.3 and later, the value
+   will always be set to "'linux'", so it is recommended to always use
+   the "startswith" idiom presented above.
+
+   For other systems, the values are:
+
+   +-----------------------+-----------------------------+
+   | System                | "platform" value            |
+   +=======================+=============================+
+   | Linux (2.x *and* 3.x) | "'linux2'"                  |
+   +-----------------------+-----------------------------+
+   | Windows               | "'win32'"                   |
+   +-----------------------+-----------------------------+
+   | Windows/Cygwin        | "'cygwin'"                  |
+   +-----------------------+-----------------------------+
+   | Mac OS X              | "'darwin'"                  |
+   +-----------------------+-----------------------------+
+   | OS/2                  | "'os2'"                     |
+   +-----------------------+-----------------------------+
+   | OS/2 EMX              | "'os2emx'"                  |
+   +-----------------------+-----------------------------+
+   | RiscOS                | "'riscos'"                  |
+   +-----------------------+-----------------------------+
+   | AtheOS                | "'atheos'"                  |
+   +-----------------------+-----------------------------+
+
+   Voir aussi: "os.name" has a coarser granularity.  "os.uname()"
+     gives system- dependent version information.
+
+     Le module "platform" fournit des vérifications détaillées pour
+     l’identité du système.
+
+sys.prefix
+
+   A string giving the site-specific directory prefix where the
+   platform independent Python files are installed; by default, this
+   is the string "'/usr/local'".  This can be set at build time with
+   the "--prefix" argument to the **configure** script.  The main
+   collection of Python library modules is installed in the directory
+   "*prefix*/lib/python*X.Y*" while the platform independent header
+   files (all except "pyconfig.h") are stored in
+   "*prefix*/include/python*X.Y*", where *X.Y* is the version number
+   of Python, for example "2.7".
+
+sys.ps1
+sys.ps2
+
+   Strings specifying the primary and secondary prompt of the
+   interpreter.  These are only defined if the interpreter is in
+   interactive mode.  Their initial values in this case are "'>>> '"
+   and "'... '".  If a non-string object is assigned to either
+   variable, its "str()" is re-evaluated each time the interpreter
+   prepares to read a new interactive command; this can be used to
+   implement a dynamic prompt.
+
+sys.py3kwarning
+
+   Bool containing the status of the Python 3 warning flag. It’s
+   "True" when Python is started with the -3 option.  (This should be
+   considered read-only; setting it to a different value doesn’t have
+   an effect on Python 3 warnings.)
+
+   Nouveau dans la version 2.6.
+
+sys.setcheckinterval(interval)
+
+   Set the interpreter’s « check interval ».  This integer value
+   determines how often the interpreter checks for periodic things
+   such as thread switches and signal handlers.  The default is "100",
+   meaning the check is performed every 100 Python virtual
+   instructions. Setting it to a larger value may increase performance
+   for programs using threads.  Setting it to a value "<=" 0 checks
+   every virtual instruction, maximizing responsiveness as well as
+   overhead.
+
+sys.setdefaultencoding(name)
+
+   Set the current default string encoding used by the Unicode
+   implementation.  If *name* does not match any available encoding,
+   "LookupError" is raised. This function is only intended to be used
+   by the "site" module implementation and, where needed, by
+   "sitecustomize".  Once used by the "site" module, it is removed
+   from the "sys" module’s namespace.
+
+   Nouveau dans la version 2.0.
+
+sys.setdlopenflags(n)
+
+   Set the flags used by the interpreter for "dlopen()" calls, such as
+   when the interpreter loads extension modules.  Among other things,
+   this will enable a lazy resolving of symbols when importing a
+   module, if called as "sys.setdlopenflags(0)".  To share symbols
+   across extension modules, call as "sys.setdlopenflags(dl.RTLD_NOW |
+   dl.RTLD_GLOBAL)".  Symbolic names for the flag modules can be
+   either found in the "dl" module, or in the "DLFCN" module. If
+   "DLFCN" is not available, it can be generated from
+   "/usr/include/dlfcn.h" using the **h2py** script. Availability:
+   Unix.
+
+   Nouveau dans la version 2.2.
+
+sys.setprofile(profilefunc)
+
+   Set the system’s profile function, which allows you to implement a
+   Python source code profiler in Python.  See chapter The Python
+   Profilers for more information on the Python profiler.  The
+   system’s profile function is called similarly to the system’s trace
+   function (see "settrace()"), but it isn’t called for each executed
+   line of code (only on call and return, but the return event is
+   reported even when an exception has been set).  The function is
+   thread-specific, but there is no way for the profiler to know about
+   context switches between threads, so it does not make sense to use
+   this in the presence of multiple threads. Also, its return value is
+   not used, so it can simply return "None".
+
+sys.setrecursionlimit(limit)
+
+   Set the maximum depth of the Python interpreter stack to *limit*.
+   This limit prevents infinite recursion from causing an overflow of
+   the C stack and crashing Python.
+
+   The highest possible limit is platform-dependent.  A user may need
+   to set the limit higher when she has a program that requires deep
+   recursion and a platform that supports a higher limit.  This should
+   be done with care, because a too-high limit can lead to a crash.
+
+sys.settrace(tracefunc)
+
+   Set the system’s trace function, which allows you to implement a
+   Python source code debugger in Python.  The function is thread-
+   specific; for a debugger to support multiple threads, it must be
+   registered using "settrace()" for each thread being debugged.
+
+   Trace functions should have three arguments: *frame*, *event*, and
+   *arg*. *frame* is the current stack frame.  *event* is a string:
+   "'call'", "'line'", "'return'", "'exception'", "'c_call'",
+   "'c_return'", or "'c_exception'". *arg* depends on the event type.
+
+   The trace function is invoked (with *event* set to "'call'")
+   whenever a new local scope is entered; it should return a reference
+   to a local trace function to be used that scope, or "None" if the
+   scope shouldn’t be traced.
+
+   The local trace function should return a reference to itself (or to
+   another function for further tracing in that scope), or "None" to
+   turn off tracing in that scope.
+
+   The events have the following meaning:
+
+   "'call'"
+      A function is called (or some other code block entered).  The
+      global trace function is called; *arg* is "None"; the return
+      value specifies the local trace function.
+
+   "'line'"
+      The interpreter is about to execute a new line of code or re-
+      execute the condition of a loop.  The local trace function is
+      called; *arg* is "None"; the return value specifies the new
+      local trace function.  See "Objects/lnotab_notes.txt" for a
+      detailed explanation of how this works.
+
+   "'return'"
+      A function (or other code block) is about to return.  The local
+      trace function is called; *arg* is the value that will be
+      returned, or "None" if the event is caused by an exception being
+      raised.  The trace function’s return value is ignored.
+
+   "'exception'"
+      An exception has occurred.  The local trace function is called;
+      *arg* is a tuple "(exception, value, traceback)"; the return
+      value specifies the new local trace function.
+
+   "'c_call'"
+      A C function is about to be called.  This may be an extension
+      function or a built-in.  *arg* is the C function object.
+
+   "'c_return'"
+      A C function has returned. *arg* is the C function object.
+
+   "'c_exception'"
+      A C function has raised an exception.  *arg* is the C function
+      object.
+
+   Note that as an exception is propagated down the chain of callers,
+   an "'exception'" event is generated at each level.
+
+   For more information on code and frame objects, refer to The
+   standard type hierarchy.
+
+   **CPython implementation detail:** The "settrace()" function is
+   intended only for implementing debuggers, profilers, coverage tools
+   and the like.  Its behavior is part of the implementation platform,
+   rather than part of the language definition, and thus may not be
+   available in all Python implementations.
+
+sys.settscdump(on_flag)
+
+   Activate dumping of VM measurements using the Pentium timestamp
+   counter, if *on_flag* is true. Deactivate these dumps if *on_flag*
+   is off. The function is available only if Python was compiled with
+   "--with-tsc". To understand the output of this dump, read
+   "Python/ceval.c" in the Python sources.
+
+   Nouveau dans la version 2.4.
+
+   **CPython implementation detail:** This function is intimately
+   bound to CPython implementation details and thus not likely to be
+   implemented elsewhere.
+
+sys.stdin
+sys.stdout
+sys.stderr
+
+   File objects corresponding to the interpreter’s standard input,
+   output and error streams.  "stdin" is used for all interpreter
+   input except for scripts but including calls to "input()" and
+   "raw_input()".  "stdout" is used for the output of "print" and
+   *expression* statements and for the prompts of "input()" and
+   "raw_input()". The interpreter’s own prompts and (almost all of)
+   its error messages go to "stderr".  "stdout" and "stderr" needn’t
+   be built-in file objects: any object is acceptable as long as it
+   has a "write()" method that takes a string argument.  (Changing
+   these objects doesn’t affect the standard I/O streams of processes
+   executed by "os.popen()", "os.system()" or the "exec*()" family of
+   functions in the "os" module.)
+
+sys.__stdin__
+sys.__stdout__
+sys.__stderr__
+
+   These objects contain the original values of "stdin", "stderr" and
+   "stdout" at the start of the program.  They are used during
+   finalization, and could be useful to print to the actual standard
+   stream no matter if the "sys.std*" object has been redirected.
+
+   It can also be used to restore the actual files to known working
+   file objects in case they have been overwritten with a broken
+   object.  However, the preferred way to do this is to explicitly
+   save the previous stream before replacing it, and restore the saved
+   object.
+
+sys.subversion
+
+   A triple (repo, branch, version) representing the Subversion
+   information of the Python interpreter. *repo* is the name of the
+   repository, "'CPython'". *branch* is a string of one of the forms
+   "'trunk'", "'branches/name'" or "'tags/name'". *version* is the
+   output of "svnversion", if the interpreter was built from a
+   Subversion checkout; it contains the revision number (range) and
+   possibly a trailing “M” if there were local modifications. If the
+   tree was exported (or svnversion was not available), it is the
+   revision of "Include/patchlevel.h" if the branch is a tag.
+   Otherwise, it is "None".
+
+   Nouveau dans la version 2.5.
+
+   Note: Python is now developed using Mercurial.  In recent Python
+     2.7 bugfix releases, "subversion" therefore contains placeholder
+     information.  It is removed in Python 3.3.
+
+sys.tracebacklimit
+
+   When this variable is set to an integer value, it determines the
+   maximum number of levels of traceback information printed when an
+   unhandled exception occurs. The default is "1000".  When set to "0"
+   or less, all traceback information is suppressed and only the
+   exception type and value are printed.
+
+sys.version
+
+   A string containing the version number of the Python interpreter
+   plus additional information on the build number and compiler used.
+   This string is displayed when the interactive interpreter is
+   started.  Do not extract version information out of it, rather, use
+   "version_info" and the functions provided by the "platform" module.
+
+sys.api_version
+
+   The C API version for this interpreter.  Programmers may find this
+   useful when debugging version conflicts between Python and
+   extension modules.
+
+   Nouveau dans la version 2.3.
+
+sys.version_info
+
+   A tuple containing the five components of the version number:
+   *major*, *minor*, *micro*, *releaselevel*, and *serial*.  All
+   values except *releaselevel* are integers; the release level is
+   "'alpha'", "'beta'", "'candidate'", or "'final'".  The
+   "version_info" value corresponding to the Python version 2.0 is
+   "(2, 0, 0, 'final', 0)".  The components can also be accessed by
+   name, so "sys.version_info[0]" is equivalent to
+   "sys.version_info.major" and so on.
+
+   Nouveau dans la version 2.0.
+
+   Modifié dans la version 2.7: Added named component attributes
+
+sys.warnoptions
+
+   This is an implementation detail of the warnings framework; do not
+   modify this value.  Refer to the "warnings" module for more
+   information on the warnings framework.
+
+sys.winver
+
+   The version number used to form registry keys on Windows platforms.
+   This is stored as string resource 1000 in the Python DLL.  The
+   value is normally the first three characters of "version".  It is
+   provided in the "sys" module for informational purposes; modifying
+   this value has no effect on the registry keys used by Python.
+   Availability: Windows.
+
+-[ Citations ]-
+
+[C99] ISO/IEC 9899:1999.  « Programming languages – C. »  A
+      public draft of this standard is available at http://www.open-
+      std.org/jtc1/sc22/wg14/www/docs/n1256.pdf.
