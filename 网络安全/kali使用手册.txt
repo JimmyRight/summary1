@@ -324,4 +324,5 @@ http://sempersecurus.blogspot.com/2013/12/a-forensic-overview-of-linux-perlbot.h
 https://code.google.com/p/volatility/wiki/LinuxCommandReference23#linux_pidhashtable
 
 
+六、linux系统学习
 
