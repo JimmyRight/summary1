@@ -19,11 +19,15 @@ python、pypy、shell
 
 
 
-
-
-
-
-
+https://www.python.org/downloads/
+鼠标右键我的电脑  -> 属性 -> 点击高级系统设置 -> 点击环境变量 -> 点击PATH -> 在最后面加上我们的Python安装路径 -> 点击确定(到python27即可）
+安装pip
+https://pip.pypa.io/en/stable/installing/
+我们同样需要在Python的官网上去下载，下载地址是：https://pypi.python.org/pypi/pip#downloads
+下载完成之后，解压到一个文件夹，用CMD控制台进入解压目录，输入：
+python setup.py install
+https://jingyan.baidu.com/article/7e4409533f32092fc0e2ef24.html
+pip install --upgrade pip
 
 #python编程常用知识点
 循环
@@ -5246,46 +5250,48 @@ Python CGI编程
 		1、下载并安装apache：httpd-2.2.31-x64.zip，可以参见http://jingyan.baidu.com/article/29697b912f6539ab20de3cf8.html
 			命令行下进入到apache下面的bin目录，输入httpd -k install,把apache安装成windows后台服务。
 			https://jingyan.baidu.com/article/af9f5a2d20253343140a450f.html
-		2、ScriptAlias /cgi-bin/ "D:/phpStudy/Apache/cgi-bin/"
-			<Directory "D:/phpStudy/Apache/cgi-bin/">  
-			AllowOverride None  
-			Options None  
-			Order allow,deny  
-			Allow from all  
+		2、 ScriptAlias /cgi-bin/ "D:/phpStudy/WWW/cgi-bin/"
+			<Directory "D:/phpStudy/WWW/cgi-bin">  
+				Require all granted
+				AllowOverride None
+				AddHandler cgi-script .pl .cgi .py 
+				Options +ExecCGI   
+				Order allow,deny
+				Allow from all
 			</Directory>  
-			AddHandler cgi-script .cgi .py
 			#Apache CGI就算配好了。 在浏览器中键入http://localhost/cgi-bin就可以访问d:/programs/Apache2/cgi-bin/目录下的.cgi脚本。 
 		3、启动apache服务，可以使用任务管理器
 		4、cgi又是如何与python,perl解释器关联起来的呢？
 		首先，确保你在本机单独安装了perl,python环境，此时还没有和.cgi脚本文件关联起来。 
-		如果d:/programs/Apache2/cgi-bin/目录下有一个脚本叫hello.cgi, 在文件第一行像如下方式指定python.exe或者perl.exe的路径：
+		如果d:/programs/Apache2/cgi-bin/目录下有一个脚本叫hello.cgi, 在文件第一行像如下方式指定python.exe或者perl.exe的路径,该文件以下所有代码就转交相应的解释器去执行了  
 			Cgi代码
 				#!c:/Perl/bin/perl.exe  
 			或者Cgi代码  
-				#!C:/Python26/python 该文件以下所有代码就转交相应的解释器去执行了  
+				#!C:\Python27/python #windows 
+				#!/usr/bin/python		#linux
 		5、写web代码和python脚本：web代码可以默认放在 htdocs目录，python脚本放在 cgi-bin目录
 
-	Apache 支持CGI 配置：
-		设置好CGI目录：
-			ScriptAlias /cgi-bin/ /var/www/cgi-bin/     #linux
+		Apache 支持CGI 配置：
+			设置好CGI目录：
+				ScriptAlias /cgi-bin/ /var/www/cgi-bin/     #linux
+				ScriptAlias /cgi-bin/ "D:/phpStudy/WWW/cgi-bin/"#windows
 			
+		所有的HTTP服务器执行CGI程序都保存在一个预先配置的目录。这个目录被称为CGI目录，并按照惯例，它被命名为/var/www/cgi-bin目录。
 
-	所有的HTTP服务器执行CGI程序都保存在一个预先配置的目录。这个目录被称为CGI目录，并按照惯例，它被命名为/var/www/cgi-bin目录。
+		CGI文件的扩展名为.cgi，python也可以使用.py扩展名。
 
-	CGI文件的扩展名为.cgi，python也可以使用.py扩展名。
+		默认情况下，Linux服务器配置运行的cgi-bin目录中为/var/www。
 
-	默认情况下，Linux服务器配置运行的cgi-bin目录中为/var/www。
+		如果你想指定其他运行 CGI 脚本的目录，可以修改 httpd.conf 配置文件，如下所示：
+			<Directory "/var/www/cgi-bin">
+			   AllowOverride None
+			   Options +ExecCGI
+			   Order allow,deny
+			   Allow from all
+			</Directory>
 
-	如果你想指定其他运行 CGI 脚本的目录，可以修改 httpd.conf 配置文件，如下所示：
-		<Directory "/var/www/cgi-bin">
-		   AllowOverride None
-		   Options +ExecCGI
-		   Order allow,deny
-		   Allow from all
-		</Directory>
-
-	在 AddHandler 中添加 .py 后缀，这样我们就可以访问 .py 结尾的 python 脚本文件：
-		AddHandler cgi-script .cgi .pl .py
+		在 AddHandler 中添加 .py 后缀，这样我们就可以访问 .py 结尾的 python 脚本文件：
+			AddHandler cgi-script .cgi .pl .py
 
 	第一个CGI程序
 		我们使用Python创建第一个CGI程序，文件名为hello.py，文件位于/var/www/cgi-bin目录中，内容如下：
@@ -5867,7 +5873,7 @@ Python CGI编程
 
 		fn = os.path.basename(fileitem.filename.replace("\\", "/" ))
 
-		文件下载对话框
+	文件下载对话框
 
 		我们先在当前目录下创建 foo.txt 文件，用于程序的下载。
 
@@ -5894,7 +5900,6 @@ python操作mysql数据库
 	Python 标准数据库接口为 Python DB-API，Python DB-API为开发人员提供了数据库应用编程接口。
 
 	Python 数据库接口支持非常多的数据库，你可以选择适合你项目的数据库：
-
 		GadFly
 		mSQL
 		MySQL
@@ -5906,345 +5911,340 @@ python操作mysql数据库
 		Sybase
 
 	你可以访问Python数据库接口及API查看详细的支持数据库列表。
-
+		https://wiki.python.org/moin/DatabaseInterfaces
 	不同的数据库你需要下载不同的DB API模块，例如你需要访问Oracle数据库和Mysql数据，你需要下载Oracle和MySQL数据库模块。
 
 	DB-API 是一个规范. 它定义了一系列必须的对象和数据库存取方式, 以便为各种各样的底层数据库系统和多种多样的数据库接口程序提供一致的访问接口 。
-
 	Python的DB-API，为大多数的数据库实现了接口，使用它连接各数据库后，就可以用相同的方式操作各数据库。
 
 	Python DB-API使用流程：
-
 		引入 API 模块。
 		获取与数据库的连接。
 		执行SQL语句和存储过程。
 		关闭数据库连接。
 
 	什么是MySQLdb?
-
-	MySQLdb 是用于Python链接Mysql数据库的接口，它实现了 Python 数据库 API 规范 V2.0，基于 MySQL C API 上建立的。
+		MySQLdb 是用于Python链接Mysql数据库的接口，它实现了 Python 数据库 API 规范 V2.0，基于 MySQL C API 上建立的。
+	
 	如何安装MySQLdb?
+		为了用DB-API编写MySQL脚本，必须确保已经安装了MySQL。复制以下代码，并执行：
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
 
-	为了用DB-API编写MySQL脚本，必须确保已经安装了MySQL。复制以下代码，并执行：
+			import MySQLdb
 
-	#!/usr/bin/python
-	# -*- coding: UTF-8 -*-
+		如果执行后的输出结果如下所示，意味着你没有安装 MySQLdb 模块：
+			Traceback (most recent call last):
+			  File "test.py", line 3, in <module>
+				import MySQLdb
+			ImportError: No module named MySQLdb
 
-	import MySQLdb
+		安装MySQLdb，请访问 http://sourceforge.net/projects/mysql-python ，(Linux平台可以访问：https://pypi.python.org/pypi/MySQL-python)从这里可选择适合您的平台的安装包，分为预编译的二进制文件和源代码安装包。
 
-	如果执行后的输出结果如下所示，意味着你没有安装 MySQLdb 模块：
+		如果您选择二进制文件发行版本的话，安装过程基本安装提示即可完成。如果从源代码进行安装的话，则需要切换到MySQLdb发行版本的顶级目录，并键入下列命令:
+			$ gunzip MySQL-python-1.2.2.tar.gz
+			$ tar -xvf MySQL-python-1.2.2.tar
+			$ cd MySQL-python-1.2.2
+			$ python setup.py build
+			$ python setup.py install
 
-	Traceback (most recent call last):
-	  File "test.py", line 3, in <module>
-		import MySQLdb
-	ImportError: No module named MySQLdb
-
-	安装MySQLdb，请访问 http://sourceforge.net/projects/mysql-python ，(Linux平台可以访问：https://pypi.python.org/pypi/MySQL-python)从这里可选择适合您的平台的安装包，分为预编译的二进制文件和源代码安装包。
-
-	如果您选择二进制文件发行版本的话，安装过程基本安装提示即可完成。如果从源代码进行安装的话，则需要切换到MySQLdb发行版本的顶级目录，并键入下列命令:
-
-	$ gunzip MySQL-python-1.2.2.tar.gz
-	$ tar -xvf MySQL-python-1.2.2.tar
-	$ cd MySQL-python-1.2.2
-	$ python setup.py build
-	$ python setup.py install
-
-	注意：请确保您有root权限来安装上述模块。
+		注意：请确保您有root权限来安装上述模块。
+		
 	数据库连接
 
-	连接数据库前，请先确认以下事项：
+		连接数据库前，请先确认以下事项：
 
-		您已经创建了数据库 TESTDB.
-		在TESTDB数据库中您已经创建了表 EMPLOYEE
-		EMPLOYEE表字段为 FIRST_NAME, LAST_NAME, AGE, SEX 和 INCOME。
-		连接数据库TESTDB使用的用户名为 "testuser" ，密码为 "test123",你可以可以自己设定或者直接使用root用户名及其密码，Mysql数据库用户授权请使用Grant命令。
-		在你的机子上已经安装了 Python MySQLdb 模块。
-		如果您对sql语句不熟悉，可以访问我们的 SQL基础教程
+			您已经创建了数据库 TESTDB.
+			在TESTDB数据库中您已经创建了表 EMPLOYEE
+			EMPLOYEE表字段为 FIRST_NAME, LAST_NAME, AGE, SEX 和 INCOME。
+			连接数据库TESTDB使用的用户名为 "testuser" ，密码为 "test123",你可以可以自己设定或者直接使用root用户名及其密码，Mysql数据库用户授权请使用Grant命令。
+			在你的机子上已经安装了 Python MySQLdb 模块。
+			如果您对sql语句不熟悉，可以访问我们的 SQL基础教程
 
-	实例：
+		实例：
 
-	以下实例链接Mysql的TESTDB数据库：
+		以下实例链接Mysql的TESTDB数据库：
 
-	#!/usr/bin/python
-	# -*- coding: UTF-8 -*-
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
 
-	import MySQLdb
+		import MySQLdb
 
-	# 打开数据库连接
-	db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
+		# 打开数据库连接
+		db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
 
-	# 使用cursor()方法获取操作游标 
-	cursor = db.cursor()
+		# 使用cursor()方法获取操作游标 
+		cursor = db.cursor()
 
-	# 使用execute方法执行SQL语句
-	cursor.execute("SELECT VERSION()")
+		# 使用execute方法执行SQL语句
+		cursor.execute("SELECT VERSION()")
 
-	# 使用 fetchone() 方法获取一条数据
-	data = cursor.fetchone()
+		# 使用 fetchone() 方法获取一条数据
+		data = cursor.fetchone()
 
-	print "Database version : %s " % data
+		print "Database version : %s " % data
 
-	# 关闭数据库连接
-	db.close()
+		# 关闭数据库连接
+		db.close()
 
-	执行以上脚本输出结果如下：
+		执行以上脚本输出结果如下：
 
-	Database version : 5.0.45
+		Database version : 5.0.45
 
 	创建数据库表
 
-	如果数据库连接存在我们可以使用execute()方法来为数据库创建表，如下所示创建表EMPLOYEE：
+		如果数据库连接存在我们可以使用execute()方法来为数据库创建表，如下所示创建表EMPLOYEE：
 
-	#!/usr/bin/python
-	# -*- coding: UTF-8 -*-
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
 
-	import MySQLdb
+		import MySQLdb
 
-	# 打开数据库连接
-	db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
+		# 打开数据库连接
+		db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
 
-	# 使用cursor()方法获取操作游标 
-	cursor = db.cursor()
+		# 使用cursor()方法获取操作游标 
+		cursor = db.cursor()
 
-	# 如果数据表已经存在使用 execute() 方法删除表。
-	cursor.execute("DROP TABLE IF EXISTS EMPLOYEE")
+		# 如果数据表已经存在使用 execute() 方法删除表。
+		cursor.execute("DROP TABLE IF EXISTS EMPLOYEE")
 
-	# 创建数据表SQL语句
-	sql = """CREATE TABLE EMPLOYEE (
-			 FIRST_NAME  CHAR(20) NOT NULL,
-			 LAST_NAME  CHAR(20),
-			 AGE INT,  
-			 SEX CHAR(1),
-			 INCOME FLOAT )"""
+		# 创建数据表SQL语句
+		sql = """CREATE TABLE EMPLOYEE (
+				 FIRST_NAME  CHAR(20) NOT NULL,
+				 LAST_NAME  CHAR(20),
+				 AGE INT,  
+				 SEX CHAR(1),
+				 INCOME FLOAT )"""
 
-	cursor.execute(sql)
+		cursor.execute(sql)
 
-	# 关闭数据库连接
-	db.close()
+		# 关闭数据库连接
+		db.close()
 
 	数据库插入操作
 
-	以下实例使用执行 SQL INSERT 语句向表 EMPLOYEE 插入记录：
+		以下实例使用执行 SQL INSERT 语句向表 EMPLOYEE 插入记录：
 
-	#!/usr/bin/python
-	# -*- coding: UTF-8 -*-
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
 
-	import MySQLdb
+		import MySQLdb
 
-	# 打开数据库连接
-	db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
+		# 打开数据库连接
+		db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
 
-	# 使用cursor()方法获取操作游标 
-	cursor = db.cursor()
+		# 使用cursor()方法获取操作游标 
+		cursor = db.cursor()
 
-	# SQL 插入语句
-	sql = """INSERT INTO EMPLOYEE(FIRST_NAME,
-			 LAST_NAME, AGE, SEX, INCOME)
-			 VALUES ('Mac', 'Mohan', 20, 'M', 2000)"""
-	try:
-	   # 执行sql语句
-	   cursor.execute(sql)
-	   # 提交到数据库执行
-	   db.commit()
-	except:
-	   # Rollback in case there is any error
-	   db.rollback()
+		# SQL 插入语句
+		sql = """INSERT INTO EMPLOYEE(FIRST_NAME,
+				 LAST_NAME, AGE, SEX, INCOME)
+				 VALUES ('Mac', 'Mohan', 20, 'M', 2000)"""
+		try:
+		   # 执行sql语句
+		   cursor.execute(sql)
+		   # 提交到数据库执行
+		   db.commit()
+		except:
+		   # Rollback in case there is any error
+		   db.rollback()
 
-	# 关闭数据库连接
-	db.close()
+		# 关闭数据库连接
+		db.close()
 
-	以上例子也可以写成如下形式：
+		以上例子也可以写成如下形式：
 
-	#!/usr/bin/python
-	# -*- coding: UTF-8 -*-
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
 
-	import MySQLdb
+		import MySQLdb
 
-	# 打开数据库连接
-	db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
+		# 打开数据库连接
+		db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
 
-	# 使用cursor()方法获取操作游标 
-	cursor = db.cursor()
+		# 使用cursor()方法获取操作游标 
+		cursor = db.cursor()
 
-	# SQL 插入语句
-	sql = "INSERT INTO EMPLOYEE(FIRST_NAME, \
-		   LAST_NAME, AGE, SEX, INCOME) \
-		   VALUES ('%s', '%s', '%d', '%c', '%d' )" % \
-		   ('Mac', 'Mohan', 20, 'M', 2000)
-	try:
-	   # 执行sql语句
-	   cursor.execute(sql)
-	   # 提交到数据库执行
-	   db.commit()
-	except:
-	   # 发生错误时回滚
-	   db.rollback()
+		# SQL 插入语句
+		sql = "INSERT INTO EMPLOYEE(FIRST_NAME, \
+			   LAST_NAME, AGE, SEX, INCOME) \
+			   VALUES ('%s', '%s', '%d', '%c', '%d' )" % \
+			   ('Mac', 'Mohan', 20, 'M', 2000)
+		try:
+		   # 执行sql语句
+		   cursor.execute(sql)
+		   # 提交到数据库执行
+		   db.commit()
+		except:
+		   # 发生错误时回滚
+		   db.rollback()
 
-	# 关闭数据库连接
-	db.close()
+		# 关闭数据库连接
+		db.close()
 
-	实例：
+		实例：
 
-	以下代码使用变量向SQL语句中传递参数:
+		以下代码使用变量向SQL语句中传递参数:
 
-	..................................
-	user_id = "test123"
-	password = "password"
+		..................................
+		user_id = "test123"
+		password = "password"
 
-	con.execute('insert into Login values("%s", "%s")' % \
-				 (user_id, password))
-	..................................
+		con.execute('insert into Login values("%s", "%s")' % \
+					 (user_id, password))
+		..................................
 
-	数据库查询操作
+		数据库查询操作
 
-	Python查询Mysql使用 fetchone() 方法获取单条数据, 使用fetchall() 方法获取多条数据。
+		Python查询Mysql使用 fetchone() 方法获取单条数据, 使用fetchall() 方法获取多条数据。
 
-		fetchone(): 该方法获取下一个查询结果集。结果集是一个对象
-		fetchall():接收全部的返回结果行.
-		rowcount: 这是一个只读属性，并返回执行execute()方法后影响的行数。
+			fetchone(): 该方法获取下一个查询结果集。结果集是一个对象
+			fetchall():接收全部的返回结果行.
+			rowcount: 这是一个只读属性，并返回执行execute()方法后影响的行数。
 
-	实例：
+		实例：
 
-	查询EMPLOYEE表中salary（工资）字段大于1000的所有数据：
+		查询EMPLOYEE表中salary（工资）字段大于1000的所有数据：
 
-	#!/usr/bin/python
-	# -*- coding: UTF-8 -*-
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
 
-	import MySQLdb
+		import MySQLdb
 
-	# 打开数据库连接
-	db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
+		# 打开数据库连接
+		db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
 
-	# 使用cursor()方法获取操作游标 
-	cursor = db.cursor()
+		# 使用cursor()方法获取操作游标 
+		cursor = db.cursor()
 
-	# SQL 查询语句
-	sql = "SELECT * FROM EMPLOYEE \
-		   WHERE INCOME > '%d'" % (1000)
-	try:
-	   # 执行SQL语句
-	   cursor.execute(sql)
-	   # 获取所有记录列表
-	   results = cursor.fetchall()
-	   for row in results:
-		  fname = row[0]
-		  lname = row[1]
-		  age = row[2]
-		  sex = row[3]
-		  income = row[4]
-		  # 打印结果
-		  print "fname=%s,lname=%s,age=%d,sex=%s,income=%d" % \
-				 (fname, lname, age, sex, income )
-	except:
-	   print "Error: unable to fecth data"
+		# SQL 查询语句
+		sql = "SELECT * FROM EMPLOYEE \
+			   WHERE INCOME > '%d'" % (1000)
+		try:
+		   # 执行SQL语句
+		   cursor.execute(sql)
+		   # 获取所有记录列表
+		   results = cursor.fetchall()
+		   for row in results:
+			  fname = row[0]
+			  lname = row[1]
+			  age = row[2]
+			  sex = row[3]
+			  income = row[4]
+			  # 打印结果
+			  print "fname=%s,lname=%s,age=%d,sex=%s,income=%d" % \
+					 (fname, lname, age, sex, income )
+		except:
+		   print "Error: unable to fecth data"
 
-	# 关闭数据库连接
-	db.close()
+		# 关闭数据库连接
+		db.close()
 
-	以上脚本执行结果如下：
+		以上脚本执行结果如下：
 
-	fname=Mac, lname=Mohan, age=20, sex=M, income=2000
+		fname=Mac, lname=Mohan, age=20, sex=M, income=2000
 
-	数据库更新操作
+		数据库更新操作
 
-	更新操作用于更新数据表的的数据，以下实例将 EMPLOYEE 表中的 SEX 字段为 'M' 的 AGE 字段递增 1：
+		更新操作用于更新数据表的的数据，以下实例将 EMPLOYEE 表中的 SEX 字段为 'M' 的 AGE 字段递增 1：
 
-	#!/usr/bin/python
-	# -*- coding: UTF-8 -*-
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
 
-	import MySQLdb
+		import MySQLdb
 
-	# 打开数据库连接
-	db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
+		# 打开数据库连接
+		db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
 
-	# 使用cursor()方法获取操作游标 
-	cursor = db.cursor()
+		# 使用cursor()方法获取操作游标 
+		cursor = db.cursor()
 
-	# SQL 更新语句
-	sql = "UPDATE EMPLOYEE SET AGE = AGE + 1 WHERE SEX = '%c'" % ('M')
-	try:
-	   # 执行SQL语句
-	   cursor.execute(sql)
-	   # 提交到数据库执行
-	   db.commit()
-	except:
-	   # 发生错误时回滚
-	   db.rollback()
+		# SQL 更新语句
+		sql = "UPDATE EMPLOYEE SET AGE = AGE + 1 WHERE SEX = '%c'" % ('M')
+		try:
+		   # 执行SQL语句
+		   cursor.execute(sql)
+		   # 提交到数据库执行
+		   db.commit()
+		except:
+		   # 发生错误时回滚
+		   db.rollback()
 
-	# 关闭数据库连接
-	db.close()
+		# 关闭数据库连接
+		db.close()
 
-	删除操作
+		删除操作
 
-	删除操作用于删除数据表中的数据，以下实例演示了删除数据表 EMPLOYEE 中 AGE 大于 20 的所有数据：
+		删除操作用于删除数据表中的数据，以下实例演示了删除数据表 EMPLOYEE 中 AGE 大于 20 的所有数据：
 
-	#!/usr/bin/python
-	# -*- coding: UTF-8 -*-
+		#!/usr/bin/python
+		# -*- coding: UTF-8 -*-
 
-	import MySQLdb
+		import MySQLdb
 
-	# 打开数据库连接
-	db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
+		# 打开数据库连接
+		db = MySQLdb.connect("localhost","testuser","test123","TESTDB" )
 
-	# 使用cursor()方法获取操作游标 
-	cursor = db.cursor()
+		# 使用cursor()方法获取操作游标 
+		cursor = db.cursor()
 
-	# SQL 删除语句
-	sql = "DELETE FROM EMPLOYEE WHERE AGE > '%d'" % (20)
-	try:
-	   # 执行SQL语句
-	   cursor.execute(sql)
-	   # 提交修改
-	   db.commit()
-	except:
-	   # 发生错误时回滚
-	   db.rollback()
+		# SQL 删除语句
+		sql = "DELETE FROM EMPLOYEE WHERE AGE > '%d'" % (20)
+		try:
+		   # 执行SQL语句
+		   cursor.execute(sql)
+		   # 提交修改
+		   db.commit()
+		except:
+		   # 发生错误时回滚
+		   db.rollback()
 
-	# 关闭连接
-	db.close()
+		# 关闭连接
+		db.close()
 
-	执行事务
+		执行事务
 
-	事务机制可以确保数据一致性。
+		事务机制可以确保数据一致性。
 
-	事务应该具有4个属性：原子性、一致性、隔离性、持久性。这四个属性通常称为ACID特性。
+		事务应该具有4个属性：原子性、一致性、隔离性、持久性。这四个属性通常称为ACID特性。
 
-		原子性（atomicity）。一个事务是一个不可分割的工作单位，事务中包括的诸操作要么都做，要么都不做。
-		一致性（consistency）。事务必须是使数据库从一个一致性状态变到另一个一致性状态。一致性与原子性是密切相关的。
-		隔离性（isolation）。一个事务的执行不能被其他事务干扰。即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相干扰。
-		持久性（durability）。持续性也称永久性（permanence），指一个事务一旦提交，它对数据库中数据的改变就应该是永久性的。接下来的其他操作或故障不应该对其有任何影响。 
+			原子性（atomicity）。一个事务是一个不可分割的工作单位，事务中包括的诸操作要么都做，要么都不做。
+			一致性（consistency）。事务必须是使数据库从一个一致性状态变到另一个一致性状态。一致性与原子性是密切相关的。
+			隔离性（isolation）。一个事务的执行不能被其他事务干扰。即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相干扰。
+			持久性（durability）。持续性也称永久性（permanence），指一个事务一旦提交，它对数据库中数据的改变就应该是永久性的。接下来的其他操作或故障不应该对其有任何影响。 
 
-	Python DB API 2.0 的事务提供了两个方法 commit 或 rollback。
-	实例：
+		Python DB API 2.0 的事务提供了两个方法 commit 或 rollback。
+		实例：
 
-	# SQL删除记录语句
-	sql = "DELETE FROM EMPLOYEE WHERE AGE > '%d'" % (20)
-	try:
-	   # 执行SQL语句
-	   cursor.execute(sql)
-	   # 向数据库提交
-	   db.commit()
-	except:
-	   # 发生错误时回滚
-	   db.rollback()
+		# SQL删除记录语句
+		sql = "DELETE FROM EMPLOYEE WHERE AGE > '%d'" % (20)
+		try:
+		   # 执行SQL语句
+		   cursor.execute(sql)
+		   # 向数据库提交
+		   db.commit()
+		except:
+		   # 发生错误时回滚
+		   db.rollback()
 
-	对于支持事务的数据库， 在Python数据库编程中，当游标建立之时，就自动开始了一个隐形的数据库事务。
+		对于支持事务的数据库， 在Python数据库编程中，当游标建立之时，就自动开始了一个隐形的数据库事务。
 
-	commit()方法游标的所有更新操作，rollback（）方法回滚当前游标的所有操作。每一个方法都开始了一个新的事务。
-	错误处理
+		commit()方法游标的所有更新操作，rollback（）方法回滚当前游标的所有操作。每一个方法都开始了一个新的事务。
+		错误处理
 
-	DB API中定义了一些数据库操作的错误及异常，下表列出了这些错误和异常:
-	异常	描述
-	Warning	当有严重警告时触发，例如插入数据是被截断等等。必须是 StandardError 的子类。
-	Error	警告以外所有其他错误类。必须是 StandardError 的子类。
-	InterfaceError	当有数据库接口模块本身的错误（而不是数据库的错误）发生时触发。 必须是Error的子类。
-	DatabaseError	和数据库有关的错误发生时触发。 必须是Error的子类。
-	DataError	当有数据处理时的错误发生时触发，例如：除零错误，数据超范围等等。 必须是DatabaseError的子类。
-	OperationalError	指非用户控制的，而是操作数据库时发生的错误。例如：连接意外断开、 数据库名未找到、事务处理失败、内存分配错误等等操作数据库是发生的错误。 必须是DatabaseError的子类。
-	IntegrityError	完整性相关的错误，例如外键检查失败等。必须是DatabaseError子类。
-	InternalError	数据库的内部错误，例如游标（cursor）失效了、事务同步失败等等。 必须是DatabaseError子类。
-	ProgrammingError	程序错误，例如数据表（table）没找到或已存在、SQL语句语法错误、 参数数量错误等等。必须是DatabaseError的子类。
-	NotSupportedError	不支持错误，指使用了数据库不支持的函数或API等。例如在连接对象上 使用.rollback()函数，然而数据库并不支持事务或者事务已关闭。 必须是DatabaseError的子类。
+		DB API中定义了一些数据库操作的错误及异常，下表列出了这些错误和异常:
+		异常	描述
+		Warning	当有严重警告时触发，例如插入数据是被截断等等。必须是 StandardError 的子类。
+		Error	警告以外所有其他错误类。必须是 StandardError 的子类。
+		InterfaceError	当有数据库接口模块本身的错误（而不是数据库的错误）发生时触发。 必须是Error的子类。
+		DatabaseError	和数据库有关的错误发生时触发。 必须是Error的子类。
+		DataError	当有数据处理时的错误发生时触发，例如：除零错误，数据超范围等等。 必须是DatabaseError的子类。
+		OperationalError	指非用户控制的，而是操作数据库时发生的错误。例如：连接意外断开、 数据库名未找到、事务处理失败、内存分配错误等等操作数据库是发生的错误。 必须是DatabaseError的子类。
+		IntegrityError	完整性相关的错误，例如外键检查失败等。必须是DatabaseError子类。
+		InternalError	数据库的内部错误，例如游标（cursor）失效了、事务同步失败等等。 必须是DatabaseError子类。
+		ProgrammingError	程序错误，例如数据表（table）没找到或已存在、SQL语句语法错误、 参数数量错误等等。必须是DatabaseError的子类。
+		NotSupportedError	不支持错误，指使用了数据库不支持的函数或API等。例如在连接对象上 使用.rollback()函数，然而数据库并不支持事务或者事务已关闭。 必须是DatabaseError的子类。
 
 
 Python 网络编程
@@ -6270,109 +6270,109 @@ Python 网络编程
 		protocol: 一般不填默认为0.
 
 	Socket 对象(内建)方法
-	函数 	描述
-	服务器端套接字
-	s.bind() 	绑定地址（host,port）到套接字， 在AF_INET下,以元组（host,port）的形式表示地址。
-	s.listen() 	开始TCP监听。backlog指定在拒绝连接之前，操作系统可以挂起的最大连接数量。该值至少为1，大部分应用程序设为5就可以了。
-	s.accept() 	被动接受TCP客户端连接,(阻塞式)等待连接的到来
-	客户端套接字
-	s.connect() 	主动初始化TCP服务器连接，。一般address的格式为元组（hostname,port），如果连接出错，返回socket.error错误。
-	s.connect_ex() 	connect()函数的扩展版本,出错时返回出错码,而不是抛出异常
-	公共用途的套接字函数
-	s.recv() 	接收TCP数据，数据以字符串形式返回，bufsize指定要接收的最大数据量。flag提供有关消息的其他信息，通常可以忽略。
-	s.send() 	发送TCP数据，将string中的数据发送到连接的套接字。返回值是要发送的字节数量，该数量可能小于string的字节大小。
-	s.sendall() 	完整发送TCP数据，完整发送TCP数据。将string中的数据发送到连接的套接字，但在返回之前会尝试发送所有数据。成功返回None，失败则抛出异常。
-	s.recvfrom() 	接收UDP数据，与recv()类似，但返回值是（data,address）。其中data是包含接收数据的字符串，address是发送数据的套接字地址。
-	s.sendto() 	发送UDP数据，将数据发送到套接字，address是形式为（ipaddr，port）的元组，指定远程地址。返回值是发送的字节数。
-	s.close() 	关闭套接字
-	s.getpeername() 	返回连接套接字的远程地址。返回值通常是元组（ipaddr,port）。
-	s.getsockname() 	返回套接字自己的地址。通常是一个元组(ipaddr,port)
-	s.setsockopt(level,optname,value) 	设置给定套接字选项的值。
-	s.getsockopt(level,optname[.buflen]) 	返回套接字选项的值。
-	s.settimeout(timeout) 	设置套接字操作的超时期，timeout是一个浮点数，单位是秒。值为None表示没有超时期。一般，超时期应该在刚创建套接字时设置，因为它们可能用于连接的操作（如connect()）
-	s.gettimeout() 	返回当前超时期的值，单位是秒，如果没有设置超时期，则返回None。
-	s.fileno() 	返回套接字的文件描述符。
-	s.setblocking(flag) 	如果flag为0，则将套接字设为非阻塞模式，否则将套接字设为阻塞模式（默认值）。非阻塞模式下，如果调用recv()没有发现任何数据，或send()调用无法立即发送数据，那么将引起socket.error异常。
-	s.makefile() 	创建一个与该套接字相关连的文件
+		函数 	描述
+		服务器端套接字
+		s.bind() 	绑定地址（host,port）到套接字， 在AF_INET下,以元组（host,port）的形式表示地址。
+		s.listen() 	开始TCP监听。backlog指定在拒绝连接之前，操作系统可以挂起的最大连接数量。该值至少为1，大部分应用程序设为5就可以了。
+		s.accept() 	被动接受TCP客户端连接,(阻塞式)等待连接的到来
+		客户端套接字
+		s.connect() 	主动初始化TCP服务器连接，。一般address的格式为元组（hostname,port），如果连接出错，返回socket.error错误。
+		s.connect_ex() 	connect()函数的扩展版本,出错时返回出错码,而不是抛出异常
+		公共用途的套接字函数
+		s.recv() 	接收TCP数据，数据以字符串形式返回，bufsize指定要接收的最大数据量。flag提供有关消息的其他信息，通常可以忽略。
+		s.send() 	发送TCP数据，将string中的数据发送到连接的套接字。返回值是要发送的字节数量，该数量可能小于string的字节大小。
+		s.sendall() 	完整发送TCP数据，完整发送TCP数据。将string中的数据发送到连接的套接字，但在返回之前会尝试发送所有数据。成功返回None，失败则抛出异常。
+		s.recvfrom() 	接收UDP数据，与recv()类似，但返回值是（data,address）。其中data是包含接收数据的字符串，address是发送数据的套接字地址。
+		s.sendto() 	发送UDP数据，将数据发送到套接字，address是形式为（ipaddr，port）的元组，指定远程地址。返回值是发送的字节数。
+		s.close() 	关闭套接字
+		s.getpeername() 	返回连接套接字的远程地址。返回值通常是元组（ipaddr,port）。
+		s.getsockname() 	返回套接字自己的地址。通常是一个元组(ipaddr,port)
+		s.setsockopt(level,optname,value) 	设置给定套接字选项的值。
+		s.getsockopt(level,optname[.buflen]) 	返回套接字选项的值。
+		s.settimeout(timeout) 	设置套接字操作的超时期，timeout是一个浮点数，单位是秒。值为None表示没有超时期。一般，超时期应该在刚创建套接字时设置，因为它们可能用于连接的操作（如connect()）
+		s.gettimeout() 	返回当前超时期的值，单位是秒，如果没有设置超时期，则返回None。
+		s.fileno() 	返回套接字的文件描述符。
+		s.setblocking(flag) 	如果flag为0，则将套接字设为非阻塞模式，否则将套接字设为阻塞模式（默认值）。非阻塞模式下，如果调用recv()没有发现任何数据，或send()调用无法立即发送数据，那么将引起socket.error异常。
+		s.makefile() 	创建一个与该套接字相关连的文件
 	简单实例
-	服务端
+		服务端
 
-	我们使用 socket 模块的 socket 函数来创建一个 socket 对象。socket 对象可以通过调用其他函数来设置一个 socket 服务。
+			我们使用 socket 模块的 socket 函数来创建一个 socket 对象。socket 对象可以通过调用其他函数来设置一个 socket 服务。
 
-	现在我们可以通过调用 bind(hostname, port) 函数来指定服务的 port(端口)。
+			现在我们可以通过调用 bind(hostname, port) 函数来指定服务的 port(端口)。
 
-	接着，我们调用 socket 对象的 accept 方法。该方法等待客户端的连接，并返回 connection 对象，表示已连接到客户端。
+			接着，我们调用 socket 对象的 accept 方法。该方法等待客户端的连接，并返回 connection 对象，表示已连接到客户端。
 
-	完整代码如下：
+			完整代码如下：
 
-	#!/usr/bin/python
-	# -*- coding: UTF-8 -*-
-	# 文件名：server.py
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+			# 文件名：server.py
 
-	import socket               # 导入 socket 模块
+			import socket               # 导入 socket 模块
 
-	s = socket.socket()         # 创建 socket 对象
-	host = socket.gethostname() # 获取本地主机名
-	port = 12345                # 设置端口
-	s.bind((host, port))        # 绑定端口
+			s = socket.socket()         # 创建 socket 对象
+			host = socket.gethostname() # 获取本地主机名
+			port = 12345                # 设置端口
+			s.bind((host, port))        # 绑定端口
 
-	s.listen(5)                 # 等待客户端连接
-	while True:
-		c, addr = s.accept()     # 建立客户端连接。
-		print '连接地址：', addr
-		c.send('欢迎访问菜鸟教程！')
-		c.close()                # 关闭连接
+			s.listen(5)                 # 等待客户端连接
+			while True:
+				c, addr = s.accept()     # 建立客户端连接。
+				print '连接地址：', addr
+				c.send('欢迎访问菜鸟教程！')
+				c.close()                # 关闭连接
 
-	客户端
+		客户端
 
-	接下来我们写一个简单的客户端实例连接到以上创建的服务。端口号为 12345。
+			接下来我们写一个简单的客户端实例连接到以上创建的服务。端口号为 12345。
 
-	socket.connect(hosname, port ) 方法打开一个 TCP 连接到主机为 hostname 端口为 port 的服务商。连接后我们就可以从服务端后期数据，记住，操作完成后需要关闭连接。
+			socket.connect(hosname, port ) 方法打开一个 TCP 连接到主机为 hostname 端口为 port 的服务商。连接后我们就可以从服务端后期数据，记住，操作完成后需要关闭连接。
 
-	完整代码如下：
+			完整代码如下：
 
-	#!/usr/bin/python
-	# -*- coding: UTF-8 -*-
-	# 文件名：client.py
+			#!/usr/bin/python
+			# -*- coding: UTF-8 -*-
+			# 文件名：client.py
 
-	import socket               # 导入 socket 模块
+			import socket               # 导入 socket 模块
 
-	s = socket.socket()         # 创建 socket 对象
-	host = socket.gethostname() # 获取本地主机名
-	port = 12345                # 设置端口好
+			s = socket.socket()         # 创建 socket 对象
+			host = socket.gethostname() # 获取本地主机名
+			port = 12345                # 设置端口好
 
-	s.connect((host, port))
-	print s.recv(1024)
-	s.close()  
+			s.connect((host, port))
+			print s.recv(1024)
+			s.close()  
 
-	现在我们打开两个终端，第一个终端执行 server.py 文件：
+			现在我们打开两个终端，第一个终端执行 server.py 文件：
 
-	$ python server.py
+			$ python server.py
 
-	第二个终端执行 client.py 文件：
+			第二个终端执行 client.py 文件：
 
-	$ python client.py 
-	欢迎访问菜鸟教程！
+			$ python client.py 
+			欢迎访问菜鸟教程！
 
-	这是我们再打开第一个终端，就会看到有以下信息输出：
+			这是我们再打开第一个终端，就会看到有以下信息输出：
 
-	连接地址： ('192.168.0.118', 62461)
+			连接地址： ('192.168.0.118', 62461)
 
 	Python Internet 模块
 
-	以下列出了 Python 网络编程的一些重要模块：
-	协议	功能用处	端口号	Python 模块
-	HTTP	网页访问	80	httplib, urllib, xmlrpclib
-	NNTP	阅读和张贴新闻文章，俗称为"帖子"	119	nntplib
-	FTP	文件传输	20	ftplib, urllib
-	SMTP	发送邮件	25	smtplib
-	POP3	接收邮件	110	poplib
-	IMAP4	获取邮件	143	imaplib
-	Telnet	命令行	23	telnetlib
-	Gopher	信息查找	70	gopherlib, urllib
+		以下列出了 Python 网络编程的一些重要模块：
+		协议	功能用处	端口号	Python 模块
+		HTTP	网页访问	80	httplib, urllib, xmlrpclib
+		NNTP	阅读和张贴新闻文章，俗称为"帖子"	119	nntplib
+		FTP	文件传输	20	ftplib, urllib
+		SMTP	发送邮件	25	smtplib
+		POP3	接收邮件	110	poplib
+		IMAP4	获取邮件	143	imaplib
+		Telnet	命令行	23	telnetlib
+		Gopher	信息查找	70	gopherlib, urllib
 
-	更多内容可以参阅官网的 Python Socket Library and Modules。
-	https://docs.python.org/2/library/socket.html
+		更多内容可以参阅官网的 Python Socket Library and Modules。
+		https://docs.python.org/2/library/socket.html
 
 
 Python SMTP发送邮件
@@ -7912,107 +7912,13 @@ Python 100例
 
 以下实例在Python2.7下测试通过：
 http://www.runoob.com/python/python-100-examples.html
-    Python 练习实例1
-    Python 练习实例2
-    Python 练习实例3
-    Python 练习实例4
-    Python 练习实例5
-    Python 练习实例6
-    Python 练习实例7
-    Python 练习实例8
-    Python 练习实例9
-    Python 练习实例10
-    Python 练习实例11
-    Python 练习实例12
-    Python 练习实例13
-    Python 练习实例14
-    Python 练习实例15
-    Python 练习实例16
-    Python 练习实例17
-    Python 练习实例18
-    Python 练习实例19
-    Python 练习实例20
-    Python 练习实例21
-    Python 练习实例22
-    Python 练习实例23
-    Python 练习实例24
-    Python 练习实例25
-    Python 练习实例26
-    Python 练习实例27
-    Python 练习实例28
-    Python 练习实例29
-    Python 练习实例30
-    Python 练习实例31
-    Python 练习实例32
-    Python 练习实例33
-    Python 练习实例34
-    Python 练习实例35
-    Python 练习实例36
-    Python 练习实例37
-    Python 练习实例38
-    Python 练习实例39
-    Python 练习实例40
-    Python 练习实例41
-    Python 练习实例42
-    Python 练习实例43
-    Python 练习实例44
-    Python 练习实例45
-    Python 练习实例46
-    Python 练习实例47
-    Python 练习实例48
-    Python 练习实例49
-    Python 练习实例50
-    Python 练习实例51
-    Python 练习实例52
-    Python 练习实例53
-    Python 练习实例54
-    Python 练习实例55
-    Python 练习实例56
-    Python 练习实例57
-    Python 练习实例58
-    Python 练习实例59
-    Python 练习实例60
-    Python 练习实例61
-    Python 练习实例62
-    Python 练习实例63
-    Python 练习实例64
-    Python 练习实例65
-    Python 练习实例66
-    Python 练习实例67
-    Python 练习实例68
-    Python 练习实例69
-    Python 练习实例70
-    Python 练习实例71
-    Python 练习实例72
-    Python 练习实例73
-    Python 练习实例74
-    Python 练习实例75
-    Python 练习实例76
-    Python 练习实例77
-    Python 练习实例78
-    Python 练习实例79
-    Python 练习实例80
-    Python 练习实例81
-    Python 练习实例82
-    Python 练习实例83
-    Python 练习实例84
-    Python 练习实例85
-    Python 练习实例86
-    Python 练习实例87
-    Python 练习实例88
-    Python 练习实例89
-    Python 练习实例90
-    Python 练习实例91
-    Python 练习实例92
-    Python 练习实例93
-    Python 练习实例94
-    Python 练习实例95
-    Python 练习实例96
-    Python 练习实例97
-    Python 练习实例98
-    Python 练习实例99
-    Python 练习实例100
 
+
+python3编程
+http://www.runoob.com/python3/python3-tutorial.html
+
+Python 编码规范(Google)
+http://www.runoob.com/w3cnote/google-python-styleguide.html
 
 
 
