@@ -1,0 +1,2560 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0059)http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" id="sixapart-standard"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+<meta name="generator" content="Movable Type  5.2.2">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./常用Git命令清单_files/styles.css" type="text/css">
+<link rel="start" href="http://www.ruanyifeng.com/blog/" title="Home">
+<link rel="alternate" type="application/atom+xml" title="Recent Entries" href="http://feeds.feedburner.com/ruanyifeng">
+<script type="text/javascript" src="./常用Git命令清单_files/mt.js.下载"></script>
+<!--
+<rdf:RDF xmlns="http://web.resource.org/cc/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<Work rdf:about="http://www.ruanyifeng.com/blog/2017/08/koa.html">
+<dc:title>Koa 框架教程</dc:title>
+<dc:description>Node 主要用在开发 Web 应用。这决定了使用 Node，往往离不开 Web 应用框架。...</dc:description>
+<dc:creator>阮一峰</dc:creator>
+<dc:date>2017-08-09T07:29:00+08:00</dc:date>
+<license rdf:resource="http://creativecommons.org/licenses/by-nc-nd/3.0/" />
+</Work>
+<License rdf:about="http://creativecommons.org/licenses/by-nc-nd/3.0/">
+</License>
+</rdf:RDF>
+-->
+
+
+    
+    <link rel="prev" href="http://www.ruanyifeng.com/blog/2015/12/a-mocha-tutorial-of-examples.html" title="测试框架 Mocha 实例教程">
+    <link rel="next" href="http://www.ruanyifeng.com/blog/2015/12/safe-job.html" title="有没有安全的工作？">
+    
+    <title>常用 Git 命令清单 - 阮一峰的网络日志</title>
+</head>
+<body id="scrapbook" class="mt-entry-archive one-column">
+<script>
+if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent)) document.body.classList.add('mobile');
+
+window.addEventListener('load', function(event) {
+  setTimeout(function () {
+    hab('#sup-post-2');
+    hab('#gd1-inner');
+  }, 1000);
+});
+</script>
+    <div id="container">
+        <div id="container-inner">
+
+            <div id="header">
+    <div id="header-inner">
+        <div id="header-content">
+
+
+            <div id="header-name">阮一峰的网络日志 <span id="site_location"> » <a href="http://www.ruanyifeng.com/blog/" accesskey="1">首页</a></span><span id="site_archive"> » <a href="http://www.ruanyifeng.com/blog/archives.html">档案</a></span>
+</div>
+
+<div id="google_search">
+<!-- SiteSearch Google -->
+<form action="http://www.ruanyifeng.com/blog/search.html" id="cse-search-box">
+      <div>
+        <input type="hidden" name="cx" value="016304377626642577906:b_e9skaywzq">
+    <input type="hidden" name="cof" value="FORID:11">
+    <input type="hidden" name="ie" value="UTF-8">
+        <input type="text" name="q" size="20" class="searchbox" id="sbi" value="">
+        <input type="image" src="./常用Git命令清单_files/top_search_submit.gif" class="searchbox_submit" value="" alt="搜索" name="sa">
+      </div>
+    </form>
+<!-- SiteSearch Google -->
+</div>
+<div id="feed_icon">
+<a href="http://www.ruanyifeng.com/feed.html" title="订阅Feed">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAUzSURBVHjavFdbbFRVFF3nPjoz7dTWTittaW0jUDRAUqaNojyqREnEQKgfUj9MqqAmhqRt/OCD4CuY+Kckoh+aiGKC+gMJbdHoRysJ8dkhhmJLNdDKtJU+6GMK87j3Hs85d2Z6HzNtMYWb3Dn3NWftvfba+5xNYDl+e6Fkj6yqb/oDRbWq14vlPBLRKCITkxf0ROLt+hNjp1PPSRK4kA3vF1dXNRcWlyA2OQU9eos9opAkAiKxD+XkKO6t15aRWO7J/MgmAZU8MEgexgZHMX518Dh72sYMmVKShnxWuWHdHtxKIDIYTgMuDzgfmSOIQkYMpdUF8OY92Hytt4/jvkg47czzU16iQovM3QFwmNck+Yyduu7D6NA0Z6JR4THntFs9V4tWQg6Ui3s6MwKDncsFTnXKLJhDSeUK3AgPtyhccDzmVs999buRt/1Vm4i0od+hX7+MRG87jPGB/w1u8FPj9xEw7McVrnYuOCvtpjTth3J/nTg99c8LRhKhr6D3dTB5R24bXFwbMXBsyZzeoXaycEpJ95TB09AGX/NpqLVNtw8urnVzLvHjFNxiFqRy2OOHuqUVnue+ACkoWzo4O6lGzTmuHq6nPvY2m9rVqjrIK2rMEKxqyG5NPAKt+wjo0LklgfNxJkZMA3KJvqRUk3z5UFY3QH14P0h+WUY79HPvgv7VuSg4ZRGY1YgZgqXmORccF17sy2ehnf9AeO085K2HQFbtXBScj0LcpgF2cN+WV+DZ/LJQu6gD4R7oV7pBJwbSgtMvfiPoVp56DySwxm7EtkMs1WdAB7qzggsDJKQYsHucSkOudrkiCPWR/fA2nYCn8SNIK4NptSMyAu3sAdDRkIsJdfth0LzSrODUoPNZ4KI9SxJI5UHk7D4GdQfz2us31c7CoHMjRkKuDPHseCMrONVhNcDJwMJpKFVvg9L4OaTiNWm1x789KCqkrXhVBiEz0WYCT2nAzQAD1/vaETv1GrRfP4Vx5cfMNcDPwvP0h0DhanPym7OIf/+O67vcJ1/PCJ4KgdzaUP6Wz+dU+5yIL6fV+PsHGAOdwlPpvvUOyeeAVGyCdqkDNB6DPjsBSrnndfOGevOh3RhGItxvA+fX1CtbGFhgYUFkFMZPR6F1HnClHq8HyubWtJexX06CRmdt33hrd7nA7SFY4qoGpnYuOKcRykPPgDCBcsHx9Iv+fNL2PueBehCWUfYQIIMGLOCcOmXDXsh1+yCt35tUPfvzGFuSvzvoinXOxqa02qOhM6733nVP2MAdaej2XN11DPKjLZCD+yBvahGCo7JfTKAN9UD7s8Oe9zUNIhz8fWI8DG2k38WCFdxugANcXrvTVd1IEbuv3Jour7Hzn7jLMBNfKs7R3i67gRVrbeCOEDhinmWhAatsqdquM2XzHZINhK2cqTjHr/XZdVJUbgN3MWAVXKbSyg9jesRW2xP9di+lwrL5ojM3m2H/kG9hwcIA37c71W6wJdW2J2S5nrjYbq/t1AHAhJsKQeyfPvf6IMJgghPJhFZ4x0KlfLFvt22du45Au/A1SOlGc0P672XXwhLtOcM0kTTEMMd0qkVmMNXxMd/tsedUjInr4SQDgOfeXMSiN0FCL5WHah4L1qqYXPJOJlttd+a5M+YpcG5poLYKQ5f+6JJ4r8bbJYP47hq4r7QAs9PjYNhHJd4o8l5taiwuOpa7AS4XKqI/5NjJbTnaWK92nLdLuhQAJayRNMiygXPBeQN+Qbvu0zDc3y+aUzhbkGR73sI7ljvUnndx2q3t+X8CDAD66FtrIL864AAAAABJRU5ErkJggg==" alt="" style="border: 0pt none;">
+</a></div>
+
+        </div>
+    </div>
+</div>
+
+
+
+            <div id="content">
+                <div id="content-inner">
+
+
+                    <div id="alpha">
+                        <div id="alpha-inner">
+
+
+                            <div id="entry-1861" class="entry-asset asset hentry">
+                                <div class="asset-header">
+<div class="asset-nav entry-nav">
+
+<div class="entry-location">
+<ul>
+<li>上一篇：<a href="http://www.ruanyifeng.com/blog/2015/12/a-mocha-tutorial-of-examples.html" title="测试框架 Mocha 实例教程">测试框架&nbsp;Mocha&nbsp;</a></li>
+<li>下一篇：<a href="http://www.ruanyifeng.com/blog/2015/12/safe-job.html" title="有没有安全的工作？">有没有安全的工作？&nbsp;&nbsp;</a></li>
+</ul>
+</div>
+
+
+    
+                                    <div class="entry-categories">
+                                        <p>分类<span class="delimiter">：</span></p>
+                                        <ul>
+                                            <li><a href="http://www.ruanyifeng.com/blog/developer/" rel="tag">开发者手册</a></li>
+                                        </ul>
+                                    </div>
+    
+
+
+                                            
+</div>
+                                </div>
+<article class="hentry">
+                                    <h1 id="page-title" class="asset-name entry-title">常用 Git 命令清单</h1>
+                                            <div id="share_button" style="float:right;padding-right:2em;padding-top:1em;"></div>
+                                    <div class="asset-meta">
+                                        
+
+                                            <p class="vcard author">作者： <a class="fn url" href="http://www.ruanyifeng.com/">阮一峰</a></p>
+                                    <p>日期： <a href="http://www.ruanyifeng.com/blog/2015/12/"><abbr class="published" title="2015-12-09T09:54:31+08:00">2015年12月 9日</abbr></a></p>
+
+
+                                    </div>
+                                
+                                <div class="asset-content entry-content" id="main-content">
+
+                                    <!-- div class="asset-body" -->
+                                        <p>我每天使用 Git ，但是很多命令记不住。</p>
+
+                                    <!-- /div -->
+
+
+                                    <!-- div id="more" class="asset-more" -->
+                                        <p>一般来说，日常使用只要记住下图6个命令，就可以了。但是熟练使用，恐怕要记住60～100个命令。</p>
+
+<p><img src="./常用Git命令清单_files/bg2015120901.png" style="width:800px;"></p>
+
+<p>下面是我整理的常用 Git 命令清单。几个专用名词的译名如下。</p>
+
+<blockquote>
+  <ul>
+<li>Workspace：工作区</li>
+<li>Index / Stage：暂存区</li>
+<li>Repository：仓库区（或本地仓库）</li>
+<li>Remote：远程仓库</li>
+</ul>
+</blockquote>
+
+<h2>一、新建代码库</h2>
+
+<blockquote><pre><code class="language-bash">
+# 在当前目录新建一个Git代码库
+$ git init
+
+# 新建一个目录，将其初始化为Git代码库
+$ git init [project-name]
+
+# 下载一个项目和它的整个代码历史
+$ git clone [url]
+</code></pre></blockquote>
+
+<h2>二、配置</h2>
+
+<p>Git的设置文件为<code>.gitconfig</code>，它可以在用户主目录下（全局配置），也可以在项目目录下（项目配置）。</p>
+
+<blockquote><pre><code class="language-bash">
+# 显示当前的Git配置
+$ git config --list
+
+# 编辑Git配置文件
+$ git config -e [--global]
+
+# 设置提交代码时的用户信息
+$ git config [--global] user.name "[name]"
+$ git config [--global] user.email "[email address]"
+</code></pre></blockquote>
+
+<h2>三、增加/删除文件</h2>
+
+<blockquote><pre><code class="language-bash">
+# 添加指定文件到暂存区
+$ git add [file1] [file2] ...
+
+# 添加指定目录到暂存区，包括子目录
+$ git add [dir]
+
+# 添加当前目录的所有文件到暂存区
+$ git add .
+
+# 添加每个变化前，都会要求确认
+# 对于同一个文件的多处变化，可以实现分次提交
+$ git add -p
+
+# 删除工作区文件，并且将这次删除放入暂存区
+$ git rm [file1] [file2] ...
+
+# 停止追踪指定文件，但该文件会保留在工作区
+$ git rm --cached [file]
+
+# 改名文件，并且将这个改名放入暂存区
+$ git mv [file-original] [file-renamed]
+</code></pre></blockquote>
+
+<h2>四、代码提交</h2>
+
+<blockquote><pre><code class="language-bash">
+# 提交暂存区到仓库区
+$ git commit -m [message]
+
+# 提交暂存区的指定文件到仓库区
+$ git commit [file1] [file2] ... -m [message]
+
+# 提交工作区自上次commit之后的变化，直接到仓库区
+$ git commit -a
+
+# 提交时显示所有diff信息
+$ git commit -v
+
+# 使用一次新的commit，替代上一次提交
+# 如果代码没有任何新变化，则用来改写上一次commit的提交信息
+$ git commit --amend -m [message]
+
+# 重做上一次commit，并包括指定文件的新变化
+$ git commit --amend [file1] [file2] ...
+</code></pre></blockquote>
+
+<h2>五、分支</h2>
+
+<blockquote><pre><code class="language-bash">
+# 列出所有本地分支
+$ git branch
+
+# 列出所有远程分支
+$ git branch -r
+
+# 列出所有本地分支和远程分支
+$ git branch -a
+
+# 新建一个分支，但依然停留在当前分支
+$ git branch [branch-name]
+
+# 新建一个分支，并切换到该分支
+$ git checkout -b [branch]
+
+# 新建一个分支，指向指定commit
+$ git branch [branch] [commit]
+
+# 新建一个分支，与指定的远程分支建立追踪关系
+$ git branch --track [branch] [remote-branch]
+
+# 切换到指定分支，并更新工作区
+$ git checkout [branch-name]
+
+# 切换到上一个分支
+$ git checkout -
+
+# 建立追踪关系，在现有分支与指定的远程分支之间
+$ git branch --set-upstream [branch] [remote-branch]
+
+# 合并指定分支到当前分支
+$ git merge [branch]
+
+# 选择一个commit，合并进当前分支
+$ git cherry-pick [commit]
+
+# 删除分支
+$ git branch -d [branch-name]
+
+# 删除远程分支
+$ git push origin --delete [branch-name]
+$ git branch -dr [remote/branch]
+</code></pre></blockquote>
+
+<h2>六、标签</h2>
+
+<blockquote><pre><code class="language-bash">
+# 列出所有tag
+$ git tag
+
+# 新建一个tag在当前commit
+$ git tag [tag]
+
+# 新建一个tag在指定commit
+$ git tag [tag] [commit]
+
+# 删除本地tag
+$ git tag -d [tag]
+
+# 删除远程tag
+$ git push origin :refs/tags/[tagName]
+
+# 查看tag信息
+$ git show [tag]
+
+# 提交指定tag
+$ git push [remote] [tag]
+
+# 提交所有tag
+$ git push [remote] --tags
+
+# 新建一个分支，指向某个tag
+$ git checkout -b [branch] [tag]
+</code></pre></blockquote>
+
+<h2>七、查看信息</h2>
+
+<blockquote><pre><code class="language-bash">
+# 显示有变更的文件
+$ git status
+
+# 显示当前分支的版本历史
+$ git log
+
+# 显示commit历史，以及每次commit发生变更的文件
+$ git log --stat
+
+# 搜索提交历史，根据关键词
+$ git log -S [keyword]
+
+# 显示某个commit之后的所有变动，每个commit占据一行
+$ git log [tag] HEAD --pretty=format:%s
+
+# 显示某个commit之后的所有变动，其"提交说明"必须符合搜索条件
+$ git log [tag] HEAD --grep feature
+
+# 显示某个文件的版本历史，包括文件改名
+$ git log --follow [file]
+$ git whatchanged [file]
+
+# 显示指定文件相关的每一次diff
+$ git log -p [file]
+
+# 显示过去5次提交
+$ git log -5 --pretty --oneline
+
+# 显示所有提交过的用户，按提交次数排序
+$ git shortlog -sn
+
+# 显示指定文件是什么人在什么时间修改过
+$ git blame [file]
+
+# 显示暂存区和工作区的差异
+$ git diff
+
+# 显示暂存区和上一个commit的差异
+$ git diff --cached [file]
+
+# 显示工作区与当前分支最新commit之间的差异
+$ git diff HEAD
+
+# 显示两次提交之间的差异
+$ git diff [first-branch]...[second-branch]
+
+# 显示今天你写了多少行代码
+$ git diff --shortstat "@{0 day ago}"
+
+# 显示某次提交的元数据和内容变化
+$ git show [commit]
+
+# 显示某次提交发生变化的文件
+$ git show --name-only [commit]
+
+# 显示某次提交时，某个文件的内容
+$ git show [commit]:[filename]
+
+# 显示当前分支的最近几次提交
+$ git reflog
+</code></pre></blockquote>
+
+<h2>八、远程同步</h2>
+
+<blockquote><pre><code class="language-bash">
+# 下载远程仓库的所有变动
+$ git fetch [remote]
+
+# 显示所有远程仓库
+$ git remote -v
+
+# 显示某个远程仓库的信息
+$ git remote show [remote]
+
+# 增加一个新的远程仓库，并命名
+$ git remote add [shortname] [url]
+
+# 取回远程仓库的变化，并与本地分支合并
+$ git pull [remote] [branch]
+
+# 上传本地指定分支到远程仓库
+$ git push [remote] [branch]
+
+# 强行推送当前分支到远程仓库，即使有冲突
+$ git push [remote] --force
+
+# 推送所有分支到远程仓库
+$ git push [remote] --all
+</code></pre></blockquote>
+
+<h2>九、撤销</h2>
+
+<blockquote><pre><code class="language-bash">
+# 恢复暂存区的指定文件到工作区
+$ git checkout [file]
+
+# 恢复某个commit的指定文件到暂存区和工作区
+$ git checkout [commit] [file]
+
+# 恢复暂存区的所有文件到工作区
+$ git checkout .
+
+# 重置暂存区的指定文件，与上一次commit保持一致，但工作区不变
+$ git reset [file]
+
+# 重置暂存区与工作区，与上一次commit保持一致
+$ git reset --hard
+
+# 重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变
+$ git reset [commit]
+
+# 重置当前分支的HEAD为指定commit，同时重置暂存区和工作区，与指定commit一致
+$ git reset --hard [commit]
+
+# 重置当前HEAD为指定commit，但保持暂存区和工作区不变
+$ git reset --keep [commit]
+
+# 新建一个commit，用来撤销指定commit
+# 后者的所有变化都将被前者抵消，并且应用到当前分支
+$ git revert [commit]
+
+# 暂时将未提交的变化移除，稍后再移入
+$ git stash
+$ git stash pop
+</code></pre></blockquote>
+
+<h2>十、其他</h2>
+
+<blockquote><pre><code class="language-bash">
+# 生成一个可供发布的压缩包
+$ git archive
+</code></pre></blockquote>
+
+<p>（完）</p>
+
+                                    <!-- /div -->
+
+                                </div>
+    <script type="text/javascript" src="./常用Git命令清单_files/newwindow.js.下载"></script>
+                                <div class="asset-footer">
+
+<h3>文档信息</h3>
+<ul>
+<li>版权声明：自由转载-非商用-非衍生-保持署名（<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>）</li>
+<li>发表日期： <abbr class="published" title="2015-12-09T09:54:31+08:00">2015年12月 9日</abbr></li>
+<li>更多内容： <a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank"> 档案</a>  » 
+<a href="http://www.ruanyifeng.com/blog/developer/"> 开发者手册</a> 
+</li>
+<li>博客文集：<a href="http://road.ruanyifeng.com/" target="_blank">《前方的路》</a>，<a href="http://survivor.ruanyifeng.com/" target="_blank">《未来世界的幸存者》</a></li>
+<li>社交媒体：<a href="https://twitter.com/ruanyf" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAk1JREFUeNqsVc9rE0EU/mZ3dhPNJl2bVIk/Km09aFBE8GLvnrwJXvwLxIsgCP4Fnit6E8Gb0IMHwUsL9SSNgiAoooJIpE1Joo1h82uT7IxvxmRN3Q32kAdvdrI773vfe+/bDTu9WioDcDAda3Ja8piepQ1avCkCeny0Y+R9KenKwOmHHLvPaKn7AtVOoO8dOWDCMpg+41gMQv5FNEJACgoE8MsPNLDBhgfoutMOsJDmWLmU037C4TApciljwQ/kHoohQxV06+wMXNvE7WINuaSpvdYVKLgWnl3O4zAxU3Z1IYVGT+B5qYWV9z2kbQaT/cOwTsxOUUYF+mB5Dkmi8HG3h2q9hxsFNwRTdvQgxxnXRrMvIdkEhllis/qtiWuLDm4WZnBlPoWnXz28LHdw0uGR7m9Wu3j0qYGEubfn4UlBfXO4gTZltRNMg9w9f0i7kNFxllsBlS0x75gYfxyWTBUjT2W5CSMSPBrQuG21+hiMDS8CeCzF8eSLp13uQ3Ab1IqMFZN8tFHPmgOBF99bYP8Be1Xp6t7OJszJgKpPSiZvaj7uf2hguz2IBQuozDvFH6RDBjuK9wdQDvt0nMpW+8efGyh5UcAeZb2+UcHbnz5Jx4wdlp4yJYU3kLiQtfBwOYeLc8nIwfXtNu69q2Oz4mMxbemYOOOjKarhvq51KUjg3GwiFPIuvcNF6pnSnWK0lOEabNLgQh1aJFAhlGB9rG110B2+oyRNPc0sZbRNFltmLKDKqj4Qrm1ojzOxDz2pyPQ0P7CK4c40/wJ+CzAAGYrXsvfFXR4AAAAASUVORK5CYII=" style="border:0;"> twitter</a>，<a href="http://weibo.com/ruanyf" target="_blank"><img src="data:image/png;base64,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" style="border:0;"> weibo</a></li>
+<li>Feed订阅： <a href="http://www.ruanyifeng.com/feed.html" target="_blank"><img src="data:image/gif;base64,R0lGODlhFAAUANU2APV1GfmrePZ8IeR5VPq2ieNkLf7p3NpFJveCJ/NoFfibVPR1IexiJfvdzuZrNfXGuOhUEueTevaFOfzIpNxDGeZZJNU6IOubifiVTfOnid1aLuZpLOFSJf/28vJtIvGcefaLSd5kNu9iFv/z6//48//t4uFfLfNkCeJNGuGNc/rCof/+/PVxEeldI/V5KeKMbu9nIvB2OvzQtNxMKfOPXP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAADYALAAAAAAUABQAAAb/QJstEjKZCsjCZsl0pIS2QWXaYsA8noVWIEAgFoNhhWNyMESi7Jbr/aZCFdRnZJAFJCwAt+vlOkwtEBk1hDUkExJ6bQJaGyYMLTQTDSOFHQF8jAseSFYiJwkuAQ2FE1xaHjBIMDAgARguJwABJIQTLJswDEgeIgSEJQQILAqVNQEiui1HHgkBhTUGCiwYtR0xLS0VJhtaEgoEBoQkGCfPNSoQY9xaCwAsCBPALgmkJA4cZN0CAAgY/PJqEIDwgVAECjM0bOAnwcAKGQJclKhRgoGDDjUeUDigkN8vQiBOfByAglSDAxw3IBCgYEU0FyJoEPpA4UGNDjMsaHDQR8EdPVYOMmQYQGHAhQgHLIRIsWAlgASsGMRBMWMGBQtYZ7yIsoBRKkhjOMxAiXJGGCEpHGxIYsSIhrcaQmy1EQQAOw==" style="border:0;"></a></li>
+
+</ul>
+                                </div>
+</article>
+                            </div>
+
+  <div id="sup-post-2" style="display: inline-block ! important;width: 100%;">
+    <p style="text-align:center;"><a href="http://www.zhufengpeixun.cn/?ref=ruanyifeng.com" target="_blank"><img alt="珠峰培训" src="./常用Git命令清单_files/sup_zhufeng_page.png" style="border:none;"></a></p>
+    <p style="text-align:center;"><a href="http://www.stuq.org/course/1194?ref=ruanyifeng.com" title="stuQ" target="_blank"><img alt="stuQ" src="./常用Git命令清单_files/sup_stuq_c201707.jpg" style="border:none;display: block !important;"></a></p>                         
+  </div>
+
+<div id="related_entries">
+<h2>相关文章</h2>
+<ul>
+
+<li><strong>2017.07.29: <a href="http://www.ruanyifeng.com/blog/2017/07/xmonad.html">窗口管理器 xmonad 教程</a></strong>
+
+                           <div class="entry-body">
+                              开发者最需要的，就是一个顺手的开发环境。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2017.07.18: <a href="http://www.ruanyifeng.com/blog/2017/07/pull_request.html">Pull Request 的命令行管理</a></strong>
+
+                           <div class="entry-body">
+                              Github 的一大特色就是 Pull Request 功能（简写为 PR）。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2017.06.22: <a href="http://www.ruanyifeng.com/blog/2017/06/custom-elements.html">HTML 自定义元素教程</a></strong>
+
+                           <div class="entry-body">
+                              组件是 Web 开发的方向，现在的热点是 JavaScript 组件，但是 HTML 组件未来可能更有希望。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2017.06.15: <a href="http://www.ruanyifeng.com/blog/2017/06/raspberry-pi-tutorial.html">树莓派新手入门教程</a></strong>
+
+                           <div class="entry-body">
+                              树莓派（Raspberry Pi）是学习计算机知识、架设服务器的好工具，价格低廉，可玩性高。
+
+                           </div>
+
+</li>
+
+ 
+</ul>
+</div>
+
+
+<div id="gd1" style="display: block !important;">
+<h2>广告<a href="http://www.ruanyifeng.com/support.html">（购买广告位）</a></h2>
+<div id="gd1-inner">
+<div id="gd1-left">
+<a href="http://www.miaov.com/?utm_source=ruanyifeng&amp;" alt="妙味课堂" target="_blank"><img alt="妙味课堂" src="./常用Git命令清单_files/sup_miaov_201707.jpg" style="border:none;display: block !important;"></a>
+<br>
+<a href="https://www.yunxinshi.com/?utm_source=ruanyifeng" title="云信使" target="_blank"><img alt="云信使" src="./常用Git命令清单_files/sup_yunxinshi.jpg" style="border:none;display: block !important;"></a>
+</div>
+<div id="gd1-right">
+<a href="http://trial.ssbit.win/?from=ruanyifeng" title="倚天剑" target="_blank"><img alt="倚天剑" src="./常用Git命令清单_files/ruanyifeng.2k.1forth.banner.png" style="border:none;display: block !important;"></a>
+<br>
+<a href="http://cn.udacity.com/mlnd/?utm_source=ruanyf&amp;utm_medium=banner&amp;utm_campaign=MLND06" title="优达学城" target="_blank"><img alt="优达学城" src="./常用Git命令清单_files/sup_udacity_201708.jpg" style="border:none;display: block !important;"></a>
+
+</div>
+</div>
+</div>
+                    
+
+                    <div id="comments" class="comments">
+
+
+    
+    
+        
+    <h2 class="comments-header">留言（55条）</h2>
+
+    <div id="comments-content" class="comments-content" style="clear: left;">
+        
+        <div id="comment-353175" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.pureage.info" href="http://www.pureage.info/" target="_blank" rel="nofollow">strider</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353175">
+            <p>常用的也是你提到的这几个，其他的每次都要现查。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  9, 2015 10:08 AM">2015年12月 9日 10:08</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353175">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用strider的这条留言" onclick="return CommentQuote(&#39;comment-quote-353175&#39;,&#39;strider&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353176" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="https://JustYY.com" href="https://justyy.com/" target="_blank" rel="nofollow">JustYY.com 小赖子的英国生活和资讯。</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353176">
+            <p>多谢  很实用</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  9, 2015 10:25 AM">2015年12月 9日 10:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353176">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用JustYY.com 小赖子的英国生活和资讯。的这条留言" onclick="return CommentQuote(&#39;comment-quote-353176&#39;,&#39;JustYY.com 小赖子的英国生活和资讯。&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353178" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://yanhaijing.com" href="http://yanhaijing.com/" target="_blank" rel="nofollow">yanhaijing</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353178">
+            <p><a href="http://yanhaijing.com/git/2014/11/01/my-git-note" rel="nofollow">http://yanhaijing.com/git/2014/11/01/my-git-note</a> 类似文章，但没有阮老师写的清晰</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  9, 2015 10:28 AM">2015年12月 9日 10:28</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353178">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用yanhaijing的这条留言" onclick="return CommentQuote(&#39;comment-quote-353178&#39;,&#39;yanhaijing&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353179" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Tony</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353179">
+            <p>想不通那些说 git 超级简单的人, 是一种什么心理!</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  9, 2015 10:32 AM">2015年12月 9日 10:32</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353179">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用Tony的这条留言" onclick="return CommentQuote(&#39;comment-quote-353179&#39;,&#39;Tony&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353180" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">hmy</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353180">
+            <p>git 的实现原理很简单，相对其他版本管理系统</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  9, 2015 10:33 AM">2015年12月 9日 10:33</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353180">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用hmy的这条留言" onclick="return CommentQuote(&#39;comment-quote-353180&#39;,&#39;hmy&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353184" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.awesomes.cn" href="http://www.awesomes.cn/" target="_blank" rel="nofollow">笔墨</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353184">
+            <p>git --orphan gh-pages 也很重要，用于创建一个全新的分支，不包含原分支的提交历史，Gihthub项目主页分支用这个。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  9, 2015 11:20 AM">2015年12月 9日 11:20</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353184">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用笔墨的这条留言" onclick="return CommentQuote(&#39;comment-quote-353184&#39;,&#39;笔墨&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353188" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">SpicyCat</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353188">
+            <p>没有git bisec就算了，连git rebase也没有？git rebase算是比较常用的了。<br>
+看log建议用gitk，不用记那么多参数。<br>
+git alias 也比较有用。<br>
+但是常用的就那么几个，不常用的还是要现查手册。<br>
+感觉阮老师这一篇略水。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  9, 2015 12:09 PM">2015年12月 9日 12:09</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353188">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用SpicyCat的这条留言" onclick="return CommentQuote(&#39;comment-quote-353188&#39;,&#39;SpicyCat&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353189" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.awesomes.cn" href="http://www.awesomes.cn/" target="_blank" rel="nofollow">笔墨</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353189">
+            <blockquote>
+<pre>引用笔墨的发言：</pre>
+
+<p>git --orphan gh-pages 也很重要，用于创建一个全新的分支，不包含原分支的提交历史，Gihthub项目主页分支用这个。</p>
+
+</blockquote>
+
+<p>错了，是 git checkout --orphan gh-pages</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  9, 2015 12:24 PM">2015年12月 9日 12:24</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353189">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用笔墨的这条留言" onclick="return CommentQuote(&#39;comment-quote-353189&#39;,&#39;笔墨&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353190" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Eich</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353190">
+            <p>显示两次差异的中间不是两个点的吗？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  9, 2015 12:51 PM">2015年12月 9日 12:51</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353190">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用Eich的这条留言" onclick="return CommentQuote(&#39;comment-quote-353190&#39;,&#39;Eich&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353191" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">阮一峰</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353191">
+            <p>@Eich</p>
+
+<p>三个点比两个点包括更多的commit。</p>
+
+<p><a href="http://stackoverflow.com/questions/462974/what-are-the-differences-between-double-dot-and-triple-dot-in-git-com#answer-24186641" rel="nofollow">http://stackoverflow.com/questions/462974/what-are-the-differences-between-double-dot-and-triple-dot-in-git-com#answer-24186641</a></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  9, 2015  1:37 PM">2015年12月 9日 13:37</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353191">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用阮一峰的这条留言" onclick="return CommentQuote(&#39;comment-quote-353191&#39;,&#39;阮一峰&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353192" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Emily</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353192">
+            <p>噗，不太会用命令行，一直用 sourceTree</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  9, 2015  2:10 PM">2015年12月 9日 14:10</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353192">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用Emily的这条留言" onclick="return CommentQuote(&#39;comment-quote-353192&#39;,&#39;Emily&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353195" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.catscarlet.com/" href="http://www.catscarlet.com/" target="_blank" rel="nofollow">石樱灯笼</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353195">
+            <p>求问开头那个图是用什么软件画的？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  9, 2015  5:02 PM">2015年12月 9日 17:02</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353195">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用石樱灯笼的这条留言" onclick="return CommentQuote(&#39;comment-quote-353195&#39;,&#39;石樱灯笼&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353198" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">az</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353198">
+            <p>git pull<br>
+git add .<br>
+git commit -m 'well'<br>
+git push origin <br>
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  9, 2015  9:08 PM">2015年12月 9日 21:08</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353198">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用az的这条留言" onclick="return CommentQuote(&#39;comment-quote-353198&#39;,&#39;az&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353206" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Mark</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353206">
+            <p>阮老師<br>
+我可以轉譯成繁中轉貼到我的blog嗎？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 10, 2015  1:43 PM">2015年12月10日 13:43</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353206">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用Mark的这条留言" onclick="return CommentQuote(&#39;comment-quote-353206&#39;,&#39;Mark&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353207" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Ivan</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353207">
+            <p>最近阮兄一直在钻研技术，什么时候再写写人文社科类的文章</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 10, 2015  1:50 PM">2015年12月10日 13:50</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353207">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用Ivan的这条留言" onclick="return CommentQuote(&#39;comment-quote-353207&#39;,&#39;Ivan&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353210" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">阮一峰</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353210">
+            <p>@Mark：非常欢迎啊。</p>
+
+<p>@Ivan：只要能抽出时间，就会写。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 10, 2015  3:39 PM">2015年12月10日 15:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353210">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用阮一峰的这条留言" onclick="return CommentQuote(&#39;comment-quote-353210&#39;,&#39;阮一峰&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353213" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.sina.com.cn/mergine" href="http://blog.sina.com.cn/mergine" target="_blank" rel="nofollow">zhangbo9716</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353213">
+            <p>阮老师最近写的都是技术的文章啊。很少思想类的文章了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 10, 2015  7:04 PM">2015年12月10日 19:04</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353213">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用zhangbo9716的这条留言" onclick="return CommentQuote(&#39;comment-quote-353213&#39;,&#39;zhangbo9716&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353216" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">ky</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353216">
+            <p>不知道阮老师可否出个typescript相关的教程，网上找不到好的啊。。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 11, 2015  3:23 AM">2015年12月11日 03:23</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353216">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用ky的这条留言" onclick="return CommentQuote(&#39;comment-quote-353216&#39;,&#39;ky&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353221" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://phping.sinaapp.com/" href="http://phping.sinaapp.com/" target="_blank" rel="nofollow">phping</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353221">
+            <blockquote>
+<pre>引用Emily的发言：</pre>
+
+<p>噗，不太会用命令行，一直用 sourceTree</p>
+
+</blockquote>
+
+<p>我也是，先前是使用的命令行操作，现在在用sourcetree.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 11, 2015  2:29 PM">2015年12月11日 14:29</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353221">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用phping的这条留言" onclick="return CommentQuote(&#39;comment-quote-353221&#39;,&#39;phping&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353266" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">doingnothing</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353266">
+            <blockquote>
+<pre>引用Tony的发言：</pre>
+
+<p>想不通那些说 git 超级简单的人, 是一种什么心理!</p>
+
+</blockquote>
+
+<blockquote>
+<pre>引用Tony的发言：</pre>
+
+<p>想不通那些说 git 超级简单的人, 是一种什么心理!</p>
+
+</blockquote>
+
+<p>感觉就是一种推销的说辞罢了。这种说辞，让一些人觉得随便学下就好了，导致实际上经常踩到坑。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 13, 2015 12:11 AM">2015年12月13日 00:11</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353266">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用doingnothing的这条留言" onclick="return CommentQuote(&#39;comment-quote-353266&#39;,&#39;doingnothing&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353276" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">coder</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353276">
+            <p>关注很长时间了，留个名</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 14, 2015  3:47 PM">2015年12月14日 15:47</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353276">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用coder的这条留言" onclick="return CommentQuote(&#39;comment-quote-353276&#39;,&#39;coder&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353278" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">gostar</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353278">
+            <p>基本都用到过。   讲的蛮好的`</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 14, 2015  6:04 PM">2015年12月14日 18:04</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353278">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用gostar的这条留言" onclick="return CommentQuote(&#39;comment-quote-353278&#39;,&#39;gostar&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353282" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">x</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353282">
+            <p>我们学校的老师呀，虽然没教过我。（本人计算机专业，当时 闻其名未见其人），话说现在还在计算机行业，也在写着 前端JavaScript 。搜索 tail call optimization 的时搜索到的。呵呵。自己水平还是比较菜 </p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 15, 2015  9:47 AM">2015年12月15日 09:47</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353282">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用x的这条留言" onclick="return CommentQuote(&#39;comment-quote-353282&#39;,&#39;x&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353348" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">MMY</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353348">
+            <p>阮老师，怎么在github里面加入代码演示呢？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 16, 2015  3:14 PM">2015年12月16日 15:14</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353348">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用MMY的这条留言" onclick="return CommentQuote(&#39;comment-quote-353348&#39;,&#39;MMY&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353358" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.runjf.com" href="http://www.runjf.com/" target="_blank" rel="nofollow">ruanjf</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353358">
+            <blockquote>
+<pre>引用SpicyCat的发言：</pre>
+
+<p>没有git bisec就算了，连git rebase也没有？git rebase算是比较常用的了。<br>
+看log建议用gitk，不用记那么多参数。<br>
+git alias 也比较有用。<br>
+但是常用的就那么几个，不常用的还是要现查手册。<br>
+感觉阮老师这一篇略水。</p>
+
+</blockquote>
+fetch + rebase用得最多了
+
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 17, 2015 10:15 AM">2015年12月17日 10:15</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353358">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用ruanjf的这条留言" onclick="return CommentQuote(&#39;comment-quote-353358&#39;,&#39;ruanjf&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353460" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://暂无" href="http://xn--rgvyn/" target="_blank" rel="nofollow">yager</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353460">
+            <p>阮老师，刚才开发中用到tag的两个命令：<br>
+删除本地tag:<br>
+git tag -d tagName<br>
+删除远程tag:<br>
+git push origin :refs/tags/tagName</p>
+
+<p>希望能做个补充。<br>
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 22, 2015  7:50 PM">2015年12月22日 19:50</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353460">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用yager的这条留言" onclick="return CommentQuote(&#39;comment-quote-353460&#39;,&#39;yager&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353465" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">阮一峰</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353465">
+            <p>@yager：</p>
+
+<p>谢谢补充，已经添加。</p>
+
+<p>欢迎大家继续补充。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 23, 2015  9:01 AM">2015年12月23日 09:01</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353465">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用阮一峰的这条留言" onclick="return CommentQuote(&#39;comment-quote-353465&#39;,&#39;阮一峰&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353481" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">AnnabellChan</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353481">
+            <p>其实只要记住对应的英文就会方便很多<br>
+比如 git checkout -b，b其实是browse的abbr.<br>
+git branch -r, r -&gt; remote<br>
+git branch -a, a -&gt; all<br>
+git config -l, l -&gt; list<br>
+git commit -m, m -&gt; message</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 23, 2015  5:05 PM">2015年12月23日 17:05</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353481">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用AnnabellChan的这条留言" onclick="return CommentQuote(&#39;comment-quote-353481&#39;,&#39;AnnabellChan&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353500" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Yan Xiaoxue</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353500">
+            <p>您好，您博客的这个评论是怎么做的？<br>
+我刚开始用jekyll。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 24, 2015  1:28 PM">2015年12月24日 13:28</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353500">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用Yan Xiaoxue的这条留言" onclick="return CommentQuote(&#39;comment-quote-353500&#39;,&#39;Yan Xiaoxue&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353535" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">汪卫卫</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353535">
+            <p>阮老师，我可以转载在我的博客里吗？方便查用。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 24, 2015  7:47 PM">2015年12月24日 19:47</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353535">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用汪卫卫的这条留言" onclick="return CommentQuote(&#39;comment-quote-353535&#39;,&#39;汪卫卫&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353659" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://jozhi.github.io/" href="http://jozhi.github.io/" target="_blank" rel="nofollow">大大大，大志</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353659">
+            <blockquote>
+<pre>引用Emily的发言：</pre>
+
+<p>噗，不太会用命令行，一直用 sourceTree</p>
+
+</blockquote>
+
+<p>还是IDE集成的比较好，比如用webstrom中的git~ 然后结合前者中的terminal[终端面板]一起使用。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 30, 2015  2:57 PM">2015年12月30日 14:57</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353659">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用大大大，大志的这条留言" onclick="return CommentQuote(&#39;comment-quote-353659&#39;,&#39;大大大，大志&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353742" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.elmerlxy.com" href="http://www.elmerlxy.com/" target="_blank" rel="nofollow">李欣羿</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353742">
+            <p>看过您的很多技术网站，受益颇丰。感谢有你。。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January  4, 2016  4:59 PM">2016年1月 4日 16:59</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353742">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用李欣羿的这条留言" onclick="return CommentQuote(&#39;comment-quote-353742&#39;,&#39;李欣羿&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353755" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.jeremylu.com" href="http://www.jeremylu.com/" target="_blank" rel="nofollow">Jeremy Lu</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353755">
+            <p>git stash 很有用，把改变过的篇码先搁置。何不加上呢？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January  5, 2016  1:30 AM">2016年1月 5日 01:30</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353755">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用Jeremy Lu的这条留言" onclick="return CommentQuote(&#39;comment-quote-353755&#39;,&#39;Jeremy Lu&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353820" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.cnblogs.com/yaoel" href="http://www.cnblogs.com/yaoel" target="_blank" rel="nofollow">yaoelvon</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353820">
+            <p>写的不错</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January  6, 2016 10:44 PM">2016年1月 6日 22:44</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-353820">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用yaoelvon的这条留言" onclick="return CommentQuote(&#39;comment-quote-353820&#39;,&#39;yaoelvon&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-354253" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://aiddroid.com" href="http://aiddroid.com/" target="_blank" rel="nofollow">aiddroid</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-354253">
+            <blockquote>
+<pre>引用Jeremy Lu的发言：</pre>
+
+<p>git stash 很有用，把改变过的篇码先搁置。何不加上呢？</p>
+
+</blockquote>
+
+<p>+1，stash 必须上</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 22, 2016  5:00 PM">2016年1月22日 17:00</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-354253">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用aiddroid的这条留言" onclick="return CommentQuote(&#39;comment-quote-354253&#39;,&#39;aiddroid&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-354382" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.hardfist.me" href="http://www.hardfist.me/" target="_blank" rel="nofollow">杨健</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-354382">
+            <p>$ git checkout [commit] [file] 是恢复指定文件到工作区和暂存区而不仅仅是工作区</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 29, 2016  2:36 PM">2016年1月29日 14:36</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-354382">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用杨健的这条留言" onclick="return CommentQuote(&#39;comment-quote-354382&#39;,&#39;杨健&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-354383" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.hardfist.me" href="http://www.hardfist.me/" target="_blank" rel="nofollow">杨健</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-354383">
+            <p>git checkout 内容会让暂存区和工作区同步更新到某个commit。<br>
+且<br>
+"""<br>
+# 恢复上一个commit的所有文件到工作区<br>
+$ git checkout .<br>
+"""<br>
+有误，git checkout .并不是恢复上一个commit的所有文件到工作区，而是使得当前工作区内容恢复到当前暂存区内容</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 29, 2016  2:43 PM">2016年1月29日 14:43</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-354383">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用杨健的这条留言" onclick="return CommentQuote(&#39;comment-quote-354383&#39;,&#39;杨健&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-354387" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">阮一峰</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-354387">
+            <p>@杨健：</p>
+
+<p>谢谢指出，已经更正。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 30, 2016 12:05 AM">2016年1月30日 00:05</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-354387">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用阮一峰的这条留言" onclick="return CommentQuote(&#39;comment-quote-354387&#39;,&#39;阮一峰&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-355365" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www" href="http://www/" target="_blank" rel="nofollow">davidtutu</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-355365">
+            写的很好很详细
+<p>虽然还不是很熟悉但有一种不明觉厉的感觉,谢谢老师了!</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April  1, 2016 12:44 AM">2016年4月 1日 00:44</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-355365">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用davidtutu的这条留言" onclick="return CommentQuote(&#39;comment-quote-355365&#39;,&#39;davidtutu&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-356123" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">小嶙地</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-356123">
+            <p>git log -5 --pretty --oneline。在我这个版本上执行报错。git版本2.5.4.<br>
+git log --pretty --oneline -5这种方式正确。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May  8, 2016  9:06 PM">2016年5月 8日 21:06</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-356123">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用小嶙地的这条留言" onclick="return CommentQuote(&#39;comment-quote-356123&#39;,&#39;小嶙地&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-358441" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">シェしあたたかい</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-358441">
+            <p>git branch -D 只能删除本地分支<br>
+而git branch -d -r 可以删除本地与远程的联系<br>
+但是不知道有没有什么命令可以同时删除这两个呢？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 15, 2016  2:58 PM">2016年6月15日 14:58</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-358441">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用シェしあたたかい的这条留言" onclick="return CommentQuote(&#39;comment-quote-358441&#39;,&#39;シェしあたたかい&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-362484" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yinchao</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-362484">
+            <p># 显示暂存区和工作区的差异<br>
+$ git diff</p>
+
+<p>这条貌似不对。git diff只显示工作区中产生的差异，而不再显示已add到暂存区的差异。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2016 10:48 AM">2016年8月17日 10:48</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-362484">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用yinchao的这条留言" onclick="return CommentQuote(&#39;comment-quote-362484&#39;,&#39;yinchao&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-363484" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yy</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-363484">
+            <p>阮老师，已经转载在我的博客。方便查看</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 31, 2016 12:01 PM">2016年8月31日 12:01</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-363484">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用yy的这条留言" onclick="return CommentQuote(&#39;comment-quote-363484&#39;,&#39;yy&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-365329" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">ww</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-365329">
+            <p># 重置当前HEAD为指定commit，但保持暂存区和工作区不变<br>
+$ git reset --keep [commit]</p>
+
+<p>这条应该是: git reset --soft [commit]</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 28, 2016 10:31 AM">2016年9月28日 10:31</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-365329">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用ww的这条留言" onclick="return CommentQuote(&#39;comment-quote-365329&#39;,&#39;ww&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-366144" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="https://github.com/jias" href="https://github.com/jias" target="_blank" rel="nofollow">拂山</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-366144">
+            <p>还有非常非常常用的</p>
+
+<p>冲突的时候，如果想直接用远程的<br>
+git checkout --theirs .<br>
+git add .</p>
+
+<p>冲突的时候，如果想直接用本地的<br>
+git checkout --ours .<br>
+git add .</p>
+
+<p>或者使用明确的路径<br>
+git checkout --theirs path/to/the/conflicted/file<br>
+git add path/to/the/conflicted/file</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 11, 2016  9:13 PM">2016年10月11日 21:13</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-366144">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用拂山的这条留言" onclick="return CommentQuote(&#39;comment-quote-366144&#39;,&#39;拂山&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-366455" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">helin</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-366455">
+            <p>git add -u 可以把所有已经在repo的文件的变更标记添加，二不会把临时生成的文件也添加进来。比 git add . 好用</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 16, 2016  5:53 PM">2016年10月16日 17:53</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-366455">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用helin的这条留言" onclick="return CommentQuote(&#39;comment-quote-366455&#39;,&#39;helin&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-366747" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://zouzls.github.io/" href="http://zouzls.github.io/" target="_blank" rel="nofollow">GsChen</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-366747">
+            <p>阮老师写的更加清晰易懂</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 20, 2016  4:32 PM">2016年10月20日 16:32</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-366747">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用GsChen的这条留言" onclick="return CommentQuote(&#39;comment-quote-366747&#39;,&#39;GsChen&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-366816" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Mia</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-366816">
+            <p>谢谢总结！！！！！！！！！！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 21, 2016  3:05 PM">2016年10月21日 15:05</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-366816">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用Mia的这条留言" onclick="return CommentQuote(&#39;comment-quote-366816&#39;,&#39;Mia&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-372149" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">二十八画生</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-372149">
+            <p>文章开始的图片上，只是pull 到 本地工作区？那 本地的repository 怎么更新？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 20, 2017 11:45 AM">2017年1月20日 11:45</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-372149">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用二十八画生的这条留言" onclick="return CommentQuote(&#39;comment-quote-372149&#39;,&#39;二十八画生&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-372566" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.gzpblog.com" href="http://www.gzpblog.com/" target="_blank" rel="nofollow">锅子</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-372566">
+            <p>最近开始学git，已经过了一遍了GitBook。<br>
+这个清单很有用！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February  8, 2017  2:25 PM">2017年2月 8日 14:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-372566">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用锅子的这条留言" onclick="return CommentQuote(&#39;comment-quote-372566&#39;,&#39;锅子&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-373507" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">阿里P8</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-373507">
+            <blockquote>
+<pre>引用Tony的发言：</pre>
+
+<p>想不通那些说 git 超级简单的人, 是一种什么心理!</p>
+
+</blockquote>
+
+<p>有一种是装X的心理，还有一种 习惯于命令行模式。 说实话从 svn 转换到git的成本很大，除非工作很闲，否则不要随便迁。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 27, 2017 11:25 AM">2017年2月27日 11:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-373507">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用阿里P8的这条留言" onclick="return CommentQuote(&#39;comment-quote-373507&#39;,&#39;阿里P8&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-375255" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">光光团</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-375255">
+            <p>那个图画的很好，很好理解</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 22, 2017  9:58 AM">2017年3月22日 09:58</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-375255">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用光光团的这条留言" onclick="return CommentQuote(&#39;comment-quote-375255&#39;,&#39;光光团&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-376839" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://1991421.cn" href="http://1991421.cn/" target="_blank" rel="nofollow">贺强</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-376839">
+            <p>阮老师的博文，帮我理解了好多知识点，谢谢啦</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May  2, 2017  8:26 PM">2017年5月 2日 20:26</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-376839">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用贺强的这条留言" onclick="return CommentQuote(&#39;comment-quote-376839&#39;,&#39;贺强&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-378771" class="comment">
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.cnblogs.com/wenhandi/" href="http://www.cnblogs.com/wenhandi/" target="_blank" rel="nofollow">翰弟</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-378771">
+            <p>git接触两周了，还需练习</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 19, 2017 12:37 AM">2017年7月19日 00:37</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-378771">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用翰弟的这条留言" onclick="return CommentQuote(&#39;comment-quote-378771&#39;,&#39;翰弟&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-378965" class="comment">
+    <div id="comment-last" class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">潘启宝</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-378965">
+            <p>如何忽略本地的一些文件？例如开发环境产生的一些文件。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 26, 2017  8:04 PM">2017年7月26日 20:04</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-378965">#</a>
+ | <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html#comment-text" title="引用潘启宝的这条留言" onclick="return CommentQuote(&#39;comment-quote-378965&#39;,&#39;潘启宝&#39;);">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    </div>
+        
+    
+
+
+    
+    
+    <div class="comments-open" id="comments-open">
+        <h2 class="comments-open-header">我要发表看法</h2>
+        <div class="comments-open-content">
+
+        
+            <div id="comment-greeting"></div>
+
+            <form method="post" action="http://www.ruanyifeng.com/cgi-bin/mtos/mt-comments.cgi" name="comments_form" id="comments-form" onsubmit="return pleaseWait();">
+                <input type="hidden" name="static" value="1">
+                <input type="hidden" name="entry_id" value="1861">
+                <input type="hidden" name="__lang" value="en">
+                <input type="hidden" name="parent_id" value="" id="comment-parent-id">
+                <input type="hidden" name="armor" value="1">
+                <input type="hidden" name="preview" value="">
+                <input type="hidden" name="sid" value="">
+                <div id="comments-open-data">
+            <div id="comments-open-text">
+                    <p><label for="comment-text">您的留言
+                    （HTML标签部分可用）</label></p>
+                    <p><textarea id="comment-text" name="text" rows="10" cols="50"></textarea></p>
+                </div>
+                    <div id="comment-form-name">
+                        <p><label for="comment-author">您的大名：</label></p>
+                        <p><input id="comment-author" name="author" size="30" value="">  <span class="hint"> «-必填</span></p>
+                    </div>
+                    <div id="comment-form-email">
+                        <p><label for="comment-email">电子邮件：</label></p>
+                        <p><input id="comment-email" name="email" size="30" value="">  <span class="hint"> «-必填，不公开</span></p>
+                    </div>
+                    <div id="comment-form-url">
+                        <p><label for="comment-url">个人网址：</label></p>
+                        <p><input id="comment-url" name="url" size="30" value="">  <span class="hint"> «-我信任你，不会填写广告链接</span></p>
+                    </div>
+                    <div id="comment-form-remember-me">
+                        <p>
+                        <label for="comment-bake-cookie">记住个人信息？</label><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="!this.checked?forgetMe(document.comments_form):rememberMe(document.comments_form)" value="1" accesskey="r"></p>
+                    </div>
+                </div>
+                    <div id="comment-form-reply" style="display:none">
+                    <input type="checkbox" id="comment-reply" name="comment_reply" value="" onclick="mtSetCommentParentID()">
+                    <label for="comment-reply" id="comment-reply-label"></label>
+                </div>
+                <div id="comments-open-captcha"></div>
+                <div id="comments-open-footer">
+<div id="wait" style="display:none;">
+<p><strong>正在发表您的评论，请稍候</strong></p>
+<p>
+<input type="text" name="percent" size="3" style="font-family:Arial; color:black;text-align:center; border-width:medium; border-style:none;">           
+<input type="text" name="chart" size="46" style="font-family:Arial;font-weight:bolder; color:black; padding:0px; border-style:none;">
+</p>
+</div>
+
+                    <p><input type="submit" accesskey="s" name="post" id="comment-submit" value="发表">  <span class="hint"> «- 点击按钮</span></p>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+    
+
+
+</div>
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <script type="text/javascript" src="./常用Git命令清单_files/prism.js.下载"></script>
+
+            <div id="footer">
+    <div id="footer-inner">
+        <div id="footer-content">
+<p><a href="http://www.ruanyifeng.com/contact.html">联系方式</a> | 2003 - 2017
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46829782-1', 'ruanyifeng.com');
+  ga('send', 'pageview');
+
+</script>
+
+<script type="text/javascript" src="./常用Git命令清单_files/stats.js.下载"></script>
+
+
+
+</p>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="share_button_proto" style="display:none;">
+<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+
+
+
+<script type="text/javascript" charset="utf-8" src="./常用Git命令清单_files/buttonLite.js.下载"></script>
+<script type="text/javascript" charset="utf-8">
+bShare.addEntry({
+    title: document.getElementById("page-title").innerHTML,
+url:window.location.href
+});
+</script>
+</div>
+
+<script>
+document.getElementById("share_button").innerHTML=document.getElementById("share_button_proto").innerHTML;
+</script>
+
+
+
+
+        </div>
+    </div>
+
+</body></html>
