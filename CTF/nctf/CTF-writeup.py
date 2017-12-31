@@ -180,6 +180,8 @@ if($_GET[id] == "hackerDJ")
 ?>
 http://way.nuptzj.cn/php/index.php?id=%2568ackerDJ 
 nctf{php_is_best_language}
+
+
 20.伪装者
 x-forwarded-for:127.0.0.1
 nctf{happy_http_headers}
@@ -251,6 +253,11 @@ else
 ?>
 chinalover.sinaapp.com/web12/index.php?key=0xccccccccc
 nctf{follow_your_dream}
+
+26.密码重置
+300
+重置管理员账号：admin 的密码
+
 }
 实验吧CTF
 {
@@ -267,4 +274,5 @@ nctf{follow_your_dream}
 		#username=1' or extractvalue/*&password=*/(1,concat(0x23,(select value from ffll44jj))) or '
 	2.认真一点！分值：35
 		 http://ctf5.shiyanbar.com/web/earnest/index.php 
+		 http://www.weisource.xin/?p=162
 }
