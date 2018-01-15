@@ -1,0 +1,96 @@
+基础篇
+第一章 简介
+1.1服务器入侵原理
+入侵思路
+入侵方式
+黑客技能表
+1.2web安全学习方法
+攻击技术
+漏洞挖掘
+系统防护
+编程技术
+	C++,python
+	php、前端、数据库
+	
+第二章 http请求
+2.1 http协议解析
+url协议与格式
+发起http请求
+http协议服务特点:无状态、被动式、rr模型
+http请求的数据包格式
+http响应的数据报格式
+http请求的八种方法
+	get\post\head\put\delete\trace\connect\options
+http响应的状态码
+	1xx
+	2xx
+	3xx
+	4xx
+	5xx
+http头
+	请求头：host\user-agent\refer\cookie\range\x-forward-for\accept\accept-charset\
+	响应头：server\set-cookie\last-modified\location\refresh
+	普通头：date,cache-control,connection
+	实体头：元信息，content-type,content-encoding,content-length、last-modified
+模拟http请求
+	telnet:telnet www.baidu.com 80
+			ctrl+]
+			get /index.html http/1.1
+			两次回车提交请求
+	curl
+	python
+	浏览器
+	burp\fiddler抓包
+http与https
+
+2.2截取http
+burp
+	功能
+		target
+		proxy
+		spider
+		repeater
+		intruder
+		sequencer
+		decoder
+		comparer
+	配置
+	高级使用
+		burp+sqlmap
+		
+fiddler
+	配置
+	拦截http\https
+	基本功能
+		监听：所有类型、web浏览器、费浏览器、进程
+		命令行工具：cls
+					select
+					bpu
+		过滤器filters
+		设置断点:设置rules
+				bpu www.baidu.com
+				bpafter www.baidu.com
+		模块
+			statistics
+			inspectors
+			autoresponder
+			textwizard
+			composer
+		插件
+			接口
+			第三方插件
+				intruder21
+				x5s
+				ammonite
+
+winsock expert
+	调试网路应用程序
+	
+2.3 http应用
+黑帽seo
+
+
+第三章 信息探测				
+		
+		
+	

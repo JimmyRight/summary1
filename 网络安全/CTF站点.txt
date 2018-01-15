@@ -1,8 +1,0 @@
-ISCC:http://iscc.isclab.org.cn/team/2917 1271432244@qq.com tulu2017 123456
-NCTF£ºhttp://ctf.nuptzj.cn/
-http://ssctf.seclover.com
-http://xnuca.erangelab.com/
-http://oj.xctf.org.cn/
-http://ctf.360.cn/
-http://bctf.cn/#/challenge
-http://hackgame.blackbap.org/
