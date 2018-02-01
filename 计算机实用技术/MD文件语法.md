@@ -1,98 +1,99 @@
-#��markdownд����ĵ�һ��md�ĵ�
+#用markdown写下你的第一个md文档
 
-    markdown ����ʵ���Դ�ѵ���Ϊ�˶�Ӧ��д��ҳ����HTML�����ı�������ԣ�Hyper Text Markup Language���е�markup��_
+    markdown 这个词的来源难道是为了对应编写网页所用HTML（超文本标记语言，Hyper Text Markup Language）中的markup？_
 
-#markdown ��ʲô��
+#markdown 是什么？
 
-	ͬ���Ǳ�����ԣ��������HTML���Ӽ򵥣�һ�������ڱ�Ƿ��������ϣ����������ڱ�Ƿ�����д�ϡ�HTML��Ƿ��ŷǳ��࣬������Ҫ������ݵĿ�ʼ�ͽ���λ�ã���markdownֻ���ĸ������ı�Ƿ��ţ�ֻҪ�ڿ�ʼλ�ñ�Ǽ��ɡ�
+	同样是标记语言，但它相比HTML更加简单！一是体现在标记符的数量上，二是体现在标记符的书写上。
+	HTML标记符号非常多，并且需要标记内容的开始和结束位置，而markdown只有四个基本的标记符号，只要在开始位置标记即可。
 
-#markdown ���ʲô���⣿
-��������Ҫ���ĵ���������η��������ֲ�������word�����ı༭��������д���Ű�Ͷ�ȡʱ��markdown����д�׶����ƾͷǳ�ͻ���ˡ���������ʹ��һ��ʱ���Ժ󣬷���ʹ��markdown�ǳ������ڰ���������д��ʱ�����Լ����߼�˼·�Ͷ����Ρ�
+#markdown 解决什么问题？
+当我们需要让文档看起来层次分明，但又不依赖于word这样的编辑工具来书写、排版和读取时，markdown的易写易读优势就非常突出了。并且在我使用一段时间以后，发现使用markdown非常有助于帮助作者在写作时整理自己的逻辑思路和段落层次。
 
-#������д�Ͷ�ȡ markdown��
-	ͬHTMLһ���������ʹ���κ�һ��ı��༭�������༭�Ͷ�ȡ����markdown��ʽ���ı�����ֻ����һЩ�ر�Ĺ��ߣ����е��Ʊʼǣ�����վ������飩�£����ܳ��ֳ���Ⱦ��ĸ�ʽ��
-	ͬʱmarkdownҲ����ʹ��HTML�����Ӹ�ʽ���Ű棬����ζ�ţ��㼴����ʹ�ñ�׼��markdown�﷨��Ҳ����������Ƕ��HTML��ǣ���Ҳֻ�ܶ�Ӧ���е�һС���֡�
-#markdown ���﷨
+#怎样书写和读取 markdown？
+	同HTML一样，你可以使用任何一款纯文本编辑工具来编辑和读取包含markdown格式的文本，但只有在一些特别的工具（如有道云笔记）或网站（如简书）下，才能呈现出渲染后的格式。
+	同时markdown也可以使用HTML来添加格式和排版，这意味着，你即可以使用标准的markdown语法，也可以在其中嵌入HTML标记，但也只能对应其中的一小部分。
+#markdown 的语法
 
-�������ţ�* - + >
-���������е�markdown��Ƕ��ǻ������ĸ����ż�����ϣ���Ҫע����ǣ�����Ի������ſ�ͷ�ı�ǣ�ע��������ź�ָ����ݵĿո�
+基本符号：* - + >
+基本上所有的markdown标记都是基于这四个符号及其组合，需要注意的是，如果以基本符号开头的标记，注意基本符号后分割内容的空格。
 
-    ����
-        һ������ # һ������
-        �������� ## ��������
-        �������� ### ��������
-        �ļ����� #### �ļ�����
-        �弶���� ##### �弶����
-        �������� ###### ��������
+    标题
+        一级标题 # 一级标题
+        二级标题 ## 二级标题
+        三级标题 ### 三级标题
+        四级标题 #### 四级标题
+        五级标题 ##### 五级标题
+        六级标题 ###### 六级标题
 
-    ����
+    引用
 
-    ���õķ�ʽ��> ��������
+    引用的方式：> 引用内容
 
-    ����
-        ��������Ȼ �س� ��Ϊ��ǡ�
-    �ָ���
-        ���������������ϵ�---���Ӻ��߷ָ��������£�
+    段落
+        段落以自然 回车 作为标记。
+    分隔符
+        连续输入三个以上的---添加横线分隔符，如下：
 
-    �б�
-        ʹ��* - +�е��κ�һ�����żӿո�Ϳ��Դ��������б������������������������߿��Խ�һ��ʹ��+ -�����ֲ�ι�ϵ��
-        ʹ������+��+�ո񴴽������б�
-        �б�����Ƕ�ף�ʹ��ʱ��Ƕ���б�ǰ�ո���ƪ���µ��б�ʹ����Ƕ���б���
+    列表
+        使用* - +中的任何一个符号加空格就可以创建无序列表，但如我这样的完美主义者可以进一步使用+ -来表现层次关系。
+        使用数字+点+空格创建有序列表
+        列表可以嵌套，使用时在嵌套列表前空格，这篇文章的列表使用了嵌套列表。
 
-* ����һ�������б�
-* ����һ�������б�
+* 这是一个无序列表
+* 这是一个无序列表
 
-+ ����һ���������б�
-  - ����һ���������б�
++ 这是一个父无序列表
+  - 这是一个子无序列表
 
-1. ����һ�������б�`
-2. ����һ�������б�`
+1. 这是一个有序列表`
+2. 这是一个有序列表`
 
-    ����
-        ��markdownд����ĵ�һ��md�ĵ� �������������������ɵ�
+    链接
+        用markdown写下你的第一个md文档 的文章链接是这样构成的
 
-[��markdownд����ĵ�һ��md�ĵ�](http://www.jianshu.com/p/de9c98bba332) 
+[用markdown写下你的第一个md文档](http://www.jianshu.com/p/de9c98bba332) 
 
-    Ҳ����ֱ���ü����Ű�����ַ�ķ�ʽ<http://www.jianshu.com>���������� http://www.jianshu.com
-    ͼƬ
-        ����һ������һ����ֻ��Ҫ��ǰ��ӣ�
+    也可以直接用尖括号包含网址的方式<http://www.jianshu.com>来构成链接 http://www.jianshu.com
+    图片
+        像构造一个链接一样，只需要在前面加！
 
-![ͼƬ����](ͼƬ��ַ)
+![图片名称](图片地址)
 
-����
+简书
 
-    Ҳ����ʹ��html��ʽ��ָ��ͼƬ��С
+    也可以使用html方式来指定图片大小
 
-<img src="http://upload-images.jianshu.io/upload_images/95646-5bfd0cecf587c766.png" width="300px" height="240px" alt="����">
+<img src="http://upload-images.jianshu.io/upload_images/95646-5bfd0cecf587c766.png" width="300px" height="240px" alt="简书">
 
-<img src="http://upload-images.jianshu.io/upload_images/95646-5bfd0cecf587c766.png" width="300px" height="240px" alt="����">
+<img src="http://upload-images.jianshu.io/upload_images/95646-5bfd0cecf587c766.png" width="300px" height="240px" alt="简书">
 
-    �����
+    代码段
 
-ʹ��
+使用
 ```
-����
+代码
 ```
-�����ķ�ʽ������
-` ���������Ͻ�esc���·������ڰ��״̬����
+这样的方式来构建
+` 符号在左上角esc键下方，请在半角状态输入
 
-print("����һ�������");
+print("这是一个代码段");
 
-    ������ʽ
-        ��б *��б*
-        �Ӵ� **�Ӵ�**
-        ��б���Ӵ� ***��б���Ӵ�***
-    ����
-        ʹ��- |���Ű����ݷָ�Ϊ����Ϊ���ʵı�����ʽ�ͺá�
-        ʹ��:���ű�ʶ���롣
+    字体样式
+        倾斜 *倾斜*
+        加粗 **加粗**
+        倾斜并加粗 ***倾斜并加粗***
+    表格
+        使用- |符号把内容分割为你认为合适的表格样式就好。
+        使用:符号标识对齐。
 
-��ͷ1|��ͷ2|��ͷ3
+表头1|表头2|表头3
 :----|:-----:|-----:
-�����|���ж���|�Ҷ���
+左对齐|居中对齐|右对齐
 
-��ͷ1 	��ͷ2 	��ͷ3
-����� 	���ж��� 	�Ҷ���
+表头1 	表头2 	表头3
+左对齐 	居中对齐 	右对齐
 
-    ����
-        ���markdown��д���ĵ���Ϊ .md ��ʽ���Ϳ����ö�Ӧ�Ĺ��߲鿴Ч���ͱ༭�ˡ�
+    保存
+        最后将markdown编写的文档存为 .md 格式，就可以用对应的工具查看效果和编辑了。
 
