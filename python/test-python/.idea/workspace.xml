@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="61a162dd-a874-4ce3-a066-d89e4bcf8362" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/../../CTF/CTF总结.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/PWN/CTF-pwn-tips.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/REVERSE/160crackme/160个CrackMe破解思路合集.rar" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/REVERSE/160crackme/160个crackme练手.rar" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/REVERSE/Android逆向手册.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/REVERSE/IDA Pro权威指南 第2版 .pdf" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/REVERSE/反编译技术与软件逆向分析.pdf" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/REVERSE/逆向学习笔记.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/REVERSE/逆向工程权威指南.上册.pdf" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/REVERSE/逆向工程权威指南.下册.pdf" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/各练习平台writeup/NCTF/CTF-writeup.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/各练习平台writeup/NCTF/misc/gif.zip" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/各练习平台writeup/NCTF/pwn/nctf1/readme.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/各练习平台writeup/NCTF/pwn/nctf1/test" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/各练习平台writeup/NCTF/pwn/nctf1/test.c" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/各练习平台writeup/NCTF/re/1.exe" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/各练习平台writeup/NCTF/re/2.asm" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/各练习平台writeup/实验吧/web01baocuo.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/.gitignore" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/README.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/web300-2/index.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/web500-2/index.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/web500-4/README.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/web500-4/config.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/web500-4/htmlpurifier/INSTALL" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/web500-4/htmlpurifier/library/HTMLPurifier/AttrDef/URI.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/web500-4/htmlpurifier/library/HTMLPurifier/CSSDefinition.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/web500-4/htmlpurifier/library/HTMLPurifier/ConfigSchema.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/web500-4/htmlpurifier/library/HTMLPurifier/Exception.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/web500-4/htmlpurifier/library/HTMLPurifier/Filter.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/web500-4/htmlpurifier/library/HTMLPurifier/HTMLDefinition.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/web500-4/htmlpurifier/library/HTMLPurifier/HTMLModule/Name.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/web500-4/htmlpurifier/library/HTMLPurifier/HTMLModule/Proprietary.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/web500-4/htmlpurifier/library/HTMLPurifier/Length.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../CTF/练习题/CTF_web-master/web500-4/htmlpurifier/library/HTMLPurifier/URI.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../Py编程.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../reverse.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../实用小工具/burpsuite_pro_v1.7.27_Cracked_loader.rar" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../实用小工具/winrar破解/readme.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../实用小工具/winrar破解/reshacker_setup.exe" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../实用小工具/winrar破解/winrar-x64-550sc.exe" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../网络安全/MSF使用教程.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../网络安全/PHP编程.php" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../网络安全/eternalblue教程.doc" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../网络安全/kali使用手册.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../网络安全/sql注入.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../网络安全/web常见漏洞利用方式.txt" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../网络安全/各渗透练习平台.c" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../计算机实用技术/MD文件语法.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/../../计算机实用技术/bat命令.md" afterPath="" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="450" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>stri</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/base64all.py" />
+        <option value="$PROJECT_DIR$/base64-ntimes.py" />
+        <option value="$PROJECT_DIR$/tkinter.py" />
+        <option value="$PROJECT_DIR$/son.py" />
+        <option value="$PROJECT_DIR$/json.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="260" />
+    <option name="y" value="20" />
+    <option name="width" value="1400" />
+    <option name="height" value="980" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Python</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>PyUnresolvedReferencesInspection</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="test-python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="test-python" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="test-python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="test-python" type="462c0819:PsiDirectoryNode" />
+              <item name="xml" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.json">
+    <configuration name="base64-ntimes" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="测试脚本" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/base64-ntimes.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="base64all" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Python27\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="测试脚本" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/base64all.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="json" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="测试脚本" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/json.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="tkinter" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="测试脚本" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tkinter.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <list size="4">
+      <item index="0" class="java.lang.String" itemvalue="Python.base64all" />
+      <item index="1" class="java.lang.String" itemvalue="Python.base64-ntimes" />
+      <item index="2" class="java.lang.String" itemvalue="Python.tkinter" />
+      <item index="3" class="java.lang.String" itemvalue="Python.json" />
+    </list>
+    <recent_temporary>
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Python.json" />
+        <item index="1" class="java.lang.String" itemvalue="Python.tkinter" />
+        <item index="2" class="java.lang.String" itemvalue="Python.base64all" />
+        <item index="3" class="java.lang.String" itemvalue="Python.base64-ntimes" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="61a162dd-a874-4ce3-a066-d89e4bcf8362" name="Default" comment="" />
+      <created>1514798400864</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1514798400864</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="260" y="20" width="1400" height="980" extended-state="0" />
+    <layout>
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24927746" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32885087" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/tkinter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="20" lean-forward="false" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/json.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="13" lean-forward="true" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base64all.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base64-ntimes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="18" column="32" lean-forward="false" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base64all.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/son.py" />
+    <entry file="file://$PROJECT_DIR$/json.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="13" lean-forward="true" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tkinter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="20" lean-forward="false" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
